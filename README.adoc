@@ -1,0 +1,275 @@
+= AsciiRSD: Asciidoctor processor for RSD standards
+
+image:https://img.shields.io/gem/v/asciidoctor-rsd.svg["Gem Version", link="https://rubygems.org/gems/asciidoctor-rsd"]
+image:https://img.shields.io/travis/riboseinc/asciidoctor-rsd/master.svg["Build Status", link="https://travis-ci.org/riboseinc/asciidoctor-rsd"]
+image:https://codeclimate.com/github/riboseinc/asciidoctor-rsd/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/riboseinc/asciidoctor-rsd"]
+
+WARNING: This gem is still under development.
+
+== Functionality
+
+This gem processes http://asciidoctor.org/[Asciidoctor] documents following
+a template for generating RSD International Standards.
+
+The gem currently inherits from the https://github.com/riboseinc/asciidoctor-iso
+gem, and aligns closely to it. Refer to the ISO gem
+for guidance, including https://github.com/riboseinc/asciidoctor-iso/wiki/Guidance-for-authoring
+
+The following outputs are generated.
+
+* (Optional) An HTML preview generated directly from the Asciidoctor document,
+using native Asciidocot formatting. 
+** http://asciimath.org[AsciiMathML] is to be used for mathematical formatting.
+The gem uses the https://github.com/asciidoctor/asciimath[Ruby AsciiMath parser],
+which is syntactically stricter than the common MathJax processor;
+if you do not get expected results, try bracketting terms your in AsciiMathML
+expressions.
+* an XML representation of the document, intended as a document model for RSD
+International Standards. 
+* The XML representation is processed in turn to generate the following outputs
+as end deliverable RSD standard drafts.
+** Microsoft Word output (`.doc`), following the style conventions of the 
+https://www.rsd.org/rsd-templates.html[RSD Standard Microsoft Word template]. 
+(In development)
+** PDF (forthcoming)
+** HTML (forthcoming)
+
+This AsciiDoc syntax for writing RSD standards is hereby named "AsciiRSD".
+
+== Usage
+
+[source,console]
+----
+$ asciidoctor a.adoc  # HTML output of Asciidoc file
+$ asciidoctor -b rsd -r 'asciidoctor-rsd' a.adoc  # RSD XML output
+----
+
+The gem translates the document into RSD XML format, and then
+validates its output against the RSD XML document model; errors are
+reported to console against the XML, and are intended for users to
+check that they have provided all necessary components of the
+document.
+
+TODO: The gem will then convert the XML to Word Document, HTML, and
+PDF, and output those files with the appropriate file suffixes.
+`lib/asciidoctor/rsd/rsd2wordhtml.rb` is work in progress, and not yet
+integrated into the executable.
+
+=== Content Warnings
+
+The gem also realises several format checks as prescribed in ISO/IEC
+DIR 2, and warns the user about them in the console:
+
+* Numbers with what looks like dots instead of commas for decimal points.
+
+* Groups of numbers without spacing for every three digits. (The gem attempts
+to ignore RSD references.)
+
+* No space before percent sign.
+
+* No bracketing of tolerance in percentage (e.g. `15 ± 7 % .`)
+
+* No recommendations, permissions or requirements (detected by keyword) in:
+foreword, scope, introduction, term examples and examples, notes, footnotes.
+
+* No subclauses that are the only child of a clause. (In clauses, annexes, or
+scopes.)
+
+* 5 levels of subclause nesting. (Never actuated, AsciiDoc only permits 4
+levels of subsections.)
+
+* Non-RSD/IEC reference turning up as normative.
+
+* Term definition starts with an article, or ends with a period.
+
+* Title intro or title part appears in only one of French or English.
+
+== Approach
+
+=== Document model
+
+The RSD Standard Document model is an instance of the
+https://github.com/riboseinc/isodoc-models[StandardDocument model].
+
+The RSD format ("RSD XML") intends to introduce rigour into the RSD
+standards authoring process, and is prescribed in a separate document.
+
+RSD XML is still under development, but it already contains all the markup
+needed to render a RSD document into HTML.
+
+WARNING: The current RNG model of RSD XML is out of sync with the UML.
+
+=== Asciidoctor
+
+Asciidoctor has been selected as the authoring tool to generate the document
+model representation of RSD standards. It is a document formatting tool like
+Markdown and DocBook, which combines the relative ease of use of the former
+(using relatively lightweight markup), and the rigour and expressively of the
+latter (it has a well-defined syntax, and was in fact initially developed as a
+DocBook document authoring tool). Asciidoctor has built-in capability to output
+Text, DocBook and HTML; so it can be used to preview the file as it is being
+authored.
+
+Note that in order to generate HTML preview output close to what is intended
+in the RSD standard, the Asciidoc
+document includes a fair amount of formatting instructions (e.g. disabling
+section numbering where appropriate, the titling of Appendixes as Annexes), as
+well as RSD boilerplate text, and predefined section headers (sections are
+recognised by fixed titles such as `Normative References`). Authoring RSD
+standards in this fashion assumes that users will be populating an Asciidoc
+template, and not removing needed formatting instructions.
+
+=== Features not visible in HTML preview
+
+The gem uses built-in Asciidoc formatting as much as possible, so that users
+can retain the ability to preview documents; for _Terms and Definitions_
+clauses, which have a good deal of explicit structure, macros have been
+introduced for semantic markup (admitted terms, deprecated terms, etc). The
+default HTML output of an Asciidoc-formatted RSD document is quite close to the
+intended final output, with the following exceptions. Note that the final
+outputs of the conversion (Microsoft Word, PDF, HTML) do not have these exceptions,
+and comply with the RSD Standard specifications.
+
+* _Terms and Definitions_: each term is marked up as an unnumbered subclause,
+the semantic markup of alternate and other terms is not rendered visually.
+
+* _Formulas_: Asciidoctor has no provision for the automated numbering of
+rsdlated block formulas ("stem"), and does not display the number assigned a
+block formula in its default HTML processor—although it does provide automated
+numbering of examples. Formula numbering is provided in the final outputs
+of the conversion.
+
+* _Missing elements_: The document model does not yet include Asciidoc elements
+that do not appear to be relevant to RSD Standards; these will be ignored in
+generating RSD XML. Those elements include:
+* sidebars (`aside`) (as distinct from warnings),
+* ASCII art/preformatted text (`literal`) (as distinct from sourcecode listings),
+* page breaks (`thematic break`).
+
+* _Markup_: Some connecting text which is used to convey markup structure is
+left out: in particular, `DEPRECATED` and `SOURCE` (replaced by formatting
+macros).
+
+* _Tables_: Table footnotes are treated like all other footnotes: they are
+rendered at the bottom of the document, rather than the bottom of the table,
+and they are not numbered separately.
+
+* _Cross-references_: Footnoted cross-references are indicated with the reference
+text `fn` in rsdlation, or `fn:` as a prefix to the reference text. The default
+HTML processor leaves these as is: if no reference text is given, only `fn`
+will be displayed (though it will still hyperlink to the right reference).
+
+* _References_: The convention for references is that RSD documents are cited
+without brackets by RSD number, and optionally year, whether they are normative
+or in the bibliography (e.g. `RSD 20483:2013`); while all other references are
+cited by bracketed number in the bibliography (e.g. `[1]`). The default HTML
+processor treats all references the same, and will bracket them (e.g. `[RSD
+20483:2013]`). For the same reason, RSD references listed in the bibliography
+will be listed under an RSD reference, rather than a bracketed number.
+
+* _References_: References are rendered cited throughout, since they are
+automated. For that reason, if reference is to be made to both an undated and a
+dated version of an RSD reference, these need to be explicitly listed as
+separate references. (This is not done in the Rice model document, which lists
+RSD 6646, but under _Terms and Definitions_ cites the dated RSD 6646:2011.
+
+* _References_: RSD references that are undated but published have their date
+indicated under the RSD standards format in an explanatory footnote. Because of
+constraints introduced by Asciidoctor, that explanation is instead given in
+square brackets in Asciidoc format.
+
+* _Annexes_: Subheadings cannot preserve subsection numbering, while also
+appearing inline with their text (e.g. Rice document, Annex B.2): they appear
+as headings in separate lines.
+
+* _Annexes_: Cross-references to Annex subclauses are automatically prefixed
+with `Clause` rather than `Annex` or nothing.
+
+* _Metadata_: Document metadata such as document numbers, technical committees
+and title wording are not rendered in the default HTML output.
+
+* _Patent Notice_: Patent notices are treated and rendered as a subsection of
+the introduction, with an explicit subheading.
+
+* _Numbering_: The numbering of figures and tables is sequential in the default
+HTML processor: it does not include the Clause or Annex number. This,
+_Figure 1_, not _Figure A.1_.
+
+* _Notes_: There is no automatic note numbering by the default HTML processor.
+
+* _Review Notes_: The reviewer on the review note is not displayed.
+
+* _Keys_: Keys to formulas and figures are expected to be marked up as
+definition lists consistently, rather than as inline prose.
+
+* _Figures_: Simple figures are marked up as images, figures containing
+subfigures as examples. Numbering by the default HTML processor may be
+inconsistent. Subfigures are automatically numbered as independent figures.
+
+* _Markup_: The default HTML processor does not support CSS extensions such as
+small caps or strike through, though these can be marked up as CSS classes
+through custom macros in Asciidoctor: a custom CSS stylesheet will be needed to
+render them.
+
+
+
+TODO: May need to only encode figures as examples.
+
+== Document Attributes
+
+The gem relies on Asciidoctor document attributes to provide necessary
+metadata about the document. These include:
+
+`:edition:`:: The document edition
+
+`:revdate:`:: The date the document was last updated
+
+`:copyright-year:`:: The year which will be claimed as when the copyright for
+the document was issued
+
+`:title:`:: The main component of the English title of the document
+(mandatory). (The first line of the AsciiDoc document, which contains the title
+introduced with `=`, is ignored)
+
+`:doctype:`:: The document type (see RSD deliverables: The different types of
+RSD publications) (mandatory). The permitted types are:
++
+--
+code:: Code Artifact
+presentation:: Presentation
+proposal:: Proposal; includes IETF DRAFT
+standard:: Recommendation; includes IETF RFC
+report:: report
+--
+
+`:status:``:: The document status. The permitted types are: `proposal`,
+`working-draft`, `committee-draft`, `draft-standard`, `final-draft`,
+`published`, `withdrawn`.
+
+`:technical-committee:`:: The name of the relevant RSD technical committee
+(mandatory)
+
+`:language:` :: The language of the document (only `en` for now)  (mandatory)
+
+
+The attribute `:draft:`, if present, includes review notes in the XML output;
+these are otherwise suppressed.
+
+== AsciiRSD features not also present in AsciiISO
+
+* `+[keyword]#...#+`: encodes keywords, such as "MUST", "MUST NOT". (Encoded as
+`<span class="keyword">...</span>`.
+
+== Data Models
+
+The RSD Standard Document format is an instance of the
+https://github.com/riboseinc/isodoc-models[StandardDocument model]. Details of
+this general model can be found on its page. Details of the RSD modifications
+to this general model can be found on the https://github.com/riboseinc/rsd[RSD model]
+repository.
+
+== Examples
+
+* link:spec/examples/rfc6350.adoc[] is an AsciiRSD version of https://tools.ietf.org/html/rfc6350[RFC 6350].
+* link:spec/examples/rfc6350.html[] is an HTML file generated from the AsciiRSD.
+* link:spec/examples/rfc6350.doc[] is a Word document generated from the AsciiRSD.
