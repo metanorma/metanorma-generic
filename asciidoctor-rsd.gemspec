@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "asciidoctor", "~> 1.5.6"
+  spec.add_dependency "asciidoctor", "~> 1.5.7"
   spec.add_dependency "asciimath"
   spec.add_dependency "htmlentities", "~> 4.3.4"
   spec.add_dependency "image_size"
@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "ruby-xslt"
   spec.add_dependency "thread_safe"
   spec.add_dependency "uuidtools"
-  spec.add_dependency "asciidoctor-iso"
+  spec.add_dependency "asciidoctor-iso", ">= 0.7.5"
   spec.add_dependency "isodoc"
 
   spec.add_development_dependency "bundler", "~> 1.15"
