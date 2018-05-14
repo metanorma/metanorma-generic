@@ -54,13 +54,13 @@ BLANK_HDR = <<~"HDR"
          <contributor>
            <role type="author"/>
            <organization>
-             <name>CalConnect</name>
+             <name>Ribose</name>
            </organization>
          </contributor>
          <contributor>
            <role type="publisher"/>
            <organization>
-             <name>CalConnect</name>
+             <name>Ribose</name>
            </organization>
          </contributor>
 
@@ -70,7 +70,7 @@ BLANK_HDR = <<~"HDR"
            <from>#{Time.new.year}</from>
            <owner>
              <organization>
-               <name>CalConnect</name>
+               <name>Ribose</name>
              </organization>
            </owner>
          </copyright>

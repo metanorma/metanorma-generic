@@ -10,13 +10,13 @@ RSpec.describe Asciidoctor::Rsd do
   <contributor>
     <role type="author"/>
     <organization>
-      <name>CalConnect</name>
+      <name>Ribose</name>
     </organization>
   </contributor>
   <contributor>
     <role type="publisher"/>
     <organization>
-      <name>CalConnect</name>
+      <name>Ribose</name>
     </organization>
   </contributor>
   <language>en</language>
@@ -26,7 +26,7 @@ RSpec.describe Asciidoctor::Rsd do
     <from>2001</from>
     <owner>
       <organization>
-        <name>CalConnect</name>
+        <name>Ribose</name>
       </organization>
     </owner>
   </copyright>

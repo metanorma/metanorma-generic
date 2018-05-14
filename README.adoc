@@ -1,4 +1,4 @@
-= AsciiRSD: Asciidoctor processor for RSD standards
+= AsciiRSD: Asciidoctor processor for Ribose Standard Documents (RSD)
 
 image:https://img.shields.io/gem/v/asciidoctor-rsd.svg["Gem Version", link="https://rubygems.org/gems/asciidoctor-rsd"]
 image:https://img.shields.io/travis/riboseinc/asciidoctor-rsd/master.svg["Build Status", link="https://travis-ci.org/riboseinc/asciidoctor-rsd"]
@@ -9,7 +9,7 @@ WARNING: This gem is still under development.
 == Functionality
 
 This gem processes http://asciidoctor.org/[Asciidoctor] documents following
-a template for generating RSD International Standards.
+a template for generating RSD documents.
 
 The gem currently inherits from the https://github.com/riboseinc/asciidoctor-iso
 gem, and aligns closely to it. Refer to the ISO gem
@@ -18,18 +18,18 @@ for guidance, including https://github.com/riboseinc/asciidoctor-iso/wiki/Guidan
 The following outputs are generated.
 
 * (Optional) An HTML preview generated directly from the Asciidoctor document,
-using native Asciidocot formatting. 
+using native Asciidoctor formatting.
 ** http://asciimath.org[AsciiMathML] is to be used for mathematical formatting.
 The gem uses the https://github.com/asciidoctor/asciimath[Ruby AsciiMath parser],
 which is syntactically stricter than the common MathJax processor;
-if you do not get expected results, try bracketting terms your in AsciiMathML
+if you do not get expected results, try bracketing terms your in AsciiMathML
 expressions.
 * an XML representation of the document, intended as a document model for RSD
-International Standards. 
+International Standards.
 * The XML representation is processed in turn to generate the following outputs
 as end deliverable RSD standard drafts.
-** Microsoft Word output (`.doc`), following the style conventions of the 
-https://www.rsd.org/rsd-templates.html[RSD Standard Microsoft Word template]. 
+** Microsoft Word output (`.doc`), following the style conventions of the
+https://www.rsd.org/rsd-templates.html[RSD Standard Microsoft Word template].
 (In development)
 ** PDF (forthcoming)
 ** HTML (forthcoming)
@@ -88,10 +88,10 @@ levels of subsections.)
 
 === Document model
 
-The RSD Standard Document model is an instance of the
+The Ribose Standard Document model is an instance of the
 https://github.com/riboseinc/isodoc-models[StandardDocument model].
 
-The RSD format ("RSD XML") intends to introduce rigour into the RSD
+The RSD format ("RSD XML") intends to introduce rigor into the RSD
 standards authoring process, and is prescribed in a separate document.
 
 RSD XML is still under development, but it already contains all the markup
@@ -104,7 +104,7 @@ WARNING: The current RNG model of RSD XML is out of sync with the UML.
 Asciidoctor has been selected as the authoring tool to generate the document
 model representation of RSD standards. It is a document formatting tool like
 Markdown and DocBook, which combines the relative ease of use of the former
-(using relatively lightweight markup), and the rigour and expressively of the
+(using relatively lightweight markup), and the rigor and expressively of the
 latter (it has a well-defined syntax, and was in fact initially developed as a
 DocBook document authoring tool). Asciidoctor has built-in capability to output
 Text, DocBook and HTML; so it can be used to preview the file as it is being
@@ -134,7 +134,7 @@ and comply with the RSD Standard specifications.
 the semantic markup of alternate and other terms is not rendered visually.
 
 * _Formulas_: Asciidoctor has no provision for the automated numbering of
-rsdlated block formulas ("stem"), and does not display the number assigned a
+isolated block formulas ("stem"), and does not display the number assigned a
 block formula in its default HTML processor—although it does provide automated
 numbering of examples. Formula numbering is provided in the final outputs
 of the conversion.
