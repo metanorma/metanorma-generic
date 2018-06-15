@@ -15,7 +15,7 @@ p.Sourcecode, li.Sourcecode, div.Sourcecode, pre.Sourcecode
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Courier New";
 	mso-ansi-language:EN-GB;}
-p.Biblio, li.Biblio, div.Biblio
+p.Biblio, li.Biblio, div.Biblio, p.NormRef, li.NormRef, div.NormRef
 	{mso-style-unhide:no;
 	mso-style-qformat:yes;
 	mso-style-parent:"";
@@ -28,7 +28,7 @@ p.Biblio, li.Biblio, div.Biblio
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	font-size:11.0pt;
-	font-weight:bold;
+	font-weight:normal;
 	font-family:$bodyfont;
 	mso-fareast-font-family:$bodyfont;
 	mso-bidi-font-family:$bodyfont;

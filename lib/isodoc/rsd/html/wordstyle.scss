@@ -91,7 +91,7 @@ p.MsoHeader, li.MsoHeader, div.MsoHeader
 	margin:0cm;
 	margin-bottom:.0001pt;
 	mso-pagination:widow-orphan;
-	tab-stops:center 216.0pt right 432.0pt;
+	tab-stops:center 216.0pt right 482.0pt;
 	font-size:11.0pt;
 	font-family:$bodyfont;
 	mso-fareast-font-family:"Times New Roman";
@@ -102,7 +102,7 @@ p.MsoFooter, li.MsoFooter, div.MsoFooter
 	margin:0cm;
 	margin-bottom:.0001pt;
 	mso-pagination:widow-orphan;
-	tab-stops:center 216.0pt right 432.0pt;
+	tab-stops:right 482.0pt;
 	font-size:11.0pt;
 	font-family:$bodyfont;
 	mso-fareast-font-family:"Times New Roman";
@@ -603,65 +603,6 @@ p.Tablebody, li.Tablebody, div.Tablebody
 	mso-endnote-separator:url("file:///C:/Doc/FILENAME_files/header.html") es;
 	mso-endnote-continuation-separator:url("file:///C:/Doc/FILENAME_files/header.html") ecs;
 }
-@page WordSection1
-    {
-      size:612.0pt 792.0pt;
-	margin:36.0pt 53.85pt 21.55pt 53.85pt;
-	mso-header-margin:42.55pt;
-	mso-footer-margin:43.1pt;
-        mso-title-page:yes;
-	mso-even-header:url("file:///C:/Doc/FILENAME_files/header.html") eh1;
-	mso-header:url("file:///C:/Doc/FILENAME_files/header.html") h1;
-	mso-even-footer:url("file:///C:/Doc/FILENAME_files/header.html") ef1;
-	mso-footer:url("file:///C:/Doc/FILENAME_files/header.html") f1;
-	mso-first-header:url("file:///C:/Doc/FILENAME_files/header.html") fh1;
-	mso-first-footer:url("file:///C:/Doc/FILENAME_files/header.html") ff1;
-        mso-page-orientation: portrait;
-	mso-paper-source:0;}
-div.WordSection1
-	{page:WordSection1;}
-@page WordSection2
-    {size:612.0pt 792.0pt;
-	margin:36.0pt 53.85pt 21.55pt 53.85pt;
-	mso-header-margin:42.55pt;
-	mso-footer-margin:43.1pt;
-        mso-title-page:yes;
-    mso-even-header:url("file:///C:/Doc/FILENAME_files/header.html") eh1;
-	mso-header:url("file:///C:/Doc/FILENAME_files/header.html") h1;
-	mso-even-footer:url("file:///C:/Doc/FILENAME_files/header.html") ef1;
-	mso-footer:url("file:///C:/Doc/FILENAME_files/header.html") f1;
-	mso-first-header:url("file:///C:/Doc/FILENAME_files/header.html") fh1;
-	mso-first-footer:url("file:///C:/Doc/FILENAME_files/header.html") ff1;
-        mso-page-orientation: portrait;
-	mso-paper-source:0;}
-div.WordSection2
-	{page:WordSection2;}
-@page WordSection3
-    {size:612.0pt 792.0pt;
-	margin:36.0pt 53.85pt 21.55pt 53.85pt;
-	mso-header-margin:42.55pt;
-	mso-footer-margin:43.1pt;
-        mso-even-header:url("file:///C:/Doc/FILENAME_files/header.html") eh1;
-	mso-header:url("file:///C:/Doc/FILENAME_files/header.html") h1;
-	mso-even-footer:url("file:///C:/Doc/FILENAME_files/header.html") ef1;
-	mso-footer:url("file:///C:/Doc/FILENAME_files/header.html") f1;
-        mso-page-orientation: portrait;
-	mso-paper-source:0;}
-div.WordSection3
-	{page:WordSection3;}
-@page WordSection4
-    {size:612.0pt 792.0pt;
-        margin:36.0pt 53.85pt 21.55pt 53.85pt;
-        mso-header-margin:42.55pt;
-        mso-footer-margin:43.1pt;
-        mso-even-header:url("file:///C:/Doc/FILENAME_files/header.html") eh1;
-        mso-header:url("file:///C:/Doc/FILENAME_files/header.html") h1;
-        mso-even-footer:url("file:///C:/Doc/FILENAME_files/header.html") f2;
-        mso-footer:url("file:///C:/Doc/FILENAME_files/header.html") f2;
-        mso-page-orientation: portrait;
-        mso-paper-source:0;}
-div.colophon
-        {page:WordSection4;}
   /* List Definitions */
 @list l0
 	{mso-list-id:145051656;

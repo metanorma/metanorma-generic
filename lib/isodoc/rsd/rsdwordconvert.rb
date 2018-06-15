@@ -16,6 +16,7 @@ module IsoDoc
         @wordstylesheet = generate_css(html_doc_path("wordstyle.scss"), false, default_fonts(options))
         @standardstylesheet = generate_css(html_doc_path("rsd.scss"), false, default_fonts(options))
         @header = html_doc_path("header.html")
+        @wordcoverpage = html_doc_path("word_rsd_titlepage.html")
         @wordintropage = html_doc_path("word_rsd_intro.html")
         @ulstyle = "l3"
         @olstyle = "l2"
