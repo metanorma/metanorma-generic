@@ -24,11 +24,11 @@ module IsoDoc
       def default_fonts(options)
         b = options[:bodyfont] ||
           (options[:script] == "Hans" ? '"SimSun",serif' :
-           '"Garamond",serif')
+           '"Overpass",sans-serif')
         h = options[:headerfont] ||
           (options[:script] == "Hans" ? '"SimHei",sans-serif' :
-           '"Garamond",serif')
-        m = options[:monospacefont] || '"Courier New",monospace'
+           '"Overpass",sans-serif')
+        m = options[:monospacefont] || '"Space Mono",monospace'
         "$bodyfont: #{b};\n$headerfont: #{h};\n$monospacefont: #{m};\n"
       end
 

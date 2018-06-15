@@ -13,20 +13,88 @@ a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
+ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary, 
+time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+}
+    
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font-family: $bodyfont;
-	vertical-align: baseline;
+        border: 0;
+        font-size: 100%;
+} 
+    
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, tt, var,
+b, u, i, center,
+dl, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+        vertical-align: baseline;
+}   
+    
+    
+html, body, div, span, applet, object, iframe,
+p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  font-family: $bodyfont; 
+} 
+
+h1, h2, h3, h4, h5, h6, .h2Annex {
+  font-family: $headerfont;
+} 
+
+dl {
+  display: grid;
+  grid-template-columns: max-content auto;
 }
+
+dt {
+  grid-column-start: 1;
+}
+
+dd {
+  grid-column-start: 2;
+}
+
+dd p, dt p {
+  margin-top: 0px;
+}
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
@@ -35,11 +103,7 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
 }
-/*
-ol, ul {
-	list-style: none;
-}
-*/
+
 blockquote, q {
 	quotes: none;
 }
@@ -100,7 +164,7 @@ table {
         position: fixed;
         height: 100%;
         width: 30px;
-        background-color:#1d1d1d;
+        background-color:#1661AD;
         color: white!important;
         cursor: pointer;
         z-index: 100;
@@ -114,7 +178,6 @@ table {
         transform: translate(0, -50%);
         
     }
-
 
     .container {
         padding-left: 360px;
@@ -176,13 +239,15 @@ table {
 }
 
 #toc .toc-active, #toc li:hover {
-    background: #1d1d1d;
-    box-shadow: inset -5px 0px 10px -5px #1d1d1d!important;
+    background: #1661AD;
+    box-shadow: inset -5px 0px 10px -5px #1661AD!important;
 
 }
 
 #toc li:hover a {
     color: white;
+    background: none;
+     box-shadow: none;
 }
 
 /*
@@ -239,7 +304,7 @@ p.document-type, p.document-stage {
 
 p.document-type {
     font-weight: 400;
-    height: 210px;
+    height: 150;
 }
 
 #governance-band p.document-type {
@@ -253,11 +318,11 @@ p.document-stage {
 }
 
 #standard-band {
-    background-color: #0ac442;
+    background-color: #9ABD48;
 }
 
 #standard {
-    border-bottom: solid 3px #0ac442;
+    border-bottom: solid 3px #9ABD48;
 }
 
 #governance {
@@ -284,20 +349,12 @@ p.document-stage {
     text-transform: uppercase;
     }
 
-#proposal {
-    border-bottom: solid 3px #00BFFF;
-}
-
-#proposal-band {
-    background-color: #00BFFF;
-}
-
 #working-draft {
-    border-bottom: solid 3px #fda706;
+    border-bottom: solid 3px #F7803C;
 }
 
 #working-draft-band {
-    background-color: #fda706;
+    background-color: #F7803C;
 }
 
 #committee-draft {
@@ -316,28 +373,20 @@ p.document-stage {
     background-color: #fdf906;
 }
 
-#final-draft {
+#standard {
+    border-bottom: solid 3px #9ABD48;
+}
+
+#standard-band {
+    background-color: #9ABD48;
+}
+
+#obsolete {
     border-bottom: solid 3px #7e0d13;
 }
 
-#final-draft-band {
+#obsolete-band {
     background-color: #7e0d13;
-}
-
-#published {
-    border-bottom: solid 3px #0ac442;
-}
-
-#published-band {
-    background-color: #0ac442;
-}
-
-#withdrawn {
-    border-bottom: solid 3px #a0a0a0;
-}
-
-#withdrawn-band {
-    background-color: #a0a0a0;
 }
 
 /*
@@ -350,14 +399,14 @@ p.document-stage {
   
   h1,h2,h3,h4,h5,h6 {
     font-family: $headerfont;
-    color: #0e1a85;
-    font-weight: 600;
+    color: #1661AD;
+    font-weight: 300;
     margin-top: 2em;
     margin-bottom: 0.3em;
   }
 
   h1 {
-    font-size: 1.4em; 
+    font-size: 1.6em; 
     text-transform: uppercase;
     margin-top: 2em;
   }
@@ -366,26 +415,15 @@ p.document-stage {
       margin-top: 2em;
   }
   
-  h2 {font-size: 1.3em; }
+  h2 {font-size: 1.5em;
+      font-weight: 400; }
   
-  h3 {font-size: 1.1em;}
+  h3 {font-size: 1.1em;
+      font-weight: 100;}
 
-  span[id^="toc"]:after {
-    float: left;
-    padding-right: 4px;
-    margin-left: -20px;
-    font-family: "Font Awesome 5 Free"; 
-    font-weight: 900; 
-    font-size: 0.8em;
-    color: #cfcfcf;
-    content: "\f0c1";
-  }
-
- 
-
-  p.TermNum, p.Terms, p.AltTerms {
-    color: #485094;
-    font-weight: 400;
+  .TermNum, .Terms, .AltTerms {
+    color: #1661AD;
+    font-weight: 100;
   }
 
   p.TermNum {
@@ -401,10 +439,12 @@ p.document-stage {
     margin: 0;
   }
   
+  /*
   p.AltTerms {
     font-style: italic;
     margin: 0;
   }
+  */
 
 /*
     3.2 Links
@@ -417,17 +457,17 @@ p.document-stage {
       
     a:hover {
         color: white;
-        background: #1d1d1d;
-        box-shadow: 3px 0 0 #1d1d1d, -3px 0 0 #1d1d1d;
+        background: #1661AD;
+        box-shadow: 3px 0 0 #1661AD, -3px 0 0 #1661AD;
         /* padding: 2px 0 2px 0; */
     }
 
     ::selection {
-        background: #1d1d1d; /* WebKit/Blink Browsers */
+        background: #1661AD; /* WebKit/Blink Browsers */
         color: white;
       }
       ::-moz-selection {
-        background: #1d1d1d; /* Gecko Browsers */
+        background: #1661AD; /* Gecko Browsers */
         color: white;
       }
 
@@ -444,11 +484,35 @@ p.document-stage {
     3.3 Lists
 */
         
-    ul {margin-left: 0.5em;}
+    ul {margin-left: 1.2em;}
+
+  ul  li {
+  list-style: none;
+   }
+
+    li:before {
+    content: "—";
+    display: inline-block; width: 1em;
+    margin-left: -1.2em;
+  }
+
+  ul li p {
+    display: inline;
+  }
+
+ul li:first-child {
+  margin-top: 1em;
+}
       
     #toc-list ul {margin-bottom: 0.25em;}
       
     #toc-list li {list-style-type: none;}
+
+    #toc li:before {
+  content: " ";
+  display: none;
+}
+
 
 /*
     3.4 Rules
@@ -596,13 +660,19 @@ a.footnote-number {
 */
 
 .contact-info {
-    background-color: #f7f7f7;
+    background-color: #1661AD;
+    color: white;
     padding: 2em;
     margin-top: 5em;
     width: auto;
     margin-left: auto;
     margin-right: auto;
     text-align: left;
+}
+
+.contact-info a,
+.contact-info a:hover {
+  color: white;
 }
 
 .contact-info p, .contact-info a {
@@ -639,6 +709,11 @@ p {
     margin-bottom: 1em;
 }
 
+h2 p {
+  display: inline;
+}
+
+
 /*
     4.0 Page header
 */
@@ -648,11 +723,18 @@ p {
 */
 
 .wrapper-top {
-    background-color:#0e1a85;
+    background-color:#1661AD;
     /* background-image: url("img/dots@2x.png"); */
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAACXBIWXMAABYlAAAWJQFJUiTwAAADwUlEQVR4nO3YgQ2AMAwDwcAiWZ1NizrH30lIeIEq9nPOGSDqPgC7+93v/suy3Mmvhx+6VAAIcwFAmc4nyzYAIMgGAGEuACirdyBZtgEASTYACHMBQFm9A8myDQBIsgFAmAsAyuodSJZtAERSDQDCXABQVu9AsmwDAJJsABDmAoCyegeSZRsAkGQDgDAXAJTVO5As2wCAJBsAhLkAoKzegWTZBgAk2QAgzAUAZfUOJMs2ACDJBgBhLgAoq3cgWbYBAEk2AAhzAUBZvQPJsg0ASLIBQJgLAMrqHUiWbQBAkg0AwlwAUFbvQLJsAwCSbAAQ5gKAsnoHkmUbAJBkA4AwFwCU1TuQLNsAgCQbAIS5AKCs3oFk2QYAJNkAIMwFAGX1DiTLNgAgyQYAYS4AKKt3IFm2AQBJNgAIcwFAWb0DybINAEiyAUCYCwDK6h1Ilm0AQJINAMJcAFBW70CybAMAkmwAEOYCgLJ6B5JlGwCQZAOAMBcAlNU7kCzbAIAkGwCEuQCgrN6BZNkGACTZACDMBQBl9Q4kyzYAIMkGAGEuACirdyBZtgEASTYACHMBQFm9A8myDQBIsgFAmAsAyuodSJZtAERSDQDCXABQVu9AsmwDAJJsABDmAoCyegeSZRsAkGQDgDAXAJTVO5As2wCAJBsAhLkAoKzegWTZBgAk2QAgzAUAZfUOJMs2ACDJBgBhLgAoq3cgWbYBAEk2AAhzAUBZvQPJsg0ASLIBQJgLAMrqHUiWbQBAkg0AwlwAUFbvQLJsAwCSbAAQ5gKAsnoHkmUbAJBkA4AwFwCU1TuQLNsAgCQbAIS5AKCs3oFk2QYAJNkAIMwFAGX1DiTLNgAgyQYAYS4AKKt3IFm2AQBJNgAIcwFAWb0DybINAEiyAUCYCwDK6h1Ilm0AQJINAMJcAFBW70CybAMAkmwAEOYCgLJ6B5JlGwCQZAOAMBcAlNU7kCzbAIAkGwCEuQCgrN6BZNkGACTZACDMBQBl9Q4kyzYAIMkGAGEuACirdyBZtgEASTYACHMBQFm9A8myDQBIsgFAmAsAyuodSJZtAERSDQDCXABQVu9AsmwDAJJsABDmAoCyegeSZRsAkGQDgDAXAJTVO5As2wCAJBsAhLkAoKzegWTZBgAk2QAgzAUAZfUOJMs2ACDJBgBhLgAoq3cgWbYBAEk2AAhzAUBZvQPJsg0ASLIBQJgLAMrqHUiWbQBAkg0AwlwAUFbvQLJsAwCSbAAQ5gKAsnoHkmUbAJBkA4AwFwCU1TuQLNsAgCQbAFTNzA9ggAr9aahO8QAAAABJRU5ErkJggg==');
     color: #ffffff;
     padding: 2em 0;
+}
+
+.wrapper-top-bottom {
+  width: 0;
+  height: 0;
+  border-top: 100px solid #1661AD;
+  border-right: 100px solid transparent;
+  position: absolute;
 }
 
   .doc-number {
@@ -664,14 +746,18 @@ p {
       padding-bottom: 0.5em;
       font-family: $headerfont;
       font-size: 1.5em;
-      font-weight: 900;
+      line-height: 1.2em;
+  font-weight: 100;
+  padding-left: 1em;
+  padding-right: 1em;
+  text-transform: uppercase;
   }
   
   .WordSection11 {
     padding: 0 2em 0 3em;
   }
 
-  .WordSection2 {
+  .prefatory-section {
     padding: 0 3em 0 6em;
   }
   
@@ -683,12 +769,13 @@ p {
 
   .coverpage {
     text-align: center;
+    padding-left: 1.5em;
   }
 
   .coverpage-logo span, .coverpage-tc-name span {
     font-family: $bodyfont;
-      text-transform: uppercase;
-      font-weight: 600;
+      text-transform: none;
+      font-weight: 300;
   }
   
   .coverpage-tc-name {
@@ -706,7 +793,6 @@ p {
     line-height: 2em;
   }
   
-  
   .coverpage-title .title-second {
     display: none;
   }
@@ -719,31 +805,26 @@ p {
     text-transform: uppercase;
   }
 
-
-  
-  
 /*
     4.3 Draft Warning
 */
 
-  
   .coverpage-warning {
-    border-top: solid 1px #f36f36;
-    border-bottom: solid 1px #f36f36;
-    margin: 1em 2em;
-    color: #485094;
-    padding: 1em;
+      background: #f36f36;
+  color: white!important;
+  margin: 1em 2em;
+  color: #485094;
+  padding: 2em 1em 1em 1em;
+  border-radius: 25px;
   }
   
   .coverpage-warning .title {
-    color: #f36f36;
     font-family: $headerfont;
-    font-weight: 700;
+    font-weight: 300;
     text-transform: uppercase;
     font-size: 1.2em;
   }
 
-  
   
 /*
     4.4 Copyright
@@ -756,7 +837,7 @@ p {
   }
   
   
-  .copyright .name, .copyright .address {color: #485094;}
+/*  .copyright .name, .copyright .address {color: #485094;} */
   
 
 
@@ -780,14 +861,22 @@ To top button
     font-size: 12px;
     border: none;
     outline: none;
-    background-color: #1d1d1d;
+    background-color: #1f8ca0;
     opacity: 0.15;
     color: white;
     cursor: pointer;
     padding: 10px 15px 10px 15px;
     border-radius: 4px;
+    text-transform: uppercase;
   }
   
   #myBtn:hover {
     opacity: 1;
   }
+
+  a.anchorjs-link:hover {
+  background: none;
+  color: #485094;
+  box-shadow: none;
+}
+
