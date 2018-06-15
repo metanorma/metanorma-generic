@@ -1,5 +1,6 @@
 require "isodoc"
 require_relative "rsdwordrender"
+require_relative "metadata"
 
 module IsoDoc
   module Rsd
@@ -34,10 +35,8 @@ module IsoDoc
         "$bodyfont: #{b};\n$headerfont: #{h};\n$monospacefont: #{m};\n"
       end
 
-      def colophon(body, docxml)
-        section_break(body)
-        body.div **{ class: "colophon" } do |div|
-        end
+      def metadata_init(lang, script, labels)
+        @meta = Metadata.new(lang, script, labels)
       end
 
       def make_body(xml, docxml)
