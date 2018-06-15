@@ -45,7 +45,6 @@ module IsoDoc
           make_body1(body, docxml)
           make_body2(body, docxml)
           make_body3(body, docxml)
-          colophon(body, docxml)
         end
       end
 
