@@ -1,25 +1,34 @@
 GIT
   remote: https://github.com/riboseinc/asciidoctor-iso
-  revision: f5e46b7dda5fb043b5872e166806f672fe70b909
+  revision: 8e9f119ed5c38e7d75d975b1a945ebb069f94a27
   specs:
-    asciidoctor-iso (0.7.5)
-      asciidoctor (~> 1.5.6)
-      html2doc
-      htmlentities (~> 4.3.4)
-      isodoc
-      nokogiri
+    asciidoctor-iso (0.8.1)
+      asciidoctor (~> 1.5.7)
+      isobib (~> 0.1.4)
+      isodoc (>= 0.7.0)
       ruby-jing
-      sass
+
+GIT
+  remote: https://github.com/riboseinc/html2doc
+  revision: ae15cfc0a4c8ebeb74193a8aa4a7884938a08434
+  specs:
+    html2doc (0.8.0)
+      asciimath
+      htmlentities (~> 4.3.4)
+      image_size
+      mime-types
+      nokogiri
+      ruby-xslt
       thread_safe
       uuidtools
 
 GIT
   remote: https://github.com/riboseinc/isodoc
-  revision: 871fc62c0249e81f2dba3ebb64e0109e6f7b25c8
+  revision: cd4f1ecfcf31b0462f783159c8978007c929ceb8
   specs:
-    isodoc (0.5.9)
+    isodoc (0.7.0)
       asciimath
-      html2doc
+      html2doc (>= 0.7.1)
       htmlentities (~> 4.3.4)
       image_size
       liquid
@@ -27,19 +36,20 @@ GIT
       nokogiri
       roman-numerals
       ruby-xslt
+      sass
       thread_safe
       uuidtools
 
 PATH
   remote: .
   specs:
-    asciidoctor-rsd (0.2.4)
+    asciidoctor-rsd (0.2.6)
       asciidoctor (~> 1.5.7)
-      asciidoctor-iso (>= 0.7.5)
+      asciidoctor-iso (>= 0.8.0)
       asciimath
       htmlentities (~> 4.3.4)
       image_size
-      isodoc
+      isodoc (>= 0.7.0)
       mime-types
       nokogiri
       ruby-jing
@@ -50,16 +60,19 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    algoliasearch (1.22.0)
+      httpclient (~> 2.8, >= 2.8.3)
+      json (>= 1.5.1)
     asciidoctor (1.5.7.1)
     asciimath (1.0.4)
     ast (2.4.0)
     byebug (9.1.0)
     coderay (1.1.2)
     diff-lcs (1.3)
-    docile (1.1.5)
+    docile (1.3.1)
     equivalent-xml (0.6.0)
       nokogiri (>= 1.4.3)
-    ffi (1.9.18)
+    ffi (1.9.25)
     formatador (0.2.5)
     guard (2.14.2)
       formatador (>= 0.2.4)
@@ -75,24 +88,24 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
-    html2doc (0.7.0)
-      asciimath
-      htmlentities (~> 4.3.4)
-      image_size
-      mime-types
-      nokogiri
-      ruby-xslt
-      thread_safe
-      uuidtools
     htmlentities (4.3.4)
+    httpclient (2.8.3)
     image_size (2.0.0)
+    iso-bib-item (0.1.5)
+      isoics (~> 0.1.6)
+      nokogiri
+    isobib (0.1.5)
+      algoliasearch
+      iso-bib-item (~> 0.1.2)
+    isoics (0.1.6)
+    jaro_winkler (1.5.1)
     json (2.1.0)
     liquid (4.0.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    lumberjack (1.0.12)
+    lumberjack (1.0.13)
     method_source (0.9.0)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -106,15 +119,15 @@ GEM
       shellany (~> 0.0)
     optout (0.0.2)
     parallel (1.12.1)
-    parser (2.4.0.2)
-      ast (~> 2.3)
-    powerpack (0.1.1)
+    parser (2.5.1.0)
+      ast (~> 2.4.0)
+    powerpack (0.1.2)
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     rainbow (3.0.0)
-    rake (12.3.0)
-    rb-fsevent (0.10.2)
+    rake (12.3.1)
+    rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     roman-numerals (0.3.0)
@@ -131,9 +144,10 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
-    rubocop (0.52.1)
+    rubocop (0.57.2)
+      jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
-      parser (>= 2.4.0.2, < 3.0)
+      parser (>= 2.5)
       powerpack (~> 0.1)
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
@@ -149,15 +163,15 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
     shellany (0.0.1)
-    simplecov (0.15.1)
-      docile (~> 1.1.0)
+    simplecov (0.16.1)
+      docile (~> 1.1)
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
     thor (0.20.0)
     thread_safe (0.3.6)
     timecop (0.9.1)
-    unicode-display_width (1.3.0)
+    unicode-display_width (1.4.0)
     uuidtools (2.1.5)
 
 PLATFORMS
@@ -171,6 +185,7 @@ DEPENDENCIES
   equivalent-xml (~> 0.6)
   guard (~> 2.14)
   guard-rspec (~> 4.7)
+  html2doc!
   isodoc!
   rake (~> 12.0)
   rspec (~> 3.6)
@@ -179,4 +194,4 @@ DEPENDENCIES
   timecop (~> 0.9)
 
 BUNDLED WITH
-   1.16.1
+   1.16.2

@@ -442,9 +442,9 @@
     <optional>
       <ref name="status"/>
     </optional>
-    <optional>
+    <zeroOrMore>
       <ref name="copyright"/>
-    </optional>
+    </zeroOrMore>
     <zeroOrMore>
       <ref name="docrelation"/>
     </zeroOrMore>
@@ -489,10 +489,31 @@
           <value>issued</value>
         </choice>
       </attribute>
-      <ref name="bfrom"/>
-      <optional>
-        <ref name="bto"/>
-      </optional>
+      <!-- ( ( bfrom, bto? ) | date_on ) -->
+      <choice>
+        <group>
+          <element name="from">
+            <choice>
+              <data type="gYear"/>
+              <data type="date"/>
+            </choice>
+          </element>
+          <optional>
+            <element name="to">
+              <choice>
+                <data type="gYear"/>
+                <data type="date"/>
+              </choice>
+            </element>
+          </optional>
+        </group>
+        <element name="on">
+          <choice>
+            <data type="gYear"/>
+            <data type="date"/>
+          </choice>
+        </element>
+      </choice>
     </element>
   </define>
   <define name="bfrom">
@@ -505,6 +526,14 @@
   </define>
   <define name="bto">
     <element name="to">
+      <choice>
+        <data type="gYear"/>
+        <data type="date"/>
+      </choice>
+    </element>
+  </define>
+  <define name="date_on">
+    <element name="on">
       <choice>
         <data type="gYear"/>
         <data type="date"/>

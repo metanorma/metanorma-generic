@@ -7,10 +7,12 @@ require "bundler/setup"
 require "asciidoctor"
 require "asciidoctor-rsd"
 require "asciidoctor/rsd"
-require "asciidoctor/rsd/rsdconvert"
+require "isodoc/rsd/rsdhtmlconvert"
+require "isodoc/rsd/rsdwordconvert"
 require "asciidoctor/iso/converter"
 require "rspec/matchers"
 require "equivalent-xml"
+require "htmlentities"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -26,6 +28,12 @@ end
 
 def strip_guid(x)
   x.gsub(%r{ id="_[^"]+"}, ' id="_"').gsub(%r{ target="_[^"]+"}, ' target="_"')
+end
+
+def htmlencode(x)
+  HTMLEntities.new.encode(x, :hexadecimal).gsub(/&#x3e;/, ">").gsub(/&#xa;/, "\n").
+    gsub(/&#x22;/, '"').gsub(/&#x3c;/, "<").gsub(/&#x26;/, '&').gsub(/&#x27;/, "'").
+    gsub(/\\u(....)/) { |s| "&#x#{$1.downcase};" }
 end
 
 ASCIIDOC_BLANK_HDR = <<~"HDR"
@@ -48,7 +56,7 @@ HDR
 BLANK_HDR = <<~"HDR"
        <?xml version="1.0" encoding="UTF-8"?>
        <rsd-standard xmlns="https://open.ribose.com/standards/rsd">
-       <bibdata type="article">
+       <bibdata type="standard">
 
 
          <contributor>
@@ -78,5 +86,18 @@ BLANK_HDR = <<~"HDR"
            <technical-committee/>
          </editorialgroup>
        </bibdata>
+HDR
+
+HTML_HDR = <<~"HDR"
+           <body lang="EN-US" link="blue" vlink="#954F72" xml:lang="EN-US" class="container">
+           <div class="title-section">
+             <p>&#160;</p>
+           </div>
+           <br/>
+           <div class="prefatory-section">
+             <p>&#160;</p>
+           </div>
+           <br/>
+           <div class="main-section">
 HDR
 

@@ -1,0 +1,82 @@
+require "isodoc"
+
+module IsoDoc
+  module Rsd
+    # A {Converter} implementation that generates CSAND output, and a document
+    # schema encapsulation of the document for validation
+    class Metadata < IsoDoc::Metadata
+      def initialize(lang, script, labels)
+        super
+        set(:status, "XXX")
+      end
+
+      def title(isoxml, _out)
+        main = isoxml&.at(ns("//title[@language='en']"))&.text
+        set(:doctitle, main)
+      end
+
+      def subtitle(_isoxml, _out)
+        nil
+      end
+
+      def author(isoxml, _out)
+        set(:tc, "XXXX")
+        tc = isoxml.at(ns("//editorialgroup/technical-committee"))
+        set(:tc, tc.text) if tc
+      end
+
+      def docid(isoxml, _out)
+        docnumber = isoxml.at(ns("//bibdata/docidentifier"))
+        docstatus = isoxml.at(ns("//bibdata/status"))
+        dn = docnumber&.text
+        if docstatus
+          set(:status, status_print(docstatus.text))
+          abbr = status_abbr(docstatus.text)
+          dn = "#{dn}(#{abbr})" unless abbr.empty?
+        end
+        set(:docnumber, dn)
+      end
+
+      def status_print(status)
+        status.split(/-/).map{ |w| w.capitalize }.join(" ")
+      end
+
+      def status_abbr(status)
+        case status
+        when "working-draft" then "wd"
+        when "committee-draft" then "cd"
+        when "draft-standard" then "d"
+        else
+          ""
+        end
+      end
+
+      def version(isoxml, _out)
+        super
+        revdate = get[:revdate]
+        set(:revdate_monthyear, monthyr(revdate))
+      end
+
+      MONTHS = {
+        "01": "January",
+        "02": "February",
+        "03": "March",
+        "04": "April",
+        "05": "May",
+        "06": "June",
+        "07": "July",
+        "08": "August",
+        "09": "September",
+        "10": "October",
+        "11": "November",
+        "12": "December",
+      }.freeze
+
+      def monthyr(isodate)
+        m = /(?<yr>\d\d\d\d)-(?<mo>\d\d)/.match isodate
+        return isodate unless m && m[:yr] && m[:mo]
+        return "#{MONTHS[m[:mo].to_sym]} #{m[:yr]}"
+      end
+    end
+  end
+end

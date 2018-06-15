@@ -1,6 +1,7 @@
 require "asciidoctor"
 require "asciidoctor/rsd/version"
-require "asciidoctor/rsd/rsdconvert"
+require "isodoc/rsd/rsdhtmlconvert"
+require "isodoc/rsd/rsdwordconvert"
 require "asciidoctor/iso/converter"
 
 module Asciidoctor
@@ -47,7 +48,7 @@ module Asciidoctor
       end
 
       def metadata_status(node, xml)
-        xml.status **{ format: "plain" } { |s| s << node.attr("status") }
+        xml.status(**{ format: "plain" }) { |s| s << node.attr("status") }
       end
 
       def metadata_id(node, xml)
@@ -83,14 +84,26 @@ module Asciidoctor
         ret1
       end
 
+      def doctype(node)
+        d = node.attr("doctype")
+        unless %w{policy best-practices supporting-document report legal directives}.include? d
+          warn "#{d} is not a legal document type: reverting to 'standard'"
+          d = "standard"
+        end
+        d
+      end
+
       def document(node)
         init(node)
         ret1 = makexml(node)
         ret = ret1.to_xml(indent: 2)
-        filename = node.attr("docfile").gsub(/\.adoc/, ".xml").
-          gsub(%r{^.*/}, "")
-        File.open(filename, "w") { |f| f.write(ret) }
-        html_converter(node).convert filename unless node.attr("nodoc")
+        unless node.attr("nodoc") || !node.attr("docfile")
+          filename = node.attr("docfile").gsub(/\.adoc/, ".xml").
+            gsub(%r{^.*/}, "")
+          File.open(filename, "w") { |f| f.write(ret) }
+          html_converter(node).convert filename unless node.attr("nodoc")
+          word_converter(node).convert filename unless node.attr("nodoc")
+        end
         @files_to_delete.each { |f| system "rm #{f}" }
         ret
       end
@@ -125,25 +138,28 @@ module Asciidoctor
         return
       end
 
-      def html_converter(_node)
-        RsdConvert.new(
-          htmlstylesheet: generate_css(html_doc_path("htmlstyle.scss"), true),
-          standardstylesheet: generate_css(html_doc_path("rsd.scss"), true),
-          htmlcoverpage: html_doc_path("html_rsd_titlepage.html"),
-          htmlintropage: html_doc_path("html_rsd_intro.html"),
-          scripts: html_doc_path("scripts.html"),
+      def html_converter(node)
+        IsoDoc::Rsd::Convert.new(
+          script: node.attr("script"),
+          bodyfont: node.attr("body-font"),
+          headerfont: node.attr("header-font"),
+          monospacefont: node.attr("monospace-font"),
+          titlefont: node.attr("title-font"),
+          i18nyaml: node.attr("i18nyaml"),
+          scope: node.attr("scope"),
         )
       end
 
-      def default_fonts(node)
-        b = node.attr("body-font") ||
-          (node.attr("script") == "Hans" ? '"SimSun",serif' :
-           '"Overpass",sans-serif')
-        h = node.attr("header-font") ||
-          (node.attr("script") == "Hans" ? '"SimHei",sans-serif' :
-           '"Overpass",sans-serif')
-        m = node.attr("monospace-font") || '"Space Mono",monospace'
-        "$bodyfont: #{b};\n$headerfont: #{h};\n$monospacefont: #{m};\n"
+      def word_converter(node)
+        IsoDoc::Rsd::WordConvert.new(
+          script: node.attr("script"),
+          bodyfont: node.attr("body-font"),
+          headerfont: node.attr("header-font"),
+          monospacefont: node.attr("monospace-font"),
+          titlefont: node.attr("title-font"),
+          i18nyaml: node.attr("i18nyaml"),
+          scope: node.attr("scope"),
+        )
       end
 
       def inline_quoted(node)
@@ -168,7 +184,6 @@ module Asciidoctor
           end
         end.join
       end
-
     end
   end
 end

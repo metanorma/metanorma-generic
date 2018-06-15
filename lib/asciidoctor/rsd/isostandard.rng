@@ -72,9 +72,9 @@
         </oneOrMore>
         <ref name="formattedref"/>
       </choice>
-      <optional>
+      <zeroOrMore>
         <ref name="bsource"/>
-      </optional>
+      </zeroOrMore>
       <zeroOrMore>
         <ref name="docidentifier"/>
       </zeroOrMore>
@@ -96,9 +96,9 @@
       <zeroOrMore>
         <ref name="script"/>
       </zeroOrMore>
-      <optional>
+      <zeroOrMore>
         <ref name="abstract"/>
-      </optional>
+      </zeroOrMore>
       <optional>
         <ref name="status"/>
       </optional>
@@ -114,6 +114,9 @@
       <zeroOrMore>
         <ref name="ics"/>
       </zeroOrMore>
+      <optional>
+        <ref name="allParts"/>
+      </optional>
     </define>
     <define name="BibData">
       <optional>
@@ -127,9 +130,9 @@
       <optional>
         <ref name="formattedref"/>
       </optional>
-      <optional>
+      <zeroOrMore>
         <ref name="bsource"/>
-      </optional>
+      </zeroOrMore>
       <zeroOrMore>
         <ref name="docidentifier"/>
       </zeroOrMore>
@@ -151,9 +154,9 @@
       <zeroOrMore>
         <ref name="script"/>
       </zeroOrMore>
-      <optional>
+      <zeroOrMore>
         <ref name="abstract"/>
-      </optional>
+      </zeroOrMore>
       <optional>
         <ref name="status"/>
       </optional>
@@ -165,13 +168,49 @@
       <zeroOrMore>
         <ref name="ics"/>
       </zeroOrMore>
+      <optional>
+        <ref name="allParts"/>
+      </optional>
     </define>
-    <define name="bfrom">
-      <element name="from">
+    <define name="bdate">
+      <element name="date">
+        <attribute name="type">
+          <choice>
+            <value>published</value>
+            <value>accessed</value>
+            <value>created</value>
+            <value>implemented</value>
+            <value>obsoleted</value>
+            <value>confirmed</value>
+            <value>updated</value>
+            <value>issued</value>
+          </choice>
+        </attribute>
+        <!-- ( ( bfrom, bto? ) | date_on ) -->
         <choice>
-          <data type="gYear"/>
-          <data type="date"/>
-          <value>--</value>
+          <group>
+            <element name="from">
+              <choice>
+                <data type="gYear"/>
+                <data type="date"/>
+              </choice>
+            </element>
+            <optional>
+              <element name="to">
+                <choice>
+                  <data type="gYear"/>
+                  <data type="date"/>
+                </choice>
+              </element>
+            </optional>
+          </group>
+          <element name="on">
+            <choice>
+              <data type="gYear"/>
+              <data type="date"/>
+              <value>--</value>
+            </choice>
+          </element>
         </choice>
       </element>
     </define>
@@ -819,6 +858,11 @@
       <ref name="FormattedString"/>
     </element>
   </define>
+  <define name="allParts">
+    <element name="allParts">
+      <data type="boolean"/>
+    </element>
+  </define>
   <define name="clause-hanging-paragraph-with-footnote">
     <element name="clause">
       <optional>
@@ -867,12 +911,17 @@
   </define>
   <define name="termdocsource">
     <element name="termdocsource">
-      <ref name="erefType"/>
+      <ref name="CitationType"/>
     </element>
   </define>
   <define name="ics">
     <element name="ics">
-      <text/>
+      <element name="code">
+        <text/>
+      </element>
+      <element name="text">
+        <text/>
+      </element>
     </element>
   </define>
   <define name="term-clause">

@@ -7,7 +7,7 @@ RSpec.describe Asciidoctor::Rsd do
 
   it "generates output for the Rice document" do
   system "cd spec/examples; rm -f rfc6350.doc; rm -f rfc6350.html; asciidoctor --trace -b rsd -r 'asciidoctor-rsd' rfc6350.adoc; cd ../.."
-  expect(File.exist?("spec/examples/rfc6350.doc")).to be false
+  expect(File.exist?("spec/examples/rfc6350.doc")).to be true
   expect(File.exist?("spec/examples/rfc6350.html")).to be true
   end
 
@@ -157,10 +157,10 @@ RSpec.describe Asciidoctor::Rsd do
       :docfile: test.adoc
       :novalid:
     INPUT
-    html = File.read("test.html")
-    expect(html).to match(%r[p\.Sourcecode[^{]+\{[^}]+font-family: "Space Mono", monospace;]m)
-    expect(html).to match(%r[\.Biblio[^{]+\{[^}]+font-family: "Overpass", sans-serif;]m)
-    expect(html).to match(%r[h1, h2, h3, h4, h5, h6 \{[^}]+font-family: "Overpass", sans-serif;]m)
+    html = File.read("test.html", encoding: "utf-8")
+    expect(html).to match(%r[\.Sourcecode[^{]+\{[^}]+font-family: "Courier New", monospace;]m)
+    expect(html).to match(%r[ div[^{]+\{[^}]+font-family: "Garamond", serif;]m)
+    expect(html).to match(%r[h1, h2, h3, h4, h5, h6 \{[^}]+font-family: "Garamond", serif;]m)
   end
 
   it "uses Chinese fonts" do
@@ -172,9 +172,9 @@ RSpec.describe Asciidoctor::Rsd do
       :novalid:
       :script: Hans
     INPUT
-    html = File.read("test.html")
-    expect(html).to match(%r[p\.Sourcecode[^{]+\{[^}]+font-family: "Space Mono", monospace;]m)
-    expect(html).to match(%r[\.Biblio[^{]+\{[^}]+font-family: "SimSun", serif;]m)
+    html = File.read("test.html", encoding: "utf-8")
+    expect(html).to match(%r[\.Sourcecode[^{]+\{[^}]+font-family: "Courier New", monospace;]m)
+    expect(html).to match(%r[ div[^{]+\{[^}]+font-family: "SimSun", serif;]m)
     expect(html).to match(%r[h1, h2, h3, h4, h5, h6 \{[^}]+font-family: "SimHei", sans-serif;]m)
   end
 
@@ -190,9 +190,9 @@ RSpec.describe Asciidoctor::Rsd do
       :header-font: Comic Sans
       :monospace-font: Andale Mono
     INPUT
-    html = File.read("test.html")
-    expect(html).to match(%r[p\.Sourcecode[^{]+\{[^{]+font-family: Andale Mono;]m)
-    expect(html).to match(%r[\.Biblio[^{]+\{[^}]+font-family: Zapf Chancery;]m)
+    html = File.read("test.html", encoding: "utf-8")
+    expect(html).to match(%r[\.Sourcecode[^{]+\{[^{]+font-family: Andale Mono;]m)
+    expect(html).to match(%r[ div[^{]+\{[^}]+font-family: Zapf Chancery;]m)
     expect(html).to match(%r[h1, h2, h3, h4, h5, h6 \{[^}]+font-family: Comic Sans;]m)
   end
 
