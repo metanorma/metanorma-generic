@@ -490,7 +490,7 @@ p.document-stage {
   list-style: none;
    }
 
-    li:before {
+   ul li:before {
     content: "—";
     display: inline-block; width: 1em;
     margin-left: -1.2em;
@@ -571,7 +571,7 @@ p.Biblio, p.NormRef {
 
 .example {
     background-color: #e1eef1;
-    padding: 1.2em;
+    padding: 0 1.2em 0 1.2em;
     margin: 2em 0 1em 0;
 }
 
