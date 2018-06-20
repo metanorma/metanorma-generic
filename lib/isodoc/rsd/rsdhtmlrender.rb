@@ -2,7 +2,7 @@ module IsoDoc
   module Rsd
     # A {Converter} implementation that generates CSAND output, and a document
     # schema encapsulation of the document for validation
-    class Convert < IsoDoc::Convert
+    class HtmlConvert < IsoDoc::HtmlConvert
             def annex_name(annex, name, div)
         div.h1 **{ class: "Annex" } do |t|
           t << "#{get_anchors[annex['id']][:label]} "

@@ -69,6 +69,7 @@ module IsoDoc
         params = meta.map { |k, v| [k.to_s, v] }.to_h
         File.open("header.html", "w") { |f| f.write(template.render(params)) }
         @files_to_delete << "header.html"
+        "header.html"
       end
 
       def header_strip(h)

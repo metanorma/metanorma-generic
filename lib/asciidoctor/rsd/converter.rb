@@ -139,7 +139,7 @@ module Asciidoctor
       end
 
       def html_converter(node)
-        IsoDoc::Rsd::Convert.new(
+        IsoDoc::Rsd::HtmlConvert.new(
           script: node.attr("script"),
           bodyfont: node.attr("body-font"),
           headerfont: node.attr("header-font"),

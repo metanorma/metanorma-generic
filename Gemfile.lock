@@ -1,11 +1,12 @@
 GIT
   remote: https://github.com/riboseinc/asciidoctor-iso
-  revision: 975b5652397e67bbb5e48746882760c0745f163e
+  revision: 1fca67f1a4e7a67461ea3999918abc10bca3ca2c
   specs:
-    asciidoctor-iso (0.8.1)
+    asciidoctor-iso (0.9.0)
       asciidoctor (~> 1.5.7)
-      isobib (~> 0.1.4)
-      isodoc (>= 0.7.0)
+      iso-bib-item (~> 0.1.6)
+      isobib (~> 0.1.6)
+      isodoc (>= 0.8)
       ruby-jing
 
 GIT
@@ -24,9 +25,9 @@ GIT
 
 GIT
   remote: https://github.com/riboseinc/isodoc
-  revision: 8cdd3243c0479eb35e6a28d044759477f6fb2f44
+  revision: 601c1870fea386cb54fd8b2f112f680f71bd58a3
   specs:
-    isodoc (0.7.0)
+    isodoc (0.8)
       asciimath
       html2doc (>= 0.7.1)
       htmlentities (~> 4.3.4)
@@ -43,7 +44,7 @@ GIT
 PATH
   remote: .
   specs:
-    asciidoctor-rsd (0.2.6)
+    asciidoctor-rsd (0.3.0)
       asciidoctor (~> 1.5.7)
       asciidoctor-iso (>= 0.8.0)
       asciimath
@@ -60,7 +61,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    algoliasearch (1.22.0)
+    algoliasearch (1.23.2)
       httpclient (~> 2.8, >= 2.8.3)
       json (>= 1.5.1)
     asciidoctor (1.5.7.1)
@@ -92,7 +93,7 @@ GEM
     htmlentities (4.3.4)
     httpclient (2.8.3)
     image_size (2.0.0)
-    iso-bib-item (0.1.5)
+    iso-bib-item (0.1.6)
       duplicate
       isoics (~> 0.1.6)
       nokogiri
