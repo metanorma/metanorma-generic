@@ -12,7 +12,8 @@ module Metanorma
 
       def output_formats
         {
-          html: "html"
+          html: "html",
+          doc: "doc"
         }
       end
 

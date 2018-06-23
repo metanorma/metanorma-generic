@@ -13,6 +13,8 @@ require "asciidoctor/iso/converter"
 require "rspec/matchers"
 require "equivalent-xml"
 require "htmlentities"
+require "metanorma"
+require "metanorma/rsd"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
