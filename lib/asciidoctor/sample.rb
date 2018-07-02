@@ -1,7 +1,7 @@
-require "asciidoctor/rsd/version"
+require "asciidoctor/sample/version"
 
 module Asciidoctor
-  module Rsd
+  module Sample
     # Your code goes here...
   end
 end

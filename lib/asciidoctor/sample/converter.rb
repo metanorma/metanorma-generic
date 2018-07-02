@@ -1,18 +1,18 @@
 require "asciidoctor"
-require "asciidoctor/rsd/version"
-require "isodoc/rsd/rsdhtmlconvert"
-require "isodoc/rsd/rsdwordconvert"
+require "asciidoctor/sample/version"
+require "isodoc/sample/samplehtmlconvert"
+require "isodoc/sample/samplewordconvert"
 require "asciidoctor/iso/converter"
 
 module Asciidoctor
-  module Rsd
+  module Sample
     RSD_NAMESPACE = "https://open.ribose.com/standards/rsd"
 
     # A {Converter} implementation that generates RSD output, and a document
     # schema encapsulation of the document for validation
     class Converter < ISO::Converter
 
-      register_for "rsd"
+      register_for "sample"
 
       def metadata_author(node, xml)
         xml.contributor do |c|
@@ -139,7 +139,7 @@ module Asciidoctor
       end
 
       def html_converter(node)
-        IsoDoc::Rsd::HtmlConvert.new(
+        IsoDoc::Sample::HtmlConvert.new(
           script: node.attr("script"),
           bodyfont: node.attr("body-font"),
           headerfont: node.attr("header-font"),
@@ -151,7 +151,7 @@ module Asciidoctor
       end
 
       def word_converter(node)
-        IsoDoc::Rsd::WordConvert.new(
+        IsoDoc::Sample::WordConvert.new(
           script: node.attr("script"),
           bodyfont: node.attr("body-font"),
           headerfont: node.attr("header-font"),

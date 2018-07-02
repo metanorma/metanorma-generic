@@ -1,5 +1,5 @@
 module Asciidoctor
-  module Rsd
+  module Sample
     VERSION = "0.3.1"
   end
 end

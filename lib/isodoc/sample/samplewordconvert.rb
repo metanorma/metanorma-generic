@@ -1,9 +1,9 @@
 require "isodoc"
-require_relative "rsdwordrender"
+require_relative "samplewordrender"
 require_relative "metadata"
 
 module IsoDoc
-  module Rsd
+  module Sample
     # A {Converter} implementation that generates GB output, and a document
     # schema encapsulation of the document for validation
 
@@ -15,10 +15,10 @@ module IsoDoc
       def initialize(options)
         super
         @wordstylesheet = generate_css(html_doc_path("wordstyle.scss"), false, default_fonts(options))
-        @standardstylesheet = generate_css(html_doc_path("rsd.scss"), false, default_fonts(options))
+        @standardstylesheet = generate_css(html_doc_path("sample.scss"), false, default_fonts(options))
         @header = html_doc_path("header.html")
-        @wordcoverpage = html_doc_path("word_rsd_titlepage.html")
-        @wordintropage = html_doc_path("word_rsd_intro.html")
+        @wordcoverpage = html_doc_path("word_sample_titlepage.html")
+        @wordintropage = html_doc_path("word_sample_intro.html")
         @ulstyle = "l3"
         @olstyle = "l2"
         system "cp #{html_doc_path('logo.jpg')}  logo.jpg"

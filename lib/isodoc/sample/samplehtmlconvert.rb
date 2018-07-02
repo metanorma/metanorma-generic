@@ -1,9 +1,9 @@
 require "isodoc"
 require_relative "metadata"
-require_relative "rsdhtmlrender"
+require_relative "samplehtmlrender"
 
 module IsoDoc
-  module Rsd
+  module Sample
     # A {Converter} implementation that generates CSAND output, and a document
     # schema encapsulation of the document for validation
     class HtmlConvert < IsoDoc::HtmlConvert
@@ -14,8 +14,8 @@ module IsoDoc
       def initialize(options)
         super
         @htmlstylesheet = generate_css(html_doc_path("htmlstyle.scss"), true, default_fonts(options))
-        @htmlcoverpage = html_doc_path("html_rsd_titlepage.html")
-        @htmlintropage = html_doc_path("html_rsd_intro.html")
+        @htmlcoverpage = html_doc_path("html_sample_titlepage.html")
+        @htmlintropage = html_doc_path("html_sample_intro.html")
         @scripts = html_doc_path("scripts.html")
         system "cp #{html_doc_path('logo.jpg')}  logo.jpg"
         @files_to_delete << "logo.jpg"
