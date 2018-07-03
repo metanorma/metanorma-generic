@@ -1,18 +1,18 @@
 require "spec_helper"
 
-RSpec.describe Asciidoctor::Rsd do
+RSpec.describe Asciidoctor::Sample do
   it "has a version number" do
-    expect(Asciidoctor::Rsd::VERSION).not_to be nil
+    expect(Asciidoctor::Sample::VERSION).not_to be nil
   end
 
   it "generates output for the Rice document" do
-  system "cd spec/examples; rm -f rfc6350.doc; rm -f rfc6350.html; asciidoctor --trace -b rsd -r 'asciidoctor-rsd' rfc6350.adoc; cd ../.."
+  system "cd spec/examples; rm -f rfc6350.doc; rm -f rfc6350.html; asciidoctor --trace -b sample -r 'asciidoctor-sample' rfc6350.adoc; cd ../.."
   expect(File.exist?("spec/examples/rfc6350.doc")).to be true
   expect(File.exist?("spec/examples/rfc6350.html")).to be true
   end
 
   it "processes a blank document" do
-    expect(Asciidoctor.convert(<<~"INPUT", backend: :rsd, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
+    expect(Asciidoctor.convert(<<~"INPUT", backend: :sample, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
     #{ASCIIDOC_BLANK_HDR}
     INPUT
     #{BLANK_HDR}
@@ -23,7 +23,7 @@ RSpec.describe Asciidoctor::Rsd do
 
   it "converts a blank document" do
     system "rm -f test.html"
-    expect(Asciidoctor.convert(<<~"INPUT", backend: :rsd, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
+    expect(Asciidoctor.convert(<<~"INPUT", backend: :sample, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -37,7 +37,7 @@ RSpec.describe Asciidoctor::Rsd do
   end
 
   it "processes default metadata" do
-    expect(Asciidoctor.convert(<<~"INPUT", backend: :rsd, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+    expect(Asciidoctor.convert(<<~"INPUT", backend: :sample, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
       = Document title
       Author
       :docfile: test.adoc
@@ -106,7 +106,7 @@ RSpec.describe Asciidoctor::Rsd do
   end
 
   it "processes figures" do
-    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :rsd, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :sample, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
 
       [[id]]
@@ -131,7 +131,7 @@ RSpec.describe Asciidoctor::Rsd do
   end
 
   it "strips inline header" do
-    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :rsd, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :sample, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       This is a preamble
 
@@ -151,7 +151,7 @@ RSpec.describe Asciidoctor::Rsd do
 
   it "uses default fonts" do
     system "rm -f test.html"
-    Asciidoctor.convert(<<~"INPUT", backend: :rsd, header_footer: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :sample, header_footer: true)
       = Document title
       Author
       :docfile: test.adoc
@@ -165,7 +165,7 @@ RSpec.describe Asciidoctor::Rsd do
 
   it "uses Chinese fonts" do
     system "rm -f test.html"
-    Asciidoctor.convert(<<~"INPUT", backend: :rsd, header_footer: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :sample, header_footer: true)
       = Document title
       Author
       :docfile: test.adoc
@@ -180,7 +180,7 @@ RSpec.describe Asciidoctor::Rsd do
 
   it "uses specified fonts" do
     system "rm -f test.html"
-    Asciidoctor.convert(<<~"INPUT", backend: :rsd, header_footer: true)
+    Asciidoctor.convert(<<~"INPUT", backend: :sample, header_footer: true)
       = Document title
       Author
       :docfile: test.adoc
@@ -197,7 +197,7 @@ RSpec.describe Asciidoctor::Rsd do
   end
 
   it "processes inline_quoted formatting" do
-    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :rsd, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :sample, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
       #{ASCIIDOC_BLANK_HDR}
       _emphasis_
       *strong*
