@@ -29,6 +29,8 @@ module Metanorma
         case format
         when :html
           IsoDoc::Sample::HtmlConvert.new(options).convert(outname, isodoc_node)
+        when :doc
+          IsoDoc::Sample::WordConvert.new(options).convert(outname, isodoc_node)
         else
           super
         end
