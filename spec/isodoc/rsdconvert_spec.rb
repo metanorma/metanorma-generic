@@ -320,7 +320,7 @@ RSpec.describe IsoDoc::Sample do
                <h1>2.&#160; Normative references</h1>
                <p>There are no normative references in this document.</p>
              </div>
-             <div id="H"><h1>3.&#160; Terms and definitions</h1><p>For the purposes of this document,
+             <div id="H"><h1>3.&#160; Terms, definitions, symbols and abbreviated terms</h1><p>For the purposes of this document,
            the following terms and definitions apply.</p>
        <div id="I">
           <h2>3.1. Normal Terms</h2>

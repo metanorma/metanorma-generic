@@ -1,22 +1,22 @@
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "asciidoctor/rsd/version"
+require "asciidoctor/sample/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "asciidoctor-rsd"
-  spec.version       = Asciidoctor::Rsd::VERSION
+  spec.name          = "asciidoctor-metanorma_sample"
+  spec.version       = Asciidoctor::Sample::VERSION
   spec.authors       = ["Ribose Inc."]
   spec.email         = ["open.source@ribose.com"]
 
-  spec.summary       = "asciidoctor-rsd lets you write RSD in AsciiDoc."
+  spec.summary       = "Sample Metanorma Asciidoctor gem."
   spec.description   = <<~DESCRIPTION
-    asciidoctor-rsd lets you write RSD in AsciiDoc syntax.
+    Sample Metanorma Asciidoctor gem.
 
-    This gem is in active development.
+    This gem is meant to be customised for any downstream use.
   DESCRIPTION
 
-  spec.homepage      = "https://github.com/riboseinc/asciidoctor-rsd"
-  spec.license       = "MIT"
+  spec.homepage      = "https://github.com/riboseinc/asciidoctor-metanorma_sample"
+  spec.license       = "BSD-2-Clause"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
