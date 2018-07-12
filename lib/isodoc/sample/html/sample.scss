@@ -520,13 +520,21 @@ div.coverpage_warning
           font-size:10.0pt;
 }
 div.example {
-	border:solid black .25pt;
-	mso-border-alt:solid black .25pt;
-	padding:10pt;
-	mso-padding-alt:10.0pt 10.0pt 10.0pt 10.0pt;
-	margin:10pt;
-	mso-margin-alt:10.0pt 10.0pt 10.0pt 10.0pt;
+  margin-left:70.9pt;
+  text-indent:-70.9pt;
 }
+p.example, li.example, div.example, td.example, td.example p
+        {       margin:0in;
+        margin-bottom:.0001pt;
+        mso-pagination:none;
+        font-size:10.0pt;
+        font-family:$bodyfont;}
+span.note_label, span.example_label, td.example_label, td.note_label
+{
+font-size: 10.0pt;
+font-family:$bodyfont;
+}
+
 table.dl
 	{margin-top:0cm;
 	margin-right:0cm;
