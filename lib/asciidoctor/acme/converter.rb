@@ -1,24 +1,21 @@
 require "asciidoctor"
-require "asciidoctor/sample"
 require "asciidoctor/iso/converter"
-require "isodoc/sample/html_convert"
-require "isodoc/sample/word_convert"
 
 module Asciidoctor
-  module Sample
+  module Acme
 
     # A {Converter} implementation that generates RSD output, and a document
     # schema encapsulation of the document for validation
     #
     class Converter < ISO::Converter
 
-      register_for "sample"
+      register_for "acme"
 
       def metadata_author(node, xml)
         xml.contributor do |c|
           c.role **{ type: "author" }
           c.organization do |a|
-            a.name "Acme"
+            a.name Metanorma::Acme::ORGANIZATION_NAME_SHORT
           end
         end
       end
@@ -27,7 +24,7 @@ module Asciidoctor
         xml.contributor do |c|
           c.role **{ type: "publisher" }
           c.organization do |a|
-            a.name "Acme"
+            a.name Metanorma::Acme::ORGANIZATION_NAME_SHORT
           end
         end
       end
@@ -61,7 +58,7 @@ module Asciidoctor
           c.from from
           c.owner do |owner|
             owner.organization do |o|
-              o.name "Acme"
+              o.name Metanorma::Acme::ORGANIZATION_NAME_SHORT
             end
           end
         end
@@ -82,15 +79,15 @@ module Asciidoctor
       end
 
       def makexml(node)
-        result = ["<?xml version='1.0' encoding='UTF-8'?>\n<sample-standard>"]
+        result = ["<?xml version='1.0' encoding='UTF-8'?>\n<acme-standard>"]
         @draft = node.attributes.has_key?("draft")
         result << noko { |ixml| front node, ixml }
         result << noko { |ixml| middle node, ixml }
-        result << "</sample-standard>"
+        result << "</acme-standard>"
         result = textcleanup(result.flatten * "\n")
         ret1 = cleanup(Nokogiri::XML(result))
         validate(ret1)
-        ret1.root.add_namespace(nil, EXAMPLE_NAMESPACE)
+        ret1.root.add_namespace(nil, Metanorma::Acme::DOCUMENT_NAMESPACE)
         ret1
       end
 
@@ -129,10 +126,10 @@ module Asciidoctor
       def validate(doc)
         content_validate(doc)
         schema_validate(formattedstr_strip(doc.dup),
-                        File.join(File.dirname(__FILE__), "sample.rng"))
+                        File.join(File.dirname(__FILE__), "acme.rng"))
       end
 
-      def html_doc_path(file)
+      def html_path_acme(file)
         File.join(File.dirname(__FILE__), File.join("html", file))
       end
 
@@ -157,7 +154,7 @@ module Asciidoctor
       end
 
       def html_converter(node)
-        IsoDoc::Sample::HtmlConvert.new(
+        IsoDoc::Acme::HtmlConvert.new(
           script: node.attr("script"),
           bodyfont: node.attr("body-font"),
           headerfont: node.attr("header-font"),
@@ -169,7 +166,7 @@ module Asciidoctor
       end
 
       def word_converter(node)
-        IsoDoc::Sample::WordConvert.new(
+        IsoDoc::Acme::WordConvert.new(
           script: node.attr("script"),
           bodyfont: node.attr("body-font"),
           headerfont: node.attr("header-font"),

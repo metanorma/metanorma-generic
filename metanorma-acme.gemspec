@@ -1,21 +1,21 @@
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "asciidoctor/sample/version"
+require "metanorma/acme/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "asciidoctor-metanorma_sample"
-  spec.version       = Asciidoctor::Sample::VERSION
+  spec.name          = "metanorma-acme"
+  spec.version       = Metanorma::Acme::VERSION
   spec.authors       = ["Ribose Inc."]
   spec.email         = ["open.source@ribose.com"]
 
-  spec.summary       = "Sample Metanorma Asciidoctor gem."
+  spec.summary       = "Metanorma for the (fictitious) Acme Corp."
   spec.description   = <<~DESCRIPTION
-    Sample Metanorma Asciidoctor gem.
+    Metanorma for the (fictitious) Acme Corp.
 
     This gem is meant to be customised for any downstream use.
   DESCRIPTION
 
-  spec.homepage      = "https://github.com/riboseinc/asciidoctor-metanorma_sample"
+  spec.homepage      = "https://github.com/riboseinc/metanorma-acme"
   spec.license       = "BSD-2-Clause"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|

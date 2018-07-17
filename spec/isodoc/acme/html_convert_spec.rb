@@ -1,24 +1,24 @@
 require "spec_helper"
 
-RSpec.describe IsoDoc::Sample do
+RSpec.describe IsoDoc::Acme do
 
   it "processes default metadata" do
-    csdc = IsoDoc::Sample::HtmlConvert.new({})
+    csdc = IsoDoc::Acme::HtmlConvert.new({})
     input = <<~"INPUT"
-<sample-standard xmlns="https://open.ribose.com/standards/example">
+<acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
 <bibdata type="standard">
   <title language="en" format="plain">Main Title</title>
   <docidentifier>1000</docidentifier>
   <contributor>
     <role type="author"/>
     <organization>
-      <name>Acme</name>
+      <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
     </organization>
   </contributor>
   <contributor>
     <role type="publisher"/>
     <organization>
-      <name>Acme</name>
+      <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
     </organization>
   </contributor>
   <language>en</language>
@@ -28,7 +28,7 @@ RSpec.describe IsoDoc::Sample do
     <from>2001</from>
     <owner>
       <organization>
-        <name>Acme</name>
+        <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
       </organization>
     </owner>
   </copyright>
@@ -42,7 +42,7 @@ RSpec.describe IsoDoc::Sample do
   <draft>3.4</draft>
 </version>
 <sections/>
-</sample-standard>
+</acme-standard>
     INPUT
 
     output = <<~"OUTPUT"
@@ -55,7 +55,7 @@ RSpec.describe IsoDoc::Sample do
 
   it "abbreviates committee-draft" do
     input = <<~"INPUT"
-<sample-standard xmlns="https://open.ribose.com/standards/example">
+<acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
 <bibdata type="standard">
   <status format="plain">committee-draft</status>
 </bibdata><version>
@@ -64,21 +64,21 @@ RSpec.describe IsoDoc::Sample do
   <draft>3.4</draft>
 </version>
 <sections/>
-</sample-standard>
+</acme-standard>
     INPUT
 
     output = <<~"OUTPUT"
       {:accesseddate=>"XXX", :confirmeddate=>"XXX", :createddate=>"XXX", :docnumber=>"(cd)", :doctitle=>nil, :doctype=>"Standard", :docyear=>nil, :draft=>"3.4", :draftinfo=>" (draft 3.4, 2000-01-01)", :editorialgroup=>[], :ics=>"XXX", :implementeddate=>"XXX", :issueddate=>"XXX", :obsoleteddate=>"XXX", :obsoletes=>nil, :obsoletes_part=>nil, :publisheddate=>"XXX", :revdate=>"2000-01-01", :revdate_monthyear=>"January 2000", :sc=>"XXXX", :secretariat=>"XXXX", :status=>"Committee Draft", :tc=>"XXXX", :updateddate=>"XXX", :wg=>"XXXX"}
     OUTPUT
 
-    csdc = IsoDoc::Sample::HtmlConvert.new({})
+    csdc = IsoDoc::Acme::HtmlConvert.new({})
     docxml, filename, dir = csdc.convert_init(input, "test", true)
     expect(htmlencode(Hash[csdc.info(docxml, nil).sort].to_s)).to be_equivalent_to output
   end
 
   it "abbreviates draft-standard" do
     input = <<~"INPUT"
-<sample-standard xmlns="https://open.ribose.com/standards/example">
+<acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
 <bibdata type="standard">
   <status format="plain">draft-standard</status>
 </bibdata><version>
@@ -87,21 +87,21 @@ RSpec.describe IsoDoc::Sample do
   <draft>3.4</draft>
 </version>
 <sections/>
-</sample-standard>
+</acme-standard>
     INPUT
 
     output = <<~"OUTPUT"
       {:accesseddate=>"XXX", :confirmeddate=>"XXX", :createddate=>"XXX", :docnumber=>"(d)", :doctitle=>nil, :doctype=>"Standard", :docyear=>nil, :draft=>"3.4", :draftinfo=>" (draft 3.4, 2000-01-01)", :editorialgroup=>[], :ics=>"XXX", :implementeddate=>"XXX", :issueddate=>"XXX", :obsoleteddate=>"XXX", :obsoletes=>nil, :obsoletes_part=>nil, :publisheddate=>"XXX", :revdate=>"2000-01-01", :revdate_monthyear=>"January 2000", :sc=>"XXXX", :secretariat=>"XXXX", :status=>"Draft Standard", :tc=>"XXXX", :updateddate=>"XXX", :wg=>"XXXX"}
     OUTPUT
 
-    csdc = IsoDoc::Sample::HtmlConvert.new({})
+    csdc = IsoDoc::Acme::HtmlConvert.new({})
     docxml, filename, dir = csdc.convert_init(input, "test", true)
     expect(htmlencode(Hash[csdc.info(docxml, nil).sort].to_s)).to be_equivalent_to output
   end
 
   it "ignores unrecognised status" do
     input = <<~"INPUT"
-<sample-standard xmlns="https://open.ribose.com/standards/example">
+<acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
 <bibdata type="standard">
   <status format="plain">standard</status>
 </bibdata><version>
@@ -110,25 +110,25 @@ RSpec.describe IsoDoc::Sample do
   <draft>3.4</draft>
 </version>
 <sections/>
-</sample-standard>
+</acme-standard>
     INPUT
 
     output = <<~"OUTPUT"
       {:accesseddate=>"XXX", :confirmeddate=>"XXX", :createddate=>"XXX", :docnumber=>nil, :doctitle=>nil, :doctype=>"Standard", :docyear=>nil, :draft=>"3.4", :draftinfo=>" (draft 3.4, 2000-01-01)", :editorialgroup=>[], :ics=>"XXX", :implementeddate=>"XXX", :issueddate=>"XXX", :obsoleteddate=>"XXX", :obsoletes=>nil, :obsoletes_part=>nil, :publisheddate=>"XXX", :revdate=>"2000-01-01", :revdate_monthyear=>"January 2000", :sc=>"XXXX", :secretariat=>"XXXX", :status=>"Standard", :tc=>"XXXX", :updateddate=>"XXX", :wg=>"XXXX"}
     OUTPUT
 
-    csdc = IsoDoc::Sample::HtmlConvert.new({})
+    csdc = IsoDoc::Acme::HtmlConvert.new({})
     docxml, filename, dir = csdc.convert_init(input, "test", true)
     expect(htmlencode(Hash[csdc.info(docxml, nil).sort].to_s)).to be_equivalent_to output
   end
 
   it "processes pre" do
     input = <<~"INPUT"
-<sample-standard xmlns="https://open.ribose.com/standards/example">
+<acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
 <preface><foreword>
 <pre>ABC</pre>
 </foreword></preface>
-</sample-standard>
+</acme-standard>
     INPUT
 
     output = <<~"OUTPUT"
@@ -144,7 +144,7 @@ RSpec.describe IsoDoc::Sample do
     OUTPUT
 
     expect(
-      IsoDoc::Sample::HtmlConvert.new({}).
+      IsoDoc::Acme::HtmlConvert.new({}).
       convert("test", input, true).
       gsub(%r{^.*<body}m, "<body").
       gsub(%r{</body>.*}m, "</body>")
@@ -153,11 +153,11 @@ RSpec.describe IsoDoc::Sample do
 
   it "processes keyword" do
     input = <<~"INPUT"
-<sample-standard xmlns="https://open.ribose.com/standards/example">
+<acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
 <preface><foreword>
 <keyword>ABC</keyword>
 </foreword></preface>
-</sample-standard>
+</acme-standard>
     INPUT
 
     output = <<~"OUTPUT"
@@ -173,7 +173,7 @@ RSpec.describe IsoDoc::Sample do
     OUTPUT
 
     expect(
-      IsoDoc::Sample::HtmlConvert.new({}).
+      IsoDoc::Acme::HtmlConvert.new({}).
       convert("test", input, true).
       gsub(%r{^.*<body}m, "<body").
       gsub(%r{</body>.*}m, "</body>")
@@ -182,7 +182,7 @@ RSpec.describe IsoDoc::Sample do
 
   it "processes simple terms & definitions" do
     input = <<~"INPUT"
-     <sample-standard xmlns="http://riboseinc.com/isoxml">
+     <acme-standard xmlns="http://riboseinc.com/isoxml">
        <sections>
        <terms id="H" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title>
          <term id="J">
@@ -190,7 +190,7 @@ RSpec.describe IsoDoc::Sample do
        </term>
         </terms>
         </sections>
-        </sample-standard>
+        </acme-standard>
     INPUT
 
     output = <<~"OUTPUT"
@@ -206,7 +206,7 @@ RSpec.describe IsoDoc::Sample do
     OUTPUT
 
     expect(
-      IsoDoc::Sample::HtmlConvert.new({}).
+      IsoDoc::Acme::HtmlConvert.new({}).
       convert("test", input, true).
       gsub(%r{^.*<body}m, "<body").
       gsub(%r{</body>.*}m, "</body>")
@@ -215,7 +215,7 @@ RSpec.describe IsoDoc::Sample do
 
   it "processes terms & definitions with external source" do
     input = <<~"INPUT"
-    <sample-standard xmlns="http://riboseinc.com/isoxml">
+    <acme-standard xmlns="http://riboseinc.com/isoxml">
          <termdocsource type="inline" bibitemid="ISO712"/>
        <sections>
        <terms id="H" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title>
@@ -237,7 +237,7 @@ RSpec.describe IsoDoc::Sample do
   </contributor>
 </bibitem></references>
 </bibliography>
-        </sample-standard>
+        </acme-standard>
     INPUT
 
     output = <<~"OUTPUT"
@@ -258,7 +258,7 @@ RSpec.describe IsoDoc::Sample do
     OUTPUT
 
     expect(
-      IsoDoc::Sample::HtmlConvert.new({}).
+      IsoDoc::Acme::HtmlConvert.new({}).
       convert("test", input, true).
       gsub(%r{^.*<body}m, "<body").
       gsub(%r{</body>.*}m, "</body>")
@@ -267,12 +267,12 @@ RSpec.describe IsoDoc::Sample do
 
   it "processes empty terms & definitions" do
     input = <<~"INPUT"
-    <sample-standard xmlns="http://riboseinc.com/isoxml">
+    <acme-standard xmlns="http://riboseinc.com/isoxml">
       <sections>
         <terms id="H" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title>
         </terms>
       </sections>
-    </sample-standard>
+    </acme-standard>
     INPUT
 
     output = <<~"OUTPUT"
@@ -285,7 +285,7 @@ RSpec.describe IsoDoc::Sample do
     OUTPUT
 
     expect(
-      IsoDoc::Sample::HtmlConvert.new({}).
+      IsoDoc::Acme::HtmlConvert.new({}).
       convert("test", input, true).
       gsub(%r{^.*<body}m, "<body").
       gsub(%r{</body>.*}m, "</body>")
@@ -294,7 +294,7 @@ RSpec.describe IsoDoc::Sample do
 
   it "processes section names" do
     input = <<~"INPUT"
-    <sample-standard xmlns="http://riboseinc.com/isoxml">
+    <acme-standard xmlns="http://riboseinc.com/isoxml">
       <preface>
       <foreword obligation="informative">
          <title>Foreword</title>
@@ -358,7 +358,7 @@ RSpec.describe IsoDoc::Sample do
        </references>
        </clause>
        </bibliography>
-       </sample-standard>
+       </acme-standard>
     INPUT
 
     output = <<~"OUTPUT"
@@ -438,7 +438,7 @@ RSpec.describe IsoDoc::Sample do
     OUTPUT
 
     expect(
-      IsoDoc::Sample::HtmlConvert.new({}).convert("test", input, true).
+      IsoDoc::Acme::HtmlConvert.new({}).convert("test", input, true).
       gsub(%r{^.*<body}m, "<body").
       gsub(%r{</body>.*}m, "</body>")
     ).to be_equivalent_to output
@@ -456,10 +456,10 @@ RSpec.describe IsoDoc::Sample do
     output = <<~"OUTPUT"
     #{BLANK_HDR}
 <sections/>
-</sample-standard>
+</acme-standard>
     OUTPUT
 
-    expect(Asciidoctor.convert(input, backend: :sample, header_footer: true)).to be_equivalent_to output
+    expect(Asciidoctor.convert(input, backend: :acme, header_footer: true)).to be_equivalent_to output
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r{jquery\.min\.js})
     expect(html).to match(%r{Overpass})

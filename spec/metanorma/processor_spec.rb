@@ -1,13 +1,12 @@
 require "spec_helper"
-require "metanorma"
 
-RSpec.describe Metanorma::Sample::Processor do
+RSpec.describe Metanorma::Acme::Processor do
 
   registry = Metanorma::Registry.instance
-  registry.register(Metanorma::Sample::Processor)
+  registry.register(Metanorma::Acme::Processor)
 
   let(:processor) {
-    registry.find_processor(:sample)
+    registry.find_processor(:acme)
   }
 
   it "registers against metanorma" do
@@ -15,13 +14,15 @@ RSpec.describe Metanorma::Sample::Processor do
   end
 
   it "registers output formats against metanorma" do
-    expect(processor.output_formats.sort.to_s).to be_equivalent_to <<~"OUTPUT"
+    output = <<~"OUTPUT"
     [[:doc, "doc"], [:html, "html"], [:pdf, "pdf"], [:xml, "xml"]]
     OUTPUT
+
+    expect(processor.output_formats.sort.to_s).to be_equivalent_to output
   end
 
   it "registers version against metanorma" do
-    expect(processor.version.to_s).to match(%r{^Asciidoctor::Sample })
+    expect(processor.version.to_s).to match(%r{^Metanorma::Acme })
   end
 
   it "generates IsoDoc XML from a blank document" do
@@ -32,7 +33,7 @@ RSpec.describe Metanorma::Sample::Processor do
     output = <<~"OUTPUT"
     #{BLANK_HDR}
 <sections/>
-</sample-standard>
+</acme-standard>
     OUTPUT
 
     expect(processor.input_to_isodoc(input)).to be_equivalent_to output
@@ -41,7 +42,7 @@ RSpec.describe Metanorma::Sample::Processor do
   it "generates HTML from IsoDoc XML" do
     system "rm -f test.xml"
     input = <<~"INPUT"
-    <sample-standard xmlns="http://riboseinc.com/isoxml">
+    <acme-standard xmlns="http://riboseinc.com/isoxml">
       <sections>
         <terms id="H" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title>
           <term id="J">
@@ -49,7 +50,7 @@ RSpec.describe Metanorma::Sample::Processor do
           </term>
         </terms>
       </sections>
-    </sample-standard>
+    </acme-standard>
     INPUT
 
     output = <<~"OUTPUT"

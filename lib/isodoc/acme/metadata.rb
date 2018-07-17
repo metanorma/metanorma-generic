@@ -1,7 +1,7 @@
 require "isodoc"
 
 module IsoDoc
-  module Sample
+  module Acme
 
     class Metadata < IsoDoc::Metadata
       def initialize(lang, script, labels)

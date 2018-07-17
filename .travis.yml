@@ -6,7 +6,7 @@ rvm:
   - 2.4
   - ruby-head
 before_install:
-  - gem install bundler -v 1.16.1
+  - gem install bundler
   - unset _JAVA_OPTIONS
 matrix:
   allow_failures:

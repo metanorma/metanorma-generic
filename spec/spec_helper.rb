@@ -4,17 +4,10 @@ SimpleCov.start do
 end
 
 require "bundler/setup"
-require "asciidoctor"
-require "asciidoctor-sample"
-require "asciidoctor/sample"
-require "isodoc/sample/html_convert"
-require "isodoc/sample/word_convert"
-require "asciidoctor/iso/converter"
+require "metanorma-acme"
 require "rspec/matchers"
 require "equivalent-xml"
 require "htmlentities"
-require "metanorma"
-require "metanorma/sample"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -57,20 +50,20 @@ HDR
 
 BLANK_HDR = <<~"HDR"
        <?xml version="1.0" encoding="UTF-8"?>
-       <sample-standard xmlns="https://open.ribose.com/standards/example">
+       <acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
        <bibdata type="standard">
 
 
          <contributor>
            <role type="author"/>
            <organization>
-             <name>Acme</name>
+             <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
            </organization>
          </contributor>
          <contributor>
            <role type="publisher"/>
            <organization>
-             <name>Acme</name>
+             <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
            </organization>
          </contributor>
 
@@ -80,7 +73,7 @@ BLANK_HDR = <<~"HDR"
            <from>#{Time.new.year}</from>
            <owner>
              <organization>
-               <name>Acme</name>
+               <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
              </organization>
            </owner>
          </copyright>

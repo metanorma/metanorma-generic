@@ -1,12 +1,8 @@
 require "spec_helper"
 
-RSpec.describe Asciidoctor::Sample do
-  it "has a version number" do
-    expect(Asciidoctor::Sample::VERSION).not_to be nil
-  end
-
+RSpec.describe Asciidoctor::Acme do
   it "generates output for the Rice document" do
-    system "cd spec/examples; rm -f rfc6350.doc; rm -f rfc6350.html; rm -d rfc6350.pdf;asciidoctor --trace -b sample -r 'asciidoctor-sample' rfc6350.adoc; cd ../.."
+    system "cd spec/examples; rm -f rfc6350.doc; rm -f rfc6350.html; rm -d rfc6350.pdf; asciidoctor --trace -b acme -r 'metanorma-acme' rfc6350.adoc; cd ../.."
     expect(File.exist?("spec/examples/rfc6350.doc")).to be true
     expect(File.exist?("spec/examples/rfc6350.html")).to be true
     expect(File.exist?("spec/examples/rfc6350.pdf")).to be true
@@ -20,10 +16,10 @@ RSpec.describe Asciidoctor::Sample do
     output = <<~"OUTPUT"
     #{BLANK_HDR}
 <sections/>
-</sample-standard>
+</acme-standard>
     OUTPUT
 
-    expect(Asciidoctor.convert(input, backend: :sample, header_footer: true)).to be_equivalent_to output
+    expect(Asciidoctor.convert(input, backend: :acme, header_footer: true)).to be_equivalent_to output
   end
 
   it "converts a blank document" do
@@ -37,11 +33,11 @@ RSpec.describe Asciidoctor::Sample do
     output = <<~"OUTPUT"
     #{BLANK_HDR}
 <sections/>
-</sample-standard>
+</acme-standard>
     OUTPUT
 
     system "rm -f test.html"
-    expect(Asciidoctor.convert(input, backend: :sample, header_footer: true)).to be_equivalent_to output
+    expect(Asciidoctor.convert(input, backend: :acme, header_footer: true)).to be_equivalent_to output
     expect(File.exist?("test.html")).to be true
   end
 
@@ -77,20 +73,20 @@ RSpec.describe Asciidoctor::Sample do
 
     output = <<~"OUTPUT"
     <?xml version="1.0" encoding="UTF-8"?>
-<sample-standard xmlns="https://open.ribose.com/standards/example">
+<acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
 <bibdata type="standard">
   <title language="en" format="plain">Main Title</title>
   <docidentifier>1000</docidentifier>
   <contributor>
     <role type="author"/>
     <organization>
-      <name>Acme</name>
+      <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
     </organization>
   </contributor>
   <contributor>
     <role type="publisher"/>
     <organization>
-      <name>Acme</name>
+      <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
     </organization>
   </contributor>
   <language>en</language>
@@ -100,7 +96,7 @@ RSpec.describe Asciidoctor::Sample do
     <from>2001</from>
     <owner>
       <organization>
-        <name>Acme</name>
+        <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
       </organization>
     </owner>
   </copyright>
@@ -114,10 +110,10 @@ RSpec.describe Asciidoctor::Sample do
   <draft>3.4</draft>
 </version>
 <sections/>
-</sample-standard>
+</acme-standard>
     OUTPUT
 
-    expect(Asciidoctor.convert(input, backend: :sample, header_footer: true)).to be_equivalent_to output
+    expect(Asciidoctor.convert(input, backend: :acme, header_footer: true)).to be_equivalent_to output
   end
 
   it "processes figures" do
@@ -143,10 +139,10 @@ RSpec.describe Asciidoctor::Sample do
        Amen</pre>
        </figure>
        </sections>
-       </sample-standard>
+       </acme-standard>
     OUTPUT
 
-    expect(strip_guid(Asciidoctor.convert(input, backend: :sample, header_footer: true))).to be_equivalent_to output
+    expect(strip_guid(Asciidoctor.convert(input, backend: :acme, header_footer: true))).to be_equivalent_to output
   end
 
   it "strips inline header" do
@@ -166,10 +162,10 @@ RSpec.describe Asciidoctor::Sample do
        <clause id="_" obligation="normative">
          <title>Section 1</title>
        </clause></sections>
-       </sample-standard>
+       </acme-standard>
     OUTPUT
 
-    expect(strip_guid(Asciidoctor.convert(input, backend: :sample, header_footer: true))).to be_equivalent_to output
+    expect(strip_guid(Asciidoctor.convert(input, backend: :acme, header_footer: true))).to be_equivalent_to output
   end
 
   it "uses default fonts" do
@@ -181,7 +177,7 @@ RSpec.describe Asciidoctor::Sample do
     INPUT
 
     system "rm -f test.html"
-    Asciidoctor.convert(input, backend: :sample, header_footer: true)
+    Asciidoctor.convert(input, backend: :acme, header_footer: true)
 
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r[\.Sourcecode[^{]+\{[^}]+font-family: "Space Mono", monospace;]m)
@@ -199,7 +195,7 @@ RSpec.describe Asciidoctor::Sample do
     INPUT
 
     system "rm -f test.html"
-    Asciidoctor.convert(input, backend: :sample, header_footer: true)
+    Asciidoctor.convert(input, backend: :acme, header_footer: true)
 
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r[\.Sourcecode[^{]+\{[^}]+font-family: "Space Mono", monospace;]m)
@@ -220,7 +216,7 @@ RSpec.describe Asciidoctor::Sample do
     INPUT
 
     system "rm -f test.html"
-    Asciidoctor.convert(input, backend: :sample, header_footer: true)
+    Asciidoctor.convert(input, backend: :acme, header_footer: true)
 
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r[\.Sourcecode[^{]+\{[^{]+font-family: Andale Mono;]m)
@@ -261,10 +257,10 @@ RSpec.describe Asciidoctor::Sample do
        <strike>strike</strike>
        <smallcap>smallcap</smallcap></p>
        </sections>
-       </sample-standard>
+       </acme-standard>
     OUTPUT
 
-    expect(strip_guid(Asciidoctor.convert(input, backend: :sample, header_footer: true))).to be_equivalent_to output
+    expect(strip_guid(Asciidoctor.convert(input, backend: :acme, header_footer: true))).to be_equivalent_to output
   end
 
 

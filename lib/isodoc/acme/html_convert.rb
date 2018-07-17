@@ -2,21 +2,23 @@ require "isodoc"
 require_relative "metadata"
 
 module IsoDoc
-  module Sample
-    # A {Converter} implementation that generates PDF HTML output, and a
-    # document schema encapsulation of the document for validation
-    class PdfConvert < IsoDoc::PdfConvert
-      def html_doc_path(file)
+  module Acme
+
+    # A {Converter} implementation that generates HTML output, and a document
+    # schema encapsulation of the document for validation
+    #
+    class HtmlConvert < IsoDoc::HtmlConvert
+      def html_path_acme(file)
         File.join(File.dirname(__FILE__), File.join("html", file))
       end
 
       def initialize(options)
         super
-        @htmlstylesheet = generate_css(html_doc_path("htmlstyle.scss"), true, default_fonts(options))
-        @htmlcoverpage = html_doc_path("html_sample_titlepage.html")
-        @htmlintropage = html_doc_path("html_sample_intro.html")
-        @scripts = html_doc_path("scripts.html")
-        system "cp #{html_doc_path('logo.jpg')}  logo.jpg"
+        @htmlstylesheet = generate_css(html_path_acme("htmlstyle.scss"), true, default_fonts(options))
+        @htmlcoverpage = html_path_acme("html_acme_titlepage.html")
+        @htmlintropage = html_path_acme("html_acme_intro.html")
+        @scripts = html_path_acme("scripts.html")
+        system "cp #{html_path_acme('logo.jpg')} logo.jpg"
         @files_to_delete << "logo.jpg"
       end
 
@@ -35,12 +37,12 @@ module IsoDoc
         @meta = Metadata.new(lang, script, labels)
       end
 
-      def html_head()
+      def html_head
         <<~HEAD.freeze
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!--TOC script import-->
-    <script type="text/javascript"  src="https://cdn.rawgit.com/jgallen23/toc/0.3.2/dist/toc.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/jgallen23/toc/0.3.2/dist/toc.min.js"></script>
 
     <!--Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i|Space+Mono:400,700" rel="stylesheet">
@@ -48,7 +50,7 @@ module IsoDoc
     <!--Font awesome import for the link icon-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css" integrity="sha384-v2Tw72dyUXeU3y4aM2Y0tBJQkGfplr39mxZqlTBDUZAb9BGoC40+rdFCG0m10lXk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8XQu1OpdLgGFvNRnPdj5VIlCvgsDQTQB6owSOHWlAurxul7f+JpUOVdAiJ5P" crossorigin="anonymous">
-<style class="anchorjs"></style>
+    <style class="anchorjs"></style>
         HEAD
       end
 
