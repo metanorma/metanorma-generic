@@ -1,15 +1,15 @@
 require "asciidoctor"
-require "asciidoctor/sample/version"
-require "isodoc/sample/samplehtmlconvert"
-require "isodoc/sample/samplewordconvert"
+require "asciidoctor/sample"
 require "asciidoctor/iso/converter"
+require "isodoc/sample/html_convert"
+require "isodoc/sample/word_convert"
 
 module Asciidoctor
   module Sample
-    RSD_NAMESPACE = "https://open.ribose.com/standards/rsd"
 
     # A {Converter} implementation that generates RSD output, and a document
     # schema encapsulation of the document for validation
+    #
     class Converter < ISO::Converter
 
       register_for "sample"
@@ -18,7 +18,7 @@ module Asciidoctor
         xml.contributor do |c|
           c.role **{ type: "author" }
           c.organization do |a|
-            a.name "Ribose"
+            a.name "Acme"
           end
         end
       end
@@ -27,15 +27,15 @@ module Asciidoctor
         xml.contributor do |c|
           c.role **{ type: "publisher" }
           c.organization do |a|
-            a.name "Ribose"
+            a.name "Acme"
           end
         end
       end
 
       def metadata_committee(node, xml)
         xml.editorialgroup do |a|
-          a.technical_committee node.attr("technical-committee"),
-            **attr_code(type: node.attr("technical-committee-type"))
+          a.committee node.attr("committee"),
+            **attr_code(type: node.attr("committee-type"))
         end
       end
 
@@ -61,10 +61,20 @@ module Asciidoctor
           c.from from
           c.owner do |owner|
             owner.organization do |o|
-              o.name "Ribose"
+              o.name "Acme"
             end
           end
         end
+      end
+
+      def metadata_security(node, xml)
+        security = node.attr("security") || return
+        xml.security security
+      end
+
+      def metadata(node, xml)
+        super
+        metadata_security(node, xml)
       end
 
       def title_validate(root)
@@ -72,25 +82,32 @@ module Asciidoctor
       end
 
       def makexml(node)
-        result = ["<?xml version='1.0' encoding='UTF-8'?>\n<rsd-standard>"]
+        result = ["<?xml version='1.0' encoding='UTF-8'?>\n<sample-standard>"]
         @draft = node.attributes.has_key?("draft")
         result << noko { |ixml| front node, ixml }
         result << noko { |ixml| middle node, ixml }
-        result << "</rsd-standard>"
+        result << "</sample-standard>"
         result = textcleanup(result.flatten * "\n")
         ret1 = cleanup(Nokogiri::XML(result))
         validate(ret1)
-        ret1.root.add_namespace(nil, RSD_NAMESPACE)
+        ret1.root.add_namespace(nil, EXAMPLE_NAMESPACE)
         ret1
       end
 
       def doctype(node)
         d = node.attr("doctype")
-        unless %w{policy best-practices supporting-document report legal directives}.include? d
+        unless %w{policy-and-procedures best-practices supporting-document report legal directives proposal standard}.include? d
           warn "#{d} is not a legal document type: reverting to 'standard'"
           d = "standard"
         end
         d
+      end
+
+      def pdf_convert(filename)
+        url = "#{Dir.pwd}/#{filename}.html"
+        pdfjs = File.join(File.dirname(__FILE__), 'pdf.js')
+        system "export NODE_PATH=$(npm root --quiet -g);
+                node #{pdfjs} file://#{url} #{filename}.pdf"
       end
 
       def document(node)
@@ -103,6 +120,7 @@ module Asciidoctor
           File.open(filename, "w") { |f| f.write(ret) }
           html_converter(node).convert filename unless node.attr("nodoc")
           word_converter(node).convert filename unless node.attr("nodoc")
+          pdf_convert(filename.sub(/\.xml$/, "")) unless node.attr("nodoc")
         end
         @files_to_delete.each { |f| system "rm #{f}" }
         ret
@@ -111,7 +129,7 @@ module Asciidoctor
       def validate(doc)
         content_validate(doc)
         schema_validate(formattedstr_strip(doc.dup),
-                        File.join(File.dirname(__FILE__), "rsd.rng"))
+                        File.join(File.dirname(__FILE__), "sample.rng"))
       end
 
       def html_doc_path(file)

@@ -2,6 +2,8 @@ require "asciidoctor/sample/version"
 
 module Asciidoctor
   module Sample
-    # Your code goes here...
+
+    EXAMPLE_NAMESPACE = "https://open.ribose.com/standards/example"
+
   end
 end

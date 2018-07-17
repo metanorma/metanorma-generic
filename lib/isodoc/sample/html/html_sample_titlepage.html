@@ -1,14 +1,14 @@
-<div class="document-stage-band" id="working-draft-band">
+<div class="document-stage-band" id='{{ status | downcase | replace: " ", "-" }}-band'>
     <p class="document-stage">{{ status }}</p>
 </div>
 
-<div class="document-type-band" id="standard-band">
-    <p class="document-type">Ribose {{ doctype }}</p>
+<div class="document-type-band" id='{{ doctype | downcase | replace: " ", "-" }}-band'>
+    <p class="document-type">Acme {{ doctype }}</p>
 </div>
-  
-    
 
-  <div id='toggle'> <span>•</span> </div>
+
+
+  <div id='toggle'> <span>&#x2022;</span> </div>
 
   <header>
 
@@ -20,7 +20,7 @@
     <div class="doc-number">
       <span class="docnumber">{{ docnumber }}</span>
       <span class="docnumber-separator">:</span>
-      <span class="docyear">{{ docyear }}</span>
+      <span class="docyear">{{ docyear }} {{ draftinfo }}</span>
     </div>
 
     <div class="coverpage-title">
@@ -30,7 +30,7 @@
   </div>
 
   <div class="coverpage-logo">
-    <span>Ribose Group Inc.</span>
+    <span>Acme Inc. {{ docyear }}</span>
   </div>
 
   <div class="coverpage-tc-name">
@@ -42,19 +42,26 @@
 
   <div class="WordSection11">
   <div class="coverpage-stage-block" >
-    <span class="coverpage-stage" id="{{ doctype | replace: ' ', '-' | downcase }}">Ribose {{ doctype }}</span>
+    <span class="coverpage-stage" id="{{ doctype | replace: ' ', '-' | downcase }}">Acme {{ doctype }}</span>
   </div>
 
   <div class="coverpage-stage-block" >
-    <span class="coverpage-maturity" id="{{ status | replace: ' ', '-' | downcase }}">{{ status }}</span>
+    <p><span class="coverpage-maturity" id="{{ status | replace: ' ', '-' | downcase }}">{{ status }}</span></p>
+{% if security %}
+<p><span class="coverpage-maturity">Classification: {{ security }}</span></p>
+{% endif %}
 </div>
+
+{% if doctype == "Policy And Procedures" or doctype == "Proposal" %}
+<div  class="coverpage-stage-block" >{{ revdate }}</div>
+{% endif %}
 
 {% if status != "Published" and status != "Withdrawn" %}
   <div class="coverpage-warning">
     <span class="title">Warning for Drafts</span>
 
     <p class="content">
-    This document is not a Ribose Standard. It is distributed for review and
+    This document is not a Acme Standard. It is distributed for review and
     comment, and is subject to change without notice and may not be referred to as
     a Standard. Recipients of this draft are invited to submit, with their
     comments, notification of any relevant patent rights of which they are aware
@@ -63,9 +70,10 @@
   </div>
 {% endif %}
 
+<div class="info-section">
 <div class="copyright">
   <p class="year">
-    &copy; {{ docyear }} Ribose Group Inc.
+    &copy; {{ docyear }} Acme Inc.
   </p>
 
   <p class="message">
@@ -77,7 +85,7 @@
   </p>
 
 <div class="contact-info">
-  <p class="name">Ribose Group Inc.</p>
+  <p class="name">Acme Inc.</p>
   <p class="address">
     Suite 1, 8/F, New Henry House<br />
     10 Ice House Street<br />
@@ -92,6 +100,7 @@
 
 <div class="rule"></div>
 </div>
+  </div>
 
 
 </header>

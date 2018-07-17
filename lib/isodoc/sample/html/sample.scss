@@ -1,16 +1,15 @@
-p.Sourcecode, li.Sourcecode, div.Sourcecode, pre.Sourcecode
+p.Sourcecode, li.Sourcecode, div.Sourcecode, pre.Sourcecode, pre
 	{mso-style-unhide:no;
 	mso-style-qformat:yes;
 	mso-style-parent:"";
-	margin-top:0cm;
+	margin-top:6.0pt;
 	margin-right:0cm;
-	margin-bottom:12.0pt;
+	margin-bottom:6.0pt;
 	margin-left:0cm;
 	text-align:left;
-	line-height:12.0pt;
 	mso-pagination:widow-orphan;
-	tab-stops:20.15pt;
-	font-size:9.0pt;
+	tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt;
+	font-size:10.0pt;
 	font-family:$monospacefont;
 	mso-fareast-font-family:Calibri;
 	mso-bidi-font-family:"Courier New";
@@ -27,7 +26,7 @@ p.Biblio, li.Biblio, div.Biblio, p.NormRef, li.NormRef, div.NormRef
     tab-stops: 33.15pt;
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
-	font-size:11.0pt;
+	font-size:10.5pt;
 	font-weight:normal;
 	font-family:$bodyfont;
 	mso-fareast-font-family:$bodyfont;
@@ -243,7 +242,7 @@ p.zzCopyright, li.zzCopyright
 	tab-stops:20.15pt 25.7pt 481.15pt;
 	padding:0cm;
 	mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt;
-	font-size:11.0pt;
+	font-size:10.5pt;
 	font-family:$bodyfont;
 	mso-fareast-font-family:$bodyfont;
 	mso-bidi-font-family:$bodyfont;
@@ -324,13 +323,27 @@ p.Quote, li.Quote, div.Quote
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	tab-stops:20.15pt;
-	font-size:11.0pt;
+	font-size:10.5pt;
 	font-family:$bodyfont;
 	mso-fareast-font-family:$bodyfont;
 	mso-bidi-font-family:$bodyfont;
 	mso-ansi-language:EN-GB;}
 p.QuoteAttribution
-        {text-align:right;}
+        {text-align:right;
+        mso-style-priority:99;
+        margin-top:0cm;
+        margin-right:36.0pt;
+        margin-bottom:0cm;
+        margin-left:36.0pt;
+        line-height:12.0pt;
+        mso-pagination:widow-orphan;
+        tab-stops:20.15pt;
+        font-size:10.5pt;
+        font-family:$bodyfont;
+        mso-fareast-font-family:$bodyfont;
+        mso-bidi-font-family:$bodyfont;
+        mso-ansi-language:EN-GB;
+        }
 p.Admonition, li.Admonition, div.Admonition
 	{mso-style-priority:99;
 	margin-top:0cm;
@@ -385,7 +398,7 @@ p.Formula, li.Formula, div.Formula
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	tab-stops:right 487.45pt;
-	font-size:11.0pt;
+	font-size:10.5pt;
 	font-family:$bodyfont;
 	mso-fareast-font-family:$bodyfont;
 	mso-bidi-font-family:$bodyfont;
@@ -486,7 +499,7 @@ span.stem
     italic;}
 div.formula
     {tab-stops:right 487.45pt;}
-body 
+body
     {tab-interval:36.0pt;}
 dt
     {page-break-inside:avoid;
@@ -496,16 +509,18 @@ dt
     font-size:14.0pt;
     font-weight:bold;}
 .coverpage_techcommittee
-    {text-align:center;}
+    {text-align:center;
+    font-size:12.0pt}
 .coverpage_docstage
     {text-align:center;
     font-size:30.0pt;
     color:#485094;}
 div.coverpage_warning
     {mso-element:para-border-div;
-    border:solid windowtext 1.0pt #485094; 
+    border:solid windowtext 1.0pt #485094;
     mso-border-alt:solid windowtext .5pt;
     padding:1.0pt 4.0pt 1.0pt 4.0pt #485094;
+    font-size:10.0pt;
     margin-left:4.25pt;
     margin-right:4.25pt}
 .coverpage_warning

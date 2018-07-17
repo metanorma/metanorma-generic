@@ -2,8 +2,7 @@ require "isodoc"
 
 module IsoDoc
   module Sample
-    # A {Converter} implementation that generates CSAND output, and a document
-    # schema encapsulation of the document for validation
+
     class Metadata < IsoDoc::Metadata
       def initialize(lang, script, labels)
         super
@@ -20,8 +19,7 @@ module IsoDoc
       end
 
       def author(isoxml, _out)
-        set(:tc, "XXXX")
-        tc = isoxml.at(ns("//editorialgroup/technical-committee"))
+        tc = isoxml.at(ns("//editorialgroup/committee"))
         set(:tc, tc.text) if tc
       end
 
@@ -76,6 +74,11 @@ module IsoDoc
         m = /(?<yr>\d\d\d\d)-(?<mo>\d\d)/.match isodate
         return isodate unless m && m[:yr] && m[:mo]
         return "#{MONTHS[m[:mo].to_sym]} #{m[:yr]}"
+      end
+
+      def security(isoxml, _out)
+        security = isoxml.at(ns("//bibdata/security")) || return
+        set(:security, security.text)
       end
     end
   end

@@ -13,7 +13,8 @@ module Metanorma
       def output_formats
         super.merge(
           html: "html",
-          doc: "doc"
+          doc: "doc",
+          pdf: "pdf"
         )
       end
 
@@ -31,6 +32,16 @@ module Metanorma
           IsoDoc::Sample::HtmlConvert.new(options).convert(outname, isodoc_node)
         when :doc
           IsoDoc::Sample::WordConvert.new(options).convert(outname, isodoc_node)
+        when :pdf
+          IsoDoc::Sample::PdfConvert.new(options).convert(outname, isodoc_node)
+=begin
+          require 'tempfile'
+          outname_html = outname + ".html"
+          IsoDoc::Sample::HtmlConvert.new(options).convert(outname_html, isodoc_node)
+          puts outname_html
+          system "cat #{outname_html}"
+          Metanorma::Output::Pdf.new.convert(outname_html, outname)
+=end
         else
           super
         end

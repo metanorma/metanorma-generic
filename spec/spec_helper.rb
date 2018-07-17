@@ -7,8 +7,8 @@ require "bundler/setup"
 require "asciidoctor"
 require "asciidoctor-sample"
 require "asciidoctor/sample"
-require "isodoc/sample/samplehtmlconvert"
-require "isodoc/sample/samplewordconvert"
+require "isodoc/sample/html_convert"
+require "isodoc/sample/word_convert"
 require "asciidoctor/iso/converter"
 require "rspec/matchers"
 require "equivalent-xml"
@@ -57,20 +57,20 @@ HDR
 
 BLANK_HDR = <<~"HDR"
        <?xml version="1.0" encoding="UTF-8"?>
-       <rsd-standard xmlns="https://open.ribose.com/standards/rsd">
+       <sample-standard xmlns="https://open.ribose.com/standards/example">
        <bibdata type="standard">
 
 
          <contributor>
            <role type="author"/>
            <organization>
-             <name>Ribose</name>
+             <name>Acme</name>
            </organization>
          </contributor>
          <contributor>
            <role type="publisher"/>
            <organization>
-             <name>Ribose</name>
+             <name>Acme</name>
            </organization>
          </contributor>
 
@@ -80,12 +80,12 @@ BLANK_HDR = <<~"HDR"
            <from>#{Time.new.year}</from>
            <owner>
              <organization>
-               <name>Ribose</name>
+               <name>Acme</name>
              </organization>
            </owner>
          </copyright>
          <editorialgroup>
-           <technical-committee/>
+           <committee/>
          </editorialgroup>
        </bibdata>
 HDR

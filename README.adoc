@@ -1,9 +1,9 @@
 = asciidoctor-metanorma_sample: Sample Asciidoctor processor for Metanorma documents
 
 ////
-image:https://img.shields.io/gem/v/asciidoctor-rsd.svg["Gem Version", link="https://rubygems.org/gems/asciidoctor-rsd"]
-image:https://img.shields.io/travis/riboseinc/asciidoctor-rsd/master.svg["Build Status", link="https://travis-ci.org/riboseinc/asciidoctor-rsd"]
-image:https://codeclimate.com/github/riboseinc/asciidoctor-rsd/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/riboseinc/asciidoctor-rsd"]
+image:https://img.shields.io/gem/v/asciidoctor-metanorma_sample.svg["Gem Version", link="https://rubygems.org/gems/asciidoctor-metanorma_sample"]
+image:https://img.shields.io/travis/riboseinc/asciidoctor-metanorma_sample/master.svg["Build Status", link="https://travis-ci.org/riboseinc/asciidoctor-metanorma_sample"]
+image:https://codeclimate.com/github/riboseinc/asciidoctor-metanorma_sample/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/riboseinc/asciidoctor-metanorma_sample"]
 ////
 
 == Functionality

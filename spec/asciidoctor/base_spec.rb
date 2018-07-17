@@ -6,38 +6,47 @@ RSpec.describe Asciidoctor::Sample do
   end
 
   it "generates output for the Rice document" do
-  system "cd spec/examples; rm -f rfc6350.doc; rm -f rfc6350.html; asciidoctor --trace -b sample -r 'asciidoctor-sample' rfc6350.adoc; cd ../.."
-  expect(File.exist?("spec/examples/rfc6350.doc")).to be true
-  expect(File.exist?("spec/examples/rfc6350.html")).to be true
+    system "cd spec/examples; rm -f rfc6350.doc; rm -f rfc6350.html; rm -d rfc6350.pdf;asciidoctor --trace -b sample -r 'asciidoctor-sample' rfc6350.adoc; cd ../.."
+    expect(File.exist?("spec/examples/rfc6350.doc")).to be true
+    expect(File.exist?("spec/examples/rfc6350.html")).to be true
+    expect(File.exist?("spec/examples/rfc6350.pdf")).to be true
   end
 
   it "processes a blank document" do
-    expect(Asciidoctor.convert(<<~"INPUT", backend: :sample, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
+    input = <<~"INPUT"
     #{ASCIIDOC_BLANK_HDR}
     INPUT
+
+    output = <<~"OUTPUT"
     #{BLANK_HDR}
 <sections/>
-</rsd-standard>
+</sample-standard>
     OUTPUT
+
+    expect(Asciidoctor.convert(input, backend: :sample, header_footer: true)).to be_equivalent_to output
   end
 
   it "converts a blank document" do
-    system "rm -f test.html"
-    expect(Asciidoctor.convert(<<~"INPUT", backend: :sample, header_footer: true)).to be_equivalent_to <<~"OUTPUT"
+    input = <<~"INPUT"
       = Document title
       Author
       :docfile: test.adoc
       :novalid:
     INPUT
+
+    output = <<~"OUTPUT"
     #{BLANK_HDR}
 <sections/>
-</rsd-standard>
+</sample-standard>
     OUTPUT
+
+    system "rm -f test.html"
+    expect(Asciidoctor.convert(input, backend: :sample, header_footer: true)).to be_equivalent_to output
     expect(File.exist?("test.html")).to be true
   end
 
   it "processes default metadata" do
-    expect(Asciidoctor.convert(<<~"INPUT", backend: :sample, header_footer: true)).to be_equivalent_to <<~'OUTPUT'
+    input = <<~"INPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -48,9 +57,9 @@ RSpec.describe Asciidoctor::Sample do
       :edition: 2
       :revdate: 2000-01-01
       :draft: 3.4
-      :technical-committee: TC
-      :technical-committee-number: 1
-      :technical-committee-type: A
+      :committee: TC
+      :committee-number: 1
+      :committee-type: A
       :subcommittee: SC
       :subcommittee-number: 2
       :subcommittee-type: B
@@ -63,22 +72,25 @@ RSpec.describe Asciidoctor::Sample do
       :iteration: 3
       :language: en
       :title: Main Title
+      :security: Client Confidential
     INPUT
+
+    output = <<~"OUTPUT"
     <?xml version="1.0" encoding="UTF-8"?>
-<rsd-standard xmlns="https://open.ribose.com/standards/rsd">
+<sample-standard xmlns="https://open.ribose.com/standards/example">
 <bibdata type="standard">
   <title language="en" format="plain">Main Title</title>
   <docidentifier>1000</docidentifier>
   <contributor>
     <role type="author"/>
     <organization>
-      <name>Ribose</name>
+      <name>Acme</name>
     </organization>
   </contributor>
   <contributor>
     <role type="publisher"/>
     <organization>
-      <name>Ribose</name>
+      <name>Acme</name>
     </organization>
   </contributor>
   <language>en</language>
@@ -88,25 +100,28 @@ RSpec.describe Asciidoctor::Sample do
     <from>2001</from>
     <owner>
       <organization>
-        <name>Ribose</name>
+        <name>Acme</name>
       </organization>
     </owner>
   </copyright>
   <editorialgroup>
-    <technical-committee type="A">TC</technical-committee>
+    <committee type="A">TC</committee>
   </editorialgroup>
+  <security>Client Confidential</security>
 </bibdata><version>
   <edition>2</edition>
   <revision-date>2000-01-01</revision-date>
   <draft>3.4</draft>
 </version>
 <sections/>
-</rsd-standard>
+</sample-standard>
     OUTPUT
+
+    expect(Asciidoctor.convert(input, backend: :sample, header_footer: true)).to be_equivalent_to output
   end
 
   it "processes figures" do
-    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :sample, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+    input = <<~"INPUT"
       #{ASCIIDOC_BLANK_HDR}
 
       [[id]]
@@ -116,7 +131,9 @@ RSpec.describe Asciidoctor::Sample do
 
       Amen
       ....
-      INPUT
+    INPUT
+
+    output = <<~"OUTPUT"
     #{BLANK_HDR}
        <sections>
                 <figure id="id">
@@ -126,17 +143,21 @@ RSpec.describe Asciidoctor::Sample do
        Amen</pre>
        </figure>
        </sections>
-       </rsd-standard>
+       </sample-standard>
     OUTPUT
+
+    expect(strip_guid(Asciidoctor.convert(input, backend: :sample, header_footer: true))).to be_equivalent_to output
   end
 
   it "strips inline header" do
-    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :sample, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+    input = <<~"INPUT"
       #{ASCIIDOC_BLANK_HDR}
       This is a preamble
 
       == Section 1
-      INPUT
+    INPUT
+
+    output = <<~"OUTPUT"
     #{BLANK_HDR}
              <preface><foreword obligation="informative">
          <title>Foreword</title>
@@ -145,18 +166,23 @@ RSpec.describe Asciidoctor::Sample do
        <clause id="_" obligation="normative">
          <title>Section 1</title>
        </clause></sections>
-       </rsd-standard>
+       </sample-standard>
     OUTPUT
+
+    expect(strip_guid(Asciidoctor.convert(input, backend: :sample, header_footer: true))).to be_equivalent_to output
   end
 
   it "uses default fonts" do
-    system "rm -f test.html"
-    Asciidoctor.convert(<<~"INPUT", backend: :sample, header_footer: true)
+    input = <<~"INPUT"
       = Document title
       Author
       :docfile: test.adoc
       :novalid:
     INPUT
+
+    system "rm -f test.html"
+    Asciidoctor.convert(input, backend: :sample, header_footer: true)
+
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r[\.Sourcecode[^{]+\{[^}]+font-family: "Space Mono", monospace;]m)
     expect(html).to match(%r[ div[^{]+\{[^}]+font-family: "Overpass", sans-serif;]m)
@@ -164,14 +190,17 @@ RSpec.describe Asciidoctor::Sample do
   end
 
   it "uses Chinese fonts" do
-    system "rm -f test.html"
-    Asciidoctor.convert(<<~"INPUT", backend: :sample, header_footer: true)
+    input = <<~"INPUT"
       = Document title
       Author
       :docfile: test.adoc
       :novalid:
       :script: Hans
     INPUT
+
+    system "rm -f test.html"
+    Asciidoctor.convert(input, backend: :sample, header_footer: true)
+
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r[\.Sourcecode[^{]+\{[^}]+font-family: "Space Mono", monospace;]m)
     expect(html).to match(%r[ div[^{]+\{[^}]+font-family: "SimSun", serif;]m)
@@ -179,8 +208,7 @@ RSpec.describe Asciidoctor::Sample do
   end
 
   it "uses specified fonts" do
-    system "rm -f test.html"
-    Asciidoctor.convert(<<~"INPUT", backend: :sample, header_footer: true)
+    input = <<~"INPUT"
       = Document title
       Author
       :docfile: test.adoc
@@ -190,6 +218,10 @@ RSpec.describe Asciidoctor::Sample do
       :header-font: Comic Sans
       :monospace-font: Andale Mono
     INPUT
+
+    system "rm -f test.html"
+    Asciidoctor.convert(input, backend: :sample, header_footer: true)
+
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r[\.Sourcecode[^{]+\{[^{]+font-family: Andale Mono;]m)
     expect(html).to match(%r[ div[^{]+\{[^}]+font-family: Zapf Chancery;]m)
@@ -197,7 +229,7 @@ RSpec.describe Asciidoctor::Sample do
   end
 
   it "processes inline_quoted formatting" do
-    expect(strip_guid(Asciidoctor.convert(<<~"INPUT", backend: :sample, header_footer: true))).to be_equivalent_to <<~"OUTPUT"
+    input = <<~"INPUT"
       #{ASCIIDOC_BLANK_HDR}
       _emphasis_
       *strong*
@@ -212,6 +244,8 @@ RSpec.describe Asciidoctor::Sample do
       [strike]#strike#
       [smallcap]#smallcap#
     INPUT
+
+    output = <<~"OUTPUT"
             #{BLANK_HDR}
        <sections>
         <p id="_"><em>emphasis</em>
@@ -227,8 +261,10 @@ RSpec.describe Asciidoctor::Sample do
        <strike>strike</strike>
        <smallcap>smallcap</smallcap></p>
        </sections>
-       </rsd-standard>
+       </sample-standard>
     OUTPUT
+
+    expect(strip_guid(Asciidoctor.convert(input, backend: :sample, header_footer: true))).to be_equivalent_to output
   end
 
 
