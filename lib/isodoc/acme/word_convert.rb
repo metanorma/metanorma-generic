@@ -13,13 +13,15 @@ module IsoDoc
 
       def initialize(options)
         super
-        @wordstylesheet = generate_css(html_path_acme("wordstyle.scss"), false, default_fonts(options))
-        @standardstylesheet = generate_css(html_path_acme("acme.scss"), false, default_fonts(options))
-        @header = html_path_acme("header.html")
-        @wordcoverpage = html_path_acme("word_acme_titlepage.html")
-        @wordintropage = html_path_acme("word_acme_intro.html")
-        @ulstyle = "l3"
-        @olstyle = "l2"
+        wordstylesheet = options[:wordstylesheet] || html_path_acme("wordstyle.scss")
+        @wordstylesheet = generate_css(wordstylesheet, false, default_fonts(options))
+        standardstylesheet = options[:standardstylesheet] || html_path_acme("acme.scss")
+        @standardstylesheet = generate_css(standardstylesheet, false, default_fonts(options))
+        @header = options[:header] || html_path_acme("header.html")
+        @wordcoverpage = options[:wordcoverpage] || html_path_acme("word_acme_titlepage.html")
+        @wordintropage = options[:wordintropage] || html_path_acme("word_acme_intro.html")
+        @ulstyle = options[:ulstyle] || "l3"
+        @olstyle = options[:olstyle] || "l2"
         system "cp #{html_path_acme('logo.jpg')} logo.jpg"
       end
 

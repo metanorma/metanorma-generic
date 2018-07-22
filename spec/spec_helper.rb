@@ -8,6 +8,7 @@ require "metanorma-acme"
 require "rspec/matchers"
 require "equivalent-xml"
 require "htmlentities"
+require "metanorma"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

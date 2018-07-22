@@ -12,10 +12,11 @@ module IsoDoc
 
       def initialize(options)
         super
-        @htmlstylesheet = generate_css(html_path_acme("htmlstyle.scss"), true, default_fonts(options))
-        @htmlcoverpage = html_path_acme("html_acme_titlepage.html")
-        @htmlintropage = html_path_acme("html_acme_intro.html")
-        @scripts = html_path_acme("scripts.html")
+        @htmlstylesheet = generate_css(htmlstylesheet, true, default_fonts(options))
+        htmlstylesheet = options[:htmlstylesheet] || html_path_acme("htmlstyle.scss")
+        @htmlcoverpage = options[:htmlcoverpage] || html_path_acme("html_acme_titlepage.html")
+        @htmlintropage = options[:htmlintropage] || html_path_acme("html_acme_intro.html")
+        @scripts = options[:htmlscripts] || html_path_acme("scripts.html")
         system "cp #{html_path_acme('logo.jpg')} logo.jpg"
         @files_to_delete << "logo.jpg"
       end

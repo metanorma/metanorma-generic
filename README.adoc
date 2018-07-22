@@ -11,3 +11,35 @@ image:https://codeclimate.com/github/riboseinc/metanorma-acme/badges/gpa.svg["Co
 This is an example of a https://github.com/riboseinc/metanorma[Metanorma] gem for processing input formats (Asciidoctor) and generating output formats (Word, HTML, PDF). 
 It has been created as an exemplar for generating new instances of Metanorma gems, as illustrated in https://github.com/riboseinc/asciidoctor-iso/wiki/Gem-Customisation-Guide
 
+You can customise output of this gem for your own purposes without needing to customise the gem fully. You can use the
+following asciidoctor document variables to set the stylesheets that are passed as arguments to the `isodoc` gem:
+
+````
+:body-font: (name of the main font to be used)
+:header-font: (name of the header font to be used)
+:monospace-font: (name of the monospace font to be used)
+:htmlstylesheet: (stylesheet for HTML)
+:htmlcoverpage: (cover page for HTML)
+:htmlintropage: (intro page for HTML)
+:htmlscripts: (scripts for HTML)
+:wordstylesheet: (default stylesheet for Word)
+:standardstylesheet: (standard-specific stylesheet for Word)
+:header: (header/footer HTML for Word)
+:wordcoverpage: (cover page for Word)
+:wordintropage: (intro page for Word)
+:ulstyle: (list style selector for unordered lists for Word)
+:olstyle: (list style selector for ordered lists for Word)
+````
+
+These variables will only be recognised if you run the output through the https://github.com/riboseinc/metanorma-cli[Metanorma CLI]: 
+
+[source, console]
+----
+metanorma -r metanorma-acme -t acme test.adoc
+----
+
+The CSS stylesheets are normally expected to be https://sass-lang.com/guide[SCSS], with the font names `$body-font, $header-font, $monospace-font` used as variables; but if you supply the stylesheets, you can bypass that customisation, and give the font names in the stylesheets.
+
+The cover page and intro page are still expected to be http://liquidmarkup.org[Liquid Template] files, giving metadata fields from `isodoc/metadata.rb` in curly brackets. See https://github.com/riboseinc/isodoc/blob/master/lib/isodoc/metadata.rb for the default metadata field settings.
+
+The use of HTML and CSS for Word is idiosyncratic, and involves some trial and error; consult the documentation above for more information.
