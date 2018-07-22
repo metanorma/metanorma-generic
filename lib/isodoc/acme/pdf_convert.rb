@@ -12,8 +12,8 @@ module IsoDoc
 
       def initialize(options)
         super
-        @htmlstylesheet = generate_css(htmlstylesheet, true, default_fonts(options))
         htmlstylesheet = options[:htmlstylesheet] || html_path_acme("htmlstyle.scss")
+        @htmlstylesheet = generate_css(htmlstylesheet, true, default_fonts(options))
         @htmlcoverpage = options[:htmlcoverpage] || html_path_acme("html_acme_titlepage.html")
         @htmlintropage = options[:htmlintropage] || html_path_acme("html_acme_intro.html")
         @scripts = options[:htmlscripts] || html_path_acme("scripts.html")

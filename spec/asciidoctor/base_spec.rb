@@ -264,10 +264,10 @@ RSpec.describe Asciidoctor::Acme do
   end
 
   it "uses user-specified HTML stylesheets" do
-    system "rm -f test.html"
-    system "metanorma -t acme spec/assets/test.adoc"
+    system "rm -f spec/assets/test.html"
+    system "metanorma -t acme -r metanorma-acme spec/assets/test.adoc"
 
-    html = File.read("test.html", encoding: "utf-8")
+    html = File.read("spec/assets/test.html", encoding: "utf-8")
     expect(html).to match(%r[I am an HTML stylesheet])
     expect(html).to match(%r[I am an HTML cover page])
     expect(html).to match(%r[I am an HTML intro page])
@@ -275,15 +275,16 @@ RSpec.describe Asciidoctor::Acme do
   end
 
   it "uses user-specified Word stylesheets" do
-    system "rm -f test.doc"
-    system "metanorma -t acme spec/assets/test.adoc"
+    system "rm -f spec/assets/test.doc"
+    system "metanorma -t acme -r metanorma-acme spec/assets/test.adoc"
 
-    html = File.read("test.doc", encoding: "utf-8")
+    html = File.read("spec/assets/test.doc", encoding: "utf-8")
     expect(html).to match(%r[I am a Word stylesheet])
     expect(html).to match(%r[I am a Standard stylesheet])
     expect(html).to match(%r[I am a Word cover page])
     expect(html).to match(%r[I am a Word intro page])
-    expect(html).to match(%r[I am a Word header file])
+    # expect(html).to match(%r[I am a Word header file]) -- binhexed:
+    expect(html).to match(%r[\nPCEtLSBJIGFtIGEgV29yZCBIZWFkZXIgZmlsZSAtLT4K\n])
   end
 
 

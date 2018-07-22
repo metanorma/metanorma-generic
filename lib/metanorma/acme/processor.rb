@@ -27,18 +27,18 @@ module Metanorma
       end
 
       def extract_options(file)
-        header = file.sub(/\n\n.*$/m, "")
-        /\n:htmlstylesheet: (?<htmlstylesheet>[^\n]+)\n/ =~ header
-        /\n:htmlcoverpage: (?<htmlcoverpage>[^\n]+)\n/ =~ header
-        /\n:htmlintropage: (?<htmlintropage>[^\n]+)\n/ =~ header
-        /\n:htmlscripts: (?<htmlscripts>[^\n]+)\n/ =~ header
-        /\n:wordstylesheet: (?<wordstylesheet>[^\n]+)\n/ =~ header
-        /\n:standardstylesheet: (?<standardstylesheet>[^\n]+)\n/ =~ header
-        /\n:header: (?<header>[^\n]+)\n/ =~ header
-        /\n:wordcoverpage: (?<wordcoverpage>[^\n]+)\n/ =~ header
-        /\n:wordintropage: (?<wordintropage>[^\n]+)\n/ =~ header
-        /\n:ulstyle: (?<ulstyle>[^\n]+)\n/ =~ header
-        /\n:olstyle: (?<olstyle>[^\n]+)\n/ =~ header
+        head = file.sub(/\n\n.*$/m, "\n")
+        /\n:htmlstylesheet: (?<htmlstylesheet>[^\n]+)\n/ =~ head
+        /\n:htmlcoverpage: (?<htmlcoverpage>[^\n]+)\n/ =~ head
+        /\n:htmlintropage: (?<htmlintropage>[^\n]+)\n/ =~ head
+        /\n:htmlscripts: (?<htmlscripts>[^\n]+)\n/ =~ head
+        /\n:wordstylesheet: (?<wordstylesheet>[^\n]+)\n/ =~ head
+        /\n:standardstylesheet: (?<standardstylesheet>[^\n]+)\n/ =~ head
+        /\n:header: (?<header>[^\n]+)\n/ =~ head
+        /\n:wordcoverpage: (?<wordcoverpage>[^\n]+)\n/ =~ head
+        /\n:wordintropage: (?<wordintropage>[^\n]+)\n/ =~ head
+        /\n:ulstyle: (?<ulstyle>[^\n]+)\n/ =~ head
+        /\n:olstyle: (?<olstyle>[^\n]+)\n/ =~ head
         new_options = {
           htmlstylesheet: defined?(htmlstylesheet) ? htmlstylesheet : nil,
           htmlcoverpage: defined?(htmlcoverpage) ? htmlcoverpage : nil,
