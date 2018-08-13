@@ -19,7 +19,7 @@ following asciidoctor document variables to set the stylesheets that are passed 
 :htmlstylesheet: (stylesheet for HTML)
 :htmlcoverpage: (cover page for HTML)
 :htmlintropage: (intro page for HTML)
-:htmlscripts: (scripts for HTML)
+:scripts: (scripts for HTML)
 :wordstylesheet: (default stylesheet for Word)
 :standardstylesheet: (standard-specific stylesheet for Word)
 :header: (header/footer HTML for Word)
@@ -29,7 +29,7 @@ following asciidoctor document variables to set the stylesheets that are passed 
 :olstyle: (list style selector for ordered lists for Word)
 ````
 
-These variables will only be recognised if you run the output through the https://github.com/riboseinc/metanorma-cli[Metanorma CLI]: 
+You should run the gem through the https://github.com/riboseinc/metanorma-cli[Metanorma CLI]: 
 
 [source, console]
 ----
