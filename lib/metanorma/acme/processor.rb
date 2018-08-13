@@ -31,7 +31,7 @@ module Metanorma
         /\n:htmlstylesheet: (?<htmlstylesheet>[^\n]+)\n/ =~ head
         /\n:htmlcoverpage: (?<htmlcoverpage>[^\n]+)\n/ =~ head
         /\n:htmlintropage: (?<htmlintropage>[^\n]+)\n/ =~ head
-        /\n:htmlscripts: (?<htmlscripts>[^\n]+)\n/ =~ head
+        /\n:scripts: (?<scripts>[^\n]+)\n/ =~ head
         /\n:wordstylesheet: (?<wordstylesheet>[^\n]+)\n/ =~ head
         /\n:standardstylesheet: (?<standardstylesheet>[^\n]+)\n/ =~ head
         /\n:header: (?<header>[^\n]+)\n/ =~ head
@@ -43,7 +43,7 @@ module Metanorma
           htmlstylesheet: defined?(htmlstylesheet) ? htmlstylesheet : nil,
           htmlcoverpage: defined?(htmlcoverpage) ? htmlcoverpage : nil,
           htmlintropage: defined?(htmlintropage) ? htmlintropage : nil,
-          htmlscripts: defined?(htmlscripts) ? htmlscripts : nil,
+          scripts: defined?(scripts) ? scripts : nil,
           wordstylesheet: defined?(wordstylesheet) ? wordstylesheet : nil,
           standardstylesheet: defined?(standardstylesheet) ? standardstylesheet : nil,
           header: defined?(header) ? header : nil,

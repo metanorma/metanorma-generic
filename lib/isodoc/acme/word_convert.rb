@@ -1,5 +1,6 @@
 require "isodoc"
 require_relative "metadata"
+require "fileutils"
 
 module IsoDoc
   module Acme
@@ -10,9 +11,8 @@ module IsoDoc
       def initialize(options)
         @libdir = File.dirname(__FILE__)
         super
-        @ulstyle = options[:ulstyle] || "l3"
-        @olstyle = options[:olstyle] || "l2"
-        system "cp #{html_doc_path('logo.jpg')} logo.jpg"
+        #system "cp #{html_doc_path('logo.jpg')} logo.jpg"
+        FileUtils.cp html_doc_path('logo.jpg'), "logo.jpg"
       end
 
       def default_fonts(options)
@@ -30,6 +30,8 @@ module IsoDoc
           header: html_doc_path("header.html"),
           wordcoverpage: html_doc_path("word_acme_titlepage.html"),
           wordintropage: html_doc_path("word_acme_intro.html"),
+          ulstyle: "l3",
+          olstyle: "l2",
         }
       end
 

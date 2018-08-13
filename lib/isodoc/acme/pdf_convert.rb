@@ -1,5 +1,6 @@
 require "isodoc"
 require_relative "metadata"
+require "fileutils"
 
 module IsoDoc
   module Acme
@@ -9,7 +10,8 @@ module IsoDoc
       def initialize(options)
         @libdir = File.dirname(__FILE__)
         super
-        system "cp #{html_doc_path('logo.jpg')} logo.jpg"
+        #system "cp #{html_doc_path('logo.jpg')} logo.jpg"
+        FileUtils.cp html_doc_path('logo.jpg'), "logo.jpg"
         @files_to_delete << "logo.jpg"
       end
 
