@@ -7,7 +7,7 @@ image:https://codeclimate.com/github/riboseinc/metanorma-acme/badges/gpa.svg["Co
 == Functionality
 
 This is an example of a https://github.com/riboseinc/metanorma[Metanorma] gem for processing input formats (Asciidoctor) and generating output formats (Word, HTML, PDF). 
-It has been created as an exemplar for generating new instances of Metanorma gems, as illustrated in https://github.com/riboseinc/asciidoctor-iso/wiki/Gem-Customisation-Guide
+It has been created as an exemplar for generating new instances of Metanorma gems, as illustrated in https://github.com/riboseinc/metanorma-iso/wiki/Gem-Customisation-Guide
 
 You can customise output of this gem for your own purposes without needing to customise the gem fully. You can use the
 following asciidoctor document variables to set the stylesheets that are passed as arguments to the `isodoc` gem:

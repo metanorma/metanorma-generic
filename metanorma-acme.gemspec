@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "htmlentities", "~> 4.3.4"
   spec.add_dependency "ruby-jing"
 
-  spec.add_dependency "asciidoctor-iso", "~> 0.10.1"
+  spec.add_dependency "metanorma-standoc", "~> 1.0.0"
   spec.add_dependency "isodoc", "~> 0.8.8"
 
   spec.add_development_dependency "bundler", "~> 1.15"
