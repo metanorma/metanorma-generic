@@ -18,7 +18,21 @@
   of this.
 -->
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-  <include href="biblio.rng"/>
+  <include href="biblio.rng">
+    <define name="status">
+      <element name="status">
+        <choice>
+          <value>proposal</value>
+          <value>working_draft</value>
+          <value>committee_draft</value>
+          <value>draft_standard</value>
+          <value>final_draft</value>
+          <value>published</value>
+          <value>withdrawn</value>
+        </choice>
+      </element>
+    </define>
+  </include>
   <start>
     <ref name="standard-document"/>
   </start>
@@ -28,9 +42,10 @@
       <optional>
         <ref name="version"/>
       </optional>
-      <oneOrMore>
-        <ref name="sections"/>
-      </oneOrMore>
+      <optional>
+        <ref name="preface"/>
+      </optional>
+      <ref name="sections"/>
       <zeroOrMore>
         <ref name="annex"/>
       </zeroOrMore>
@@ -42,11 +57,6 @@
   <define name="bibdata">
     <element name="bibdata">
       <ref name="BibData"/>
-    </element>
-  </define>
-  <define name="status">
-    <element name="status">
-      <ref name="FormattedString"/>
     </element>
   </define>
   <define name="version">
@@ -77,6 +87,13 @@
       <text/>
     </element>
   </define>
+  <define name="preface">
+    <element name="preface">
+      <oneOrMore>
+        <ref name="content"/>
+      </oneOrMore>
+    </element>
+  </define>
   <define name="sections">
     <element name="sections">
       <oneOrMore>
@@ -104,7 +121,9 @@
   </define>
   <define name="section-title">
     <element name="title">
-      <text/>
+      <zeroOrMore>
+        <ref name="TextElement"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="content">
@@ -324,7 +343,7 @@
       <attribute name="id">
         <data type="ID"/>
       </attribute>
-      <ref name="BasicBlock"/>
+      <ref name="paragraph"/>
     </element>
   </define>
   <define name="termsource">
@@ -423,7 +442,7 @@
         <data type="ID"/>
       </attribute>
       <oneOrMore>
-        <ref name="paragraph-with-footnote"/>
+        <ref name="paragraph"/>
       </oneOrMore>
     </element>
   </define>
@@ -690,21 +709,20 @@
         <ref name="tname"/>
       </optional>
       <choice>
-        <oneOrMore>
+        <ref name="image"/>
+        <zeroOrMore>
           <ref name="figure"/>
-        </oneOrMore>
-        <group>
-          <zeroOrMore>
-            <ref name="TextElement"/>
-          </zeroOrMore>
-          <zeroOrMore>
-            <ref name="note"/>
-          </zeroOrMore>
-          <optional>
-            <ref name="dl"/>
-          </optional>
-        </group>
+        </zeroOrMore>
       </choice>
+      <zeroOrMore>
+        <ref name="fn"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="dl"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="note"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="TextElement">
@@ -938,6 +956,11 @@
   </define>
   <define name="li">
     <element name="li">
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
       <oneOrMore>
         <ref name="paragraph-with-footnote"/>
       </oneOrMore>
@@ -981,7 +1004,9 @@
   </define>
   <define name="dt">
     <element name="dt">
-      <ref name="TextElement"/>
+      <zeroOrMore>
+        <ref name="TextElement"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="dd">
