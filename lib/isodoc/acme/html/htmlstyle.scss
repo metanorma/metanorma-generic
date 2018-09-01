@@ -150,7 +150,7 @@ table {
 */
 
 
-@media (min-width: 768px) {
+@media screen and (min-width: 768px) {
     nav {
         position: fixed;
         top: 0;
@@ -201,7 +201,7 @@ table {
     }
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
     #toc {
         padding: 0 1.5em 0 1.5em;
         overflow: visible;
