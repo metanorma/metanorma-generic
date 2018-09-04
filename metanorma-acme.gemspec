@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "ruby-jing"
 
   spec.add_dependency "metanorma-standoc", "~> 1.0.0"
-  spec.add_dependency "isodoc", "~> 0.8.8"
+  spec.add_dependency "isodoc", "~> 0.9.0"
 
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "byebug", "~> 9.1"
@@ -43,5 +43,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "simplecov", "~> 0.15"
   spec.add_development_dependency "timecop", "~> 0.9"
   spec.add_development_dependency "metanorma", "~> 0.2.5"
-  spec.add_development_dependency "metanorma-cli", "~> 0.0.1"
+  spec.add_development_dependency "metanorma-cli", "~> 1.0.0"
 end
