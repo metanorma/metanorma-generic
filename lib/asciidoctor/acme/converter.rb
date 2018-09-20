@@ -33,6 +33,12 @@ module Asciidoctor
         xml.editorialgroup do |a|
           a.committee node.attr("committee"),
             **attr_code(type: node.attr("committee-type"))
+          i = 2
+          while node.attr("committee_#{i}") do
+            a.committee node.attr("committee_#{i}"),
+              **attr_code(type: node.attr("committee-type_#{i}"))
+            i += 1
+          end
         end
       end
 
