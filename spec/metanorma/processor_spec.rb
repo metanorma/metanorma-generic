@@ -1,4 +1,5 @@
 require "spec_helper"
+require "fileutils"
 
 RSpec.describe Metanorma::Acme::Processor do
 
@@ -40,7 +41,7 @@ RSpec.describe Metanorma::Acme::Processor do
   end
 
   it "generates HTML from IsoDoc XML" do
-    system "rm -f test.xml"
+    FileUtils.rm_f "test.xml"
     input = <<~"INPUT"
     <acme-standard xmlns="http://riboseinc.com/isoxml">
       <sections>
