@@ -12,7 +12,8 @@ It has been created as an exemplar for generating new instances of Metanorma gem
 You can customise output of this gem for your own purposes without needing to customise the gem fully. You can use the
 following asciidoctor document variables to set the stylesheets that are passed as arguments to the `isodoc` gem:
 
-````
+[source,asciidoc]
+----
 :body-font: (name of the main font to be used)
 :header-font: (name of the header font to be used)
 :monospace-font: (name of the monospace font to be used)
@@ -27,7 +28,7 @@ following asciidoctor document variables to set the stylesheets that are passed 
 :wordintropage: (intro page for Word)
 :ulstyle: (list style selector for unordered lists for Word)
 :olstyle: (list style selector for ordered lists for Word)
-````
+----
 
 You should run the gem through the https://github.com/riboseinc/metanorma-cli[Metanorma CLI]: 
 
