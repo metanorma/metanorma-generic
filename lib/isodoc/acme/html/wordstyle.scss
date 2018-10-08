@@ -76,6 +76,70 @@ p.MsoNormal, li.MsoNormal, div.MsoNormal
 	mso-fareast-font-family:"Times New Roman";
 	mso-ansi-language:EN-US;
 	mso-fareast-language:EN-US;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+        {mso-style-priority:34;
+        mso-style-unhide:no;
+        mso-style-qformat:yes;
+        margin-top:0cm;
+        margin-right:0cm;
+        margin-bottom:0cm;
+        /* do not put in margin-left, it is specific to list level */
+        margin-bottom:.0001pt;
+        mso-add-space:auto;
+        mso-pagination:widow-orphan;
+        font-size:10.5pt;
+        font-family:$bodyfont;
+        mso-ansi-language:EN-AU;
+        mso-fareast-language:EN-US;}
+p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst
+        {mso-style-priority:34;
+        mso-style-unhide:no;
+        mso-style-qformat:yes;
+        mso-style-type:export-only;
+        margin-top:0cm;
+        margin-right:0cm;
+        margin-bottom:0cm;
+        /* do not put in margin-left, it is specific to list level */
+        margin-bottom:.0001pt;
+        mso-add-space:auto;
+        mso-pagination:widow-orphan;
+        font-size:10.5pt;
+        font-family:$bodyfont;
+        mso-ansi-language:EN-AU;
+        mso-fareast-language:EN-US;}
+p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle
+        {mso-style-priority:34;
+        mso-style-unhide:no;
+        mso-style-qformat:yes;
+        mso-style-type:export-only;
+        margin-top:0cm;
+        margin-right:0cm;
+        margin-bottom:0cm;
+        /* do not put in margin-left, it is specific to list level */
+        margin-bottom:.0001pt;
+        mso-add-space:auto;
+        mso-pagination:widow-orphan;
+        font-size:10.5pt;
+        font-family:$bodyfont;
+        mso-ansi-language:EN-AU;
+        mso-fareast-language:EN-US;}
+p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast
+        {mso-style-priority:34;
+        mso-style-unhide:no;
+        mso-style-qformat:yes;
+        mso-style-type:export-only;
+        margin-top:0cm;
+        margin-right:0cm;
+        margin-bottom:0cm;
+        /* do not put in margin-left, it is specific to list level */
+        margin-bottom:12.0pt;
+        mso-add-space:auto;
+        mso-pagination:widow-orphan;
+        font-size:10.5pt;
+        font-family:$bodyfont;
+        mso-ansi-language:EN-AU;
+        mso-fareast-language:EN-US;}
+
 p.MsoCommentText, li.MsoCommentText, div.MsoCommentText
 	{mso-style-noshow:yes;
 	mso-style-unhide:no;
