@@ -37,7 +37,7 @@ RSpec.describe Metanorma::Acme::Processor do
 </acme-standard>
     OUTPUT
 
-    expect(processor.input_to_isodoc(input)).to be_equivalent_to output
+    expect(processor.input_to_isodoc(input, nil)).to be_equivalent_to output
   end
 
   it "generates HTML from IsoDoc XML" do
