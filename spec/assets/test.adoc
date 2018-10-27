@@ -1,0 +1,15 @@
+= Document title
+Author
+:docfile: test.adoc
+:novalid:
+:htmlstylesheet: spec/assets/htmlstylesheet.scss
+:htmlcoverpage: spec/assets/htmlcoverpage.html
+:htmlintropage: spec/assets/htmlintropage.html
+:scripts: spec/assets/htmlscripts.html
+:wordstylesheet: spec/assets/wordstylesheet.scss
+:standardstylesheet: spec/assets/standardstylesheet.scss
+:wordcoverpage: spec/assets/wordcoverpage.html
+:wordintropage: spec/assets/wordintropage.html
+:header: spec/assets/header.html
+
+Test
