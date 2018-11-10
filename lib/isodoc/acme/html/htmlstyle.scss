@@ -517,7 +517,7 @@ p.document-stage {
    }
 
    ul li:before {
-    content: "—";
+    content: "\2014";
     display: inline-block; width: 1em;
     margin-left: -1.2em;
   }

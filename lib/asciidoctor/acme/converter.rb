@@ -43,14 +43,6 @@ module Asciidoctor
         end
       end
 
-      def title(node, xml)
-        ["en"].each do |lang|
-          xml.title **{ language: lang, format: "plain" } do |t|
-            t << asciidoc_sub(node.attr("title"))
-          end
-        end
-      end
-
       def metadata_status(node, xml)
         xml.status(**{ format: "plain" }) { |s| s << node.attr("status") }
       end
