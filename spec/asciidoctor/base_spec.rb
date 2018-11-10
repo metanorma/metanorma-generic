@@ -82,8 +82,9 @@ RSpec.describe Asciidoctor::Acme do
     <?xml version="1.0" encoding="UTF-8"?>
 <acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
 <bibdata type="standard">
-  <title language="en" format="plain">Main Title</title>
-  <docidentifier>1000</docidentifier>
+  <title language="en" format="text/plain">Main Title</title>
+  <docidentifier>Acme 1000</docidentifier>
+  <docnumber>1000</docnumber>
   <contributor>
     <role type="author"/>
     <organization>

@@ -48,7 +48,12 @@ module Asciidoctor
       end
 
       def metadata_id(node, xml)
-        xml.docidentifier { |i| i << node.attr("docnumber") }
+        return unless node.attr("docnumber")
+        xml.docidentifier do |i|
+          i << "#{Metanorma::Acme::ORGANIZATION_NAME_SHORT} "\
+            "#{node.attr("docnumber")}"
+        end
+        xml.docnumber { |i| i << node.attr("docnumber") }
       end
 
       def metadata_copyright(node, xml)
