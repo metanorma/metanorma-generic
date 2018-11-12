@@ -7,7 +7,7 @@
   -->
   <include href="isostandard.rng">
     <start>
-      <ref name="rsd-standard"/>
+      <ref name="acme-standard"/>
     </start>
     <define name="language">
       <element name="language">
@@ -206,8 +206,8 @@
       <text/>
     </element>
   </define>
-  <define name="rsd-standard">
-    <element name="rsd-standard">
+  <define name="acme-standard">
+    <element name="acme-standard">
       <ref name="bibdata"/>
       <optional>
         <ref name="version"/>
