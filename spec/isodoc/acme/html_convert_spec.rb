@@ -249,7 +249,7 @@ RSpec.describe IsoDoc::Acme do
                  <p id="ISO712" class="NormRef">ISO 712, <i> Cereals and cereal products?~@~I?~@~T?~@~IDetermination of moisture content?~@~I?~@~T?~@~IReference method</i></p>
                               </div>
              <div id="H"><h1>2.&#160; Terms and definitions</h1><p>For the purposes of this document, the terms and definitions
-         given in ISO 712 and the following apply.</p>
+         given in <a href="#ISO712">ISO 712</a> and the following apply.</p>
        <p class="TermNum" id="J">2.1</p>
                 <p class="Terms" style="text-align:left;">Term2</p>
               </div>
