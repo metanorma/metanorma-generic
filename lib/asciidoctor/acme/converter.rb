@@ -104,13 +104,6 @@ module Asciidoctor
         d
       end
 
-      def pdf_convert(filename)
-        url = "#{Dir.pwd}/#{filename}.html"
-        pdfjs = File.join(File.dirname(__FILE__), 'pdf.js')
-        system "export NODE_PATH=$(npm root --quiet -g);
-                node #{pdfjs} file://#{url} #{filename}.pdf"
-      end
-
       def document(node)
         init(node)
         ret1 = makexml(node)
@@ -159,6 +152,10 @@ module Asciidoctor
 
       def html_converter(node)
         IsoDoc::Acme::HtmlConvert.new(html_extract_attributes(node))
+      end
+
+      def pdf_converter(node)
+        IsoDoc::Acme::PdfConvert.new(html_extract_attributes(node))
       end
 
       def word_converter(node)
