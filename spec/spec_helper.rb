@@ -4,7 +4,7 @@ SimpleCov.start do
 end
 
 require "bundler/setup"
-require "metanorma-ogc"
+require "metanorma-acme"
 require "rspec/matchers"
 require "equivalent-xml"
 require "htmlentities"
@@ -51,20 +51,20 @@ HDR
 
 BLANK_HDR = <<~"HDR"
        <?xml version="1.0" encoding="UTF-8"?>
-       <ogc-standard xmlns="#{Metanorma::Ogc::DOCUMENT_NAMESPACE}">
+       <acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
        <bibdata type="standard">
 
 
          <contributor>
            <role type="author"/>
            <organization>
-             <name>#{Metanorma::Ogc::ORGANIZATION_NAME_SHORT}</name>
+             <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
            </organization>
          </contributor>
          <contributor>
            <role type="publisher"/>
            <organization>
-             <name>#{Metanorma::Ogc::ORGANIZATION_NAME_SHORT}</name>
+             <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
            </organization>
          </contributor>
 
@@ -75,7 +75,7 @@ BLANK_HDR = <<~"HDR"
            <from>#{Time.new.year}</from>
            <owner>
              <organization>
-               <name>#{Metanorma::Ogc::ORGANIZATION_NAME_SHORT}</name>
+               <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
              </organization>
            </owner>
          </copyright>

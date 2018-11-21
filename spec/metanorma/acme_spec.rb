@@ -1,7 +1,7 @@
 require "spec_helper"
 
-RSpec.describe Metanorma::Ogc do
+RSpec.describe Metanorma::Acme do
   it "has a version number" do
-    expect(Metanorma::Ogc::VERSION).not_to be nil
+    expect(Metanorma::Acme::VERSION).not_to be nil
   end
 end

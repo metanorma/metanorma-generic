@@ -1,7 +1,7 @@
 require "spec_helper"
 require "fileutils"
 
-RSpec.describe Asciidoctor::Ogc do
+RSpec.describe Asciidoctor::Acme do
   it "generates output for the Rice document" do
     FileUtils.rm_rf %w(spec/examples/rfc6350.doc spec/examples/rfc6350.html spec/examples/rfc6350.pdf)
     FileUtils.cd "spec/examples"
@@ -23,7 +23,7 @@ RSpec.describe Asciidoctor::Ogc do
 </acme-standard>
     OUTPUT
 
-    expect(Asciidoctor.convert(input, backend: :ogc, header_footer: true)).to be_equivalent_to output
+    expect(Asciidoctor.convert(input, backend: :acme, header_footer: true)).to be_equivalent_to output
   end
 
   it "converts a blank document" do
@@ -41,7 +41,7 @@ RSpec.describe Asciidoctor::Ogc do
     OUTPUT
 
     FileUtils.rm_f "test.html"
-    expect(Asciidoctor.convert(input, backend: :ogc, header_footer: true)).to be_equivalent_to output
+    expect(Asciidoctor.convert(input, backend: :acme, header_footer: true)).to be_equivalent_to output
     expect(File.exist?("test.html")).to be true
   end
 
@@ -80,21 +80,21 @@ RSpec.describe Asciidoctor::Ogc do
 
     output = <<~"OUTPUT"
     <?xml version="1.0" encoding="UTF-8"?>
-<acme-standard xmlns="#{Metanorma::Ogc::DOCUMENT_NAMESPACE}">
+<acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
 <bibdata type="standard">
   <title language="en" format="text/plain">Main Title</title>
-  <docidentifier>Ogc 1000</docidentifier>
+  <docidentifier>Acme 1000</docidentifier>
   <docnumber>1000</docnumber>
   <contributor>
     <role type="author"/>
     <organization>
-      <name>#{Metanorma::Ogc::ORGANIZATION_NAME_SHORT}</name>
+      <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
     </organization>
   </contributor>
   <contributor>
     <role type="publisher"/>
     <organization>
-      <name>#{Metanorma::Ogc::ORGANIZATION_NAME_SHORT}</name>
+      <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
     </organization>
   </contributor>
   <language>en</language>
@@ -104,7 +104,7 @@ RSpec.describe Asciidoctor::Ogc do
     <from>2001</from>
     <owner>
       <organization>
-        <name>#{Metanorma::Ogc::ORGANIZATION_NAME_SHORT}</name>
+        <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
       </organization>
     </owner>
   </copyright>
@@ -122,7 +122,7 @@ RSpec.describe Asciidoctor::Ogc do
 </acme-standard>
     OUTPUT
 
-    expect(Asciidoctor.convert(input, backend: :ogc, header_footer: true)).to be_equivalent_to output
+    expect(Asciidoctor.convert(input, backend: :acme, header_footer: true)).to be_equivalent_to output
   end
 
   it "processes figures" do
@@ -151,7 +151,7 @@ RSpec.describe Asciidoctor::Ogc do
        </acme-standard>
     OUTPUT
 
-    expect(strip_guid(Asciidoctor.convert(input, backend: :ogc, header_footer: true))).to be_equivalent_to output
+    expect(strip_guid(Asciidoctor.convert(input, backend: :acme, header_footer: true))).to be_equivalent_to output
   end
 
   it "strips inline header" do
@@ -174,7 +174,7 @@ RSpec.describe Asciidoctor::Ogc do
        </acme-standard>
     OUTPUT
 
-    expect(strip_guid(Asciidoctor.convert(input, backend: :ogc, header_footer: true))).to be_equivalent_to output
+    expect(strip_guid(Asciidoctor.convert(input, backend: :acme, header_footer: true))).to be_equivalent_to output
   end
 
   it "uses default fonts" do
@@ -186,7 +186,7 @@ RSpec.describe Asciidoctor::Ogc do
     INPUT
 
     FileUtils.rm_f "test.html"
-    Asciidoctor.convert(input, backend: :ogc, header_footer: true)
+    Asciidoctor.convert(input, backend: :acme, header_footer: true)
 
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r[\.Sourcecode[^{]+\{[^}]+font-family: "Space Mono", monospace;]m)
@@ -204,7 +204,7 @@ RSpec.describe Asciidoctor::Ogc do
     INPUT
 
     FileUtils.rm_f "test.html"
-    Asciidoctor.convert(input, backend: :ogc, header_footer: true)
+    Asciidoctor.convert(input, backend: :acme, header_footer: true)
 
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r[\.Sourcecode[^{]+\{[^}]+font-family: "Space Mono", monospace;]m)
@@ -225,7 +225,7 @@ RSpec.describe Asciidoctor::Ogc do
     INPUT
 
     FileUtils.rm_f "test.html"
-    Asciidoctor.convert(input, backend: :ogc, header_footer: true)
+    Asciidoctor.convert(input, backend: :acme, header_footer: true)
 
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r[\.Sourcecode[^{]+\{[^{]+font-family: Andale Mono;]m)
@@ -269,7 +269,7 @@ RSpec.describe Asciidoctor::Ogc do
        </acme-standard>
     OUTPUT
 
-    expect(strip_guid(Asciidoctor.convert(input, backend: :ogc, header_footer: true))).to be_equivalent_to output
+    expect(strip_guid(Asciidoctor.convert(input, backend: :acme, header_footer: true))).to be_equivalent_to output
   end
 
   it "uses user-specified HTML stylesheets" do

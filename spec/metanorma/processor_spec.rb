@@ -1,13 +1,13 @@
 require "spec_helper"
 require "fileutils"
 
-RSpec.describe Metanorma::Ogc::Processor do
+RSpec.describe Metanorma::Acme::Processor do
 
   registry = Metanorma::Registry.instance
-  registry.register(Metanorma::Ogc::Processor)
+  registry.register(Metanorma::Acme::Processor)
 
   let(:processor) {
-    registry.find_processor(:ogc)
+    registry.find_processor(:acme)
   }
 
   it "registers against metanorma" do
@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Ogc::Processor do
   end
 
   it "registers version against metanorma" do
-    expect(processor.version.to_s).to match(%r{^Metanorma::Ogc })
+    expect(processor.version.to_s).to match(%r{^Metanorma::Acme })
   end
 
   it "generates IsoDoc XML from a blank document" do
@@ -34,7 +34,7 @@ RSpec.describe Metanorma::Ogc::Processor do
     output = <<~"OUTPUT"
     #{BLANK_HDR}
 <sections/>
-</ogc-standard>
+</acme-standard>
     OUTPUT
 
     expect(processor.input_to_isodoc(input, nil)).to be_equivalent_to output
@@ -43,7 +43,7 @@ RSpec.describe Metanorma::Ogc::Processor do
   it "generates HTML from IsoDoc XML" do
     FileUtils.rm_f "test.xml"
     input = <<~"INPUT"
-    <ogc-standard xmlns="http://riboseinc.com/isoxml">
+    <acme-standard xmlns="http://riboseinc.com/isoxml">
       <sections>
         <terms id="H" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title>
           <term id="J">
@@ -51,7 +51,7 @@ RSpec.describe Metanorma::Ogc::Processor do
           </term>
         </terms>
       </sections>
-    </ogc-standard>
+    </acme-standard>
     INPUT
 
     output = <<~"OUTPUT"
