@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<acme-standard xmlns="https://open.ribose.com/standards/acme">
+<bibdata type="standard">
+  
+  <contributor>
+    <role type="author"/>
+    <organization>
+      <name>Acme</name>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      <name>Acme</name>
+    </organization>
+  </contributor>
+  <language>en</language>
+  <script>Latn</script>
+  
+  <copyright>
+    <from>2018</from>
+    <owner>
+      <organization>
+        <name>Acme</name>
+      </organization>
+    </owner>
+  </copyright>
+  <editorialgroup>
+    <committee/>
+  </editorialgroup>
+</bibdata>
+<sections>
+  <p id="_0cbb5a6c-0bfb-49b8-aca3-de71e19beb7c">Test</p>
+</sections>
+</acme-standard>

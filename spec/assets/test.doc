@@ -1,0 +1,71 @@
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----=_NextPart_7fcabe32.a3bf.44d1"
+
+------=_NextPart_7fcabe32.a3bf.44d1
+Content-Location: file:///C:/Doc/test.htm
+Content-Type: text/html; charset="utf-8"
+
+<?xml version="1.0"?>
+<html xmlns:epub="http://www.idpf.org/2007/ops" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns="http://www.w3.org/TR/REC-html40">
+  <head><!--[if gte mso 9]>
+<xml>
+<w:WordDocument>
+<w:View>Print</w:View>
+<w:Zoom>100</w:Zoom>
+<w:DoNotOptimizeForBrowser/>
+</w:WordDocument>
+</xml>
+<![endif]-->
+<meta http-equiv=Content-Type content="text/html; charset=utf-8"/>
+
+  <link rel=File-List href="test_files/filelist.xml"/>
+<style>
+  <!--
+/* I am a Word stylesheet */
+
+-->
+</style><meta http-equiv=Content-Type content="text/html; charset=UTF-8"/>
+    <style>
+      <!--
+/* I am a Standard stylesheet */
+
+-->
+    </style>
+  </head>
+  <body lang="EN-US" link="blue" vlink="#954F72" xml:lang="EN-US">
+    <div class="WordSection1"><!-- I am a Word cover page -->
+
+      <p class="MsoNormal">&#xA0;</p>
+    </div>
+    <br clear="all" class="section"/>
+    <div class="WordSection2"><!-- I am a Word intro page -->
+
+
+      <p class="MsoNormal">&#xA0;</p>
+    </div>
+    <br clear="all" class="section"/>
+    <div class="WordSection3">
+      <p class="zzSTDTitle1"></p>
+    </div>
+  <div style="mso-element:footnote-list"/></body>
+</html>
+
+
+------=_NextPart_7fcabe32.a3bf.44d1
+Content-Location: file:///C:/Doc/test_files/filelist.xml
+Content-Transfer-Encoding: base64
+Content-Type: application/xml
+
+PHhtbCB4bWxuczpvPSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTpvZmZpY2UiPgog
+ICAgICAgIDxvOk1haW5GaWxlIEhSZWY9Ii4uL3NwZWMvYXNzZXRzL3Rlc3QuaHRtIi8+ICA8bzpG
+aWxlIEhSZWY9ImZpbGVsaXN0LnhtbCIvPgogIDxvOkZpbGUgSFJlZj0iaGVhZGVyLmh0bWwiLz4K
+PC94bWw+Cg==
+
+------=_NextPart_7fcabe32.a3bf.44d1
+Content-Location: file:///C:/Doc/test_files/header.html
+Content-Transfer-Encoding: base64
+Content-Type: text/html charset="utf-8"
+
+PCEtLSBJIGFtIGEgV29yZCBIZWFkZXIgZmlsZSAtLT4K
+
+------=_NextPart_7fcabe32.a3bf.44d1--
