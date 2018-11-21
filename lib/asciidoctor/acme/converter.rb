@@ -114,7 +114,7 @@ module Asciidoctor
           File.open(filename, "w") { |f| f.write(ret) }
           html_converter(node).convert filename unless node.attr("nodoc")
           word_converter(node).convert filename unless node.attr("nodoc")
-          pdf_convert(filename.sub(/\.xml$/, "")) unless node.attr("nodoc")
+          pdf_converter(filename.sub(/\.xml$/, "")) unless node.attr("nodoc")
         end
         @files_to_delete.each { |f| FileUtils.rm f }
         ret
