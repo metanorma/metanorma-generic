@@ -49,6 +49,10 @@ module IsoDoc
         end
       end
 
+      def unpublished(status)
+        %w(published withdrawn).include? status.downcase
+      end
+
       def version(isoxml, _out)
         super
         revdate = get[:revdate]
