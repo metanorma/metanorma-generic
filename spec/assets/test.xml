@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <acme-standard xmlns="https://open.ribose.com/standards/acme">
 <bibdata type="standard">
+  <title language="en" format="text/plain">Document title</title>
   
   <contributor>
     <role type="author"/>
@@ -30,6 +31,6 @@
   </editorialgroup>
 </bibdata>
 <sections>
-  <p id="_c9f7f906-3fe2-45ed-ae1b-f6d046aaca45">Test</p>
+  <p id="_5a6c629a-35bd-4674-a1e6-81be075796fe">Test</p>
 </sections>
 </acme-standard>

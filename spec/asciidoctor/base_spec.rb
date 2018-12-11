@@ -85,7 +85,11 @@ RSpec.describe Asciidoctor::Acme do
   <title language="en" format="text/plain">Main Title</title>
   <docidentifier>Acme 1000</docidentifier>
   <docnumber>1000</docnumber>
-  <contributor>
+  <edition>2</edition>
+<version>
+  <revision-date>2000-01-01</revision-date>
+  <draft>3.4</draft>
+</version>  <contributor>
     <role type="author"/>
     <organization>
       <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
@@ -113,11 +117,7 @@ RSpec.describe Asciidoctor::Acme do
     <committee type="B">TC1</committee>
   </editorialgroup>
   <security>Client Confidential</security>
-</bibdata><version>
-  <edition>2</edition>
-  <revision-date>2000-01-01</revision-date>
-  <draft>3.4</draft>
-</version>
+</bibdata>
 <sections/>
 </acme-standard>
     OUTPUT
@@ -227,8 +227,8 @@ RSpec.describe Asciidoctor::Acme do
         <p id="_"><em>emphasis</em>
        <strong>strong</strong>
        <tt>monospace</tt>
-       "double quote"
-       'single quote'
+       “double quote”
+       ‘single quote’
        super<sup>script</sup>
        sub<sub>script</sub>
        <stem type="AsciiMath">a_90</stem>
