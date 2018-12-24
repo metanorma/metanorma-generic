@@ -522,17 +522,17 @@ p.document-stage {
   list-style: none;
    }
 
-   ul li:before {
+   ul > li:before {
     content: "\2014";
     display: inline-block; width: 1em;
     margin-left: -1.2em;
   }
 
-  ul li p:first-child {
+  ul > li p:first-child {
     display: inline;
   }
 
-ul li:first-child {
+ul > li:first-child {
   margin-top: 1em;
 }
 
