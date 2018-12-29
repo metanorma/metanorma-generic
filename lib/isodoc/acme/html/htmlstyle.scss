@@ -602,6 +602,18 @@ p.Biblio, p.NormRef {
     }
 }
 
+.Admonition {
+    background-color: #ffcccc;
+    color: #47430c;
+    padding: 1.2em;
+    margin: 1em 0 1em 0;
+
+    p {
+        margin: 0;
+    }
+}
+
+
 /*
     3.8 Examples
 */
@@ -1033,6 +1045,18 @@ To top button
     .Note p {
       padding: 0 5px 0 5px;
     }
+
+    .Admonition {
+        background-color: #ffcccc;
+        color: #47430c;
+        padding: 5px;
+        margin: 2em 0 1em 0; }
+
+    .Admonition p {
+      padding: 0 5px 0 5px;
+    }
+
+
 
     nav {
       line-height: 1;
