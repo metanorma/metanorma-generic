@@ -1,4 +1,4 @@
-= metanorma-acme: Asciidoctor processor for a (fictitios) Acme Corporation
+= metanorma-acme: Asciidoctor processor for a (fictitious) Acme Corporation
 
 image:https://img.shields.io/gem/v/metanorma-acme.svg["Gem Version", link="https://rubygems.org/gems/metanorma-acme"]
 image:https://img.shields.io/travis/riboseinc/metanorma-acme/master.svg["Build Status", link="https://travis-ci.org/riboseinc/metanorma-acme"]

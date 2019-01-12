@@ -19,7 +19,7 @@
   <script>Latn</script>
   
   <copyright>
-    <from>2018</from>
+    <from>2019</from>
     <owner>
       <organization>
         <name>Acme</name>
@@ -31,6 +31,6 @@
   </editorialgroup>
 </bibdata>
 <sections>
-  <p id="_74d2c4d0-d81d-483b-887f-77a9b80fb6e3">Test</p>
+  <p id="_2442ee7f-29eb-4451-9dec-348066fd7328">Test</p>
 </sections>
 </acme-standard>

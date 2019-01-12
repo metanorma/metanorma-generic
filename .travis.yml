@@ -7,7 +7,7 @@ rvm:
   - 2.3
   - ruby-head
 before_install:
-  - gem install bundler -v 1.16.1
+  - gem install bundler -v 2.0.1
   - npm install -g puppeteer
   - npm install
   - unset _JAVA_OPTIONS
