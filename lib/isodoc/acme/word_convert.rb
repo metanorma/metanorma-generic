@@ -11,7 +11,11 @@ module IsoDoc
       def initialize(options)
         @libdir = File.dirname(__FILE__)
         super
+      end
+
+      def convert1(docxml, filename, dir)
         FileUtils.cp html_doc_path('logo.jpg'), "logo.jpg"
+        super
       end
 
       def default_fonts(options)
@@ -68,8 +72,8 @@ module IsoDoc
           t << "#{get_anchors[annex['id']][:label]} "
           t.br
           t.b do |b|
-          name&.children&.each { |c2| parse(c2, b) }
-        end
+            name&.children&.each { |c2| parse(c2, b) }
+          end
         end
       end
 
