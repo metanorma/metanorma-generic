@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <acme-standard xmlns="https://open.ribose.com/standards/acme">
-<bibdata type="standard">
-  <title language="en" format="text/plain">Document title</title>
-  
-  <contributor>
-    <role type="author"/>
-    <organization>
-      <name>Acme</name>
-    </organization>
-  </contributor>
-  <contributor>
-    <role type="publisher"/>
-    <organization>
-      <name>Acme</name>
-    </organization>
-  </contributor>
-  <language>en</language>
-  <script>Latn</script>
-  
-  <copyright>
-    <from>2019</from>
-    <owner>
-      <organization>
-        <name>Acme</name>
-      </organization>
-    </owner>
-  </copyright>
-  <editorialgroup>
-    <committee/>
-  </editorialgroup>
+<bibdata type="standard"> 
+  <title language="en" format="text/plain">Document title</title> 
+  <contributor> 
+    <role type="author"/> 
+    <organization> 
+      <name>Acme</name> 
+    </organization> 
+  </contributor> 
+  <contributor> 
+    <role type="publisher"/> 
+    <organization> 
+      <name>Acme</name> 
+    </organization> 
+  </contributor> 
+   
+  <language>en</language> 
+  <script>Latn</script> 
+   
+  <copyright> 
+    <from>2019</from> 
+    <owner> 
+      <organization> 
+        <name>Acme</name> 
+      </organization> 
+    </owner> 
+  </copyright> 
+  <editorialgroup> 
+    <committee/> 
+  </editorialgroup> 
 </bibdata>
-<sections>
-  <p id="_0a9da283-6c10-48d4-aa5b-4a44fb2ad68e">Test</p>
+<sections> 
+  <p id="_d4de3b3e-0cad-4cb9-ba6a-f6ea5eda440c">Test</p> 
 </sections>
 </acme-standard>
