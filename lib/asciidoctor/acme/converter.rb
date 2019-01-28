@@ -88,7 +88,7 @@ module Asciidoctor
         result << noko { |ixml| front node, ixml }
         result << noko { |ixml| middle node, ixml }
         result << "</acme-standard>"
-        result = textcleanup(result.flatten * "\n")
+        result = textcleanup(result)
         ret1 = cleanup(Nokogiri::XML(result))
         validate(ret1)
         ret1.root.add_namespace(nil, Metanorma::Acme::DOCUMENT_NAMESPACE)
