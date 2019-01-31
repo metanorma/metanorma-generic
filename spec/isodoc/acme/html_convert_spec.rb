@@ -9,6 +9,11 @@ RSpec.describe IsoDoc::Acme do
 <bibdata type="standard">
   <title language="en" format="plain">Main Title</title>
   <docidentifier>1000</docidentifier>
+  <edition>2</edition>
+  <version>
+  <revision-date>2000-01-01</revision-date>
+  <draft>3.4</draft>
+</version>
   <contributor>
     <role type="author"/>
     <organization>
@@ -36,17 +41,13 @@ RSpec.describe IsoDoc::Acme do
     <committee type="A">TC</committee>
   </editorialgroup>
   <security>Client Confidential</security>
-</bibdata><version>
-  <edition>2</edition>
-  <revision-date>2000-01-01</revision-date>
-  <draft>3.4</draft>
-</version>
+</bibdata>
 <sections/>
 </acme-standard>
     INPUT
 
     output = <<~"OUTPUT"
-        {:accesseddate=>"XXX", :confirmeddate=>"XXX", :createddate=>"XXX", :docnumber=>"1000(wd)", :doctitle=>"Main Title", :doctype=>"Standard", :docyear=>"2001", :draft=>"3.4", :draftinfo=>" (draft 3.4, 2000-01-01)", :editorialgroup=>[], :ics=>"XXX", :implementeddate=>"XXX", :issueddate=>"XXX", :obsoleteddate=>"XXX", :obsoletes=>nil, :obsoletes_part=>nil, :publisheddate=>"XXX", :receiveddate=>"XXX", :revdate=>"2000-01-01", :revdate_monthyear=>"January 2000", :sc=>"XXXX", :secretariat=>"XXXX", :security=>"Client Confidential", :status=>"Working Draft", :tc=>"TC", :unpublished=>true, :updateddate=>"XXX", :wg=>"XXXX"}
+        {:accesseddate=>"XXX", :confirmeddate=>"XXX", :createddate=>"XXX", :docnumber=>"1000(wd)", :doctitle=>"Main Title", :doctype=>"Standard", :docyear=>"2001", :draft=>"3.4", :draftinfo=>" (draft 3.4, 2000-01-01)", :edition=>"2", :editorialgroup=>[], :ics=>"XXX", :implementeddate=>"XXX", :issueddate=>"XXX", :obsoleteddate=>"XXX", :obsoletes=>nil, :obsoletes_part=>nil, :publisheddate=>"XXX", :receiveddate=>"XXX", :revdate=>"2000-01-01", :revdate_monthyear=>"January 2000", :sc=>"XXXX", :secretariat=>"XXXX", :security=>"Client Confidential", :status=>"Working Draft", :tc=>"TC", :unpublished=>true, :updateddate=>"XXX", :wg=>"XXXX"}
     OUTPUT
 
     docxml, filename, dir = csdc.convert_init(input, "test", true)
@@ -58,17 +59,13 @@ RSpec.describe IsoDoc::Acme do
 <acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
 <bibdata type="standard">
   <status format="plain">committee-draft</status>
-</bibdata><version>
-  <edition>2</edition>
-  <revision-date>2000-01-01</revision-date>
-  <draft>3.4</draft>
-</version>
+</bibdata>
 <sections/>
 </acme-standard>
     INPUT
 
     output = <<~"OUTPUT"
-      {:accesseddate=>"XXX", :confirmeddate=>"XXX", :createddate=>"XXX", :docnumber=>"(cd)", :doctitle=>nil, :doctype=>"Standard", :docyear=>nil, :draft=>"3.4", :draftinfo=>" (draft 3.4, 2000-01-01)", :editorialgroup=>[], :ics=>"XXX", :implementeddate=>"XXX", :issueddate=>"XXX", :obsoleteddate=>"XXX", :obsoletes=>nil, :obsoletes_part=>nil, :publisheddate=>"XXX", :receiveddate=>"XXX", :revdate=>"2000-01-01", :revdate_monthyear=>"January 2000", :sc=>"XXXX", :secretariat=>"XXXX", :status=>"Committee Draft", :tc=>"XXXX", :unpublished=>true, :updateddate=>"XXX", :wg=>"XXXX"}
+      {:accesseddate=>"XXX", :confirmeddate=>"XXX", :createddate=>"XXX", :docnumber=>"(cd)", :doctitle=>nil, :doctype=>"Standard", :docyear=>nil, :draft=>nil, :draftinfo=>"", :edition=>nil, :editorialgroup=>[], :ics=>"XXX", :implementeddate=>"XXX", :issueddate=>"XXX", :obsoleteddate=>"XXX", :obsoletes=>nil, :obsoletes_part=>nil, :publisheddate=>"XXX", :receiveddate=>"XXX", :revdate=>nil, :revdate_monthyear=>nil, :sc=>"XXXX", :secretariat=>"XXXX", :status=>"Committee Draft", :tc=>"XXXX", :unpublished=>true, :updateddate=>"XXX", :wg=>"XXXX"}
     OUTPUT
 
     csdc = IsoDoc::Acme::HtmlConvert.new({})
@@ -81,17 +78,13 @@ RSpec.describe IsoDoc::Acme do
 <acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
 <bibdata type="standard">
   <status format="plain">draft-standard</status>
-</bibdata><version>
-  <edition>2</edition>
-  <revision-date>2000-01-01</revision-date>
-  <draft>3.4</draft>
-</version>
+</bibdata>
 <sections/>
 </acme-standard>
     INPUT
 
     output = <<~"OUTPUT"
-      {:accesseddate=>"XXX", :confirmeddate=>"XXX", :createddate=>"XXX", :docnumber=>"(d)", :doctitle=>nil, :doctype=>"Standard", :docyear=>nil, :draft=>"3.4", :draftinfo=>" (draft 3.4, 2000-01-01)", :editorialgroup=>[], :ics=>"XXX", :implementeddate=>"XXX", :issueddate=>"XXX", :obsoleteddate=>"XXX", :obsoletes=>nil, :obsoletes_part=>nil, :publisheddate=>"XXX", :receiveddate=>"XXX", :revdate=>"2000-01-01", :revdate_monthyear=>"January 2000", :sc=>"XXXX", :secretariat=>"XXXX", :status=>"Draft Standard", :tc=>"XXXX", :unpublished=>true, :updateddate=>"XXX", :wg=>"XXXX"}
+      {:accesseddate=>"XXX", :confirmeddate=>"XXX", :createddate=>"XXX", :docnumber=>"(d)", :doctitle=>nil, :doctype=>"Standard", :docyear=>nil, :draft=>nil, :draftinfo=>"", :edition=>nil, :editorialgroup=>[], :ics=>"XXX", :implementeddate=>"XXX", :issueddate=>"XXX", :obsoleteddate=>"XXX", :obsoletes=>nil, :obsoletes_part=>nil, :publisheddate=>"XXX", :receiveddate=>"XXX", :revdate=>nil, :revdate_monthyear=>nil, :sc=>"XXXX", :secretariat=>"XXXX", :status=>"Draft Standard", :tc=>"XXXX", :unpublished=>true, :updateddate=>"XXX", :wg=>"XXXX"}
     OUTPUT
 
     csdc = IsoDoc::Acme::HtmlConvert.new({})
@@ -104,17 +97,13 @@ RSpec.describe IsoDoc::Acme do
 <acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
 <bibdata type="standard">
   <status format="plain">published</status>
-</bibdata><version>
-  <edition>2</edition>
-  <revision-date>2000-01-01</revision-date>
-  <draft>3.4</draft>
-</version>
+</bibdata>
 <sections/>
 </acme-standard>
     INPUT
 
     output = <<~"OUTPUT"
-      {:accesseddate=>"XXX", :confirmeddate=>"XXX", :createddate=>"XXX", :docnumber=>nil, :doctitle=>nil, :doctype=>"Standard", :docyear=>nil, :draft=>"3.4", :draftinfo=>" (draft 3.4, 2000-01-01)", :editorialgroup=>[], :ics=>"XXX", :implementeddate=>"XXX", :issueddate=>"XXX", :obsoleteddate=>"XXX", :obsoletes=>nil, :obsoletes_part=>nil, :publisheddate=>"XXX", :receiveddate=>"XXX", :revdate=>"2000-01-01", :revdate_monthyear=>"January 2000", :sc=>"XXXX", :secretariat=>"XXXX", :status=>"Published", :tc=>"XXXX", :unpublished=>false, :updateddate=>"XXX", :wg=>"XXXX"}
+      {:accesseddate=>"XXX", :confirmeddate=>"XXX", :createddate=>"XXX", :docnumber=>nil, :doctitle=>nil, :doctype=>"Standard", :docyear=>nil, :draft=>nil, :draftinfo=>"", :edition=>nil, :editorialgroup=>[], :ics=>"XXX", :implementeddate=>"XXX", :issueddate=>"XXX", :obsoleteddate=>"XXX", :obsoletes=>nil, :obsoletes_part=>nil, :publisheddate=>"XXX", :receiveddate=>"XXX", :revdate=>nil, :revdate_monthyear=>nil, :sc=>"XXXX", :secretariat=>"XXXX", :status=>"Published", :tc=>"XXXX", :unpublished=>false, :updateddate=>"XXX", :wg=>"XXXX"}
     OUTPUT
 
     csdc = IsoDoc::Acme::HtmlConvert.new({})
@@ -127,17 +116,13 @@ RSpec.describe IsoDoc::Acme do
 <acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
 <bibdata type="standard">
   <status format="plain">standard</status>
-</bibdata><version>
-  <edition>2</edition>
-  <revision-date>2000-01-01</revision-date>
-  <draft>3.4</draft>
-</version>
+</bibdata>
 <sections/>
 </acme-standard>
     INPUT
 
     output = <<~"OUTPUT"
-      {:accesseddate=>"XXX", :confirmeddate=>"XXX", :createddate=>"XXX", :docnumber=>nil, :doctitle=>nil, :doctype=>"Standard", :docyear=>nil, :draft=>"3.4", :draftinfo=>" (draft 3.4, 2000-01-01)", :editorialgroup=>[], :ics=>"XXX", :implementeddate=>"XXX", :issueddate=>"XXX", :obsoleteddate=>"XXX", :obsoletes=>nil, :obsoletes_part=>nil, :publisheddate=>"XXX", :receiveddate=>"XXX", :revdate=>"2000-01-01", :revdate_monthyear=>"January 2000", :sc=>"XXXX", :secretariat=>"XXXX", :status=>"Standard", :tc=>"XXXX", :unpublished=>true, :updateddate=>"XXX", :wg=>"XXXX"}
+      {:accesseddate=>"XXX", :confirmeddate=>"XXX", :createddate=>"XXX", :docnumber=>nil, :doctitle=>nil, :doctype=>"Standard", :docyear=>nil, :draft=>nil, :draftinfo=>"", :edition=>nil, :editorialgroup=>[], :ics=>"XXX", :implementeddate=>"XXX", :issueddate=>"XXX", :obsoleteddate=>"XXX", :obsoletes=>nil, :obsoletes_part=>nil, :publisheddate=>"XXX", :receiveddate=>"XXX", :revdate=>nil, :revdate_monthyear=>nil, :sc=>"XXXX", :secretariat=>"XXXX", :status=>"Standard", :tc=>"XXXX", :unpublished=>true, :updateddate=>"XXX", :wg=>"XXXX"}
     OUTPUT
 
     csdc = IsoDoc::Acme::HtmlConvert.new({})
