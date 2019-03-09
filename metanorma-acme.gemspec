@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
     This gem is meant to be customised for any downstream use.
   DESCRIPTION
 
-  spec.homepage      = "https://github.com/riboseinc/metanorma-acme"
+  spec.homepage      = "https://github.com/metanorma/metanorma-acme"
   spec.license       = "BSD-2-Clause"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
