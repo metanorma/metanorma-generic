@@ -46,6 +46,11 @@ module IsoDoc
 
     <!--TOC script import-->
     <script type="text/javascript"  src="https://cdn.rawgit.com/jgallen23/toc/0.3.2/dist/toc.min.js"></script>
+    <script type="text/javascript">
+    function toclevel() { var i; var text = "";
+      for(i = 1; i <= #{@htmlToClevels}; i++) {
+        if (i > 1) { text += ","; } text += "h" + i + ":not(.TermNum)"; } }
+    </script>
 
     <!--Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i|Space+Mono:400,700" rel="stylesheet">
