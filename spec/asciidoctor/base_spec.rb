@@ -103,7 +103,10 @@ RSpec.describe Asciidoctor::Acme do
   </contributor>
   <language>en</language>
   <script>Latn</script>
-  <status format="plain">working-draft</status>
+  <status>
+    <stage>working-draft</stage>
+    <iteration>3</iteration>
+  </status>
   <copyright>
     <from>2001</from>
     <owner>

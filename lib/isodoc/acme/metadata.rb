@@ -6,7 +6,6 @@ module IsoDoc
     class Metadata < IsoDoc::Metadata
       def initialize(lang, script, labels)
         super
-        set(:status, "XXX")
       end
 
       def title(isoxml, _out)
@@ -25,18 +24,13 @@ module IsoDoc
 
       def docid(isoxml, _out)
         docnumber = isoxml.at(ns("//bibdata/docidentifier"))
-        docstatus = isoxml.at(ns("//bibdata/status"))
+        docstatus = isoxml.at(ns("//bibdata/status/stage"))
         dn = docnumber&.text
         if docstatus
-          set(:status, status_print(docstatus.text))
           abbr = status_abbr(docstatus.text)
           dn = "#{dn}(#{abbr})" unless abbr.empty?
         end
         set(:docnumber, dn)
-      end
-
-      def status_print(status)
-        status.split(/-/).map{ |w| w.capitalize }.join(" ")
       end
 
       def status_abbr(status)
