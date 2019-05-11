@@ -115,11 +115,14 @@ RSpec.describe Asciidoctor::Acme do
       </organization>
     </owner>
   </copyright>
+  <ext>
+  <doctype>standard</doctype>
   <editorialgroup>
     <committee type="A">TC</committee>
     <committee type="B">TC1</committee>
   </editorialgroup>
   <security>Client Confidential</security>
+  </ext>
 </bibdata>
 <sections/>
 </acme-standard>

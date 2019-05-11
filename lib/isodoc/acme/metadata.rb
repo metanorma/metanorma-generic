@@ -18,7 +18,7 @@ module IsoDoc
       end
 
       def author(isoxml, _out)
-        tc = isoxml.at(ns("//bibdata/editorialgroup/committee"))
+        tc = isoxml.at(ns("//bibdata/ext/editorialgroup/committee"))
         set(:tc, tc.text) if tc
       end
 
@@ -75,7 +75,7 @@ module IsoDoc
       end
 
       def security(isoxml, _out)
-        security = isoxml.at(ns("//bibdata/security")) || return
+        security = isoxml.at(ns("//bibdata/ext/security")) || return
         set(:security, security.text)
       end
     end

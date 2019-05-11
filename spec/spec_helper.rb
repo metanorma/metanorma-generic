@@ -81,9 +81,9 @@ BLANK_HDR = <<~"HDR"
              </organization>
            </owner>
          </copyright>
-         <editorialgroup>
-           <committee/>
-         </editorialgroup>
+         <ext>
+         <doctype>standard</doctype>
+         </ext>
        </bibdata>
 HDR
 

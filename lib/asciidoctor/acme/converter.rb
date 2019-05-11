@@ -31,6 +31,7 @@ module Asciidoctor
       end
 
       def metadata_committee(node, xml)
+        return unless node.attr("committee")
         xml.editorialgroup do |a|
           a.committee node.attr("committee"),
             **attr_code(type: node.attr("committee-type"))
@@ -69,7 +70,7 @@ module Asciidoctor
         xml.security security
       end
 
-      def metadata(node, xml)
+      def metadata_ext(node, xml)
         super
         metadata_security(node, xml)
       end
