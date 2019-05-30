@@ -42,9 +42,6 @@
         <ref name="ics"/>
       </zeroOrMore>
       <ref name="structuredidentifier"/>
-      <optional>
-        <ref name="allParts"/>
-      </optional>
     </define>
     <define name="bdate">
       <element name="date">
@@ -72,18 +69,6 @@
             </choice>
           </element>
         </choice>
-      </element>
-    </define>
-    <define name="biblionote">
-      <element name="note">
-        <optional>
-          <!-- Biblio date notes can be footnoted -->
-          <attribute name="type"/>
-        </optional>
-        <optional>
-          <attribute name="reference"/>
-        </optional>
-        <ref name="FormattedString"/>
       </element>
     </define>
     <define name="sections">
