@@ -249,25 +249,4 @@ RSpec.describe Asciidoctor::Acme do
     expect(strip_guid(Asciidoctor.convert(input, backend: :acme, header_footer: true))).to be_equivalent_to output
   end
 
-  it "uses user-specified HTML stylesheets" do
-    FileUtils.rm_f "spec/assets/test.html"
-    system "metanorma compile -t acme spec/assets/test.adoc"
-    html = File.read("spec/assets/test.html", encoding: "utf-8")
-    expect(html).to match(%r[I am an HTML stylesheet])
-    expect(html).to match(%r[I am an HTML cover page])
-    expect(html).to match(%r[I am an HTML intro page])
-    expect(html).to match(%r[I am an HTML scripts page])
-  end
-
-  it "uses user-specified Word stylesheets" do
-    FileUtils.rm_f "spec/assets/test.doc"
-    system "metanorma compile -t acme spec/assets/test.adoc"
-    html = File.read("spec/assets/test.doc", encoding: "utf-8")
-    expect(html).to match(%r[I am a Word stylesheet])
-    expect(html).to match(%r[I am a Standard stylesheet])
-    expect(html).to match(%r[I am a Word cover page])
-    expect(html).to match(%r[I am a Word intro page])
-    # expect(html).to match(%r[I am a Word header file]) -- binhexed:
-    expect(html).to match(%r[\nPCEtLSBJIGFtIGEgV29yZCBIZWFkZXIgZmlsZSAtLT4K\n])
-  end
 end
