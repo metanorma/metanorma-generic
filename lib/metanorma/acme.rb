@@ -1,4 +1,5 @@
 require "metanorma/acme/processor"
+require "metanorma/acme/version"
 
 module Metanorma
   module Acme
