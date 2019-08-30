@@ -4,8 +4,8 @@ require "fileutils"
 
 module IsoDoc
   module Acme
-  	module BaseConvert
-  	  def convert1(docxml, filename, dir)
+    module BaseConvert
+      def convert1(docxml, filename, dir)
         FileUtils.cp html_doc_path('logo.jpg'), File.join(@localdir, "logo.jpg")
         @files_to_delete << File.join(@localdir, "logo.jpg")
         super
@@ -30,15 +30,7 @@ module IsoDoc
         end
       end
 
-      def term_defs_boilerplate(div, source, term, preface)
-        if source.empty? && term.nil?
-          div << @no_terms_boilerplate
-        else
-          div << term_defs_boilerplate_cont(source, term)
-        end
-      end
-
-            def i18n_init(lang, script)
+      def i18n_init(lang, script)
         super
         @annex_lbl = "Appendix"
       end
@@ -69,6 +61,6 @@ module IsoDoc
           make_body3(body, docxml)
         end
       end
-  	end
+    end
   end
 end
