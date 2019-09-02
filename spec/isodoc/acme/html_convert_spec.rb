@@ -207,89 +207,9 @@ RSpec.describe IsoDoc::Acme do
     output = <<~"OUTPUT"
         #{HTML_HDR}
              <p class="zzSTDTitle1"/>
-             <div id="H"><h1>1.&#160; Terms and definitions</h1><p>For the purposes of this document,
-           the following terms and definitions apply.</p>
+             <div id="H"><h1>1.&#160; Terms and definitions</h1>
        <p class="TermNum" id="J">1.1.</p>
          <p class="Terms" style="text-align:left;">Term2</p>
-       </div>
-           </div>
-         </body>
-    OUTPUT
-
-    expect(
-      IsoDoc::Acme::HtmlConvert.new({}).
-      convert("test", input, true).
-      gsub(%r{^.*<body}m, "<body").
-      gsub(%r{</body>.*}m, "</body>")
-    ).to be_equivalent_to output
-  end
-
-  it "processes terms & definitions with external source" do
-    input = <<~"INPUT"
-    <acme-standard xmlns="http://riboseinc.com/isoxml">
-         <termdocsource type="inline" bibitemid="ISO712"/>
-       <sections>
-       <terms id="H" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title>
-         <term id="J">
-         <preferred>Term2</preferred>
-       </term>
-       </terms>
-        </sections>
-        <bibliography>
-        <references id="_normative_references" obligation="informative"><title>Normative References</title>
-<bibitem id="ISO712" type="standard">
-  <title format="text/plain">Cereals and cereal products?~@~I?~@~T?~@~IDetermination of moisture content?~@~I?~@~T?~@~IReference method</title>
-  <docidentifier>ISO 712</docidentifier>
-  <contributor>
-    <role type="publisher"/>
-    <organization>
-      <name>International Organization for Standardization</name>
-    </organization>
-  </contributor>
-</bibitem></references>
-</bibliography>
-        </acme-standard>
-    INPUT
-
-    output = <<~"OUTPUT"
-        #{HTML_HDR}
-             <p class="zzSTDTitle1"/>
-             <div>
-               <h1>1.&#160; Normative references</h1>
-               <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-                 <p id="ISO712" class="NormRef">ISO 712, <i> Cereals and cereal products?~@~I?~@~T?~@~IDetermination of moisture content?~@~I?~@~T?~@~IReference method</i></p>
-                              </div>
-             <div id="H"><h1>2.&#160; Terms and definitions</h1><p>For the purposes of this document, the terms and definitions
-         given in <a href="#ISO712">ISO 712</a> and the following apply.</p>
-       <p class="TermNum" id="J">2.1.</p>
-                <p class="Terms" style="text-align:left;">Term2</p>
-              </div>
-           </div>
-         </body>
-    OUTPUT
-
-    expect(
-      IsoDoc::Acme::HtmlConvert.new({}).
-      convert("test", input, true).
-      gsub(%r{^.*<body}m, "<body").
-      gsub(%r{</body>.*}m, "</body>")
-    ).to be_equivalent_to output
-  end
-
-  it "processes empty terms & definitions" do
-    input = <<~"INPUT"
-    <acme-standard xmlns="http://riboseinc.com/isoxml">
-      <sections>
-        <terms id="H" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title>
-        </terms>
-      </sections>
-    </acme-standard>
-    INPUT
-
-    output = <<~"OUTPUT"
-        #{HTML_HDR}
-             <p class="zzSTDTitle1"/>
-             <div id="H"><h1>1.&#160; Terms and definitions</h1><p>No terms and definitions are listed in this document.</p>
        </div>
            </div>
          </body>
@@ -387,10 +307,8 @@ RSpec.describe IsoDoc::Acme do
              </div>
              <div>
                <h1>2.&#160; Normative references</h1>
-               <p>There are no normative references in this document.</p>
              </div>
-             <div id="H"><h1>3.&#160; Terms, definitions, symbols and abbreviated terms</h1><p>For the purposes of this document,
-           the following terms and definitions apply.</p>
+             <div id="H"><h1>3.&#160; Terms, definitions, symbols and abbreviated terms</h1>
        <div id="I">
           <h2>3.1. Normal Terms</h2>
           <p class="TermNum" id="J">3.1.1.</p>

@@ -60,7 +60,6 @@ RSpec.describe Metanorma::Acme::Processor do
       <p class="zzSTDTitle1"></p>
       <div id="H">
         <h1>1.&#xA0; Terms and definitions</h1>
-        <p>For the purposes of this document, the following terms and definitions apply.</p>
         <h2 class="TermNum" id="J">1.1.&#xA0;<p class="Terms" style="text-align:left;">Term2</p></h2>
       </div>
     </main>
