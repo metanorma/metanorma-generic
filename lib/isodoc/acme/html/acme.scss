@@ -659,6 +659,8 @@ margin-left: -36.0pt;
 div.example {
   margin-right: 36.0pt;
   margin-left: 36.0pt;
+    margin-top: 0cm;
+  margin-bottom: 0cm;
 }
 
 p.example, li.example, td.example {
@@ -667,8 +669,6 @@ p.example, li.example, td.example {
 }
 
 p.example, li.example, div.example, td.example {
-    margin-top: 0cm;
-  margin-bottom: 0cm;
         mso-pagination:none;
         font-size:10.0pt;
         font-family:$bodyfont;}
