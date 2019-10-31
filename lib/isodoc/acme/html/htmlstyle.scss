@@ -572,9 +572,7 @@ p.Biblio, p.NormRef {
     3.6 Source Code + figures
 */
 
-.figure, .Sourcecode {
-    font-family: $monospacefont;
-    font-variant-ligatures: none;
+.figure, .Sourcecode, .pseudocode {
     background-color: #f7f7f7;
     font-size: 0.8em;
     line-height: 1.6em;
@@ -582,6 +580,11 @@ p.Biblio, p.NormRef {
     margin: 2em 0 1em 0;
     overflow: auto;
 }
+
+.Sourcecode {
+    font-family: $monospacefont;
+    font-variant-ligatures: none;
+  }
 
 .FigureTitle, .SourceTitle, .AdmonitionTitle {
     font-weight: 700;
@@ -634,7 +637,7 @@ p.Biblio, p.NormRef {
     margin-left:-1.5em;
 }
 
-.example .Sourcecode {
+.example .Sourcecode, .example .pseudocode {
       background: none;
 }
 
@@ -967,7 +970,7 @@ To top button
     margin-top: 1.2em;
   }
 
-  .note, .figure, .Sourcecode, table {
+  .note, .figure, .Sourcecode, .pseudocode, table {
     page-break-inside: avoid;
   }
 
