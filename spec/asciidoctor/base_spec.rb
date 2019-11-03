@@ -7,9 +7,9 @@ RSpec.describe Asciidoctor::Acme do
   #  FileUtils.cd "spec/examples"
   #  Asciidoctor.convert_file "rfc6350.adoc", {:attributes=>{"backend"=>"acme"}, :safe=>0, :header_footer=>true, :requires=>["metanorma-acme"], :failure_level=>4, :mkdirs=>true, :to_file=>nil}
   #  FileUtils.cd "../.."
-  #  expect(File.exist?("spec/examples/rfc6350.doc")).to be true
-  #  expect(File.exist?("spec/examples/rfc6350.html")).to be true
-  #  expect(File.exist?("spec/examples/rfc6350.pdf")).to be true
+  #  expect(xmlpp(File.exist?("spec/examples/rfc6350.doc"))).to be true
+  #  expect(xmlpp(File.exist?("spec/examples/rfc6350.html"))).to be true
+  #  expect(xmlpp(File.exist?("spec/examples/rfc6350.pdf"))).to be true
   #end
 
   it "processes a blank document" do
@@ -23,7 +23,7 @@ RSpec.describe Asciidoctor::Acme do
 </acme-standard>
     OUTPUT
 
-    expect(Asciidoctor.convert(input, backend: :acme, header_footer: true)).to be_equivalent_to output
+    expect(xmlpp(Asciidoctor.convert(input, backend: :acme, header_footer: true))).to be_equivalent_to xmlpp(output)
   end
 
   it "converts a blank document" do
@@ -41,7 +41,7 @@ RSpec.describe Asciidoctor::Acme do
     OUTPUT
 
     FileUtils.rm_f "test.html"
-    expect(Asciidoctor.convert(input, backend: :acme, header_footer: true)).to be_equivalent_to output
+    expect(xmlpp(Asciidoctor.convert(input, backend: :acme, header_footer: true))).to be_equivalent_to xmlpp(output)
     expect(File.exist?("test.html")).to be true
   end
 
@@ -128,7 +128,7 @@ RSpec.describe Asciidoctor::Acme do
 </acme-standard>
     OUTPUT
 
-    expect(Asciidoctor.convert(input, backend: :acme, header_footer: true)).to be_equivalent_to output
+    expect(xmlpp(Asciidoctor.convert(input, backend: :acme, header_footer: true))).to be_equivalent_to xmlpp(output)
   end
 
   it "strips inline header" do
@@ -151,7 +151,7 @@ RSpec.describe Asciidoctor::Acme do
        </acme-standard>
     OUTPUT
 
-    expect(strip_guid(Asciidoctor.convert(input, backend: :acme, header_footer: true))).to be_equivalent_to output
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :acme, header_footer: true)))).to be_equivalent_to xmlpp(output)
   end
 
   it "uses default fonts" do
@@ -246,7 +246,7 @@ RSpec.describe Asciidoctor::Acme do
        </acme-standard>
     OUTPUT
 
-    expect(strip_guid(Asciidoctor.convert(input, backend: :acme, header_footer: true))).to be_equivalent_to output
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :acme, header_footer: true)))).to be_equivalent_to xmlpp(output)
   end
 
 end

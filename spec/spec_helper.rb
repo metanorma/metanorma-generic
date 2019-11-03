@@ -9,6 +9,7 @@ require "rspec/matchers"
 require "equivalent-xml"
 require "htmlentities"
 require "metanorma"
+require "rexml/document"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -30,6 +31,14 @@ def htmlencode(x)
   HTMLEntities.new.encode(x, :hexadecimal).gsub(/&#x3e;/, ">").gsub(/&#xa;/, "\n").
     gsub(/&#x22;/, '"').gsub(/&#x3c;/, "<").gsub(/&#x26;/, '&').gsub(/&#x27;/, "'").
     gsub(/\\u(....)/) { |s| "&#x#{$1.downcase};" }
+end
+
+def xmlpp(x)
+  s = ""
+  f = REXML::Formatters::Pretty.new(2)
+  f.compact = true
+  f.write(REXML::Document.new(x),s)
+  s
 end
 
 ASCIIDOC_BLANK_HDR = <<~"HDR"

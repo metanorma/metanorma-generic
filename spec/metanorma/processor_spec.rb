@@ -37,7 +37,7 @@ RSpec.describe Metanorma::Acme::Processor do
 </acme-standard>
     OUTPUT
 
-    expect(processor.input_to_isodoc(input, nil)).to be_equivalent_to output
+    expect(xmlpp(processor.input_to_isodoc(input, nil))).to be_equivalent_to xmlpp(output)
   end
 
   it "generates HTML from IsoDoc XML" do
@@ -68,10 +68,10 @@ RSpec.describe Metanorma::Acme::Processor do
     processor.output(input, "test.html", :html)
 
     expect(
-      File.read("test.html", encoding: "utf-8").
+      xmlpp(File.read("test.html", encoding: "utf-8").
       gsub(%r{^.*<main}m, "<main").
       gsub(%r{</main>.*}m, "</main>")
-    ).to be_equivalent_to output
+           )).to be_equivalent_to xmlpp(output)
 
   end
 
