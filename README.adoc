@@ -1,11 +1,11 @@
 = metanorma-acme: Asciidoctor processor for a (fictitious) Acme Corporation
 
 image:https://img.shields.io/gem/v/metanorma-acme.svg["Gem Version", link="https://rubygems.org/gems/metanorma-acme"]
-image:https://img.shields.io/travis/metanorma/metanorma-acme/master.svg["Build Status", link="https://travis-ci.org/metanorma/metanorma-acme"]
+image:https://travis-ci.com/metanorma/metanorma-acme.svg["Build Status", link="https://travis-ci.com/metanorma/metanorma-acme"]
+image:https://ci.appveyor.com/api/projects/status/hjb4k2251qecfqkf?svg=true["Appveyor Build Status", link="https://ci.appveyor.com/project/metanorma/metanorma-acme"]
 image:https://codeclimate.com/github/metanorma/metanorma-acme/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/metanorma/metanorma-acme"]
-image:https://ci.appveyor.com/api/projects/status/4wcdip5fnx8exrj9?svg=true["Appveyor Build Status", link="https://ci.appveyor.com/project/ribose/metanorma-acme"]
-
-WARNING: This gem is still under development.
+image:https://img.shields.io/github/issues-pr-raw/metanorma/metanorma-acme.svg["Pull Requests", link="https://github.com/metanorma/metanorma-acme/pulls"]
+image:https://img.shields.io/github/commits-since/metanorma/metanorma-acme/latest.svg["Commits since latest",link="https://github.com/metanorma/metanorma-acme/releases"]
 
 == Functionality
 
