@@ -5,11 +5,11 @@ require "fileutils"
 module IsoDoc
   module Acme
     module BaseConvert
-      def convert1(docxml, filename, dir)
-        FileUtils.cp html_doc_path('logo.jpg'), File.join(@localdir, "logo.jpg")
-        @files_to_delete << File.join(@localdir, "logo.jpg")
-        super
-      end
+      #def convert1(docxml, filename, dir)
+      #  FileUtils.cp html_doc_path('logo.jpg'), File.join(@localdir, "logo.jpg")
+      #  @files_to_delete << File.join(@localdir, "logo.jpg")
+      #  super
+      #end
 
       def metadata_init(lang, script, labels)
         @meta = Metadata.new(lang, script, labels)
