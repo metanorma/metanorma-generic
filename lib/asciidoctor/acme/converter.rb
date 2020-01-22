@@ -138,6 +138,26 @@ module Asciidoctor
         return
       end
 
+      def html_extract_attributes(node)
+        configured_attributes = Metanorma::Acme.configuration.html_extract_attributes
+        {
+          script: configured_attributes["script"] || node.attr("script"),
+          bodyfont: configured_attributes["body-font"] || node.attr("body-font"),
+          headerfont: configured_attributes["header-font"] || node.attr("header-font"),
+          monospacefont: configured_attributes["monospace-font"] || node.attr("monospace-font"),
+          i18nyaml: configured_attributes["i18nyaml"] || node.attr("i18nyaml"),
+          scope: configured_attributes["scope"] || node.attr("scope"),
+          htmlstylesheet: configured_attributes["htmlstylesheet"] || node.attr("htmlstylesheet"),
+          htmlcoverpage: configured_attributes["htmlcoverpage"] || node.attr("htmlcoverpage"),
+          htmlintropage: configured_attributes["htmlintropage"] || node.attr("htmlintropage"),
+          scripts: configured_attributes["scripts"] || node.attr("scripts"),
+          scripts_pdf: configured_attributes["scripts-pdf"] || node.attr("scripts-pdf"),
+          datauriimage: configured_attributes["data-uri-image"] || node.attr("data-uri-image"),
+          htmltoclevels: configured_attributes["htmltoclevels"] || node.attr("htmltoclevels") || node.attr("toclevels"),
+          doctoclevels: configured_attributes["doctoclevels"] || node.attr("doctoclevels") || node.attr("toclevels"),
+        }
+      end
+
       def html_converter(node)
         IsoDoc::Acme::HtmlConvert.new(html_extract_attributes(node))
       end
