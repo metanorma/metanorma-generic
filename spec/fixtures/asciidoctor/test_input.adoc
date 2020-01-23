@@ -1,0 +1,29 @@
+= Document title
+Author
+:docfile: test.adoc
+:nodoc:
+:novalid:
+:docnumber: 1000
+:doctype: standard
+:edition: 2
+:revdate: 2000-01-01
+:draft: 3.4
+:committee: TC
+:committee-number: 1
+:committee-type: A
+:committee_2: TC1
+:committee-number_2: 1
+:committee-type_2: B
+:subcommittee: SC
+:subcommittee-number: 2
+:subcommittee-type: B
+:workgroup: WG
+:workgroup-number: 3
+:workgroup-type: C
+:secretariat: SECRETARIAT
+:copyright-year: 2001
+:status: working-draft
+:iteration: 3
+:language: en
+:title: Main Title
+:security: Client Confidential

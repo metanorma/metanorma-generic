@@ -10,6 +10,7 @@ require "equivalent-xml"
 require "htmlentities"
 require "metanorma"
 require "rexml/document"
+require 'byebug'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -21,6 +22,19 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  # Set defaults before each run
+  config.before(:each) do
+    Metanorma::Acme.configure do |cn|
+      cn.organization_name_short = Metanorma::Acme::ORGANIZATION_NAME_SHORT
+      cn.organization_name_long = Metanorma::Acme::ORGANIZATION_NAME_LONG
+      cn.document_namespace = Metanorma::Acme::DOCUMENT_NAMESPACE
+    end
+  end
+end
+
+def fixture_path(path)
+  File.join(File.expand_path('./fixtures', __dir__), path)
 end
 
 def strip_guid(x)
