@@ -14,7 +14,17 @@ module Metanorma
         organization_name_long
         document_namespace
         html_extract_attributes
+        htmlstylesheet
+        htmlcoverpage
+        htmlintropage
+        scripts
         doc_extract_attributes
+        header
+        standardstylesheet
+        wordcoverpage
+        wordintropage
+        wordstylesheet
+        xml_root_tag
       ].freeze
 
       attr_accessor(*CONFIG_ATTRS)

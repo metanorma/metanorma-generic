@@ -80,11 +80,12 @@ module Asciidoctor
       end
 
       def makexml(node)
-        result = ["<?xml version='1.0' encoding='UTF-8'?>\n<acme-standard>"]
+        root_tag = Metanorma::Acme.configuration.xml_root_tag || 'acme-standard'
+        result = ["<?xml version='1.0' encoding='UTF-8'?>\n<#{root_tag}>"]
         @draft = node.attributes.has_key?("draft")
         result << noko { |ixml| front node, ixml }
         result << noko { |ixml| middle node, ixml }
-        result << "</acme-standard>"
+        result << "</#{root_tag}>"
         result = textcleanup(result)
         ret1 = cleanup(Nokogiri::XML(result))
         validate(ret1) unless @novalid
@@ -158,7 +159,7 @@ module Asciidoctor
           htmltoclevels: config['htmltoclevels'] ||
             node.attr('htmltoclevels') || node.attr('toclevels'),
           doctoclevels: config['doctoclevels'] || node.attr('doctoclevels') ||
-            node.attr('toclevels'),
+            node.attr('toclevels')
         }
       end
 
@@ -184,7 +185,7 @@ module Asciidoctor
           htmltoclevels: config['htmltoclevels'] ||
             node.attr('htmltoclevels') || node.attr('toclevels'),
           doctoclevels: config['doctoclevels'] ||
-            node.attr('doctoclevels') || node.attr('toclevels'),
+            node.attr('doctoclevels') || node.attr('toclevels')
         }
       end
 

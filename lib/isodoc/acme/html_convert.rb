@@ -23,10 +23,14 @@ module IsoDoc
 
       def default_file_locations(_options)
         {
-          htmlstylesheet: html_doc_path("htmlstyle.scss"),
-          htmlcoverpage: html_doc_path("html_acme_titlepage.html"),
-          htmlintropage: html_doc_path("html_acme_intro.html"),
-          scripts: html_doc_path("scripts.html"),
+          htmlstylesheet: Metanorma::Acme.configuration.htmlstylesheet ||
+            html_doc_path("htmlstyle.scss"),
+          htmlcoverpage: Metanorma::Acme.configuration.htmlcoverpage ||
+            html_doc_path("html_acme_titlepage.html"),
+          htmlintropage: Metanorma::Acme.configuration.htmlintropage ||
+            html_doc_path("html_acme_intro.html"),
+          scripts: Metanorma::Acme.configuration.scripts ||
+            html_doc_path("scripts.html"),
         }
       end
 
