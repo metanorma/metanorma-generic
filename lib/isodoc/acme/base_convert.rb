@@ -32,7 +32,6 @@ module IsoDoc
 
       def i18n_init(lang, script)
         super
-        @annex_lbl = "Appendix"
       end
 
       def fileloc(loc)

@@ -339,7 +339,7 @@ RSpec.describe IsoDoc::Acme do
              </div>
              <br/>
              <div id="P" class="Section3">
-                <h1 class="Annex"><b>Appendix A</b><br/>(normative)<br/><b>Annex</b></h1>
+                <h1 class="Annex"><b>Annex A</b><br/>(normative)<br/><b>Annex</b></h1>
                <div id="Q">
           <h2>A.1.&#160; Annex A.1</h2>
           <div id="Q1">
