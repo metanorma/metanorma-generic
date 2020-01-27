@@ -257,7 +257,7 @@ p.IntroTitle, li.IntroTitle, div.IntroTitle
 	font-weight:bold;
 	mso-bidi-font-weight:normal;}
 div.WordSection2 p.IntroTitle, div.WordSection2 div.IntroTitle {
-	page-break-after:avoid;
+	page-break-before:always;
 }
 p.Terms, li.Terms, div.Terms
         {mso-style-name:"Term\(s\)";
