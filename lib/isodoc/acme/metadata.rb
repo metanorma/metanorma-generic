@@ -10,16 +10,8 @@ module IsoDoc
         set(:logo, File.expand_path(File.join(here, "html", "logo.jpg")))
       end
 
-      def title(isoxml, _out)
-        main = isoxml&.at(ns("//bibdata/title[@language='en']"))&.text
-        set(:doctitle, main)
-      end
-
-      def subtitle(_isoxml, _out)
-        nil
-      end
-
       def author(isoxml, _out)
+        super
         tc = isoxml.at(ns("//bibdata/ext/editorialgroup/committee"))
         set(:tc, tc.text) if tc
       end
