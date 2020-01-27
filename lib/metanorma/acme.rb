@@ -25,6 +25,7 @@ module Metanorma
         wordintropage
         wordstylesheet
         xml_root_tag
+        validate_rng_file
       ].freeze
 
       attr_accessor(*CONFIG_ATTRS)

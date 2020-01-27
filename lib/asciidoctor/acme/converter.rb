@@ -121,7 +121,8 @@ module Asciidoctor
       def validate(doc)
         content_validate(doc)
         schema_validate(formattedstr_strip(doc.dup),
-                        File.join(File.dirname(__FILE__), "acme.rng"))
+                        Metanorma::Acme.configuration.validate_rng_file ||
+                          File.join(File.dirname(__FILE__), "acme.rng"))
       end
 
       def html_path_acme(file)
