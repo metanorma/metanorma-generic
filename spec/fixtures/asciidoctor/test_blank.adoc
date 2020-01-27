@@ -1,0 +1,4 @@
+= Document title
+Author
+:docfile: test.adoc
+:novalid:

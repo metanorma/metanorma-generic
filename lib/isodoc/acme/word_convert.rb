@@ -22,11 +22,16 @@ module IsoDoc
 
       def default_file_locations(options)
         {
-          wordstylesheet: html_doc_path("wordstyle.scss"),
-          standardstylesheet: html_doc_path("acme.scss"),
-          header: html_doc_path("header.html"),
-          wordcoverpage: html_doc_path("word_acme_titlepage.html"),
-          wordintropage: html_doc_path("word_acme_intro.html"),
+          wordstylesheet: Metanorma::Acme.configuration.wordstylesheet ||
+            html_doc_path("wordstyle.scss"),
+          standardstylesheet: Metanorma::Acme.configuration.standardstylesheet ||
+            html_doc_path("acme.scss"),
+          header: Metanorma::Acme.configuration.header ||
+            html_doc_path("header.html"),
+          wordcoverpage: Metanorma::Acme.configuration.wordcoverpage ||
+            html_doc_path("word_acme_titlepage.html"),
+          wordintropage: Metanorma::Acme.configuration.wordintropage ||
+            html_doc_path("word_acme_intro.html"),
           ulstyle: "l3",
           olstyle: "l2",
         }

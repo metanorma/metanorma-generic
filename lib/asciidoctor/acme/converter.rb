@@ -16,7 +16,7 @@ module Asciidoctor
         xml.contributor do |c|
           c.role **{ type: "author" }
           c.organization do |a|
-            a.name Metanorma::Acme::ORGANIZATION_NAME_SHORT
+            a.name Metanorma::Acme.configuration.organization_name_short
           end
         end
       end
@@ -25,7 +25,7 @@ module Asciidoctor
         xml.contributor do |c|
           c.role **{ type: "publisher" }
           c.organization do |a|
-            a.name Metanorma::Acme::ORGANIZATION_NAME_SHORT
+            a.name Metanorma::Acme.configuration.organization_name_short
           end
         end
       end
@@ -47,7 +47,7 @@ module Asciidoctor
       def metadata_id(node, xml)
         return unless node.attr("docnumber")
         xml.docidentifier do |i|
-          i << "#{Metanorma::Acme::ORGANIZATION_NAME_SHORT} "\
+          i << "#{Metanorma::Acme.configuration.organization_name_short} "\
             "#{node.attr("docnumber")}"
         end
         xml.docnumber { |i| i << node.attr("docnumber") }
@@ -59,7 +59,7 @@ module Asciidoctor
           c.from from
           c.owner do |owner|
             owner.organization do |o|
-              o.name Metanorma::Acme::ORGANIZATION_NAME_SHORT
+              o.name Metanorma::Acme.configuration.organization_name_short
             end
           end
         end
@@ -80,15 +80,16 @@ module Asciidoctor
       end
 
       def makexml(node)
-        result = ["<?xml version='1.0' encoding='UTF-8'?>\n<acme-standard>"]
+        root_tag = Metanorma::Acme.configuration.xml_root_tag || 'acme-standard'
+        result = ["<?xml version='1.0' encoding='UTF-8'?>\n<#{root_tag}>"]
         @draft = node.attributes.has_key?("draft")
         result << noko { |ixml| front node, ixml }
         result << noko { |ixml| middle node, ixml }
-        result << "</acme-standard>"
+        result << "</#{root_tag}>"
         result = textcleanup(result)
         ret1 = cleanup(Nokogiri::XML(result))
         validate(ret1) unless @novalid
-        ret1.root.add_namespace(nil, Metanorma::Acme::DOCUMENT_NAMESPACE)
+        ret1.root.add_namespace(nil, Metanorma::Acme.configuration.document_namespace)
         ret1
       end
 
@@ -139,22 +140,52 @@ module Asciidoctor
       end
 
       def html_extract_attributes(node)
-        configured_attributes = Metanorma::Acme.configuration.html_extract_attributes
+        config = Metanorma::Acme.configuration.html_extract_attributes
         {
-          script: configured_attributes["script"] || node.attr("script"),
-          bodyfont: configured_attributes["body-font"] || node.attr("body-font"),
-          headerfont: configured_attributes["header-font"] || node.attr("header-font"),
-          monospacefont: configured_attributes["monospace-font"] || node.attr("monospace-font"),
-          i18nyaml: configured_attributes["i18nyaml"] || node.attr("i18nyaml"),
-          scope: configured_attributes["scope"] || node.attr("scope"),
-          htmlstylesheet: configured_attributes["htmlstylesheet"] || node.attr("htmlstylesheet"),
-          htmlcoverpage: configured_attributes["htmlcoverpage"] || node.attr("htmlcoverpage"),
-          htmlintropage: configured_attributes["htmlintropage"] || node.attr("htmlintropage"),
-          scripts: configured_attributes["scripts"] || node.attr("scripts"),
-          scripts_pdf: configured_attributes["scripts-pdf"] || node.attr("scripts-pdf"),
-          datauriimage: configured_attributes["data-uri-image"] || node.attr("data-uri-image"),
-          htmltoclevels: configured_attributes["htmltoclevels"] || node.attr("htmltoclevels") || node.attr("toclevels"),
-          doctoclevels: configured_attributes["doctoclevels"] || node.attr("doctoclevels") || node.attr("toclevels"),
+          script: config['script'] || node.attr('script'),
+          bodyfont: config['body-font'] || node.attr('body-font'),
+          headerfont: config['header-font'] || node.attr('header-font'),
+          monospacefont: config['monospace-font'] ||
+            node.attr('monospace-font'),
+          i18nyaml: config['i18nyaml'] || node.attr('i18nyaml'),
+          scope: config['scope'] || node.attr('scope'),
+          htmlstylesheet: config['htmlstylesheet'] ||
+            node.attr('htmlstylesheet'),
+          htmlcoverpage: config['htmlcoverpage'] || node.attr('htmlcoverpage'),
+          htmlintropage: config['htmlintropage'] || node.attr('htmlintropage'),
+          scripts: config['scripts'] || node.attr('scripts'),
+          scripts_pdf: config['scripts-pdf'] || node.attr('scripts-pdf'),
+          datauriimage: config['data-uri-image'] || node.attr('data-uri-image'),
+          htmltoclevels: config['htmltoclevels'] ||
+            node.attr('htmltoclevels') || node.attr('toclevels'),
+          doctoclevels: config['doctoclevels'] || node.attr('doctoclevels') ||
+            node.attr('toclevels')
+        }
+      end
+
+      def doc_extract_attributes(node)
+        config = Metanorma::Acme.configuration.doc_extract_attributes
+        {
+          script: config['script'] || node.attr('script'),
+          bodyfont: config['body-font'] || node.attr('body-font'),
+          headerfont: config['header-font'] || node.attr('header-font'),
+          monospacefont: config['monospace-font'] ||
+            node.attr('monospace-font'),
+          i18nyaml: config['i18nyaml'] || node.attr('i18nyaml'),
+          scope: config['scope'] || node.attr('scope'),
+          wordstylesheet: config['wordstylesheet'] ||
+            node.attr('wordstylesheet'),
+          standardstylesheet: config['standardstylesheet'] ||
+            node.attr('standardstylesheet'),
+          header: config['header'] || node.attr('header'),
+          wordcoverpage: config['wordcoverpage'] || node.attr('wordcoverpage'),
+          wordintropage: config['wordintropage'] || node.attr('wordintropage'),
+          ulstyle: config['ulstyle'] || node.attr('ulstyle'),
+          olstyle: config['olstyle'] || node.attr('olstyle'),
+          htmltoclevels: config['htmltoclevels'] ||
+            node.attr('htmltoclevels') || node.attr('toclevels'),
+          doctoclevels: config['doctoclevels'] ||
+            node.attr('doctoclevels') || node.attr('toclevels')
         }
       end
 

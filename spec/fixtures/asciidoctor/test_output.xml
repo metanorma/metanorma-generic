@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<acme-standard xmlns="%{document_namespace}">
+  <bibdata type="standard">
+    <title language="en" format="text/plain">Main Title</title>
+    <docidentifier>%{organization_name_short} 1000</docidentifier>
+    <docnumber>1000</docnumber>
+    <edition>2</edition>
+    <version>
+      <revision-date>2000-01-01</revision-date>
+      <draft>3.4</draft>
+    </version>
+    <contributor>
+      <role type="author"/>
+      <organization>
+        <name>%{organization_name_short}</name>
+      </organization>
+    </contributor>
+    <contributor>
+      <role type="publisher"/>
+      <organization>
+        <name>%{organization_name_short}</name>
+      </organization>
+    </contributor>
+    <language>en</language>
+    <script>Latn</script>
+    <status>
+      <stage>working-draft</stage>
+      <iteration>3</iteration>
+    </status>
+    <copyright>
+      <from>2001</from>
+      <owner>
+        <organization>
+          <name>%{organization_name_short}</name>
+        </organization>
+      </owner>
+    </copyright>
+    <ext>
+      <doctype>standard</doctype>
+      <editorialgroup>
+        <committee type="A">TC</committee>
+        <committee type="B">TC1</committee>
+      </editorialgroup>
+      <security>Client Confidential</security>
+    </ext>
+  </bibdata>
+  <sections/>
+</acme-standard>

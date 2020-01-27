@@ -14,6 +14,17 @@ module Metanorma
         organization_name_long
         document_namespace
         html_extract_attributes
+        htmlstylesheet
+        htmlcoverpage
+        htmlintropage
+        scripts
+        doc_extract_attributes
+        header
+        standardstylesheet
+        wordcoverpage
+        wordintropage
+        wordstylesheet
+        xml_root_tag
       ].freeze
 
       attr_accessor(*CONFIG_ATTRS)
@@ -24,14 +35,27 @@ module Metanorma
         self.organization_name_long ||= ORGANIZATION_NAME_LONG
         self.document_namespace ||= DOCUMENT_NAMESPACE
         self.html_extract_attributes ||= {}
+        self.doc_extract_attributes ||= {}
       end
 
       def html_extract_attributes=(attributes)
-        unless attributes.is_a?(Hash) && (attributes.length.zero? || attributes.keys.all? { |name| name.is_a?(String) })
-          raise(ArgumentError, "html_extract_attributes requires a hash with string keys")
+        unless attributes.is_a?(Hash) &&
+                attributes.keys.all? { |name| name.is_a?(String) }
+          raise(ArgumentError,
+                'html_extract_attributes requires a hash with string keys')
         end
 
-        self.instance_variable_set(:@html_extract_attributes, attributes)
+        instance_variable_set(:@html_extract_attributes, attributes)
+      end
+
+      def doc_extract_attributes=(attributes)
+        unless attributes.is_a?(Hash) &&
+               attributes.keys.all? { |name| name.is_a?(String) }
+          raise(ArgumentError,
+            'doc_extract_attributes requires a hash with string keys')
+        end
+
+        instance_variable_set(:@doc_extract_attributes, attributes)
       end
     end
 
