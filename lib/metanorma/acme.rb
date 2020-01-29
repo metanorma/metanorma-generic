@@ -13,19 +13,20 @@ module Metanorma
         organization_name_short
         organization_name_long
         document_namespace
+        logo_path
+        header
         html_extract_attributes
-        htmlstylesheet
         htmlcoverpage
         htmlintropage
+        htmlstylesheet
         scripts
-        doc_extract_attributes
-        header
         standardstylesheet
+        validate_rng_file
+        doc_extract_attributes
         wordcoverpage
         wordintropage
         wordstylesheet
         xml_root_tag
-        validate_rng_file
       ].freeze
 
       attr_accessor(*CONFIG_ATTRS)
