@@ -1,0 +1,15 @@
+organization_name_short: My Organization
+organization_name_long: My Organization name
+document_namespace: https://open.ribose.com/standards/mine
+xml_root_tag: 'mine-standard'
+logo_path: /metanorma-mine/lib/isodoc/mine/html/logo.jpg
+validate_rng_file: /metanorma-mine/lib/asciidoctor/mine/mine.rng
+htmlcoverpage: /metanorma-mine/lib/isodoc/mine/html/html_mine_titlepage.html
+htmlintropage: /metanorma-mine/lib/isodoc/mine/html/html_mine_intro.html
+htmlstylesheet: /metanorma-mine/lib/isodoc/mine/html/htmlstyle.scss
+scripts: /metanorma-mine/lib/isodoc/mine/html/scripts.html
+standardstylesheet: /metanorma-mine/lib/isodoc/mine/html/
+header: /metanorma-mine/lib/isodoc/mine/html/header.html
+wordcoverpage: /metanorma-mine/lib/isodoc/mine/html/word_mine_titlepage.html
+wordintropage: /metanorma-mine/lib/isodoc/mine/html/word_mine_intro.html
+wordstylesheet: /metanorma-mine/lib/isodoc/mine/html/wordstyle.scss

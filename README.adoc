@@ -28,13 +28,40 @@ which is syntactically stricter than the common MathJax processor;
 if you do not get expected results, try bracketing terms your in AsciiMathML
 expressions.
 
+== Configuration
+
+Gem can be configured in 2 ways:
+1. By creating yaml config file with name `metanorma.yml`, see `metanorma.yml.example` for example.
+2. By using `Metanorma::Acme.configuration` method directly:
+
+[source,ruby]
+---
+Metanorma::Acme.configure do |config|
+  config.organization_name_short = 'My Organization'
+  config.organization_name_long = 'My Organization name'
+  config.document_namespace = 'https://open.ribose.com/standards/mine'
+  config.xml_root_tag = 'mine-standard'
+  config.logo_path = '/metanorma-mine/lib/isodoc/mine/html/logo.jpg'
+  config.validate_rng_file = '/metanorma-mine/lib/asciidoctor/mine/mine.rng'
+  config.htmlcoverpage = '/metanorma-mine/lib/isodoc/mine/html/html_mine_titlepage.html'
+  config.htmlintropage = '/metanorma-mine/lib/isodoc/mine/html/html_mine_intro.html'
+  config.htmlstylesheet = '/metanorma-mine/lib/isodoc/mine/html/htmlstyle.scss'
+  config.scripts = '/metanorma-mine/lib/isodoc/mine/html/scripts.html'
+  config.standardstylesheet = '/metanorma-mine/lib/isodoc/mine/html/'
+  config.header = '/metanorma-mine/lib/isodoc/mine/html/header.html'
+  config.wordcoverpage = '/metanorma-mine/lib/isodoc/mine/html/word_mine_titlepage.html'
+  config.wordintropage = '/metanorma-mine/lib/isodoc/mine/html/word_mine_intro.html'
+  config.wordstylesheet = '/metanorma-mine/lib/isodoc/mine/html/wordstyle.scss'
+end
+---
+
 == Usage
 
 The preferred way to invoke this gem is via the `metanorma` script:
 
 [source,console]
 ----
-$ metanorma --type acme a.adoc                   # output HTML 
+$ metanorma --type acme a.adoc                   # output HTML
 $ metanorma --type acme --extensions html a.adoc # output just HTML
 $ metanorma --type acme --extensions xml a.adoc  # output RSD XML
 ----
@@ -51,7 +78,7 @@ The gem can also be invoked directly within asciidoctor, though this is deprecat
 
 [source,console]
 ----
-$ asciidoctor -b acme -r 'metanorma-acme' a.adoc  
+$ asciidoctor -b acme -r 'metanorma-acme' a.adoc
 ----
 
 === Installation

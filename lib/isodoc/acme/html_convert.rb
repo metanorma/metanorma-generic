@@ -31,6 +31,7 @@ module IsoDoc
             html_doc_path("html_acme_intro.html"),
           scripts: configuration.scripts ||
             html_doc_path("scripts.html"),
+          i18nyaml: configuration.i18nyaml
         }
       end
 

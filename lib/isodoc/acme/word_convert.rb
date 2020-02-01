@@ -32,6 +32,7 @@ module IsoDoc
             html_doc_path("word_acme_titlepage.html"),
           wordintropage: configuration.wordintropage ||
             html_doc_path("word_acme_intro.html"),
+          i18nyaml: configuration.i18nyaml,
           ulstyle: "l3",
           olstyle: "l2",
         }

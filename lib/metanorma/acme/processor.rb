@@ -3,7 +3,6 @@ require "metanorma/processor"
 module Metanorma
   module Acme
     class Processor < Metanorma::Processor
-
       def initialize
         @short = :acme
         @input_format = :asciidoc

@@ -139,57 +139,6 @@ module Asciidoctor
         return
       end
 
-      def html_extract_attributes(node)
-        config = configuration.html_extract_attributes
-        {
-          script: config['script'] || node.attr('script'),
-          bodyfont: config['body-font'] || node.attr('body-font'),
-          headerfont: config['header-font'] || node.attr('header-font'),
-          monospacefont: config['monospace-font'] ||
-            node.attr('monospace-font'),
-          i18nyaml: config['i18nyaml'] || node.attr('i18nyaml'),
-          scope: config['scope'] || node.attr('scope'),
-          htmlstylesheet: configuration.htmlstylesheet || node.attr('htmlstylesheet'),
-          htmlcoverpage: configuration.htmlcoverpage || node.attr('htmlcoverpage'),
-          htmlintropage: configuration.htmlintropage || node.attr('htmlintropage'),
-          scripts: configuration.scripts || node.attr('scripts'),
-          scripts_pdf: config['scripts-pdf'] || node.attr('scripts-pdf'),
-          datauriimage: config['data-uri-image'] || node.attr('data-uri-image'),
-          htmltoclevels: config['htmltoclevels'] ||
-            node.attr('htmltoclevels') || node.attr('toclevels'),
-          doctoclevels: config['doctoclevels'] || node.attr('doctoclevels') ||
-            node.attr('toclevels')
-        }
-      end
-
-      def doc_extract_attributes(node)
-        config = configuration.doc_extract_attributes
-        {
-          script: config['script'] || node.attr('script'),
-          bodyfont: config['body-font'] || node.attr('body-font'),
-          headerfont: config['header-font'] || node.attr('header-font'),
-          monospacefont: config['monospace-font'] ||
-            node.attr('monospace-font'),
-          i18nyaml: config['i18nyaml'] || node.attr('i18nyaml'),
-          scope: config['scope'] || node.attr('scope'),
-          wordstylesheet: configuration.wordstylesheet ||
-            node.attr('wordstylesheet'),
-          standardstylesheet: configuration.standardstylesheet ||
-            node.attr('standardstylesheet'),
-          header: configuration.header || node.attr('header'),
-          wordcoverpage: configuration.wordcoverpage ||
-            node.attr('wordcoverpage'),
-          wordintropage: configuration.wordintropage ||
-            node.attr('wordintropage'),
-          ulstyle: config['ulstyle'] || node.attr('ulstyle'),
-          olstyle: config['olstyle'] || node.attr('olstyle'),
-          htmltoclevels: config['htmltoclevels'] ||
-            node.attr('htmltoclevels') || node.attr('toclevels'),
-          doctoclevels: config['doctoclevels'] ||
-            node.attr('doctoclevels') || node.attr('toclevels')
-        }
-      end
-
       def html_converter(node)
         IsoDoc::Acme::HtmlConvert.new(html_extract_attributes(node))
       end
