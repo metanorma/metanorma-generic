@@ -158,6 +158,17 @@ p.MsoHeader, li.MsoHeader, div.MsoHeader
 	mso-fareast-font-family:"Times New Roman";
 	mso-ansi-language:EN-US;
 	mso-fareast-language:EN-US;}
+p.MsoHeaderLandscape, li.MsoHeaderLandscape, div.MsoHeaderLandscape
+        {mso-style-unhide:no;
+        margin:0cm;
+        margin-bottom:.0001pt;
+        mso-pagination:widow-orphan;
+        tab-stops:center 367.0pt right 734.0pt;
+        font-size:10.5pt;
+        font-family:$bodyfont;
+        mso-fareast-font-family:"Times New Roman";
+        mso-ansi-language:EN-US;
+        mso-fareast-language:EN-US;}
 p.MsoFooter, li.MsoFooter, div.MsoFooter
 	{mso-style-unhide:no;
 	margin:0cm;
@@ -169,6 +180,17 @@ p.MsoFooter, li.MsoFooter, div.MsoFooter
 	mso-fareast-font-family:"Times New Roman";
 	mso-ansi-language:EN-US;
 	mso-fareast-language:EN-US;}
+p.MsoFooterLandscape, li.MsoFooterLandscape, div.MsoFooterLandscape
+        {mso-style-unhide:no;
+        margin:0cm;
+        margin-bottom:.0001pt;
+        mso-pagination:widow-orphan;
+        tab-stops:right 734.0pt;
+        font-size:10.5pt;
+        font-family:$bodyfont;
+        mso-fareast-font-family:"Times New Roman";
+        mso-ansi-language:EN-US;
+        mso-fareast-language:EN-US;}
 span.MsoCommentReference
 	{mso-style-noshow:yes;
 	mso-style-unhide:no;
