@@ -21,6 +21,7 @@ module Metanorma
         htmlintropage
         htmlstylesheet
         scripts
+        scripts_pdf
         standardstylesheet
         validate_rng_file
         wordcoverpage

@@ -47,6 +47,7 @@ Metanorma::Acme.configure do |config|
   config.htmlintropage = '/metanorma-mine/lib/isodoc/mine/html/html_mine_intro.html'
   config.htmlstylesheet = '/metanorma-mine/lib/isodoc/mine/html/htmlstyle.scss'
   config.scripts = '/metanorma-mine/lib/isodoc/mine/html/scripts.html'
+  config.scripts_pdf = '/metanorma-mine/lib/isodoc/mine/html/scripts.prd.html'
   config.standardstylesheet = '/metanorma-mine/lib/isodoc/mine/html/'
   config.header = '/metanorma-mine/lib/isodoc/mine/html/header.html'
   config.wordcoverpage = '/metanorma-mine/lib/isodoc/mine/html/word_mine_titlepage.html'

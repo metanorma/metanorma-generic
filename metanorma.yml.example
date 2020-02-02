@@ -8,6 +8,7 @@ htmlcoverpage: /metanorma-mine/lib/isodoc/mine/html/html_mine_titlepage.html
 htmlintropage: /metanorma-mine/lib/isodoc/mine/html/html_mine_intro.html
 htmlstylesheet: /metanorma-mine/lib/isodoc/mine/html/htmlstyle.scss
 scripts: /metanorma-mine/lib/isodoc/mine/html/scripts.html
+scripts_pdf: /metanorma-mine/lib/isodoc/mine/html/scripts.prd.html
 standardstylesheet: /metanorma-mine/lib/isodoc/mine/html/
 header: /metanorma-mine/lib/isodoc/mine/html/header.html
 wordcoverpage: /metanorma-mine/lib/isodoc/mine/html/word_mine_titlepage.html
