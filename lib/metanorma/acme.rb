@@ -7,20 +7,23 @@ module Metanorma
     ORGANIZATION_NAME_SHORT = "Acme"
     ORGANIZATION_NAME_LONG = "Acme Corp."
     DOCUMENT_NAMESPACE = "https://open.ribose.com/standards/acme"
+    YAML_CONFIG_FILE = 'metanorma.yml'
 
     class Configuration
       CONFIG_ATTRS = %i[
         organization_name_short
         organization_name_long
         document_namespace
-        html_extract_attributes
-        htmlstylesheet
+        i18nyaml
+        logo_path
+        header
         htmlcoverpage
         htmlintropage
+        htmlstylesheet
         scripts
-        doc_extract_attributes
-        header
+        scripts_pdf
         standardstylesheet
+        validate_rng_file
         wordcoverpage
         wordintropage
         wordstylesheet
@@ -31,31 +34,20 @@ module Metanorma
 
       def initialize(*args)
         super
+        set_default_values_from_yaml_file
         self.organization_name_short ||= ORGANIZATION_NAME_SHORT
         self.organization_name_long ||= ORGANIZATION_NAME_LONG
         self.document_namespace ||= DOCUMENT_NAMESPACE
-        self.html_extract_attributes ||= {}
-        self.doc_extract_attributes ||= {}
       end
 
-      def html_extract_attributes=(attributes)
-        unless attributes.is_a?(Hash) &&
-                attributes.keys.all? { |name| name.is_a?(String) }
-          raise(ArgumentError,
-                'html_extract_attributes requires a hash with string keys')
+      # Try to set config values from yaml file in current directory
+      def set_default_values_from_yaml_file
+        return unless File.file?(YAML_CONFIG_FILE)
+
+        default_config_options = YAML.load(File.read(YAML_CONFIG_FILE))
+        CONFIG_ATTRS.each do |attr_name|
+          instance_variable_set("@#{attr_name}", default_config_options[attr_name.to_s])
         end
-
-        instance_variable_set(:@html_extract_attributes, attributes)
-      end
-
-      def doc_extract_attributes=(attributes)
-        unless attributes.is_a?(Hash) &&
-               attributes.keys.all? { |name| name.is_a?(String) }
-          raise(ArgumentError,
-            'doc_extract_attributes requires a hash with string keys')
-        end
-
-        instance_variable_set(:@doc_extract_attributes, attributes)
       end
     end
 

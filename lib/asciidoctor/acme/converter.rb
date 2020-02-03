@@ -9,14 +9,13 @@ module Asciidoctor
     # schema encapsulation of the document for validation
     #
     class Converter < Standoc::Converter
-
       register_for "acme"
 
       def metadata_author(node, xml)
         xml.contributor do |c|
           c.role **{ type: "author" }
           c.organization do |a|
-            a.name Metanorma::Acme.configuration.organization_name_short
+            a.name configuration.organization_name_short
           end
         end
       end
@@ -25,7 +24,7 @@ module Asciidoctor
         xml.contributor do |c|
           c.role **{ type: "publisher" }
           c.organization do |a|
-            a.name Metanorma::Acme.configuration.organization_name_short
+            a.name configuration.organization_name_short
           end
         end
       end
@@ -47,7 +46,7 @@ module Asciidoctor
       def metadata_id(node, xml)
         return unless node.attr("docnumber")
         xml.docidentifier do |i|
-          i << "#{Metanorma::Acme.configuration.organization_name_short} "\
+          i << "#{configuration.organization_name_short} "\
             "#{node.attr("docnumber")}"
         end
         xml.docnumber { |i| i << node.attr("docnumber") }
@@ -59,7 +58,7 @@ module Asciidoctor
           c.from from
           c.owner do |owner|
             owner.organization do |o|
-              o.name Metanorma::Acme.configuration.organization_name_short
+              o.name configuration.organization_name_short
             end
           end
         end
@@ -80,7 +79,7 @@ module Asciidoctor
       end
 
       def makexml(node)
-        root_tag = Metanorma::Acme.configuration.xml_root_tag || 'acme-standard'
+        root_tag = configuration.xml_root_tag || 'acme-standard'
         result = ["<?xml version='1.0' encoding='UTF-8'?>\n<#{root_tag}>"]
         @draft = node.attributes.has_key?("draft")
         result << noko { |ixml| front node, ixml }
@@ -89,7 +88,7 @@ module Asciidoctor
         result = textcleanup(result)
         ret1 = cleanup(Nokogiri::XML(result))
         validate(ret1) unless @novalid
-        ret1.root.add_namespace(nil, Metanorma::Acme.configuration.document_namespace)
+        ret1.root.add_namespace(nil, configuration.document_namespace)
         ret1
       end
 
@@ -121,7 +120,8 @@ module Asciidoctor
       def validate(doc)
         content_validate(doc)
         schema_validate(formattedstr_strip(doc.dup),
-                        File.join(File.dirname(__FILE__), "acme.rng"))
+                        configuration.validate_rng_file ||
+                          File.join(File.dirname(__FILE__), "acme.rng"))
       end
 
       def html_path_acme(file)
@@ -139,56 +139,6 @@ module Asciidoctor
         return
       end
 
-      def html_extract_attributes(node)
-        config = Metanorma::Acme.configuration.html_extract_attributes
-        {
-          script: config['script'] || node.attr('script'),
-          bodyfont: config['body-font'] || node.attr('body-font'),
-          headerfont: config['header-font'] || node.attr('header-font'),
-          monospacefont: config['monospace-font'] ||
-            node.attr('monospace-font'),
-          i18nyaml: config['i18nyaml'] || node.attr('i18nyaml'),
-          scope: config['scope'] || node.attr('scope'),
-          htmlstylesheet: config['htmlstylesheet'] ||
-            node.attr('htmlstylesheet'),
-          htmlcoverpage: config['htmlcoverpage'] || node.attr('htmlcoverpage'),
-          htmlintropage: config['htmlintropage'] || node.attr('htmlintropage'),
-          scripts: config['scripts'] || node.attr('scripts'),
-          scripts_pdf: config['scripts-pdf'] || node.attr('scripts-pdf'),
-          datauriimage: config['data-uri-image'] || node.attr('data-uri-image'),
-          htmltoclevels: config['htmltoclevels'] ||
-            node.attr('htmltoclevels') || node.attr('toclevels'),
-          doctoclevels: config['doctoclevels'] || node.attr('doctoclevels') ||
-            node.attr('toclevels')
-        }
-      end
-
-      def doc_extract_attributes(node)
-        config = Metanorma::Acme.configuration.doc_extract_attributes
-        {
-          script: config['script'] || node.attr('script'),
-          bodyfont: config['body-font'] || node.attr('body-font'),
-          headerfont: config['header-font'] || node.attr('header-font'),
-          monospacefont: config['monospace-font'] ||
-            node.attr('monospace-font'),
-          i18nyaml: config['i18nyaml'] || node.attr('i18nyaml'),
-          scope: config['scope'] || node.attr('scope'),
-          wordstylesheet: config['wordstylesheet'] ||
-            node.attr('wordstylesheet'),
-          standardstylesheet: config['standardstylesheet'] ||
-            node.attr('standardstylesheet'),
-          header: config['header'] || node.attr('header'),
-          wordcoverpage: config['wordcoverpage'] || node.attr('wordcoverpage'),
-          wordintropage: config['wordintropage'] || node.attr('wordintropage'),
-          ulstyle: config['ulstyle'] || node.attr('ulstyle'),
-          olstyle: config['olstyle'] || node.attr('olstyle'),
-          htmltoclevels: config['htmltoclevels'] ||
-            node.attr('htmltoclevels') || node.attr('toclevels'),
-          doctoclevels: config['doctoclevels'] ||
-            node.attr('doctoclevels') || node.attr('toclevels')
-        }
-      end
-
       def html_converter(node)
         IsoDoc::Acme::HtmlConvert.new(html_extract_attributes(node))
       end
@@ -199,6 +149,10 @@ module Asciidoctor
 
       def word_converter(node)
         IsoDoc::Acme::WordConvert.new(doc_extract_attributes(node))
+      end
+
+      def configuration
+        Metanorma::Acme.configuration
       end
     end
   end

@@ -22,19 +22,24 @@ module IsoDoc
 
       def default_file_locations(options)
         {
-          wordstylesheet: Metanorma::Acme.configuration.wordstylesheet ||
+          wordstylesheet: configuration.wordstylesheet ||
             html_doc_path("wordstyle.scss"),
-          standardstylesheet: Metanorma::Acme.configuration.standardstylesheet ||
+          standardstylesheet: configuration.standardstylesheet ||
             html_doc_path("acme.scss"),
-          header: Metanorma::Acme.configuration.header ||
+          header: configuration.header ||
             html_doc_path("header.html"),
-          wordcoverpage: Metanorma::Acme.configuration.wordcoverpage ||
+          wordcoverpage: configuration.wordcoverpage ||
             html_doc_path("word_acme_titlepage.html"),
-          wordintropage: Metanorma::Acme.configuration.wordintropage ||
+          wordintropage: configuration.wordintropage ||
             html_doc_path("word_acme_intro.html"),
+          i18nyaml: configuration.i18nyaml,
           ulstyle: "l3",
           olstyle: "l2",
         }
+      end
+
+      def configuration
+        Metanorma::Acme.configuration
       end
 
       include BaseConvert

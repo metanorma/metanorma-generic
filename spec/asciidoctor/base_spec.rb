@@ -157,41 +157,6 @@ RSpec.describe Asciidoctor::Acme do
         expect(convert).to(be_equivalent_to(xmlpp(output)))
       end
     end
-
-    context 'html extract options' do
-      let(:input) { File.read(fixture_path('asciidoctor/test_blank.adoc')) }
-      let(:output) do
-        params = {
-          organization_name_short: organization_name_short,
-          organization_name_long: organization_name_long,
-          document_namespace: document_namespace
-        }
-        format(File.read(fixture_path('asciidoctor/test_output.xml')), params)
-      end
-      let(:body_font) { 'body_font' }
-      let(:script) { 'The script' }
-      let(:header_font) { 'header_font' }
-      let(:html_extract_attributes) do
-        {
-          'script' => script,
-          'body-font' => body_font,
-          'header-font' => header_font
-        }
-      end
-
-      it 'uses configuration options for supplied html_extract attributes' do
-        Metanorma::Acme.configure do |config|
-          config.html_extract_attributes = html_extract_attributes
-        end
-        FileUtils.rm_f 'test.html'
-        convert
-        html = File.read('test.html', encoding: 'utf-8')
-        expect(html)
-          .to(match(%r[\.doc-number[^{]+\{[^{]+font-family: #{body_font};]m))
-        reg = %r[\.coverpage-title[^{]+\{[^}]+font-family: #{header_font};]m
-        expect(html).to(match(reg))
-      end
-    end
   end
 
   it "strips inline header" do

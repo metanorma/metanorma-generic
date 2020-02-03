@@ -23,15 +23,20 @@ module IsoDoc
 
       def default_file_locations(_options)
         {
-          htmlstylesheet: Metanorma::Acme.configuration.htmlstylesheet ||
+          htmlstylesheet: configuration.htmlstylesheet ||
             html_doc_path("htmlstyle.scss"),
-          htmlcoverpage: Metanorma::Acme.configuration.htmlcoverpage ||
+          htmlcoverpage: configuration.htmlcoverpage ||
             html_doc_path("html_acme_titlepage.html"),
-          htmlintropage: Metanorma::Acme.configuration.htmlintropage ||
+          htmlintropage: configuration.htmlintropage ||
             html_doc_path("html_acme_intro.html"),
-          scripts: Metanorma::Acme.configuration.scripts ||
+          scripts: configuration.scripts ||
             html_doc_path("scripts.html"),
+          i18nyaml: configuration.i18nyaml
         }
+      end
+
+      def configuration
+        Metanorma::Acme.configuration
       end
 
       def googlefonts

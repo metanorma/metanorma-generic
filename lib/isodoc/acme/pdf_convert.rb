@@ -21,10 +21,14 @@ module IsoDoc
 
       def default_file_locations(_options)
         {
-          htmlstylesheet: html_doc_path("htmlstyle.scss"),
-          htmlcoverpage: html_doc_path("html_acme_titlepage.html"),
-          htmlintropage: html_doc_path("html_acme_intro.html"),
-          scripts_pdf: html_doc_path("scripts.pdf.html"),
+          htmlstylesheet: configuration.htmlstylesheet ||
+            html_doc_path("htmlstyle.scss"),
+          htmlcoverpage: configuration.htmlcoverpage ||
+            html_doc_path("html_acme_titlepage.html"),
+          htmlintropage: configuration.htmlintropage ||
+            html_doc_path("html_acme_intro.html"),
+          scripts_pdf: configuration.scripts_pdf ||
+            html_doc_path("scripts.pdf.html")
         }
       end
 
@@ -37,6 +41,10 @@ module IsoDoc
 
       def html_toc(docxml)
         docxml
+      end
+
+      def configuration
+        Metanorma::Acme.configuration
       end
 
       include BaseConvert

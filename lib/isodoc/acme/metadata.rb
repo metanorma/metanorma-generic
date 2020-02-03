@@ -7,7 +7,12 @@ module IsoDoc
       def initialize(lang, script, labels)
         super
         here = File.dirname(__FILE__)
-        set(:logo, File.expand_path(File.join(here, "html", "logo.jpg")))
+        default_logo_path = File.expand_path(File.join(here, "html", "logo.jpg"))
+        set(:logo, configuration.logo_path || default_logo_path)
+      end
+
+      def configuration
+        Metanorma::Acme.configuration
       end
 
       def author(isoxml, _out)
