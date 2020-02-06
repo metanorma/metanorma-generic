@@ -85,11 +85,7 @@ RSpec.describe Asciidoctor::Acme do
   <title language="en" format="text/plain">Main Title</title>
   <docidentifier>Acme 1000</docidentifier>
   <docnumber>1000</docnumber>
-  <edition>2</edition>
-<version>
-  <revision-date>2000-01-01</revision-date>
-  <draft>3.4</draft>
-</version>  <contributor>
+<contributor>
     <role type="author"/>
     <organization>
       <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
@@ -101,6 +97,11 @@ RSpec.describe Asciidoctor::Acme do
       <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
     </organization>
   </contributor>
+  <edition>2</edition>
+<version>
+  <revision-date>2000-01-01</revision-date>
+  <draft>3.4</draft>
+</version>
   <language>en</language>
   <script>Latn</script>
   <status>
@@ -154,7 +155,7 @@ RSpec.describe Asciidoctor::Acme do
           config.organization_name_long = organization_name_long
           config.document_namespace = document_namespace
         end
-        expect(convert).to(be_equivalent_to(xmlpp(output)))
+        expect(xmlpp(Asciidoctor.convert(input, backend: :acme, header_footer: true))).to(be_equivalent_to(xmlpp(output)))
       end
     end
   end

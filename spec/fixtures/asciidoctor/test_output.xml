@@ -4,11 +4,6 @@
     <title language="en" format="text/plain">Main Title</title>
     <docidentifier>%{organization_name_short} 1000</docidentifier>
     <docnumber>1000</docnumber>
-    <edition>2</edition>
-    <version>
-      <revision-date>2000-01-01</revision-date>
-      <draft>3.4</draft>
-    </version>
     <contributor>
       <role type="author"/>
       <organization>
@@ -21,6 +16,11 @@
         <name>%{organization_name_short}</name>
       </organization>
     </contributor>
+    <edition>2</edition>
+    <version>
+      <revision-date>2000-01-01</revision-date>
+      <draft>3.4</draft>
+    </version>
     <language>en</language>
     <script>Latn</script>
     <status>
