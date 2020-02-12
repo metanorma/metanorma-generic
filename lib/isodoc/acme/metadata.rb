@@ -21,17 +21,6 @@ module IsoDoc
         set(:tc, tc.text) if tc
       end
 
-      def docid(isoxml, _out)
-        docnumber = isoxml.at(ns("//bibdata/docidentifier"))
-        docstatus = isoxml.at(ns("//bibdata/status/stage"))
-        dn = docnumber&.text
-        if docstatus
-          abbr = status_abbr(docstatus.text)
-          dn = "#{dn}(#{abbr})" unless abbr.empty?
-        end
-        set(:docnumber, dn)
-      end
-
       def status_abbr(status)
         case status
         when "working-draft" then "wd"

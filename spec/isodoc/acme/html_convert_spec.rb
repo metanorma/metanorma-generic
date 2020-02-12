@@ -52,85 +52,9 @@ RSpec.describe IsoDoc::Acme do
     INPUT
 
     output = <<~"OUTPUT"
-    {:accesseddate=>"XXX", :agency=>"Acme", :authors=>[], :authors_affiliations=>{}, :circulateddate=>"XXX", :confirmeddate=>"XXX", :copieddate=>"XXX", :createddate=>"XXX", :docnumber=>"1000(wd)", :doctitle=>"Main Title", :doctype=>"Standard", :docyear=>"2001", :draft=>"3.4", :draftinfo=>" (draft 3.4, 2000-01-01)", :edition=>"2", :implementeddate=>"XXX", :issueddate=>"XXX", :logo=>"#{File.join(logoloc, "logo.jpg")}", :obsoleteddate=>"XXX", :publisheddate=>"XXX", :receiveddate=>"XXX", :revdate=>"2000-01-01", :revdate_monthyear=>"January 2000", :security=>"Client Confidential", :stage=>"Working Draft", :tc=>"TC", :transmitteddate=>"XXX", :unchangeddate=>"XXX", :unpublished=>true, :updateddate=>"XXX"}
+    {:accesseddate=>"XXX", :agency=>"Acme", :authors=>[], :authors_affiliations=>{}, :circulateddate=>"XXX", :confirmeddate=>"XXX", :copieddate=>"XXX", :createddate=>"XXX", :docnumber=>"1000", :docnumeric=>nil, :doctitle=>"Main Title", :doctype=>"Standard", :docyear=>"2001", :draft=>"3.4", :draftinfo=>" (draft 3.4, 2000-01-01)", :edition=>"2", :implementeddate=>"XXX", :issueddate=>"XXX", :logo=>"#{File.join(logoloc, "logo.jpg")}", :obsoleteddate=>"XXX", :publisheddate=>"XXX", :receiveddate=>"XXX", :revdate=>"2000-01-01", :revdate_monthyear=>"January 2000", :security=>"Client Confidential", :stage=>"Working Draft", :tc=>"TC", :transmitteddate=>"XXX", :unchangeddate=>"XXX", :unpublished=>true, :updateddate=>"XXX"}
     OUTPUT
 
-    docxml, filename, dir = csdc.convert_init(input, "test", true)
-    expect(htmlencode(Hash[csdc.info(docxml, nil).sort].to_s)).to be_equivalent_to output
-  end
-
-  it "abbreviates committee-draft" do
-    input = <<~"INPUT"
-<acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
-<bibdata type="standard">
-  <status><stage>committee-draft</stage></status>
-</bibdata>
-<sections/>
-</acme-standard>
-    INPUT
-
-    output = <<~"OUTPUT"
-    {:accesseddate=>"XXX", :agency=>"", :authors=>[], :authors_affiliations=>{}, :circulateddate=>"XXX", :confirmeddate=>"XXX", :copieddate=>"XXX", :createddate=>"XXX", :docnumber=>"(cd)", :doctitle=>nil, :docyear=>nil, :draft=>nil, :draftinfo=>"", :edition=>nil, :implementeddate=>"XXX", :issueddate=>"XXX", :logo=>"#{File.join(logoloc, "logo.jpg")}", :obsoleteddate=>"XXX", :publisheddate=>"XXX", :receiveddate=>"XXX", :revdate=>nil, :revdate_monthyear=>nil, :stage=>"Committee Draft", :transmitteddate=>"XXX", :unchangeddate=>"XXX", :unpublished=>true, :updateddate=>"XXX"}
-    OUTPUT
-
-    csdc = IsoDoc::Acme::HtmlConvert.new({})
-    docxml, filename, dir = csdc.convert_init(input, "test", true)
-    expect(htmlencode(Hash[csdc.info(docxml, nil).sort].to_s)).to be_equivalent_to output
-  end
-
-  it "abbreviates draft-standard" do
-    input = <<~"INPUT"
-<acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
-<bibdata type="standard">
-  <status><stage>draft-standard</stage></status>
-</bibdata>
-<sections/>
-</acme-standard>
-    INPUT
-
-    output = <<~"OUTPUT"
-    {:accesseddate=>"XXX", :agency=>"", :authors=>[], :authors_affiliations=>{}, :circulateddate=>"XXX", :confirmeddate=>"XXX", :copieddate=>"XXX", :createddate=>"XXX", :docnumber=>"(d)", :doctitle=>nil, :docyear=>nil, :draft=>nil, :draftinfo=>"", :edition=>nil, :implementeddate=>"XXX", :issueddate=>"XXX", :logo=>"#{File.join(logoloc, "logo.jpg")}", :obsoleteddate=>"XXX", :publisheddate=>"XXX", :receiveddate=>"XXX", :revdate=>nil, :revdate_monthyear=>nil, :stage=>"Draft Standard", :transmitteddate=>"XXX", :unchangeddate=>"XXX", :unpublished=>true, :updateddate=>"XXX"}
-    OUTPUT
-
-    csdc = IsoDoc::Acme::HtmlConvert.new({})
-    docxml, filename, dir = csdc.convert_init(input, "test", true)
-    expect(htmlencode(Hash[csdc.info(docxml, nil).sort].to_s)).to be_equivalent_to output
-  end
-
-    it "abbreviates published" do
-    input = <<~"INPUT"
-<acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
-<bibdata type="standard">
-  <status><stage>published</stage></status>
-</bibdata>
-<sections/>
-</acme-standard>
-    INPUT
-
-    output = <<~"OUTPUT"
-    {:accesseddate=>"XXX", :agency=>"", :authors=>[], :authors_affiliations=>{}, :circulateddate=>"XXX", :confirmeddate=>"XXX", :copieddate=>"XXX", :createddate=>"XXX", :docnumber=>nil, :doctitle=>nil, :docyear=>nil, :draft=>nil, :draftinfo=>"", :edition=>nil, :implementeddate=>"XXX", :issueddate=>"XXX", :logo=>"#{File.join(logoloc, "logo.jpg")}", :obsoleteddate=>"XXX", :publisheddate=>"XXX", :receiveddate=>"XXX", :revdate=>nil, :revdate_monthyear=>nil, :stage=>"Published", :transmitteddate=>"XXX", :unchangeddate=>"XXX", :unpublished=>false, :updateddate=>"XXX"}
-    OUTPUT
-
-    csdc = IsoDoc::Acme::HtmlConvert.new({})
-    docxml, filename, dir = csdc.convert_init(input, "test", true)
-    expect(htmlencode(Hash[csdc.info(docxml, nil).sort].to_s)).to be_equivalent_to output
-  end
-
-  it "ignores unrecognised status" do
-    input = <<~"INPUT"
-<acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
-<bibdata type="standard">
-  <status><stage>standard</stage></status>
-</bibdata>
-<sections/>
-</acme-standard>
-    INPUT
-
-    output = <<~"OUTPUT"
-    {:accesseddate=>"XXX", :agency=>"", :authors=>[], :authors_affiliations=>{}, :circulateddate=>"XXX", :confirmeddate=>"XXX", :copieddate=>"XXX", :createddate=>"XXX", :docnumber=>nil, :doctitle=>nil, :docyear=>nil, :draft=>nil, :draftinfo=>"", :edition=>nil, :implementeddate=>"XXX", :issueddate=>"XXX", :logo=>"#{File.join(logoloc, "logo.jpg")}", :obsoleteddate=>"XXX", :publisheddate=>"XXX", :receiveddate=>"XXX", :revdate=>nil, :revdate_monthyear=>nil, :stage=>"Standard", :transmitteddate=>"XXX", :unchangeddate=>"XXX", :unpublished=>true, :updateddate=>"XXX"}
-    OUTPUT
-
-    csdc = IsoDoc::Acme::HtmlConvert.new({})
     docxml, filename, dir = csdc.convert_init(input, "test", true)
     expect(htmlencode(Hash[csdc.info(docxml, nil).sort].to_s)).to be_equivalent_to output
   end

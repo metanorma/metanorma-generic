@@ -43,11 +43,16 @@ module Asciidoctor
         end
       end
 
+      def docidentifier_cleanup(xmldoc)
+        template = configuration.docid_template ||
+          "{{ organization_name_short }} {{ docnumeric }}"
+        docid = xmldoc.at("//bibdata/docidentifier")
+        docid.children = boilerplate_isodoc(xmldoc).populate_template(template, nil)
+      end
+
       def metadata_id(node, xml)
-        return unless node.attr("docnumber")
         xml.docidentifier do |i|
-          i << "#{configuration.organization_name_short} "\
-            "#{node.attr("docnumber")}"
+          i << "DUMMY"
         end
         xml.docnumber { |i| i << node.attr("docnumber") }
       end
@@ -153,6 +158,14 @@ module Asciidoctor
 
       def configuration
         Metanorma::Acme.configuration
+      end
+
+      def boilerplate_isodoc(xmldoc)
+        conv = super
+        Metanorma::Acme::Configuration::CONFIG_ATTRS.each do |a|
+          conv.labels[a] = configuration.send a
+        end
+        conv
       end
     end
   end
