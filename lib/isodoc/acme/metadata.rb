@@ -8,7 +8,20 @@ module IsoDoc
         super
         here = File.dirname(__FILE__)
         default_logo_path = File.expand_path(File.join(here, "html", "logo.jpg"))
-        set(:logo, ::IsoDoc::Acme::BaseConvert.baselocation(configuration.logo_path) || default_logo_path)
+        set(:logo, baselocation(configuration.logo_path) || default_logo_path)
+      end
+
+      class << self
+        attr_accessor :_file
+      end
+
+      def self.inherited( k )
+        k._file = caller_locations.first.absolute_path
+      end
+
+      def baselocation(loc)
+        return nil if loc.nil?
+        File.expand_path(File.join(File.dirname(self.class::_file || __FILE__), "..", "..", "..", loc))
       end
 
       def configuration

@@ -9,14 +9,17 @@ module IsoDoc
         @meta = Metadata.new(lang, script, labels)
       end
 
-      def self.baselocation(loc)
-        return nil if loc.nil?
-        File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", loc))
+      class << self
+        attr_accessor :_file
+      end
+
+      def self.inherited( k )
+        k._file = caller_locations.first.absolute_path
       end
 
       def baselocation(loc)
         return nil if loc.nil?
-        File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", loc))
+        File.expand_path(File.join(File.dirname(self.class::_file || __FILE__), "..", "..", "..", loc))
       end
 
       def annex_name(annex, name, div)
