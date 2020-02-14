@@ -12,6 +12,14 @@ module IsoDoc
         super
       end
 
+      class << self
+        attr_accessor :_file
+      end
+
+      def self.inherited( k )
+        k._file = caller_locations.first.absolute_path
+      end
+
       def default_fonts(options)
         {
           bodyfont: (options[:script] == "Hans" ? '"SimSun",serif' : '"Arial",sans-serif'),
