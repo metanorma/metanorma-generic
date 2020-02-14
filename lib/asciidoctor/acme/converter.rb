@@ -70,16 +70,6 @@ module Asciidoctor
         end
       end
 
-      def metadata_security(node, xml)
-        security = node.attr("security") || return
-        xml.security security
-      end
-
-      def metadata_ext(node, xml)
-        super
-        metadata_security(node, xml)
-      end
-
       def title_validate(root)
         nil
       end
