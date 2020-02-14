@@ -21,13 +21,13 @@ module IsoDoc
 
       def default_file_locations(_options)
         {
-          htmlstylesheet: configuration.htmlstylesheet ||
+          htmlstylesheet: baselocation(configuration.htmlstylesheet) ||
             html_doc_path("htmlstyle.scss"),
-          htmlcoverpage: configuration.htmlcoverpage ||
+          htmlcoverpage: baselocation(configuration.htmlcoverpage) ||
             html_doc_path("html_acme_titlepage.html"),
-          htmlintropage: configuration.htmlintropage ||
+          htmlintropage: baselocation(configuration.htmlintropage) ||
             html_doc_path("html_acme_intro.html"),
-          scripts_pdf: configuration.scripts_pdf ||
+          scripts_pdf: baselocation(configuration.scripts_pdf) ||
             html_doc_path("scripts.pdf.html")
         }
       end

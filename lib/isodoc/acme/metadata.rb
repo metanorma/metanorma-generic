@@ -8,7 +8,7 @@ module IsoDoc
         super
         here = File.dirname(__FILE__)
         default_logo_path = File.expand_path(File.join(here, "html", "logo.jpg"))
-        set(:logo, configuration.logo_path || default_logo_path)
+        set(:logo, ::IsoDoc::Acme::BaseConvert.baselocation(configuration.logo_path) || default_logo_path)
       end
 
       def configuration

@@ -22,17 +22,17 @@ module IsoDoc
 
       def default_file_locations(options)
         {
-          wordstylesheet: configuration.wordstylesheet ||
+          wordstylesheet: baselocation(configuration.wordstylesheet) ||
             html_doc_path("wordstyle.scss"),
-          standardstylesheet: configuration.standardstylesheet ||
+          standardstylesheet: baselocation(configuration.standardstylesheet) ||
             html_doc_path("acme.scss"),
-          header: configuration.header ||
+          header: baselocation(configuration.header) ||
             html_doc_path("header.html"),
-          wordcoverpage: configuration.wordcoverpage ||
+          wordcoverpage: baselocation(configuration.wordcoverpage) ||
             html_doc_path("word_acme_titlepage.html"),
-          wordintropage: configuration.wordintropage ||
+          wordintropage: baselocation(configuration.wordintropage) ||
             html_doc_path("word_acme_intro.html"),
-          i18nyaml: configuration.i18nyaml,
+          i18nyaml: baselocation(configuration.i18nyaml),
           ulstyle: "l3",
           olstyle: "l2",
         }
