@@ -22,6 +22,7 @@ module Metanorma
         htmlintropage
         htmlstylesheet
         published_stages
+        stage_abbreviations
         scripts
         scripts_pdf
         standardstylesheet

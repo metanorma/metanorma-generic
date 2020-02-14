@@ -15,11 +15,6 @@ module IsoDoc
         @meta = Metadata.new(lang, script, labels)
       end
 
-      def info(isoxml, out)
-        @meta.security isoxml, out
-        super
-      end
-
       def annex_name(annex, name, div)
         div.h1 **{ class: "Annex" } do |t|
           t << "#{anchor(annex['id'], :label)} "
