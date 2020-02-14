@@ -21,6 +21,7 @@ module Metanorma
         htmlcoverpage
         htmlintropage
         htmlstylesheet
+        published_stages
         scripts
         scripts_pdf
         standardstylesheet

@@ -32,8 +32,9 @@ module IsoDoc
       end
 
       def unpublished(status)
-        !%w(published withdrawn).include? status.downcase
-      end
+        stages = configuration&.published_stages || ["published"]
+        !(Array(stages).map { |m| m.downcase }.include? status.downcase)
+    end
 
       def version(isoxml, _out)
         super
