@@ -47,7 +47,11 @@ module Asciidoctor
         template = configuration.docid_template ||
           "{{ organization_name_short }} {{ docnumeric }}"
         docid = xmldoc.at("//bibdata/docidentifier")
-        docid.children = boilerplate_isodoc(xmldoc).populate_template(template, nil)
+        id = boilerplate_isodoc(xmldoc).populate_template(template, nil)
+        if id.empty? then docid.remove
+        else
+          docid.children
+        end
       end
 
       def metadata_id(node, xml)
@@ -126,7 +130,7 @@ module Asciidoctor
         content_validate(doc)
         schema_validate(formattedstr_strip(doc.dup),
                         configuration.validate_rng_file ||
-                          File.join(File.dirname(__FILE__), "acme.rng"))
+                        File.join(File.dirname(__FILE__), "acme.rng"))
       end
 
       def html_path_acme(file)
