@@ -48,10 +48,7 @@ module Asciidoctor
           "{{ organization_name_short }} {{ docnumeric }}"
         docid = xmldoc.at("//bibdata/docidentifier")
         id = boilerplate_isodoc(xmldoc).populate_template(template, nil)
-        if id.empty? then docid.remove
-        else
-          docid.children
-        end
+        id.empty? and docid.remove or docid.children = id
       end
 
       def metadata_id(node, xml)
