@@ -7,94 +7,11 @@
    License: none (public domain)
 */
 
-@import 'base_style/reset';
-@import 'base_style/typography';
-@import 'base_style/nav';
-@import 'base_style/bands';
-@import 'base_style/blocks';
-
-// START 'base_style/blocks';
-// .FigureTitle, .SourceTitle, .AdmonitionTitle, .RecommendationTitle {
-//     font-weight: 700;
-//     font-size: 1em;
-//     text-align: center;
-// }
-
-// .Sourcecode {
-//   font-family: $monospacefont;
-//   font-variant-ligatures: none;
-// }
-
-// .contact-info p,
-// .contact-info a {
-//   font-family: $monospacefont;
-//   font-variant-ligatures: none;
-//   font-weight: 400;
-// }
-
-// div.figure>img {
-//   margin-left: auto;
-//   margin-right: auto;
-//   display: block;
-//   max-width: 100%;
-//   height: auto;
-// }
-
-// .figure,
-// .Sourcecode,
-// .pseudocode {
-//   background-color: #f7f7f7;
-//   font-size: 0.8em;
-//   line-height: 1.6em;
-//   padding: 1.5em;
-//   margin: 2em 0 1em 0;
-//   overflow: auto;
-// }
-
-// .example {
-//   background-color: #e1eef1;
-//   padding: 1.2em;
-//   margin: 2em 0 1em 0;
-//   padding-left: 2em;
-// }
-
-// .example .example-title {
-//   font-weight: 700;
-//   text-transform: uppercase;
-//   margin-top: 0;
-//   margin-left: -1.5em;
-// }
-
-// .example .Sourcecode,
-// .example .pseudocode {
-//   background: none;
-// }
-
-// .formula {
-//     background-color: #f7f7f7;
-//     padding: 1.5em;
-//     margin-top: 2em;
-//     text-align: center;
-// }
-
-// .Quote {
-//     background-color: #f7f7f7;
-//     font-style: italic;
-//     width: 80%;
-//     padding: 1.5em;
-//     margin-top: 2em;
-//     margin-left: auto;
-//     margin-right: auto;
-// }
-// END 'base_style/blocks';
+@import 'base_style/all';
 
 body {
   @include bodyStyle1(15px, 1.4em, #1d1d1d, #ffffff, 300);
   // @include sidebarNavContainer(323px);
-}
-
-table {
-  @include table(1px solid black);
 }
 
 main {margin: 0 3em 0 6em;}
@@ -137,22 +54,22 @@ nav {
 */
 
 @media screen and (min-width: 768px) {
-    .container {
-        padding-left: 360px;
-    }
+  .container {
+      padding-left: 360px;
+  }
 
-    .rule.toc {
-        display: none;
-    }
+  .rule.toc {
+      display: none;
+  }
 
-    h1.toc-contents {
-        margin-top: 1em;
-    }
+  h1.toc-contents {
+      margin-top: 1em;
+  }
 
-    ul#toc-list {
-        padding:0;
-        margin:0;
-    }
+  ul#toc-list {
+      padding:0;
+      margin:0;
+  }
 }
 
 div.figure {
@@ -218,12 +135,8 @@ p.document-stage {
 }
 
 .coverpage-maturity {
-    font-family: $bodyfont;
-    font-weight: 400;
-    font-size: 1em;
-    margin: 0 0 2em 0;
-    text-transform: uppercase;
-    }
+  @include coverpageStageBlock();
+}
 
 #working-draft, #proposal {
     border-bottom: solid 3px #F7803C;
@@ -273,50 +186,50 @@ p.document-stage {
     3.1 Titles
 */
 
-  h1,h2,h3,h4,h5,h6 {
-    font-family: $headerfont;
-    color: #1661AD;
-    font-weight: 300;
-    margin-top: 1.6em;
-    margin-bottom: 0.3em;
-  }
+h1,h2,h3,h4,h5,h6 {
+  font-family: $headerfont;
+  color: #1661AD;
+  font-weight: 300;
+  margin-top: 1.6em;
+  margin-bottom: 0.3em;
+}
 
-  h1 {
-    font-size: 1.6em;
-    text-transform: uppercase;
+h1 {
+  font-size: 1.6em;
+  text-transform: uppercase;
+  margin-top: 2em;
+}
+
+h1#content {
     margin-top: 2em;
-  }
+}
 
-  h1#content {
-      margin-top: 2em;
-  }
+h2 {
+  margin-top: 1.3em;
+  font-size: 1.3em;
+  font-weight: 400;
+}
 
-  h2 {
-    margin-top: 1.3em;
-    font-size: 1.3em;
-    font-weight: 400;
-  }
+h3 {
+  margin-top: 1.1em;
+  font-size: 1.1em;
+  font-weight: 100;
+}
 
-  h3 {
-    margin-top: 1.1em;
-    font-size: 1.1em;
-    font-weight: 100;
-  }
+.TermNum, .Terms, .AltTerms {
+  color: #1661AD;
+  font-weight: 100;
+}
 
-  .TermNum, .Terms, .AltTerms {
-    color: #1661AD;
-    font-weight: 100;
-  }
+h2.TermNum {
+  margin-bottom: 0;
+}
 
-  h2.TermNum {
-    margin-bottom: 0;
-  }
-
-  p.Terms {
-    font-size: 1.1em;
-    line-height: 1.5em;
-    margin: 0;
-  }
+p.Terms {
+  font-size: 1.1em;
+  line-height: 1.5em;
+  margin: 0;
+}
 
 p.AltTerms {
   /*
@@ -458,6 +371,10 @@ p.Biblio, p.NormRef {
     3.9 Tables
 */
 
+table {
+  @include table(1px solid black);
+}
+
 p.TableTitle {
   text-align: center;
   margin-top: 2.5em;
@@ -476,7 +393,6 @@ a.footnote-number {
 .footnote {
     font-size: 0.9em;
 }
-
 
 /*
     3.11 Blockquotes
@@ -498,9 +414,9 @@ a.footnote-number {
 */
 
 .contact-info {
-    padding: 2em;
-    margin-top: 5em;
-    width: 250px;
+  padding: 2em;
+  margin-top: 5em;
+  width: 250px;
 
   text-align: left;
   border: #1661AD solid 2px;
