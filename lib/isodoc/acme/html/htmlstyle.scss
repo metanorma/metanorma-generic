@@ -11,6 +11,82 @@
 @import 'base_style/typography';
 @import 'base_style/nav';
 @import 'base_style/bands';
+@import 'base_style/blocks';
+
+// START 'base_style/blocks';
+// .FigureTitle, .SourceTitle, .AdmonitionTitle, .RecommendationTitle {
+//     font-weight: 700;
+//     font-size: 1em;
+//     text-align: center;
+// }
+
+// .Sourcecode {
+//   font-family: $monospacefont;
+//   font-variant-ligatures: none;
+// }
+
+// .contact-info p,
+// .contact-info a {
+//   font-family: $monospacefont;
+//   font-variant-ligatures: none;
+//   font-weight: 400;
+// }
+
+// div.figure>img {
+//   margin-left: auto;
+//   margin-right: auto;
+//   display: block;
+//   max-width: 100%;
+//   height: auto;
+// }
+
+// .figure,
+// .Sourcecode,
+// .pseudocode {
+//   background-color: #f7f7f7;
+//   font-size: 0.8em;
+//   line-height: 1.6em;
+//   padding: 1.5em;
+//   margin: 2em 0 1em 0;
+//   overflow: auto;
+// }
+
+// .example {
+//   background-color: #e1eef1;
+//   padding: 1.2em;
+//   margin: 2em 0 1em 0;
+//   padding-left: 2em;
+// }
+
+// .example .example-title {
+//   font-weight: 700;
+//   text-transform: uppercase;
+//   margin-top: 0;
+//   margin-left: -1.5em;
+// }
+
+// .example .Sourcecode,
+// .example .pseudocode {
+//   background: none;
+// }
+
+// .formula {
+//     background-color: #f7f7f7;
+//     padding: 1.5em;
+//     margin-top: 2em;
+//     text-align: center;
+// }
+
+// .Quote {
+//     background-color: #f7f7f7;
+//     font-style: italic;
+//     width: 80%;
+//     padding: 1.5em;
+//     margin-top: 2em;
+//     margin-left: auto;
+//     margin-right: auto;
+// }
+// END 'base_style/blocks';
 
 body {
   @include bodyStyle1(15px, 1.4em, #1d1d1d, #ffffff, 300);
@@ -19,19 +95,6 @@ body {
 
 table {
   @include table(1px solid black);
-}
-
-/*
-  3.2 Links
-*/
-@include elementStyles(#485094, #1661AD, white);
-
-/*
-    3.4 Rules
-*/
-
-.rule {
-  @include rule(1px, #0e1a85)
 }
 
 main {margin: 0 3em 0 6em;}
@@ -92,13 +155,9 @@ nav {
     }
 }
 
-  div.figure > img {
-    margin-left: auto;
-margin-right: auto;
-display: block;
-max-width: 100%;
-height: auto;
-  }
+div.figure {
+  @include figureBlock();
+}
 
 /*
     Document types + stages
@@ -275,6 +334,11 @@ p.AltTerms {
 }
 
 /*
+  3.2 Links
+*/
+@include elementStyles(#485094, #1661AD, white);
+
+/*
     3.3 Lists
 */
 
@@ -312,6 +376,14 @@ ul > li:first-child {
 }
 
 /*
+    3.4 Rules
+*/
+
+.rule {
+  @include rule(1px, #0e1a85)
+}
+
+/*
     3.5 Bibliograhy
 */
 
@@ -325,23 +397,18 @@ p.Biblio, p.NormRef {
 */
 
 .figure, .Sourcecode, .pseudocode {
-    background-color: #f7f7f7;
-    font-size: 0.8em;
-    line-height: 1.6em;
-    padding: 1.5em;
-    margin: 2em 0 1em 0;
-    overflow: auto;
+  @include pseudocodeBlock(#f7f7f7);
 }
 
 .Sourcecode {
-    font-family: $monospacefont;
-    font-variant-ligatures: none;
-  }
+  @include monospaceBlockStyle()
+}
 
-.FigureTitle, .SourceTitle, .AdmonitionTitle, .RecommendationTitle {
-    font-weight: 700;
-    font-size: 1em;
-    text-align: center;
+@include admonitionBlock();
+@include recommendationBlock();
+
+.FigureTitle, .SourceTitle {
+  @include blockTitle()
 }
 
 /*
@@ -375,21 +442,16 @@ p.Biblio, p.NormRef {
 */
 
 .example {
-    background-color: #e1eef1;
-    padding: 1.2em;
-    margin: 2em 0 1em 0;
-    padding-left: 2em;
-}
+  @include exampleBlock(#e1eef1, #424242, 1.2em);
 
-.example .example-title {
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-top:0;
-    margin-left:-1.5em;
-}
+  .example-title {
+    margin-top: 0;
+  }
 
-.example .Sourcecode, .example .pseudocode {
-      background: none;
+  .Sourcecode,
+  .pseudocode {
+    background: none;
+  }
 }
 
 /*
@@ -421,27 +483,16 @@ a.footnote-number {
 */
 
 .Quote {
-    background-color: #f7f7f7;
-    font-style: italic;
-    width: 80%;
-    padding: 1.5em;
-    margin-top: 2em;
-    margin-left: auto;
-    margin-right: auto;
+  @include blockquoteBlock(#f7f7f7);
 }
-
 
 /*
     3.12 Formulas
 */
 
 .formula {
-    background-color: #f7f7f7;
-    padding: 1.5em;
-    margin-top: 2em;
-    text-align: center;
+  @include formulaBlock(#f7f7f7)
 }
-
 /*
     3.13 Contact Info
 */
@@ -464,9 +515,8 @@ a.footnote-number {
 }
 
 .contact-info p, .contact-info a {
-    font-family: $monospacefont;
-    font-variant-ligatures: none;
-    font-weight: 400;
+  @include monospaceBlockStyle();
+  font-weight: 400;
 }
 
 .contact-info .name {
