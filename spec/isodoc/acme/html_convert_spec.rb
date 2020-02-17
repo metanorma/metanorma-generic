@@ -367,25 +367,4 @@ RSpec.describe IsoDoc::Acme do
     ).to be_equivalent_to output
   end
 
-  it "injects JS into blank html" do
-    system "rm -f test.html"
-    input = <<~"INPUT"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :novalid:
-    INPUT
-
-    output = <<~"OUTPUT"
-    #{BLANK_HDR}
-<sections/>
-</acme-standard>
-    OUTPUT
-
-    expect(Asciidoctor.convert(input, backend: :acme, header_footer: true)).to be_equivalent_to output
-    html = File.read("test.html", encoding: "utf-8")
-    expect(html).to match(%r{jquery\.min\.js})
-    expect(html).to match(%r{Overpass})
-  end
-
 end

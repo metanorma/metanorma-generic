@@ -122,7 +122,6 @@ RSpec.describe Asciidoctor::Acme do
     <committee type="A">TC</committee>
     <committee type="B">TC1</committee>
   </editorialgroup>
-  <security>Client Confidential</security>
   </ext>
 </bibdata>
 <sections/>
