@@ -47,7 +47,7 @@ RSpec.describe Metanorma::Acme do
       let(:default_organization_name_short) { 'Acme' }
       let(:default_organization_name_long) { 'Acme Corp.' }
       let(:default_document_namespace) do
-        'https://open.ribose.com/standards/acme'
+        'https://metanorma.org/ns/acme'
       end
 
       it 'sets default atrributes' do
