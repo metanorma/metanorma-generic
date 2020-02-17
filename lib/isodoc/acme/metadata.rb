@@ -8,7 +8,20 @@ module IsoDoc
         super
         here = File.dirname(__FILE__)
         default_logo_path = File.expand_path(File.join(here, "html", "logo.jpg"))
-        set(:logo, configuration.logo_path || default_logo_path)
+        set(:logo, baselocation(configuration.logo_path) || default_logo_path)
+      end
+
+      class << self
+        attr_accessor :_file
+      end
+
+      def self.inherited( k )
+        k._file = caller_locations.first.absolute_path
+      end
+
+      def baselocation(loc)
+        return nil if loc.nil?
+        File.expand_path(File.join(File.dirname(self.class::_file || __FILE__), "..", "..", "..", loc))
       end
 
       def configuration
@@ -21,61 +34,14 @@ module IsoDoc
         set(:tc, tc.text) if tc
       end
 
-      def docid(isoxml, _out)
-        docnumber = isoxml.at(ns("//bibdata/docidentifier"))
-        docstatus = isoxml.at(ns("//bibdata/status/stage"))
-        dn = docnumber&.text
-        if docstatus
-          abbr = status_abbr(docstatus.text)
-          dn = "#{dn}(#{abbr})" unless abbr.empty?
-        end
-        set(:docnumber, dn)
-      end
-
-      def status_abbr(status)
-        case status
-        when "working-draft" then "wd"
-        when "committee-draft" then "cd"
-        when "draft-standard" then "d"
-        else
-          ""
-        end
+      def stage_abbr(status)
+        return super unless configuration.stage_abbreviations
+        Hash(configuration.stage_abbreviations).dig(status)
       end
 
       def unpublished(status)
-        !%w(published withdrawn).include? status.downcase
-      end
-
-      def version(isoxml, _out)
-        super
-        revdate = get[:revdate]
-        set(:revdate_monthyear, monthyr(revdate))
-      end
-
-      MONTHS = {
-        "01": "January",
-        "02": "February",
-        "03": "March",
-        "04": "April",
-        "05": "May",
-        "06": "June",
-        "07": "July",
-        "08": "August",
-        "09": "September",
-        "10": "October",
-        "11": "November",
-        "12": "December",
-      }.freeze
-
-      def monthyr(isodate)
-        m = /(?<yr>\d\d\d\d)-(?<mo>\d\d)/.match isodate
-        return isodate unless m && m[:yr] && m[:mo]
-        return "#{MONTHS[m[:mo].to_sym]} #{m[:yr]}"
-      end
-
-      def security(isoxml, _out)
-        security = isoxml.at(ns("//bibdata/ext/security")) || return
-        set(:security, security.text)
+        stages = configuration&.published_stages || ["published"]
+        !(Array(stages).map { |m| m.downcase }.include? status.downcase)
       end
     end
   end

@@ -14,12 +14,15 @@ module Metanorma
         organization_name_short
         organization_name_long
         document_namespace
+        docid_template
         i18nyaml
         logo_path
         header
         htmlcoverpage
         htmlintropage
         htmlstylesheet
+        published_stages
+        stage_abbreviations
         scripts
         scripts_pdf
         standardstylesheet

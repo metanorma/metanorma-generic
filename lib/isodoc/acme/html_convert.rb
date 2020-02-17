@@ -13,6 +13,14 @@ module IsoDoc
         super
       end
 
+      class << self
+        attr_accessor :_file
+      end
+
+      def self.inherited( k )
+        k._file = caller_locations.first.absolute_path
+      end
+
       def default_fonts(options)
         {
           bodyfont: (options[:script] == "Hans" ? '"SimSun",serif' : '"Overpass",sans-serif'),
@@ -23,15 +31,15 @@ module IsoDoc
 
       def default_file_locations(_options)
         {
-          htmlstylesheet: configuration.htmlstylesheet ||
+          htmlstylesheet: baselocation(configuration.htmlstylesheet) ||
             html_doc_path("htmlstyle.scss"),
-          htmlcoverpage: configuration.htmlcoverpage ||
+          htmlcoverpage: baselocation(configuration.htmlcoverpage) ||
             html_doc_path("html_acme_titlepage.html"),
-          htmlintropage: configuration.htmlintropage ||
+          htmlintropage: baselocation(configuration.htmlintropage) ||
             html_doc_path("html_acme_intro.html"),
-          scripts: configuration.scripts ||
+          scripts: baselocation(configuration.scripts) ||
             html_doc_path("scripts.html"),
-          i18nyaml: configuration.i18nyaml
+          i18nyaml: baselocation(configuration.i18nyaml)
         }
       end
 

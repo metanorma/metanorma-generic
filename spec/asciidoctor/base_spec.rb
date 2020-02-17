@@ -148,14 +148,22 @@ RSpec.describe Asciidoctor::Acme do
       let(:organization_name_short) { 'Test' }
       let(:organization_name_long) { 'Test Corp.' }
       let(:document_namespace) { 'https://example.com/' }
+      let(:docid_template) { "{{ organization_name_long }} {{ docnumeric }} {{ stage }}" }
 
       it 'uses configuration options for organization and namespace' do
         Metanorma::Acme.configure do |config|
           config.organization_name_short = organization_name_short
           config.organization_name_long = organization_name_long
           config.document_namespace = document_namespace
+          config.docid_template = docid_template
         end
         expect(xmlpp(Asciidoctor.convert(input, backend: :acme, header_footer: true))).to(be_equivalent_to(xmlpp(output)))
+        Metanorma::Acme.configure do |config|
+          config.organization_name_short = Metanorma::Acme::Configuration.new.organization_name_short
+          config.organization_name_long = Metanorma::Acme::Configuration.new.organization_name_long
+          config.document_namespace = Metanorma::Acme::Configuration.new.document_namespace
+          config.docid_template = Metanorma::Acme::Configuration.new.docid_template
+        end
       end
     end
   end

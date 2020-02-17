@@ -14,3 +14,6 @@ header: /metanorma-mine/lib/isodoc/mine/html/header.html
 wordcoverpage: /metanorma-mine/lib/isodoc/mine/html/word_mine_titlepage.html
 wordintropage: /metanorma-mine/lib/isodoc/mine/html/word_mine_intro.html
 wordstylesheet: /metanorma-mine/lib/isodoc/mine/html/wordstyle.scss
+docid_template: "{{ organization_name_short }} {{ docnumeric }}"
+published_stages:
+  - published
