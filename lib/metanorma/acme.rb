@@ -38,17 +38,15 @@ module Metanorma
 
       def initialize(*args)
         super
-        set_default_values_from_yaml_file
+        # Try to set config values from yaml file in current directory
+        set_default_values_from_yaml_file(YAML_CONFIG_FILE) if File.file?(YAML_CONFIG_FILE)
         self.organization_name_short ||= ORGANIZATION_NAME_SHORT
         self.organization_name_long ||= ORGANIZATION_NAME_LONG
         self.document_namespace ||= DOCUMENT_NAMESPACE
       end
 
-      # Try to set config values from yaml file in current directory
-      def set_default_values_from_yaml_file
-        return unless File.file?(YAML_CONFIG_FILE)
-
-        default_config_options = YAML.load(File.read(YAML_CONFIG_FILE))
+      def set_default_values_from_yaml_file(config_file)
+        default_config_options = YAML.load(File.read(config_file))
         CONFIG_ATTRS.each do |attr_name|
           instance_variable_set("@#{attr_name}", default_config_options[attr_name.to_s])
         end

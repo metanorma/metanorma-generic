@@ -207,6 +207,51 @@ RSpec.describe Asciidoctor::Acme do
     expect(html).to match(%r[h1, h2, h3, h4, h5, h6 \{[^}]+font-family: "Overpass", sans-serif;]m)
   end
 
+  context 'customize directive' do
+    subject(:config) { Metanorma::Acme.configuration }
+    let(:config_file) { Tempfile.new('my_custom_config_file.yml') }
+    let(:organization_name_short) { 'Test' }
+    let(:organization_name_long) { 'Test Corp.' }
+    let(:document_namespace) { 'https://example.com/' }
+    let(:input) do
+      <<~"INPUT"
+        = Document title
+        Author
+        :customize: #{config_file.path}
+        :docfile: test.adoc
+        :novalid:
+      INPUT
+    end
+    let(:yaml_content) do
+      {
+        'organization_name_short' => organization_name_short,
+        'organization_name_long' => organization_name_long,
+        'document_namespace' => document_namespace
+      }
+    end
+
+    before do
+      FileUtils.rm_f "test.html"
+      config_file.tap { |file| file.puts(yaml_content.to_yaml) }.close
+      Metanorma::Acme.configure do |config|
+        config.organization_name_short = ''
+        config.organization_name_long = ''
+        config.document_namespace = ''
+      end
+    end
+
+    after do
+      FileUtils.rm_f "test.html"
+    end
+
+    it 'recognizes `customize` option and uses supplied file as the config file' do
+      expect { Asciidoctor.convert(input, backend: :acme, header_footer: true) }
+        .to(change {
+          [config.organization_name_short, config.organization_name_long, config.document_namespace]
+          }.from(['','','']).to([organization_name_short, organization_name_long, document_namespace]))
+    end
+  end
+
   it "uses Chinese fonts" do
     input = <<~"INPUT"
       = Document title

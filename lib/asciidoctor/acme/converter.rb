@@ -70,10 +70,6 @@ module Asciidoctor
         end
       end
 
-      def title_validate(root)
-        nil
-      end
-
       def makexml(node)
         root_tag = configuration.xml_root_tag || 'acme-standard'
         result = ["<?xml version='1.0' encoding='UTF-8'?>\n<#{root_tag}>"]
@@ -97,7 +93,12 @@ module Asciidoctor
         d
       end
 
+      def read_config_file(path_to_config_file)
+        Metanorma::Acme.configuration.set_default_values_from_yaml_file(path_to_config_file)
+      end
+
       def document(node)
+        read_config_file(node.attr("customize")) if node.attr("customize")
         init(node)
         ret1 = makexml(node)
         ret = ret1.to_xml(indent: 2)
@@ -131,17 +132,15 @@ module Asciidoctor
         end
       end
 
-      def style(n, t)
-        return
-      end
+      def blank_method(*args); end
 
       def html_converter(node)
         IsoDoc::Acme::HtmlConvert.new(html_extract_attributes(node))
       end
 
-      def pdf_converter(node)
-        IsoDoc::Acme::PdfConvert.new(html_extract_attributes(node))
-      end
+      alias_method :pdf_converter, :html_converter
+      alias_method :style, :blank_method
+      alias_method :title_validate, :blank_method
 
       def word_converter(node)
         IsoDoc::Acme::WordConvert.new(doc_extract_attributes(node))
