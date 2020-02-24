@@ -9,6 +9,9 @@ module Asciidoctor
     # schema encapsulation of the document for validation
     #
     class Converter < Standoc::Converter
+      XML_ROOT_TAG = "acme-standard".freeze
+      XML_NAMESPACE = "https://www.metanorma.org/ns/acme".freeze
+
       register_for "acme"
 
       def metadata_author(node, xml)
@@ -75,7 +78,7 @@ module Asciidoctor
       end
 
       def makexml(node)
-        root_tag = configuration.xml_root_tag || 'acme-standard'
+        root_tag = configuration.xml_root_tag || XML_ROOT_TAG
         result = ["<?xml version='1.0' encoding='UTF-8'?>\n<#{root_tag}>"]
         @draft = node.attributes.has_key?("draft")
         result << noko { |ixml| front node, ixml }
@@ -84,7 +87,7 @@ module Asciidoctor
         result = textcleanup(result)
         ret1 = cleanup(Nokogiri::XML(result))
         validate(ret1) unless @novalid
-        ret1.root.add_namespace(nil, configuration.document_namespace)
+        ret1.root.add_namespace(nil, configuration.document_namespace || XML_NAMESPACE)
         ret1
       end
 
