@@ -309,11 +309,11 @@ p.Biblio, p.NormRef {
     3.6 Source Code + figures
 */
 
-.figure, .Sourcecode, .pseudocode {
+.figure, pre, .pseudocode {
   @include pseudocodeBlock(#f7f7f7);
 }
 
-.Sourcecode {
+pre {
   @include monospaceBlockStyle()
 }
 
@@ -361,7 +361,7 @@ p.Biblio, p.NormRef {
     margin-top: 0;
   }
 
-  .Sourcecode,
+  pre,
   .pseudocode {
     background: none;
   }
@@ -634,7 +634,7 @@ To top button
     margin-top: 1.2em;
   }
 
-  .note, .figure, .Sourcecode, .pseudocode, table {
+  .note, .figure, pre, .pseudocode, table {
     page-break-inside: avoid;
   }
 
