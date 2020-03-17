@@ -36,10 +36,19 @@ module Metanorma
 
       attr_accessor(*CONFIG_ATTRS)
 
+      class << self
+        attr_accessor :_file
+      end
+
+      def self.inherited( k )
+        k._file = caller_locations.first.absolute_path
+      end
+
       def initialize(*args)
         super
         # Try to set config values from yaml file in current directory
-        set_default_values_from_yaml_file(YAML_CONFIG_FILE) if File.file?(YAML_CONFIG_FILE)
+        @yaml = File.join(File.dirname(self.class::_file || __FILE__), "..", "..", YAML_CONFIG_FILE)
+        set_default_values_from_yaml_file(@yaml) if File.file?(@yaml)
         self.organization_name_short ||= ORGANIZATION_NAME_SHORT
         self.organization_name_long ||= ORGANIZATION_NAME_LONG
         self.document_namespace ||= DOCUMENT_NAMESPACE
