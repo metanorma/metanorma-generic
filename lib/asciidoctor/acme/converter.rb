@@ -26,6 +26,7 @@ module Asciidoctor
             a.name configuration.organization_name_short
           end
         end
+        personal_author(node, xml)
       end
 
       def metadata_publisher(node, xml)
