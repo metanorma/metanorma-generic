@@ -14,6 +14,11 @@ module Asciidoctor
 
       register_for "acme"
 
+       def baselocation(loc)
+        return nil if loc.nil?
+        File.expand_path(File.join(File.dirname(self.class::_file || __FILE__), "..", "..", "..", loc))
+      end
+
       def metadata_author(node, xml)
         xml.contributor do |c|
           c.role **{ type: "author" }
@@ -120,7 +125,7 @@ module Asciidoctor
       def validate(doc)
         content_validate(doc)
         schema_validate(formattedstr_strip(doc.dup),
-                        configuration.validate_rng_file ||
+                        baselocation(configuration.validate_rng_file) ||
                         File.join(File.dirname(__FILE__), "acme.rng"))
       end
 
