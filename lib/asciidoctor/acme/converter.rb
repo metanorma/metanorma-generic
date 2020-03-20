@@ -89,21 +89,25 @@ module Asciidoctor
         result = textcleanup(result)
         ret1 = cleanup(Nokogiri::XML(result))
         validate(ret1) unless @novalid
-        ret1.root.add_namespace(nil, configuration.document_namespace || XML_NAMESPACE)
+        ret1.root.add_namespace(nil, configuration.document_namespace ||
+                                XML_NAMESPACE)
         ret1
       end
 
       def doctype(node)
         d = node.attr("doctype")
-        unless %w{policy-and-procedures best-practices supporting-document report legal directives proposal standard}.include? d
-          warn "#{d} is not a legal document type: reverting to 'standard'"
+        unless %w{policy-and-procedures best-practices supporting-document
+          report legal directives proposal standard}.include? d
+          @log.add("Document Attributes", nil,
+                   "#{d} is not a legal document type: reverting to 'standard'")
           d = "standard"
         end
         d
       end
 
       def read_config_file(path_to_config_file)
-        Metanorma::Acme.configuration.set_default_values_from_yaml_file(path_to_config_file)
+        Metanorma::Acme.configuration.
+          set_default_values_from_yaml_file(path_to_config_file)
       end
 
       def document(node)
@@ -119,6 +123,7 @@ module Asciidoctor
           word_converter(node).convert filename unless node.attr("nodoc")
           pdf_converter(node).convert filename unless node.attr("nodoc")
         end
+        @log.write(@filename + ".err") unless @novalid
         @files_to_delete.each { |f| FileUtils.rm f }
         ret
       end
