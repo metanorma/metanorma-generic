@@ -19,11 +19,13 @@ module IsoDoc
         k._file = caller_locations.first.absolute_path
       end
 
-      def default_fonts(options)
+       def default_fonts(options)
         {
-          bodyfont: (options[:script] == "Hans" ? '"SimSun",serif' : '"Overpass",sans-serif'),
-          headerfont: (options[:script] == "Hans" ? '"SimHei",sans-serif' : '"Overpass",sans-serif'),
-          monospacefont: '"Space Mono",monospace'
+          bodyfont: (options[:script] == "Hans" ? '"SimSun",serif'
+                     : configuration.html_bodyfont || '"Overpass",sans-serif'),
+          headerfont: (options[:script] == "Hans" ? '"SimHei",sans-serif' :
+                       configuration.html_headerfont || '"Overpass",sans-serif'),
+          monospacefont: configuration.html_monospacefont || '"Space Mono",monospace'
         }
       end
 

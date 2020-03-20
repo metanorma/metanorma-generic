@@ -22,6 +22,9 @@ module Metanorma
         htmlcoverpage
         htmlintropage
         htmlstylesheet
+        html_bodyfont
+        html_headerfont
+        html_monospacefont
         published_stages
         stage_abbreviations
         scripts
@@ -31,6 +34,9 @@ module Metanorma
         wordcoverpage
         wordintropage
         wordstylesheet
+        word_bodyfont
+        word_headerfont
+        word_monospacefont
         xml_root_tag
       ].freeze
 
