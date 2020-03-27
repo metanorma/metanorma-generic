@@ -1,17 +1,7 @@
 require "spec_helper"
 require "fileutils"
 
-RSpec.describe Asciidoctor::Acme do
-  #it "generates output for the Rice document" do
-  #  FileUtils.rm_rf %w(spec/examples/rfc6350.doc spec/examples/rfc6350.html spec/examples/rfc6350.pdf)
-  #  FileUtils.cd "spec/examples"
-  #  Asciidoctor.convert_file "rfc6350.adoc", {:attributes=>{"backend"=>"acme"}, :safe=>0, :header_footer=>true, :requires=>["metanorma-acme"], :failure_level=>4, :mkdirs=>true, :to_file=>nil}
-  #  FileUtils.cd "../.."
-  #  expect(xmlpp(File.exist?("spec/examples/rfc6350.doc"))).to be true
-  #  expect(xmlpp(File.exist?("spec/examples/rfc6350.html"))).to be true
-  #  expect(xmlpp(File.exist?("spec/examples/rfc6350.pdf"))).to be true
-  #end
-
+RSpec.describe Asciidoctor::Generic do
   it "processes a blank document" do
     input = <<~"INPUT"
     #{ASCIIDOC_BLANK_HDR}
@@ -20,10 +10,10 @@ RSpec.describe Asciidoctor::Acme do
     output = <<~"OUTPUT"
     #{BLANK_HDR}
 <sections/>
-</acme-standard>
+</generic-standard>
     OUTPUT
 
-    expect(xmlpp(Asciidoctor.convert(input, backend: :acme, header_footer: true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(Asciidoctor.convert(input, backend: :generic, header_footer: true))).to be_equivalent_to xmlpp(output)
   end
 
   it "converts a blank document" do
@@ -37,11 +27,11 @@ RSpec.describe Asciidoctor::Acme do
     output = <<~"OUTPUT"
     #{BLANK_HDR}
 <sections/>
-</acme-standard>
+</generic-standard>
     OUTPUT
 
     FileUtils.rm_f "test.html"
-    expect(xmlpp(Asciidoctor.convert(input, backend: :acme, header_footer: true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(Asciidoctor.convert(input, backend: :generic, header_footer: true))).to be_equivalent_to xmlpp(output)
     expect(File.exist?("test.html")).to be true
   end
 
@@ -80,7 +70,7 @@ RSpec.describe Asciidoctor::Acme do
 
     output = <<~"OUTPUT"
     <?xml version="1.0" encoding="UTF-8"?>
-<acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
+<generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
 <bibdata type="standard">
   <title language="en" format="text/plain">Main Title</title>
   <docidentifier>Acme 1000</docidentifier>
@@ -88,13 +78,13 @@ RSpec.describe Asciidoctor::Acme do
 <contributor>
     <role type="author"/>
     <organization>
-      <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
+      <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
     </organization>
   </contributor>
   <contributor>
     <role type="publisher"/>
     <organization>
-      <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
+      <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
     </organization>
   </contributor>
   <edition>2</edition>
@@ -112,7 +102,7 @@ RSpec.describe Asciidoctor::Acme do
     <from>2001</from>
     <owner>
       <organization>
-        <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
+        <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
       </organization>
     </owner>
   </copyright>
@@ -125,15 +115,15 @@ RSpec.describe Asciidoctor::Acme do
   </ext>
 </bibdata>
 <sections/>
-</acme-standard>
+</generic-standard>
     OUTPUT
 
-    expect(xmlpp(Asciidoctor.convert(input, backend: :acme, header_footer: true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(Asciidoctor.convert(input, backend: :generic, header_footer: true))).to be_equivalent_to xmlpp(output)
   end
 
   context 'with configuration options' do
     subject(:convert) do
-      xmlpp(Asciidoctor.convert(input, backend: :acme, header_footer: true))
+      xmlpp(Asciidoctor.convert(input, backend: :generic, header_footer: true))
     end
 
     context 'organiztion' do
@@ -150,18 +140,18 @@ RSpec.describe Asciidoctor::Acme do
       let(:docid_template) { "{{ organization_name_long }} {{ docnumeric }} {{ stage }}" }
 
       it 'uses configuration options for organization and namespace' do
-        Metanorma::Acme.configure do |config|
+        Metanorma::Generic.configure do |config|
           config.organization_name_short = organization_name_short
           config.organization_name_long = organization_name_long
           config.document_namespace = document_namespace
           config.docid_template = docid_template
         end
-        expect(xmlpp(Asciidoctor.convert(input, backend: :acme, header_footer: true))).to(be_equivalent_to(xmlpp(output)))
-        Metanorma::Acme.configure do |config|
-          config.organization_name_short = Metanorma::Acme::Configuration.new.organization_name_short
-          config.organization_name_long = Metanorma::Acme::Configuration.new.organization_name_long
-          config.document_namespace = Metanorma::Acme::Configuration.new.document_namespace
-          config.docid_template = Metanorma::Acme::Configuration.new.docid_template
+        expect(xmlpp(Asciidoctor.convert(input, backend: :generic, header_footer: true))).to(be_equivalent_to(xmlpp(output)))
+        Metanorma::Generic.configure do |config|
+          config.organization_name_short = Metanorma::Generic::Configuration.new.organization_name_short
+          config.organization_name_long = Metanorma::Generic::Configuration.new.organization_name_long
+          config.document_namespace = Metanorma::Generic::Configuration.new.document_namespace
+          config.docid_template = Metanorma::Generic::Configuration.new.docid_template
         end
       end
     end
@@ -184,10 +174,10 @@ RSpec.describe Asciidoctor::Acme do
        <clause id="_" obligation="normative">
          <title>Section 1</title>
        </clause></sections>
-       </acme-standard>
+       </generic-standard>
     OUTPUT
 
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :acme, header_footer: true)))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :generic, header_footer: true)))).to be_equivalent_to xmlpp(output)
   end
 
   it "uses default fonts" do
@@ -199,7 +189,7 @@ RSpec.describe Asciidoctor::Acme do
     INPUT
 
     FileUtils.rm_f "test.html"
-    Asciidoctor.convert(input, backend: :acme, header_footer: true)
+    Asciidoctor.convert(input, backend: :generic, header_footer: true)
 
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r[\bpre[^{]+\{[^}]+font-family: "Space Mono", monospace;]m)
@@ -208,7 +198,7 @@ RSpec.describe Asciidoctor::Acme do
   end
 
   context 'customize directive' do
-    subject(:config) { Metanorma::Acme.configuration }
+    subject(:config) { Metanorma::Generic.configuration }
     let(:config_file) { Tempfile.new('my_custom_config_file.yml') }
     let(:organization_name_short) { 'Test' }
     let(:organization_name_long) { 'Test Corp.' }
@@ -233,7 +223,7 @@ RSpec.describe Asciidoctor::Acme do
     before do
       FileUtils.rm_f "test.html"
       config_file.tap { |file| file.puts(yaml_content.to_yaml) }.close
-      Metanorma::Acme.configure do |config|
+      Metanorma::Generic.configure do |config|
         config.organization_name_short = ''
         config.organization_name_long = ''
         config.document_namespace = ''
@@ -245,7 +235,7 @@ RSpec.describe Asciidoctor::Acme do
     end
 
     it 'recognizes `customize` option and uses supplied file as the config file' do
-      expect { Asciidoctor.convert(input, backend: :acme, header_footer: true) }
+      expect { Asciidoctor.convert(input, backend: :generic, header_footer: true) }
         .to(change {
           [config.organization_name_short, config.organization_name_long, config.document_namespace]
           }.from(['','','']).to([organization_name_short, organization_name_long, document_namespace]))
@@ -262,7 +252,7 @@ RSpec.describe Asciidoctor::Acme do
     INPUT
 
     FileUtils.rm_f "test.html"
-    Asciidoctor.convert(input, backend: :acme, header_footer: true)
+    Asciidoctor.convert(input, backend: :generic, header_footer: true)
 
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r[\bpre[^{]+\{[^}]+font-family: "Space Mono", monospace;]m)
@@ -283,7 +273,7 @@ RSpec.describe Asciidoctor::Acme do
     INPUT
 
     FileUtils.rm_f "test.html"
-    Asciidoctor.convert(input, backend: :acme, header_footer: true)
+    Asciidoctor.convert(input, backend: :generic, header_footer: true)
 
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r[\bpre[^{]+\{[^{]+font-family: Andale Mono;]m)
@@ -324,10 +314,10 @@ RSpec.describe Asciidoctor::Acme do
        <strike>strike</strike>
        <smallcap>smallcap</smallcap></p>
        </sections>
-       </acme-standard>
+       </generic-standard>
     OUTPUT
 
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :acme, header_footer: true)))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :generic, header_footer: true)))).to be_equivalent_to xmlpp(output)
   end
 
 end

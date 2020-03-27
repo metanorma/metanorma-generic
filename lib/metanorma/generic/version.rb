@@ -1,5 +1,5 @@
 module Metanorma
-  module Acme
+  module Generic
     VERSION = "1.4.4"
   end
 end

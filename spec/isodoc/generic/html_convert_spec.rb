@@ -1,13 +1,13 @@
 require "spec_helper"
 
-logoloc = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "lib", "isodoc", "acme", "html"))
+logoloc = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "lib", "isodoc", "generic", "html"))
 
-RSpec.describe IsoDoc::Acme do
+RSpec.describe IsoDoc::Generic do
 
   it "processes default metadata" do
-    csdc = IsoDoc::Acme::HtmlConvert.new({})
+    csdc = IsoDoc::Generic::HtmlConvert.new({})
     input = <<~"INPUT"
-<acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
+<generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
 <bibdata type="standard">
   <title language="en" format="plain">Main Title</title>
   <docidentifier>1000</docidentifier>
@@ -19,13 +19,13 @@ RSpec.describe IsoDoc::Acme do
   <contributor>
     <role type="author"/>
     <organization>
-      <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
+      <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
     </organization>
   </contributor>
   <contributor>
     <role type="publisher"/>
     <organization>
-      <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
+      <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
     </organization>
   </contributor>
   <language>en</language>
@@ -35,7 +35,7 @@ RSpec.describe IsoDoc::Acme do
     <from>2001</from>
     <owner>
       <organization>
-        <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
+        <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
       </organization>
     </owner>
   </copyright>
@@ -48,7 +48,7 @@ RSpec.describe IsoDoc::Acme do
   </ext>
 </bibdata>
 <sections/>
-</acme-standard>
+</generic-standard>
     INPUT
 
     output = <<~"OUTPUT"
@@ -61,7 +61,7 @@ RSpec.describe IsoDoc::Acme do
 
    context 'with configuration options' do
     subject(:convert) do
-      xmlpp(Asciidoctor.convert(input, backend: :acme, header_footer: true))
+      xmlpp(Asciidoctor.convert(input, backend: :generic, header_footer: true))
     end
 
     context 'organiztion' do
@@ -70,14 +70,14 @@ RSpec.describe IsoDoc::Acme do
       let(:stage_abbreviations) { { "working-draft" => "wd" } }
 
       it 'processes default metadata' do
-        Metanorma::Acme.configure do |config|
+        Metanorma::Generic.configure do |config|
           config.logo_path = logo_path
           config.published_stages = published_stages
           config.stage_abbreviations = stage_abbreviations
         end
-            csdc = IsoDoc::Acme::HtmlConvert.new({})
+            csdc = IsoDoc::Generic::HtmlConvert.new({})
     input = <<~"INPUT"
-<acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
+<generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
 <bibdata type="standard">
   <title language="en" format="plain">Main Title</title>
   <docidentifier>1000</docidentifier>
@@ -89,13 +89,13 @@ RSpec.describe IsoDoc::Acme do
   <contributor>
     <role type="author"/>
     <organization>
-      <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
+      <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
     </organization>
   </contributor>
   <contributor>
     <role type="publisher"/>
     <organization>
-      <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
+      <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
     </organization>
   </contributor>
   <language>en</language>
@@ -105,7 +105,7 @@ RSpec.describe IsoDoc::Acme do
     <from>2001</from>
     <owner>
       <organization>
-        <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
+        <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
       </organization>
     </owner>
   </copyright>
@@ -118,7 +118,7 @@ RSpec.describe IsoDoc::Acme do
   </ext>
 </bibdata>
 <sections/>
-</acme-standard>
+</generic-standard>
     INPUT
 
     output = <<~"OUTPUT"
@@ -127,10 +127,10 @@ RSpec.describe IsoDoc::Acme do
 
         docxml, filename, dir = csdc.convert_init(input, "test", true)
         expect(htmlencode(Hash[csdc.info(docxml, nil).sort].to_s)).to be_equivalent_to output
-        Metanorma::Acme.configure do |config|
-          config.logo_path = Metanorma::Acme::Configuration.new.logo_path
-          config.published_stages = Metanorma::Acme::Configuration.new.published_stages
-          config.stage_abbreviations = Metanorma::Acme::Configuration.new.stage_abbreviations
+        Metanorma::Generic.configure do |config|
+          config.logo_path = Metanorma::Generic::Configuration.new.logo_path
+          config.published_stages = Metanorma::Generic::Configuration.new.published_stages
+          config.stage_abbreviations = Metanorma::Generic::Configuration.new.stage_abbreviations
         end
       end
     end
@@ -139,11 +139,11 @@ RSpec.describe IsoDoc::Acme do
 
   it "processes pre" do
     input = <<~"INPUT"
-<acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
+<generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
 <preface><foreword>
 <pre>ABC</pre>
 </foreword></preface>
-</acme-standard>
+</generic-standard>
     INPUT
 
     output = <<~"OUTPUT"
@@ -159,7 +159,7 @@ RSpec.describe IsoDoc::Acme do
     OUTPUT
 
     expect(
-      IsoDoc::Acme::HtmlConvert.new({}).
+      IsoDoc::Generic::HtmlConvert.new({}).
       convert("test", input, true).
       gsub(%r{^.*<body}m, "<body").
       gsub(%r{</body>.*}m, "</body>")
@@ -168,11 +168,11 @@ RSpec.describe IsoDoc::Acme do
 
   it "processes keyword" do
     input = <<~"INPUT"
-<acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
+<generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
 <preface><foreword>
 <keyword>ABC</keyword>
 </foreword></preface>
-</acme-standard>
+</generic-standard>
     INPUT
 
     output = <<~"OUTPUT"
@@ -188,7 +188,7 @@ RSpec.describe IsoDoc::Acme do
     OUTPUT
 
     expect(
-      IsoDoc::Acme::HtmlConvert.new({}).
+      IsoDoc::Generic::HtmlConvert.new({}).
       convert("test", input, true).
       gsub(%r{^.*<body}m, "<body").
       gsub(%r{</body>.*}m, "</body>")
@@ -197,7 +197,7 @@ RSpec.describe IsoDoc::Acme do
 
   it "processes simple terms & definitions" do
     input = <<~"INPUT"
-     <acme-standard xmlns="http://riboseinc.com/isoxml">
+     <generic-standard xmlns="http://riboseinc.com/isoxml">
        <sections>
        <terms id="H" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title>
          <term id="J">
@@ -205,7 +205,7 @@ RSpec.describe IsoDoc::Acme do
        </term>
         </terms>
         </sections>
-        </acme-standard>
+        </generic-standard>
     INPUT
 
     output = <<~"OUTPUT"
@@ -220,7 +220,7 @@ RSpec.describe IsoDoc::Acme do
     OUTPUT
 
     expect(
-      IsoDoc::Acme::HtmlConvert.new({}).
+      IsoDoc::Generic::HtmlConvert.new({}).
       convert("test", input, true).
       gsub(%r{^.*<body}m, "<body").
       gsub(%r{</body>.*}m, "</body>")
@@ -229,7 +229,7 @@ RSpec.describe IsoDoc::Acme do
 
   it "processes section names" do
     input = <<~"INPUT"
-    <acme-standard xmlns="http://riboseinc.com/isoxml">
+    <generic-standard xmlns="http://riboseinc.com/isoxml">
       <preface>
       <foreword obligation="informative">
          <title>Foreword</title>
@@ -287,7 +287,7 @@ RSpec.describe IsoDoc::Acme do
        </references>
        </clause>
        </bibliography>
-       </acme-standard>
+       </generic-standard>
     INPUT
 
     output = <<~"OUTPUT"
@@ -361,7 +361,7 @@ RSpec.describe IsoDoc::Acme do
     OUTPUT
 
     expect(
-      IsoDoc::Acme::HtmlConvert.new({}).convert("test", input, true).
+      IsoDoc::Generic::HtmlConvert.new({}).convert("test", input, true).
       gsub(%r{^.*<body}m, "<body").
       gsub(%r{</body>.*}m, "</body>")
     ).to be_equivalent_to output

@@ -3,7 +3,7 @@
 </div>
 
 <div class="document-type-band" id="{{ doctype | downcase | replace: ' ', '-' }}-band">
-    <p class="document-type">Acme {{ doctype }}</p>
+  <p class="document-type">{{ agency }} {{ doctype }}</p>
 </div>
 
 
@@ -30,7 +30,7 @@
   </div>
 
   <div class="coverpage-logo">
-    <span>Acme Corp. {{ docyear }}</span>
+    <span>{{ publisher }} {{ docyear }}</span>
   </div>
 
   <div class="coverpage-tc-name">
@@ -42,7 +42,7 @@
 
   <div class="WordSection11">
   <div class="coverpage-stage-block" >
-    <span class="coverpage-stage" id="{{ doctype | replace: ' ', '-' | downcase }}">Acme {{ doctype }}</span>
+    <span class="coverpage-stage" id="{{ doctype | replace: ' ', '-' | downcase }}">{{ agency }} {{ doctype }}</span>
   </div>
 
   <div class="coverpage-stage-block" >
@@ -61,7 +61,7 @@
     <span class="title">Warning for Drafts</span>
 
     <p class="content">
-    This document is not a Acme Standard. It is distributed for review and
+    This document is not a {{ agency }} Standard. It is distributed for review and
     comment, and is subject to change without notice and may not be referred to as
     a Standard. Recipients of this draft are invited to submit, with their
     comments, notification of any relevant patent rights of which they are aware
@@ -73,7 +73,7 @@
 <div class="info-section">
 <div class="copyright">
   <p class="year">
-    &copy; {{ docyear }} Acme Corp.
+  &copy; {{ docyear }} {{ publisher }}
   </p>
 
   <p class="message">
@@ -85,7 +85,7 @@
   </p>
 
 <div class="contact-info">
-  <p class="name">Acme Corp.</p>
+  <p class="name">{{ publisher }}</p>
   <p class="address">
     Suite 1, 8/F, New Henry House<br />
     10 Ice House Street<br />

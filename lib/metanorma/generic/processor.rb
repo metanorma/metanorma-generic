@@ -1,12 +1,12 @@
 require "metanorma/processor"
 
 module Metanorma
-  module Acme
+  module Generic
     class Processor < Metanorma::Processor
       def initialize
-        @short = :acme
+        @short = :generic
         @input_format = :asciidoc
-        @asciidoctor_backend = :acme
+        @asciidoctor_backend = :generic
       end
 
       def output_formats
@@ -18,7 +18,7 @@ module Metanorma
       end
 
       def version
-        "Metanorma::Acme #{Metanorma::Acme::VERSION}"
+        "Metanorma::Generic #{Metanorma::Generic::VERSION}"
       end
 
       def input_to_isodoc(file, filename)
@@ -57,11 +57,11 @@ module Metanorma
       def output(isodoc_node, outname, format, options={})
         case format
         when :html
-          IsoDoc::Acme::HtmlConvert.new(options).convert(outname, isodoc_node)
+          IsoDoc::Generic::HtmlConvert.new(options).convert(outname, isodoc_node)
         when :doc
-          IsoDoc::Acme::WordConvert.new(options).convert(outname, isodoc_node)
+          IsoDoc::Generic::WordConvert.new(options).convert(outname, isodoc_node)
         when :pdf
-          IsoDoc::Acme::PdfConvert.new(options).convert(outname, isodoc_node)
+          IsoDoc::Generic::PdfConvert.new(options).convert(outname, isodoc_node)
         else
           super
         end

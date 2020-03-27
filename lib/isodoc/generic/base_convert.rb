@@ -3,7 +3,7 @@ require_relative "metadata"
 require "fileutils"
 
 module IsoDoc
-  module Acme
+  module Generic
     module BaseConvert
       def metadata_init(lang, script, labels)
         @meta = Metadata.new(lang, script, labels)

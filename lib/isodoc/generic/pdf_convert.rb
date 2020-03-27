@@ -2,7 +2,7 @@ require_relative "base_convert"
 require "isodoc"
 
 module IsoDoc
-  module Acme
+  module Generic
     # A {Converter} implementation that generates PDF HTML output, and a
     # document schema encapsulation of the document for validation
     class PdfConvert < IsoDoc::PdfConvert
@@ -34,9 +34,9 @@ module IsoDoc
           htmlstylesheet: baselocation(configuration.htmlstylesheet) ||
             html_doc_path("htmlstyle.scss"),
           htmlcoverpage: baselocation(configuration.htmlcoverpage) ||
-            html_doc_path("html_acme_titlepage.html"),
+            html_doc_path("html_generic_titlepage.html"),
           htmlintropage: baselocation(configuration.htmlintropage) ||
-            html_doc_path("html_acme_intro.html"),
+            html_doc_path("html_generic_intro.html"),
           scripts_pdf: baselocation(configuration.scripts_pdf) ||
             html_doc_path("scripts.pdf.html")
         }
@@ -54,7 +54,7 @@ module IsoDoc
       end
 
       def configuration
-        Metanorma::Acme.configuration
+        Metanorma::Generic.configuration
       end
 
       include BaseConvert

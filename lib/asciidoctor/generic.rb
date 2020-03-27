@@ -1,7 +1,7 @@
-require "asciidoctor/acme/converter"
+require "asciidoctor/generic/converter"
 
 module Asciidoctor
-  module Acme
+  module Generic
 
   end
 end

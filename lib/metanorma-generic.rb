@@ -1,8 +1,8 @@
-require "metanorma/acme"
+require "metanorma/generic"
 require "asciidoctor"
-require "asciidoctor/acme"
-require "isodoc/acme"
+require "asciidoctor/generic"
+require "isodoc/generic"
 
 if defined? Metanorma
-  Metanorma::Registry.instance.register(Metanorma::Acme::Processor)
+  Metanorma::Registry.instance.register(Metanorma::Generic::Processor)
 end

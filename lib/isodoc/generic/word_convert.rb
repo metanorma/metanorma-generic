@@ -2,7 +2,7 @@ require_relative "base_convert"
 require "isodoc"
 
 module IsoDoc
-  module Acme
+  module Generic
     # A {Converter} implementation that generates Word output, and a document
     # schema encapsulation of the document for validation
 
@@ -33,13 +33,13 @@ module IsoDoc
           wordstylesheet: baselocation(configuration.wordstylesheet) ||
             html_doc_path("wordstyle.scss"),
           standardstylesheet: baselocation(configuration.standardstylesheet) ||
-            html_doc_path("acme.scss"),
+            html_doc_path("generic.scss"),
           header: baselocation(configuration.header) ||
             html_doc_path("header.html"),
           wordcoverpage: baselocation(configuration.wordcoverpage) ||
-            html_doc_path("word_acme_titlepage.html"),
+            html_doc_path("word_generic_titlepage.html"),
           wordintropage: baselocation(configuration.wordintropage) ||
-            html_doc_path("word_acme_intro.html"),
+            html_doc_path("word_generic_intro.html"),
           i18nyaml: baselocation(configuration.i18nyaml),
           ulstyle: "l3",
           olstyle: "l2",
@@ -47,7 +47,7 @@ module IsoDoc
       end
 
       def configuration
-        Metanorma::Acme.configuration
+        Metanorma::Generic.configuration
       end
 
       include BaseConvert

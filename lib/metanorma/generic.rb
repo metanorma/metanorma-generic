@@ -1,13 +1,13 @@
-require "metanorma/acme/processor"
-require "metanorma/acme/version"
+require "metanorma/generic/processor"
+require "metanorma/generic/version"
 require 'forwardable'
 require 'yaml'
 
 module Metanorma
-  module Acme
+  module Generic
     ORGANIZATION_NAME_SHORT = "Acme"
     ORGANIZATION_NAME_LONG = "Acme Corp."
-    DOCUMENT_NAMESPACE = "https://metanorma.org/ns/acme"
+    DOCUMENT_NAMESPACE = "https://metanorma.org/ns/generic"
     YAML_CONFIG_FILE = 'metanorma.yml'
 
     class Configuration

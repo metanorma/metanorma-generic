@@ -2,7 +2,7 @@ require_relative "base_convert"
 require "isodoc"
 
 module IsoDoc
-  module Acme
+  module Generic
 
     # A {Converter} implementation that generates HTML output, and a document
     # schema encapsulation of the document for validation
@@ -36,9 +36,9 @@ module IsoDoc
           htmlstylesheet: baselocation(configuration.htmlstylesheet) ||
             html_doc_path("htmlstyle.scss"),
           htmlcoverpage: baselocation(configuration.htmlcoverpage) ||
-            html_doc_path("html_acme_titlepage.html"),
+            html_doc_path("html_generic_titlepage.html"),
           htmlintropage: baselocation(configuration.htmlintropage) ||
-            html_doc_path("html_acme_intro.html"),
+            html_doc_path("html_generic_intro.html"),
           scripts: baselocation(configuration.scripts) ||
             html_doc_path("scripts.html"),
           i18nyaml: baselocation(configuration.i18nyaml)
@@ -46,7 +46,7 @@ module IsoDoc
       end
 
       def configuration
-        Metanorma::Acme.configuration
+        Metanorma::Generic.configuration
       end
 
       def googlefonts

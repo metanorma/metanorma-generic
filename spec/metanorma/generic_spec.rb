@@ -2,20 +2,20 @@
 
 require 'spec_helper'
 
-RSpec.describe Metanorma::Acme do
+RSpec.describe Metanorma::Generic do
   it 'has a version number' do
-    expect(Metanorma::Acme::VERSION).not_to be nil
+    expect(Metanorma::Generic::VERSION).not_to be nil
   end
 
   describe '#configuration' do
     it 'has `configuration` attribute accessable' do
-      expect(Metanorma::Acme.configuration)
-        .to(be_instance_of(Metanorma::Acme::Configuration))
+      expect(Metanorma::Generic.configuration)
+        .to(be_instance_of(Metanorma::Generic::Configuration))
     end
 
     context 'YAML config support' do
-      subject(:config) { Metanorma::Acme::Configuration.new }
-      let(:config_file_name) { Metanorma::Acme::YAML_CONFIG_FILE }
+      subject(:config) { Metanorma::Generic::Configuration.new }
+      let(:config_file_name) { Metanorma::Generic::YAML_CONFIG_FILE }
       let(:organization_name_short) { 'Test' }
       let(:organization_name_long) { 'Test Corp.' }
       let(:document_namespace) { 'https://example.com/' }
@@ -43,11 +43,11 @@ RSpec.describe Metanorma::Acme do
     end
 
     context 'default attributes' do
-      subject(:config) { Metanorma::Acme.configuration }
+      subject(:config) { Metanorma::Generic.configuration }
       let(:default_organization_name_short) { 'Acme' }
       let(:default_organization_name_long) { 'Acme Corp.' }
       let(:default_document_namespace) do
-        'https://metanorma.org/ns/acme'
+        'https://metanorma.org/ns/generic'
       end
 
       it 'sets default atrributes' do
@@ -61,13 +61,13 @@ RSpec.describe Metanorma::Acme do
     end
 
     context 'attribute setters' do
-      subject(:config) { Metanorma::Acme.configuration }
+      subject(:config) { Metanorma::Generic.configuration }
       let(:organization_name_short) { 'Test' }
       let(:organization_name_long) { 'Test Corp.' }
       let(:document_namespace) { 'https://example.com/' }
 
       it 'sets atrributes' do
-        Metanorma::Acme.configure do |config|
+        Metanorma::Generic.configure do |config|
           config.organization_name_short = organization_name_short
           config.organization_name_long = organization_name_long
           config.document_namespace = document_namespace

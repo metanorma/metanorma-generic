@@ -4,7 +4,7 @@ SimpleCov.start do
 end
 
 require "bundler/setup"
-require "metanorma-acme"
+require "metanorma-generic"
 require "rspec/matchers"
 require "equivalent-xml"
 require "htmlentities"
@@ -25,10 +25,10 @@ RSpec.configure do |config|
 
   # Set defaults before each run
   config.before(:each) do
-    Metanorma::Acme.configure do |cn|
-      cn.organization_name_short = Metanorma::Acme::ORGANIZATION_NAME_SHORT
-      cn.organization_name_long = Metanorma::Acme::ORGANIZATION_NAME_LONG
-      cn.document_namespace = Metanorma::Acme::DOCUMENT_NAMESPACE
+    Metanorma::Generic.configure do |cn|
+      cn.organization_name_short = Metanorma::Generic::ORGANIZATION_NAME_SHORT
+      cn.organization_name_long = Metanorma::Generic::ORGANIZATION_NAME_LONG
+      cn.document_namespace = Metanorma::Generic::DOCUMENT_NAMESPACE
     end
   end
 end
@@ -74,20 +74,20 @@ HDR
 
 BLANK_HDR = <<~"HDR"
        <?xml version="1.0" encoding="UTF-8"?>
-       <acme-standard xmlns="#{Metanorma::Acme::DOCUMENT_NAMESPACE}">
+       <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
        <bibdata type="standard">
         <title language="en" format="text/plain">Document title</title>
          <docidentifier>Acme </docidentifier>
          <contributor>
            <role type="author"/>
            <organization>
-             <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
+             <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
            </organization>
          </contributor>
          <contributor>
            <role type="publisher"/>
            <organization>
-             <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
+             <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
            </organization>
          </contributor>
 
@@ -100,7 +100,7 @@ BLANK_HDR = <<~"HDR"
            <from>#{Time.new.year}</from>
            <owner>
              <organization>
-               <name>#{Metanorma::Acme::ORGANIZATION_NAME_SHORT}</name>
+               <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
              </organization>
            </owner>
          </copyright>

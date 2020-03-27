@@ -3,16 +3,16 @@ require "asciidoctor/standoc/converter"
 require "fileutils"
 
 module Asciidoctor
-  module Acme
+  module Generic
 
     # A {Converter} implementation that generates RSD output, and a document
     # schema encapsulation of the document for validation
     #
     class Converter < Standoc::Converter
-      XML_ROOT_TAG = "acme-standard".freeze
-      XML_NAMESPACE = "https://www.metanorma.org/ns/acme".freeze
+      XML_ROOT_TAG = "generic-standard".freeze
+      XML_NAMESPACE = "https://www.metanorma.org/ns/generic".freeze
 
-      register_for "acme"
+      register_for "generic"
 
        def baselocation(loc)
         return nil if loc.nil?
@@ -106,7 +106,7 @@ module Asciidoctor
       end
 
       def read_config_file(path_to_config_file)
-        Metanorma::Acme.configuration.
+        Metanorma::Generic.configuration.
           set_default_values_from_yaml_file(path_to_config_file)
       end
 
@@ -132,11 +132,7 @@ module Asciidoctor
         content_validate(doc)
         schema_validate(formattedstr_strip(doc.dup),
                         baselocation(configuration.validate_rng_file) ||
-                        File.join(File.dirname(__FILE__), "acme.rng"))
-      end
-
-      def html_path_acme(file)
-        File.join(File.dirname(__FILE__), File.join("html", file))
+                        File.join(File.dirname(__FILE__), "generic.rng"))
       end
 
       def sections_cleanup(x)
@@ -149,7 +145,7 @@ module Asciidoctor
       def blank_method(*args); end
 
       def html_converter(node)
-        IsoDoc::Acme::HtmlConvert.new(html_extract_attributes(node))
+        IsoDoc::Generic::HtmlConvert.new(html_extract_attributes(node))
       end
 
       alias_method :pdf_converter, :html_converter
@@ -157,16 +153,16 @@ module Asciidoctor
       alias_method :title_validate, :blank_method
 
       def word_converter(node)
-        IsoDoc::Acme::WordConvert.new(doc_extract_attributes(node))
+        IsoDoc::Generic::WordConvert.new(doc_extract_attributes(node))
       end
 
       def configuration
-        Metanorma::Acme.configuration
+        Metanorma::Generic.configuration
       end
 
       def boilerplate_isodoc(xmldoc)
         conv = super
-        Metanorma::Acme::Configuration::CONFIG_ATTRS.each do |a|
+        Metanorma::Generic::Configuration::CONFIG_ATTRS.each do |a|
           conv.labels[a] = configuration.send a
         end
         conv

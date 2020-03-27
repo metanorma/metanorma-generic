@@ -1,21 +1,21 @@
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "metanorma/acme/version"
+require "metanorma/generic/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "metanorma-acme"
-  spec.version       = Metanorma::Acme::VERSION
+  spec.name          = "metanorma-generic"
+  spec.version       = Metanorma::Generic::VERSION
   spec.authors       = ["Ribose Inc."]
   spec.email         = ["open.source@ribose.com"]
 
-  spec.summary       = "Metanorma for the (fictitious) Acme Corp."
+  spec.summary       = "Metanorma template gem for customisation."
   spec.description   = <<~DESCRIPTION
-    Metanorma for the (fictitious) Acme Corp.
-
-    This gem is meant to be customised for any downstream use.
+    Metanorma template gem for customisation. This gem is meant to be customised for any downstream use.
+    
+    Formerly known as metanorma-acme
   DESCRIPTION
 
-  spec.homepage      = "https://github.com/metanorma/metanorma-acme"
+  spec.homepage      = "https://github.com/metanorma/metanorma-generic"
   spec.license       = "BSD-2-Clause"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|

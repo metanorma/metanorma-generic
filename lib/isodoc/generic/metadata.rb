@@ -1,7 +1,7 @@
 require "isodoc"
 
 module IsoDoc
-  module Acme
+  module Generic
 
     class Metadata < IsoDoc::Metadata
       def initialize(lang, script, labels)
@@ -25,7 +25,7 @@ module IsoDoc
       end
 
       def configuration
-        Metanorma::Acme.configuration
+        Metanorma::Generic.configuration
       end
 
       def author(isoxml, _out)
