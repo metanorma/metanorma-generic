@@ -59,7 +59,7 @@ RSpec.describe Metanorma::Generic::Processor do
       <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
       <p class="zzSTDTitle1"></p>
       <div id="H">
-        <h1  id='toc0'>1.&#xA0; Terms and definitions</h1>
+        <h1>1.&#xA0; Terms and definitions</h1>
         <h2 class="TermNum" id="J">1.1.&#xA0;<p class="Terms" style="text-align:left;">Term2</p></h2>
       </div>
     </main>
