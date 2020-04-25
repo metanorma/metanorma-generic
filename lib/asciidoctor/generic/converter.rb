@@ -79,6 +79,13 @@ module Asciidoctor
         end
       end
 
+      def metadata_ext(node, ext)
+        super
+        Array(configuration.metadata_extensions).each do |e|
+          a = node.attr(e) and ext.send e, a
+        end
+      end
+
       def makexml(node)
         root_tag = configuration.xml_root_tag || XML_ROOT_TAG
         result = ["<?xml version='1.0' encoding='UTF-8'?>\n<#{root_tag}>"]

@@ -27,3 +27,4 @@ Author
 :language: en
 :title: Main Title
 :security: Client Confidential
+:insecurity: Client Unconfidential

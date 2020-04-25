@@ -54,6 +54,11 @@ module IsoDoc
           make_body3(body, docxml)
         end
       end
+
+      def info(isoxml, out)
+        @meta.ext isoxml, out
+        super
+      end
     end
   end
 end

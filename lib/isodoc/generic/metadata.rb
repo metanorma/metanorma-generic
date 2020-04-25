@@ -43,6 +43,13 @@ module IsoDoc
         stages = configuration&.published_stages || ["published"]
         !(Array(stages).map { |m| m.downcase }.include? status.downcase)
       end
+
+      def ext(isoxml, out)
+        Array(configuration.metadata_extensions).each do |e|
+          b = isoxml&.at(ns("//bibdata/ext/#{e}"))&.text or next
+          set(e.to_sym, b)
+        end
+      end
     end
   end
 end

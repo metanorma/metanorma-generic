@@ -126,18 +126,20 @@ RSpec.describe Asciidoctor::Generic do
       xmlpp(Asciidoctor.convert(input, backend: :generic, header_footer: true))
     end
 
-    context 'organiztion' do
+    context 'organization' do
       let(:input) { File.read(fixture_path('asciidoctor/test_input.adoc')) }
       let(:output) do
         File.read(fixture_path('asciidoctor/test_output.xml')) %
           { organization_name_short: organization_name_short,
             organization_name_long: organization_name_long,
+            metadata_extensions_out: "<security>Client Confidential</security><insecurity>Client Unconfidential</insecurity>",
             document_namespace: document_namespace}
       end
       let(:organization_name_short) { 'Test' }
       let(:organization_name_long) { 'Test Corp.' }
       let(:document_namespace) { 'https://example.com/' }
       let(:docid_template) { "{{ organization_name_long }} {{ docnumeric }} {{ stage }}" }
+      let(:metadata_extensions) { [ "security", "insecurity" ] }
 
       it 'uses configuration options for organization and namespace' do
         Metanorma::Generic.configure do |config|
@@ -145,6 +147,7 @@ RSpec.describe Asciidoctor::Generic do
           config.organization_name_long = organization_name_long
           config.document_namespace = document_namespace
           config.docid_template = docid_template
+          config.metadata_extensions = metadata_extensions
         end
         expect(xmlpp(Asciidoctor.convert(input, backend: :generic, header_footer: true))).to(be_equivalent_to(xmlpp(output)))
         Metanorma::Generic.configure do |config|
@@ -152,6 +155,7 @@ RSpec.describe Asciidoctor::Generic do
           config.organization_name_long = Metanorma::Generic::Configuration.new.organization_name_long
           config.document_namespace = Metanorma::Generic::Configuration.new.document_namespace
           config.docid_template = Metanorma::Generic::Configuration.new.docid_template
+          config.metadata_extensions = Metanorma::Generic::Configuration.new.metadata_extensions
         end
       end
     end

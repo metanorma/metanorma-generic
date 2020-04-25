@@ -64,16 +64,18 @@ RSpec.describe IsoDoc::Generic do
       xmlpp(Asciidoctor.convert(input, backend: :generic, header_footer: true))
     end
 
-    context 'organiztion' do
+    context 'organization' do
       let(:published_stages) { "working-draft" }
       let(:logo_path) { 'lib/example.jpg' }
       let(:stage_abbreviations) { { "working-draft" => "wd" } }
+      let(:metadata_extensions) { [ "security", "insecurity" ] }
 
       it 'processes default metadata' do
         Metanorma::Generic.configure do |config|
           config.logo_path = logo_path
           config.published_stages = published_stages
           config.stage_abbreviations = stage_abbreviations
+          config.metadata_extensions = metadata_extensions
         end
             csdc = IsoDoc::Generic::HtmlConvert.new({})
     input = <<~"INPUT"
@@ -115,6 +117,7 @@ RSpec.describe IsoDoc::Generic do
     <committee type="A">TC</committee>
   </editorialgroup>
   <security>Client Confidential</security>
+  <insecurity>Client Unconfidential</insecurity>
   </ext>
 </bibdata>
 <sections/>
@@ -122,7 +125,7 @@ RSpec.describe IsoDoc::Generic do
     INPUT
 
     output = <<~"OUTPUT"
-    {:accesseddate=>"XXX", :agency=>"Acme", :authors=>[], :authors_affiliations=>{}, :circulateddate=>"XXX", :confirmeddate=>"XXX", :copieddate=>"XXX", :createddate=>"XXX", :docnumber=>"1000", :docnumeric=>nil, :doctitle=>"Main Title", :doctype=>"Standard", :docyear=>"2001", :draft=>"3.4", :draftinfo=>" (draft 3.4, 2000-01-01)", :edition=>"2", :implementeddate=>"XXX", :issueddate=>"XXX", :logo=>"#{File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "lib", "example.jpg"))}", :obsoleteddate=>"XXX", :publisheddate=>"XXX", :publisher=>"Acme", :receiveddate=>"XXX", :revdate=>"2000-01-01", :revdate_monthyear=>"January 2000", :stage=>"Working Draft", :tc=>"TC", :transmitteddate=>"XXX", :unchangeddate=>"XXX", :unpublished=>false, :updateddate=>"XXX"}
+    {:accesseddate=>"XXX", :agency=>"Acme", :authors=>[], :authors_affiliations=>{}, :circulateddate=>"XXX", :confirmeddate=>"XXX", :copieddate=>"XXX", :createddate=>"XXX", :docnumber=>"1000", :docnumeric=>nil, :doctitle=>"Main Title", :doctype=>"Standard", :docyear=>"2001", :draft=>"3.4", :draftinfo=>" (draft 3.4, 2000-01-01)", :edition=>"2", :implementeddate=>"XXX", :insecurity=>"Client Unconfidential", :issueddate=>"XXX", :logo=>"#{File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "lib", "example.jpg"))}", :obsoleteddate=>"XXX", :publisheddate=>"XXX", :publisher=>"Acme", :receiveddate=>"XXX", :revdate=>"2000-01-01", :revdate_monthyear=>"January 2000", :security=>"Client Confidential", :stage=>"Working Draft", :tc=>"TC", :transmitteddate=>"XXX", :unchangeddate=>"XXX", :unpublished=>false, :updateddate=>"XXX"}
     OUTPUT
 
         docxml, filename, dir = csdc.convert_init(input, "test", true)
@@ -131,6 +134,7 @@ RSpec.describe IsoDoc::Generic do
           config.logo_path = Metanorma::Generic::Configuration.new.logo_path
           config.published_stages = Metanorma::Generic::Configuration.new.published_stages
           config.stage_abbreviations = Metanorma::Generic::Configuration.new.stage_abbreviations
+          config.metadata_extensions = Metanorma::Generic::Configuration.new.metadata_extensions
         end
       end
     end

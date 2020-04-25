@@ -41,6 +41,7 @@
         <committee type="A">TC</committee>
         <committee type="B">TC1</committee>
       </editorialgroup>
+      %{metadata_extensions_out}
     </ext>
   </bibdata>
   <sections/>

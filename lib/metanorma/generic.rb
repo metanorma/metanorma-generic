@@ -25,6 +25,7 @@ module Metanorma
         html_bodyfont
         html_headerfont
         html_monospacefont
+        metadata_extensions
         published_stages
         stage_abbreviations
         scripts
