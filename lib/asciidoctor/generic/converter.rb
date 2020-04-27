@@ -14,6 +14,14 @@ module Asciidoctor
 
       register_for "generic"
 
+      def xml_root_tag
+        configuration.xml_root_tag || XML_ROOT_TAG
+      end
+
+      def xml_namespace
+        configuration.document_namespace || XML_NAMESPACE
+      end
+
        def baselocation(loc)
         return nil if loc.nil?
         File.expand_path(File.join(File.dirname(self.class::_file || __FILE__), "..", "..", "..", loc))
@@ -86,8 +94,10 @@ module Asciidoctor
         end
       end
 
+=begin
       def makexml(node)
-        root_tag = configuration.xml_root_tag || XML_ROOT_TAG
+        #root_tag = configuration.xml_root_tag || XML_ROOT_TAG
+        root_tag = XML_ROOT_TAG
         result = ["<?xml version='1.0' encoding='UTF-8'?>\n<#{root_tag}>"]
         @draft = node.attributes.has_key?("draft")
         result << noko { |ixml| front node, ixml }
@@ -100,6 +110,7 @@ module Asciidoctor
                                 XML_NAMESPACE)
         ret1
       end
+=end
 
       def doctype(node)
         d = node.attr("doctype")
