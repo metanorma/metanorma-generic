@@ -52,7 +52,7 @@ RSpec.describe IsoDoc::Generic do
     INPUT
 
     output = <<~"OUTPUT"
-    {:accesseddate=>"XXX", :agency=>"Acme", :authors=>[], :authors_affiliations=>{}, :circulateddate=>"XXX", :confirmeddate=>"XXX", :copieddate=>"XXX", :createddate=>"XXX", :docnumber=>"1000", :docnumeric=>nil, :doctitle=>"Main Title", :doctype=>"Standard", :docyear=>"2001", :draft=>"3.4", :draftinfo=>" (draft 3.4, 2000-01-01)", :edition=>"2", :implementeddate=>"XXX", :issueddate=>"XXX", :logo=>"#{File.join(logoloc, "logo.jpg")}", :obsoleteddate=>"XXX", :publisheddate=>"XXX", :publisher=>"Acme", :receiveddate=>"XXX", :revdate=>"2000-01-01", :revdate_monthyear=>"January 2000", :stage=>"Working Draft", :stageabbr=>"WD", :tc=>"TC", :transmitteddate=>"XXX", :unchangeddate=>"XXX", :unpublished=>true, :updateddate=>"XXX"}
+    {:accesseddate=>"XXX", :agency=>"Acme", :authors=>[], :authors_affiliations=>{}, :circulateddate=>"XXX", :confirmeddate=>"XXX", :copieddate=>"XXX", :createddate=>"XXX", :docnumber=>"1000", :docnumeric=>nil, :doctitle=>"Main Title", :doctype=>"Standard", :docyear=>"2001", :draft=>"3.4", :draftinfo=>" (draft 3.4, 2000-01-01)", :edition=>"2", :implementeddate=>"XXX", :issueddate=>"XXX", :logo=>"#{File.join(logoloc, "logo.jpg")}", :obsoleteddate=>"XXX", :publisheddate=>"XXX", :publisher=>"Acme", :receiveddate=>"XXX", :revdate=>"2000-01-01", :revdate_monthyear=>"January 2000", :stage=>"Working Draft", :stageabbr=>"WD", :tc=>"TC", :transmitteddate=>"XXX", :unchangeddate=>"XXX", :unpublished=>true, :updateddate=>"XXX", :vote_endeddate=>"XXX", :vote_starteddate=>"XXX"}
     OUTPUT
 
     docxml, filename, dir = csdc.convert_init(input, "test", true)
@@ -125,7 +125,7 @@ RSpec.describe IsoDoc::Generic do
     INPUT
 
     output = <<~"OUTPUT"
-    {:accesseddate=>"XXX", :agency=>"Acme", :authors=>[], :authors_affiliations=>{}, :circulateddate=>"XXX", :confirmeddate=>"XXX", :copieddate=>"XXX", :createddate=>"XXX", :docnumber=>"1000", :docnumeric=>nil, :doctitle=>"Main Title", :doctype=>"Standard", :docyear=>"2001", :draft=>"3.4", :draftinfo=>" (draft 3.4, 2000-01-01)", :edition=>"2", :implementeddate=>"XXX", :insecurity=>"Client Unconfidential", :issueddate=>"XXX", :logo=>"#{File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "lib", "example.jpg"))}", :obsoleteddate=>"XXX", :publisheddate=>"XXX", :publisher=>"Acme", :receiveddate=>"XXX", :revdate=>"2000-01-01", :revdate_monthyear=>"January 2000", :security=>"Client Confidential", :stage=>"Working Draft", :tc=>"TC", :transmitteddate=>"XXX", :unchangeddate=>"XXX", :unpublished=>false, :updateddate=>"XXX"}
+    {:accesseddate=>"XXX", :agency=>"Acme", :authors=>[], :authors_affiliations=>{}, :circulateddate=>"XXX", :confirmeddate=>"XXX", :copieddate=>"XXX", :createddate=>"XXX", :docnumber=>"1000", :docnumeric=>nil, :doctitle=>"Main Title", :doctype=>"Standard", :docyear=>"2001", :draft=>"3.4", :draftinfo=>" (draft 3.4, 2000-01-01)", :edition=>"2", :implementeddate=>"XXX", :insecurity=>"Client Unconfidential", :issueddate=>"XXX", :logo=>"#{File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "lib", "example.jpg"))}", :obsoleteddate=>"XXX", :publisheddate=>"XXX", :publisher=>"Acme", :receiveddate=>"XXX", :revdate=>"2000-01-01", :revdate_monthyear=>"January 2000", :security=>"Client Confidential", :stage=>"Working Draft", :tc=>"TC", :transmitteddate=>"XXX", :unchangeddate=>"XXX", :unpublished=>false, :updateddate=>"XXX", :vote_endeddate=>"XXX", :vote_starteddate=>"XXX"}
     OUTPUT
 
         docxml, filename, dir = csdc.convert_init(input, "test", true)
@@ -215,7 +215,7 @@ RSpec.describe IsoDoc::Generic do
     output = <<~"OUTPUT"
         #{HTML_HDR}
              <p class="zzSTDTitle1"/>
-             <div id="H"><h1>1.&#160; Terms and definitions</h1>
+             <div id="H"><h1>1.&#160; Terms, Definitions, Symbols and Abbreviated Terms</h1>
        <p class="TermNum" id="J">1.1.</p>
          <p class="Terms" style="text-align:left;">Term2</p>
        </div>
@@ -316,7 +316,7 @@ RSpec.describe IsoDoc::Generic do
              <div>
                <h1>2.&#160; Normative references</h1>
              </div>
-             <div id="H"><h1>3.&#160; Terms, definitions, symbols and abbreviated terms</h1>
+             <div id="H"><h1>3.&#160; Terms, Definitions, Symbols and Abbreviated Terms</h1>
        <div id="I">
           <h2>3.1.&#160; Normal Terms</h2>
           <p class="TermNum" id="J">3.1.1.</p>
@@ -365,10 +365,10 @@ RSpec.describe IsoDoc::Generic do
     OUTPUT
 
     expect(
-      IsoDoc::Generic::HtmlConvert.new({}).convert("test", input, true).
+      xmlpp(IsoDoc::Generic::HtmlConvert.new({}).convert("test", input, true).
       gsub(%r{^.*<body}m, "<body").
       gsub(%r{</body>.*}m, "</body>")
-    ).to be_equivalent_to output
+    )).to be_equivalent_to xmlpp(output)
   end
 
 end
