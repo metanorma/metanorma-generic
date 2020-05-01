@@ -7,7 +7,7 @@ module Metanorma
   module Generic
     ORGANIZATION_NAME_SHORT = "Acme"
     ORGANIZATION_NAME_LONG = "Acme Corp."
-    DOCUMENT_NAMESPACE = "https://metanorma.org/ns/generic"
+    DOCUMENT_NAMESPACE = "https://www.metanorma.org/ns/generic"
     YAML_CONFIG_FILE = 'metanorma.yml'
 
     class Configuration
