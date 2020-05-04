@@ -50,10 +50,8 @@ module IsoDoc
       end
 
       def googlefonts
-        <<~HEAD.freeze
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i|Space+Mono:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Overpass:300,300i,600,900" rel="stylesheet">
-        HEAD
+        return unless configuration.webfont
+        Array(configuration.webfont).map { |x| %{<link href="#{x}" rel="stylesheet">} }.join("\n")
       end
 
       include BaseConvert

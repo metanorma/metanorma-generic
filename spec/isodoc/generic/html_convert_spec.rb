@@ -69,6 +69,7 @@ RSpec.describe IsoDoc::Generic do
       let(:logo_path) { 'lib/example.jpg' }
       let(:stage_abbreviations) { { "working-draft" => "wd" } }
       let(:metadata_extensions) { [ "security", "insecurity" ] }
+      let(:webfont) { [ "Jack", "Jill" ] }
 
       it 'processes default metadata' do
         Metanorma::Generic.configure do |config|
@@ -76,6 +77,7 @@ RSpec.describe IsoDoc::Generic do
           config.published_stages = published_stages
           config.stage_abbreviations = stage_abbreviations
           config.metadata_extensions = metadata_extensions
+          config.webfont = webfont
         end
             csdc = IsoDoc::Generic::HtmlConvert.new({})
     input = <<~"INPUT"
@@ -130,11 +132,19 @@ RSpec.describe IsoDoc::Generic do
 
         docxml, filename, dir = csdc.convert_init(input, "test", true)
         expect(htmlencode(Hash[csdc.info(docxml, nil).sort].to_s)).to be_equivalent_to output
+
+        FileUtils.rm_f "test.html"
+        IsoDoc::Generic::HtmlConvert.new({}).convert("test", input, false) 
+        html = File.read("test.html", encoding: "utf-8")
+        expect(html).to include '<link href="Jack" rel="stylesheet" />'
+        expect(html).to include '<link href="Jill" rel="stylesheet" />'
+
         Metanorma::Generic.configure do |config|
           config.logo_path = Metanorma::Generic::Configuration.new.logo_path
           config.published_stages = Metanorma::Generic::Configuration.new.published_stages
           config.stage_abbreviations = Metanorma::Generic::Configuration.new.stage_abbreviations
           config.metadata_extensions = Metanorma::Generic::Configuration.new.metadata_extensions
+          config.webfont = Metanorma::Generic::Configuration.new.webfont
         end
       end
     end

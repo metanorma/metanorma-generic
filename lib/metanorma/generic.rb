@@ -32,6 +32,7 @@ module Metanorma
         scripts_pdf
         standardstylesheet
         validate_rng_file
+        webfont
         wordcoverpage
         wordintropage
         wordstylesheet
