@@ -69,7 +69,7 @@ RSpec.describe IsoDoc::Generic do
       let(:logo_path) { 'lib/example.jpg' }
       let(:stage_abbreviations) { { "working-draft" => "wd" } }
       let(:metadata_extensions) { [ "security", "insecurity" ] }
-      let(:webfont) { [ "Jack", "Jill" ] }
+      let(:webfont) { [ "Jack&amp;x", "Jill?x" ] }
 
       it 'processes default metadata' do
         Metanorma::Generic.configure do |config|
@@ -136,8 +136,8 @@ RSpec.describe IsoDoc::Generic do
         FileUtils.rm_f "test.html"
         IsoDoc::Generic::HtmlConvert.new({}).convert("test", input, false) 
         html = File.read("test.html", encoding: "utf-8")
-        expect(html).to include '<link href="Jack" rel="stylesheet" />'
-        expect(html).to include '<link href="Jill" rel="stylesheet" />'
+        expect(html).to include '<link href="Jack&amp;x" rel="stylesheet" />'
+        expect(html).to include '<link href="Jill?x" rel="stylesheet" />'
 
         Metanorma::Generic.configure do |config|
           config.logo_path = Metanorma::Generic::Configuration.new.logo_path
