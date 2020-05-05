@@ -60,6 +60,15 @@ module Asciidoctor
         end
       end
 
+      def metadata_status(node, xml)
+        xml.status do |s|
+          s.stage ( node.attr("status") || node.attr("docstage") ||
+                   configuration.default_stage || "published" )
+          x = node.attr("substage") and s.substage x
+          x = node.attr("iteration") and s.iteration x
+        end
+      end
+
       def docidentifier_cleanup(xmldoc)
         template = configuration.docid_template ||
           "{{ organization_name_short }} {{ docnumeric }}"

@@ -21,7 +21,6 @@ Author
 :workgroup-type: C
 :secretariat: SECRETARIAT
 :copyright-year: 2001
-:status: working-draft
 :iteration: 3
 :language: en
 :title: Main Title

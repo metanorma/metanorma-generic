@@ -29,6 +29,7 @@ module Metanorma
         html_monospacefont
         metadata_extensions
         published_stages
+        default_stage
         stage_abbreviations
         scripts
         scripts_pdf

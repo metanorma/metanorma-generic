@@ -143,6 +143,7 @@ RSpec.describe Asciidoctor::Generic do
       let(:stage_abbreviations) { { "ready" => "", "steady" => "" } }
       let(:doctypes) { [ "lion", "elephant" ] }
       let(:default_doctype) { "elephant" }
+      let(:default_stage) { "working-draft" }
 
       it 'uses configuration options for organization and namespace' do
         Metanorma::Generic.configure do |config|
@@ -154,6 +155,7 @@ RSpec.describe Asciidoctor::Generic do
           config.stage_abbreviations = stage_abbreviations
           config.doctypes = doctypes
           config.default_doctype = default_doctype
+          config.default_stage = default_stage
         end
 
         FileUtils.rm_f "test.err"
@@ -170,6 +172,7 @@ RSpec.describe Asciidoctor::Generic do
           config.stage_abbreviations = Metanorma::Generic::Configuration.new.stage_abbreviations
           config.doctypes = Metanorma::Generic::Configuration.new.doctypes
           config.default_doctype = Metanorma::Generic::Configuration.new.default_doctype
+          config.default_stage = Metanorma::Generic::Configuration.new.default_stage
         end
       end
     end
