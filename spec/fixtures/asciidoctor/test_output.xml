@@ -7,13 +7,13 @@
     <contributor>
       <role type="author"/>
       <organization>
-        <name>%{organization_name_short}</name>
+        <name>%{organization_name_long}</name>
       </organization>
     </contributor>
     <contributor>
       <role type="publisher"/>
       <organization>
-        <name>%{organization_name_short}</name>
+        <name>%{organization_name_long}</name>
       </organization>
     </contributor>
     <edition>2</edition>
@@ -31,7 +31,7 @@
       <from>2001</from>
       <owner>
         <organization>
-          <name>%{organization_name_short}</name>
+          <name>%{organization_name_long}</name>
         </organization>
       </owner>
     </copyright>

@@ -31,7 +31,7 @@ module Asciidoctor
         xml.contributor do |c|
           c.role **{ type: "author" }
           c.organization do |a|
-            a.name configuration.organization_name_short
+            a.name configuration.organization_name_long
           end
         end
         personal_author(node, xml)
@@ -41,7 +41,7 @@ module Asciidoctor
         xml.contributor do |c|
           c.role **{ type: "publisher" }
           c.organization do |a|
-            a.name configuration.organization_name_short
+            a.name configuration.organization_name_long
           end
         end
       end
@@ -81,7 +81,7 @@ module Asciidoctor
           c.from from
           c.owner do |owner|
             owner.organization do |o|
-              o.name configuration.organization_name_short
+              o.name configuration.organization_name_long
             end
           end
         end

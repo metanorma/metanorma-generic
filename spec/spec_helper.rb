@@ -81,13 +81,13 @@ BLANK_HDR = <<~"HDR"
          <contributor>
            <role type="author"/>
            <organization>
-             <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
+             <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
            </organization>
          </contributor>
          <contributor>
            <role type="publisher"/>
            <organization>
-             <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
+             <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
            </organization>
          </contributor>
 
@@ -100,7 +100,7 @@ BLANK_HDR = <<~"HDR"
            <from>#{Time.new.year}</from>
            <owner>
              <organization>
-               <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
+               <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
              </organization>
            </owner>
          </copyright>

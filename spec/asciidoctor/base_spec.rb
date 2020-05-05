@@ -78,13 +78,13 @@ RSpec.describe Asciidoctor::Generic do
 <contributor>
     <role type="author"/>
     <organization>
-      <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
+      <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
     </organization>
   </contributor>
   <contributor>
     <role type="publisher"/>
     <organization>
-      <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
+      <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
     </organization>
   </contributor>
   <edition>2</edition>
@@ -102,7 +102,7 @@ RSpec.describe Asciidoctor::Generic do
     <from>2001</from>
     <owner>
       <organization>
-        <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
+        <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
       </organization>
     </owner>
   </copyright>
