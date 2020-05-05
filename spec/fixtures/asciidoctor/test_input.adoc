@@ -2,7 +2,6 @@
 Author
 :docfile: test.adoc
 :nodoc:
-:novalid:
 :docnumber: 1000
 :doctype: standard
 :edition: 2

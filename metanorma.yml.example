@@ -7,6 +7,9 @@ validate_rng_file: /metanorma-mine/lib/asciidoctor/mine/mine.rng
 htmlcoverpage: /metanorma-mine/lib/isodoc/mine/html/html_mine_titlepage.html
 htmlintropage: /metanorma-mine/lib/isodoc/mine/html/html_mine_intro.html
 htmlstylesheet: /metanorma-mine/lib/isodoc/mine/html/htmlstyle.scss
+html_bodyfont: '"Source Sans Pro",sans-serif'
+html_headerfont: '"Source Sans Pro",sans-serif'
+html_monospacefont: '"Source Code Pro",monospace'
 scripts: /metanorma-mine/lib/isodoc/mine/html/scripts.html
 scripts_pdf: /metanorma-mine/lib/isodoc/mine/html/scripts.prd.html
 standardstylesheet: /metanorma-mine/lib/isodoc/mine/html/
@@ -14,8 +17,22 @@ header: /metanorma-mine/lib/isodoc/mine/html/header.html
 wordcoverpage: /metanorma-mine/lib/isodoc/mine/html/word_mine_titlepage.html
 wordintropage: /metanorma-mine/lib/isodoc/mine/html/word_mine_intro.html
 wordstylesheet: /metanorma-mine/lib/isodoc/mine/html/wordstyle.scss
+word_bodyfont: '"Source Sans Pro","Arial",sans-serif'
+word_headerfont: '"Source Sans Pro","Arial",sans-serif'
+word_monospacefont: '"Source Code Pro",monospace'
 docid_template: "{{ organization_name_short }} {{ docnumeric }}"
 metadata_extensions:
   - security
 published_stages:
   - published
+stage_abbreviations:
+  draft-proposal:
+  draft-development:
+  draft-testing:
+  draft-implementation:
+  in-force:
+  retired:
+metadata_extensions:
+ - security
+ - recipient
+

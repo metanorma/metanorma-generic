@@ -94,24 +94,6 @@ module Asciidoctor
         end
       end
 
-=begin
-      def makexml(node)
-        #root_tag = configuration.xml_root_tag || XML_ROOT_TAG
-        root_tag = XML_ROOT_TAG
-        result = ["<?xml version='1.0' encoding='UTF-8'?>\n<#{root_tag}>"]
-        @draft = node.attributes.has_key?("draft")
-        result << noko { |ixml| front node, ixml }
-        result << noko { |ixml| middle node, ixml }
-        result << "</#{root_tag}>"
-        result = textcleanup(result)
-        ret1 = cleanup(Nokogiri::XML(result))
-        validate(ret1) unless @novalid
-        ret1.root.add_namespace(nil, configuration.document_namespace ||
-                                XML_NAMESPACE)
-        ret1
-      end
-=end
-
       def doctype(node)
         d = node.attr("doctype")
         unless %w{policy-and-procedures best-practices supporting-document
@@ -151,6 +133,23 @@ module Asciidoctor
         schema_validate(formattedstr_strip(doc.dup),
                         baselocation(configuration.validate_rng_file) ||
                         File.join(File.dirname(__FILE__), "generic.rng"))
+      end
+
+      def content_validate(doc)
+        super
+        bibdata_validate(doc.root)
+      end
+
+      def bibdata_validate(doc)
+        stage_validate(doc)
+      end
+
+      def stage_validate(xmldoc)
+        stages = configuration&.stage_abbreviations&.keys || return
+        stages.empty? and return
+        stage = xmldoc&.at("//bibdata/status/stage")&.text
+        stages.include? stage or
+          @log.add("Document Attributes", nil, "#{stage} is not a recognised status")
       end
 
       def sections_cleanup(x)

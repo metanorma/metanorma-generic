@@ -140,6 +140,7 @@ RSpec.describe Asciidoctor::Generic do
       let(:document_namespace) { 'https://example.com/' }
       let(:docid_template) { "{{ organization_name_long }} {{ docnumeric }} {{ stage }}" }
       let(:metadata_extensions) { [ "security", "insecurity" ] }
+      let(:stage_abbreviations) { { "ready" => "", "steady" => "" } }
 
       it 'uses configuration options for organization and namespace' do
         Metanorma::Generic.configure do |config|
@@ -148,14 +149,20 @@ RSpec.describe Asciidoctor::Generic do
           config.document_namespace = document_namespace
           config.docid_template = docid_template
           config.metadata_extensions = metadata_extensions
+          config.stage_abbreviations = stage_abbreviations
         end
+
+        FileUtils.rm_f "test.err"
         expect(xmlpp(Asciidoctor.convert(input, backend: :generic, header_footer: true))).to(be_equivalent_to(xmlpp(output)))
+        expect(File.read("test.err")).to include "working-draft is not a recognised status"
+
         Metanorma::Generic.configure do |config|
           config.organization_name_short = Metanorma::Generic::Configuration.new.organization_name_short
           config.organization_name_long = Metanorma::Generic::Configuration.new.organization_name_long
           config.document_namespace = Metanorma::Generic::Configuration.new.document_namespace
           config.docid_template = Metanorma::Generic::Configuration.new.docid_template
           config.metadata_extensions = Metanorma::Generic::Configuration.new.metadata_extensions
+          config.stage_abbreviations = Metanorma::Generic::Configuration.new.stage_abbreviations
         end
       end
     end
