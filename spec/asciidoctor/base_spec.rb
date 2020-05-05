@@ -141,6 +141,8 @@ RSpec.describe Asciidoctor::Generic do
       let(:docid_template) { "{{ organization_name_long }} {{ docnumeric }} {{ stage }}" }
       let(:metadata_extensions) { [ "security", "insecurity" ] }
       let(:stage_abbreviations) { { "ready" => "", "steady" => "" } }
+      let(:doctypes) { [ "lion", "elephant" ] }
+      let(:default_doctype) { "elephant" }
 
       it 'uses configuration options for organization and namespace' do
         Metanorma::Generic.configure do |config|
@@ -150,11 +152,14 @@ RSpec.describe Asciidoctor::Generic do
           config.docid_template = docid_template
           config.metadata_extensions = metadata_extensions
           config.stage_abbreviations = stage_abbreviations
+          config.doctypes = doctypes
+          config.default_doctype = default_doctype
         end
 
         FileUtils.rm_f "test.err"
         expect(xmlpp(Asciidoctor.convert(input, backend: :generic, header_footer: true))).to(be_equivalent_to(xmlpp(output)))
         expect(File.read("test.err")).to include "working-draft is not a recognised status"
+        expect(File.read("test.err")).to include "standard is not a legal document type: reverting to 'elephant'"
 
         Metanorma::Generic.configure do |config|
           config.organization_name_short = Metanorma::Generic::Configuration.new.organization_name_short
@@ -163,6 +168,8 @@ RSpec.describe Asciidoctor::Generic do
           config.docid_template = Metanorma::Generic::Configuration.new.docid_template
           config.metadata_extensions = Metanorma::Generic::Configuration.new.metadata_extensions
           config.stage_abbreviations = Metanorma::Generic::Configuration.new.stage_abbreviations
+          config.doctypes = Metanorma::Generic::Configuration.new.doctypes
+          config.default_doctype = Metanorma::Generic::Configuration.new.default_doctype
         end
       end
     end

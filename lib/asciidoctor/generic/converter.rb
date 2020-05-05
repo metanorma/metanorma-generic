@@ -96,11 +96,13 @@ module Asciidoctor
 
       def doctype(node)
         d = node.attr("doctype")
-        unless %w{policy-and-procedures best-practices supporting-document
-          report legal directives proposal standard}.include? d
+        configuration.doctypes or return d == "article" ? "standard" : d
+        default = configuration.default_doctype || Array(configuration.doctypes).dig(0) ||
+          "standard"
+        unless Array(configuration.doctypes).include? d
           @log.add("Document Attributes", nil,
-                   "#{d} is not a legal document type: reverting to 'standard'")
-          d = "standard"
+                   "#{d} is not a legal document type: reverting to '#{default}'")
+          d = default
         end
         d
       end

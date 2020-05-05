@@ -35,4 +35,7 @@ stage_abbreviations:
 metadata_extensions:
  - security
  - recipient
-
+doctypes:
+ - standard
+ - recommendation
+default_doctype: standard

@@ -16,6 +16,8 @@ module Metanorma
         organization_name_long
         document_namespace
         docid_template
+        doctypes
+        default_doctype
         i18nyaml
         logo_path
         header
