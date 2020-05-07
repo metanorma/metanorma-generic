@@ -73,7 +73,7 @@ RSpec.describe Asciidoctor::Generic do
 <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
 <bibdata type="standard">
   <title language="en" format="text/plain">Main Title</title>
-  <docidentifier>Acme 1000</docidentifier>
+  <docidentifier type="Acme">Acme 1000</docidentifier>
   <docnumber>1000</docnumber>
 <contributor>
     <role type="author"/>

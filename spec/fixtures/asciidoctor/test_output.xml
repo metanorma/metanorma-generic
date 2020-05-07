@@ -2,7 +2,7 @@
 <generic-standard xmlns="%{document_namespace}">
   <bibdata type="standard">
     <title language="en" format="text/plain">Main Title</title>
-    <docidentifier>Test Corp. 1000 Working Draft</docidentifier>
+    <docidentifier type="Test">Test Corp. 1000 Working Draft</docidentifier>
     <docnumber>1000</docnumber>
     <contributor>
       <role type="author"/>

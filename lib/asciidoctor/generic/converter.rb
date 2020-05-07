@@ -78,7 +78,8 @@ module Asciidoctor
       end
 
       def metadata_id(node, xml)
-        xml.docidentifier do |i|
+        xml.docidentifier **{ type:
+                              configuration.organization_name_short } do |i|
           i << "DUMMY"
         end
         xml.docnumber { |i| i << node.attr("docnumber") }

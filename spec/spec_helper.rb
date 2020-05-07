@@ -77,7 +77,7 @@ BLANK_HDR = <<~"HDR"
        <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
        <bibdata type="standard">
         <title language="en" format="text/plain">Document title</title>
-         <docidentifier>Acme </docidentifier>
+         <docidentifier type="Acme">Acme </docidentifier>
          <contributor>
            <role type="author"/>
            <organization>
