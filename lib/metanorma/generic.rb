@@ -14,12 +14,14 @@ module Metanorma
       CONFIG_ATTRS = %i[
         organization_name_short
         organization_name_long
+        bibliography_titles
         document_namespace
         docid_template
         doctypes
         default_doctype
         i18nyaml
         logo_path
+        logo_paths
         header
         htmlcoverpage
         htmlintropage
@@ -28,12 +30,15 @@ module Metanorma
         html_headerfont
         html_monospacefont
         metadata_extensions
+        normref_titles
         published_stages
         default_stage
         stage_abbreviations
         scripts
         scripts_pdf
         standardstylesheet
+        symbols_titles
+        termsdefs_titles
         validate_rng_file
         webfont
         wordcoverpage
@@ -63,6 +68,15 @@ module Metanorma
         self.organization_name_short ||= ORGANIZATION_NAME_SHORT
         self.organization_name_long ||= ORGANIZATION_NAME_LONG
         self.document_namespace ||= DOCUMENT_NAMESPACE
+        self.termsdefs_titles ||= 
+          ["Terms and definitions", "Terms, definitions, symbols and abbreviated terms",
+           "Terms, definitions, symbols and abbreviations", "Terms, definitions and symbols",
+           "Terms, definitions and abbreviations", "Terms, definitions and abbreviated terms"]
+        self.symbols_titles ||=
+          ["Symbols and abbreviated terms", "Symbols", "Abbreviated terms", "Abbreviations"]
+        self.normref_titles ||=
+          ["Normative references"]
+        self.bibliography_titles ||= ["Bibliography"]
       end
 
       def set_default_values_from_yaml_file(config_file)

@@ -44,5 +44,37 @@
       %{metadata_extensions_out}
     </ext>
   </bibdata>
-  <sections/>
+    <sections>
+    <clause id='_' obligation='normative'>
+      <title>Scope</title>
+      <p id='_'>1</p>
+    </clause>
+    <terms id='_' obligation='normative'>
+      <title>Terms and definitions</title>
+      <p id='_'>No terms and definitions are listed in this document.</p>
+    </terms>
+    <definitions id='_'>
+      <title>JKL</title>
+      <p id='_'>4</p>
+    </definitions>
+    <clause id='_' obligation='normative'>
+      <title>Clause</title>
+      <p id='_'>5</p>
+    </clause>
+  </sections>
+  <annex id='_' obligation='normative'>
+    <title>AnnexA</title>
+    <p id='_'>6</p>
+  </annex>
+  <bibliography>
+    <references id='_' obligation='informative'>
+      <title>Normative References</title>
+      <p id='_'>There are no normative references in this document.</p>
+      <p id='_'>2</p>
+    </references>
+    <references id='_' obligation='informative'>
+      <title>Bibliography</title>
+      <p id='_'>7</p>
+    </references>
+  </bibliography>
 </generic-standard>

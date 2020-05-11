@@ -122,6 +122,20 @@ module Asciidoctor
           set_default_values_from_yaml_file(path_to_config_file)
       end
 
+      def sectiontype_streamline(ret)
+        if configuration.termsdefs_titles.map(&:downcase).include? (ret)
+          "terms and definitions"
+        elsif configuration.symbols_titles.map(&:downcase).include? (ret)
+          "symbols and abbreviated terms"
+        elsif configuration.normref_titles.map(&:downcase).include? (ret)
+          "normative references"
+        elsif configuration.bibliography_titles.map(&:downcase).include? (ret)
+          "bibliography"
+        else
+          ret
+        end
+      end
+
       def document(node)
         read_config_file(node.attr("customize")) if node.attr("customize")
         init(node)

@@ -3,6 +3,9 @@ organization_name_long: My Organization name
 document_namespace: https://open.ribose.com/standards/mine
 xml_root_tag: 'mine-standard'
 logo_path: /metanorma-mine/lib/isodoc/mine/html/logo.jpg
+logo_paths: 
+  - /metanorma-mine/lib/isodoc/mine/html/logo1.jpg
+  - /metanorma-mine/lib/isodoc/mine/html/logo2.jpg
 validate_rng_file: /metanorma-mine/lib/asciidoctor/mine/mine.rng
 htmlcoverpage: /metanorma-mine/lib/isodoc/mine/html/html_mine_titlepage.html
 htmlintropage: /metanorma-mine/lib/isodoc/mine/html/html_mine_intro.html
@@ -39,3 +42,19 @@ doctypes:
  - standard
  - recommendation
 default_doctype: standard
+termsdefs_titles:
+  - Terms and definitions
+  - Terms, definitions, symbols and abbreviated terms
+  - Terms, definitions, symbols and abbreviations
+  - Terms, definitions and symbls
+  - Terms, definitions and abbreviations
+  - Terms, definitions and abbreviated terms
+symbols_titles:
+  - Symbols and abbreviated terms
+  - Symbols
+  - Abbreviated terms
+  - Abbreviations
+normref_titles:
+  - Normative references
+bibliography_titles
+  - Bibliography

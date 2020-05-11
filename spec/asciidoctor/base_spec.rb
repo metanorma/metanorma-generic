@@ -121,6 +121,102 @@ RSpec.describe Asciidoctor::Generic do
     expect(xmlpp(Asciidoctor.convert(input, backend: :generic, header_footer: true))).to be_equivalent_to xmlpp(output)
   end
 
+    it "processes default section titles" do
+    input = <<~"INPUT"
+      = Document title
+      Author
+      :docfile: test.adoc
+      
+      == Introduction
+
+      == Scope
+
+      [bibliography]
+      == Normative References
+
+      == Terms and definitions
+
+      == Symbols
+
+      == Clause
+
+      [appendix]
+      == Annex
+
+      [bibliography]
+      == Bibliography
+      INPUT
+    output = <<~"OUTPUT"
+    <generic-standard xmlns='https://www.metanorma.org/ns/generic'>
+  <bibdata type='standard'>
+    <title language='en' format='text/plain'>Document title</title>
+    <docidentifier type='Acme'>Acme </docidentifier>
+    <contributor>
+      <role type='author'/>
+      <organization>
+        <name>Acme Corp.</name>
+      </organization>
+    </contributor>
+    <contributor>
+      <role type='publisher'/>
+      <organization>
+        <name>Acme Corp.</name>
+      </organization>
+    </contributor>
+    <language>en</language>
+    <script>Latn</script>
+    <status>
+      <stage>published</stage>
+    </status>
+    <copyright>
+      <from>2020</from>
+      <owner>
+        <organization>
+          <name>Acme Corp.</name>
+        </organization>
+      </owner>
+    </copyright>
+    <ext>
+      <doctype>standard</doctype>
+    </ext>
+  </bibdata>
+  <preface>
+    <introduction id='_' obligation='informative'>
+      <title>Introduction</title>
+    </introduction>
+  </preface>
+  <sections>
+    <clause id='_' obligation='normative'>
+      <title>Scope</title>
+    </clause>
+    <terms id='_' obligation='normative'>
+      <title>Terms and definitions</title>
+      <p id='_'>No terms and definitions are listed in this document.</p>
+    </terms>
+    <definitions id='_'>
+      <title>Symbols</title>
+    </definitions>
+    <clause id='_' obligation='normative'>
+      <title>Clause</title>
+    </clause>
+  </sections>
+  <annex id='_' obligation='normative'>
+    <title>Annex</title>
+  </annex>
+  <bibliography>
+    <references id='_' obligation='informative'>
+      <title>Normative References</title>
+      <p id='_'>There are no normative references in this document.</p>
+    </references>
+    <references id='_' obligation='informative'>
+      <title>Bibliography</title>
+    </references>
+  </bibliography>
+</generic-standard>
+      OUTPUT
+      expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :generic, header_footer: true)))).to be_equivalent_to xmlpp(strip_guid(output))
+    end
+
   context 'with configuration options' do
     subject(:convert) do
       xmlpp(Asciidoctor.convert(input, backend: :generic, header_footer: true))
@@ -144,6 +240,10 @@ RSpec.describe Asciidoctor::Generic do
       let(:doctypes) { [ "lion", "elephant" ] }
       let(:default_doctype) { "elephant" }
       let(:default_stage) { "working-draft" }
+      let(:termsdefs_titles) { ["ABC", "DEF"] }
+      let(:symbols_titles) { ["GHI", "JKL"] }
+      let(:normref_titles) { ["MNO", "PQR"] }
+      let(:bibliography_titles) { ["STU", "VWX"] }
 
       it 'uses configuration options for organization and namespace' do
         Metanorma::Generic.configure do |config|
@@ -156,10 +256,14 @@ RSpec.describe Asciidoctor::Generic do
           config.doctypes = doctypes
           config.default_doctype = default_doctype
           config.default_stage = default_stage
+          config.termsdefs_titles = termsdefs_titles
+          config.symbols_titles = symbols_titles
+          config.normref_titles = normref_titles
+          config.bibliography_titles = bibliography_titles
         end
 
         FileUtils.rm_f "test.err"
-        expect(xmlpp(Asciidoctor.convert(input, backend: :generic, header_footer: true))).to(be_equivalent_to(xmlpp(output)))
+        expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :generic, header_footer: true)))).to(be_equivalent_to(xmlpp(output)))
         expect(File.read("test.err")).to include "working-draft is not a recognised status"
         expect(File.read("test.err")).to include "standard is not a legal document type: reverting to 'elephant'"
 
@@ -173,6 +277,10 @@ RSpec.describe Asciidoctor::Generic do
           config.doctypes = Metanorma::Generic::Configuration.new.doctypes
           config.default_doctype = Metanorma::Generic::Configuration.new.default_doctype
           config.default_stage = Metanorma::Generic::Configuration.new.default_stage
+          config.termsdefs_titles = Metanorma::Generic::Configuration.new.termsdefs_titles
+          config.symbols_titles = Metanorma::Generic::Configuration.new.symbols_titles
+          config.normref_titles = Metanorma::Generic::Configuration.new.normref_titles
+          config.bibliography_titles = Metanorma::Generic::Configuration.new.bibliography_titles
         end
       end
     end
