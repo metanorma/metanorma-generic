@@ -204,11 +204,11 @@ RSpec.describe Asciidoctor::Generic do
     <title>Annex</title>
   </annex>
   <bibliography>
-    <references id='_' obligation='informative'>
+    <references id='_' obligation='informative' normative="true">
       <title>Normative References</title>
       <p id='_'>There are no normative references in this document.</p>
     </references>
-    <references id='_' obligation='informative'>
+    <references id='_' obligation='informative' normative="false">
       <title>Bibliography</title>
     </references>
   </bibliography>
