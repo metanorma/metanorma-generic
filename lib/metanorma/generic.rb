@@ -30,6 +30,7 @@ module Metanorma
         html_headerfont
         html_monospacefont
         metadata_extensions
+        metanorma_name
         normref_titles
         published_stages
         default_stage

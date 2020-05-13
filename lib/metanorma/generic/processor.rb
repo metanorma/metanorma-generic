@@ -3,10 +3,14 @@ require "metanorma/processor"
 module Metanorma
   module Generic
     class Processor < Metanorma::Processor
+      def configuration
+        Metanorma::Generic.configuration
+      end
+
       def initialize
-        @short = :generic
+        @short = configuration&.metanorma_name&.to_sym || :generic
         @input_format = :asciidoc
-        @asciidoctor_backend = :generic
+        @asciidoctor_backend = configuration&.metanorma_name&.to_sym || :generic
       end
 
       def output_formats
