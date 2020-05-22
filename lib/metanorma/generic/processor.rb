@@ -11,6 +11,9 @@ module Metanorma
         doc: [
           configuration.word_bodyfont || "Overpass", configuration.word_headerfont || "Overpass", 
           configuration.word_monospacefont || "Space Mono"].uniq,
+        pdf: [
+          configuration.word_bodyfont || "Overpass", configuration.word_headerfont || "Overpass", 
+          configuration.word_monospacefont || "Space Mono"].uniq,
       }
     end
 
