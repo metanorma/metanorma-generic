@@ -2,6 +2,18 @@ require "metanorma/processor"
 
 module Metanorma
   module Generic
+    def self.fonts_used
+      {
+        html: [
+          configuration.html_bodyfont || "Overpass", configuration.html_headerfont || "Overpass", 
+          configuration.html_monospacefont || "Space Mono"
+        ].uniq,
+        doc: [
+          configuration.word_bodyfont || "Overpass", configuration.word_headerfont || "Overpass", 
+          configuration.word_monospacefont || "Space Mono"].uniq,
+      }
+    end
+
     class Processor < Metanorma::Processor
       def configuration
         Metanorma::Generic.configuration
