@@ -73,14 +73,16 @@ module Metanorma
         super.merge(new_options)
       end
 
-      def output(isodoc_node, outname, format, options={})
+      def output(isodoc_node, inname, outname, format, options={})
         case format
         when :html
-          IsoDoc::Generic::HtmlConvert.new(options).convert(outname, isodoc_node)
+          IsoDoc::Generic::HtmlConvert.new(options).convert(inname, isodoc_node, nil, outname)
         when :doc
-          IsoDoc::Generic::WordConvert.new(options).convert(outname, isodoc_node)
+          IsoDoc::Generic::WordConvert.new(options).convert(inname, isodoc_node, nil, outname)
         when :pdf
-          IsoDoc::Generic::PdfConvert.new(options).convert(outname, isodoc_node)
+          IsoDoc::Generic::PdfConvert.new(options).convert(inname, isodoc_node, nil, outname)
+        when :presentation
+          IsoDoc::Generic::PresentationXMLConvert.new(options).convert(inname, isodoc_node, nil, outname)
         else
           super
         end
