@@ -10,8 +10,8 @@ module IsoDoc
         @meta = Metadata.new(lang, script, labels)
       end
 
-      def xref_init(lang, script, klass, labels)
-        @xrefs = Xref.new(lang, script, klass, labels)
+      def xref_init(lang, script, klass, labels, options)
+        @xrefs = Xref.new(lang, script, klass, labels, options)
       end
 
       def baselocation(loc)
