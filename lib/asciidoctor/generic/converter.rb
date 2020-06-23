@@ -195,7 +195,7 @@ module Asciidoctor
       alias_method :style, :blank_method
       alias_method :title_validate, :blank_method
 
-      def word_converter(node)
+      def doc_converter(node)
         IsoDoc::Generic::WordConvert.new(doc_extract_attributes(node))
       end
 
