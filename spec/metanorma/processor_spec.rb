@@ -16,7 +16,7 @@ RSpec.describe Metanorma::Generic::Processor do
 
   it "registers output formats against metanorma" do
     output = <<~"OUTPUT"
-    [[:doc, "doc"], [:html, "html"], [:pdf, "pdf"], [:rxl, "rxl"], [:xml, "xml"]]
+    [[:doc, "doc"], [:html, "html"], [:pdf, "pdf"], [:presentation, "presentation.xml"], [:rxl, "rxl"], [:xml, "xml"]]
     OUTPUT
 
     expect(processor.output_formats.sort.to_s).to be_equivalent_to output
@@ -65,7 +65,7 @@ RSpec.describe Metanorma::Generic::Processor do
     </main>
     OUTPUT
 
-    processor.output(input, "test.html", :html)
+    processor.output(input, "test.xml", "test.html", :html)
 
     expect(
       xmlpp(File.read("test.html", encoding: "utf-8").

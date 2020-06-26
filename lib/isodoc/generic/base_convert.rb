@@ -1,5 +1,6 @@
 require "isodoc"
 require_relative "metadata"
+require_relative "xref"
 require "fileutils"
 
 module IsoDoc
@@ -9,6 +10,10 @@ module IsoDoc
         @meta = Metadata.new(lang, script, labels)
       end
 
+      def xref_init(lang, script, klass, labels, options)
+        @xrefs = Xref.new(lang, script, klass, labels, options)
+      end
+
       def baselocation(loc)
         return nil if loc.nil?
         File.expand_path(File.join(File.dirname(self.class::_file || __FILE__), "..", "..", "..", loc))
@@ -16,7 +21,7 @@ module IsoDoc
 
       def annex_name(annex, name, div)
         div.h1 **{ class: "Annex" } do |t|
-          t << "#{anchor(annex['id'], :label)} "
+          t << "#{@xrefs.anchor(annex['id'], :label)} "
           t.br
           t.b do |b|
             name&.children&.each { |c2| parse(c2, b) }
