@@ -6,14 +6,6 @@ require "fileutils"
 module IsoDoc
   module Generic
     module BaseConvert
-      def metadata_init(lang, script, labels)
-        @meta = Metadata.new(lang, script, labels)
-      end
-
-      def xref_init(lang, script, klass, labels, options)
-        @xrefs = Xref.new(lang, script, klass, labels, options)
-      end
-
       def baselocation(loc)
         return nil if loc.nil?
         File.expand_path(File.join(File.dirname(self.class::_file || __FILE__), "..", "..", "..", loc))
