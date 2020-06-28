@@ -1,6 +1,4 @@
 require "isodoc"
-require_relative "metadata"
-require_relative "xref"
 require "fileutils"
 
 module IsoDoc

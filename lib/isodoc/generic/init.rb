@@ -1,4 +1,6 @@
 require "isodoc"
+require_relative "metadata"
+require_relative "xref"
 
 module IsoDoc
   module Generic
