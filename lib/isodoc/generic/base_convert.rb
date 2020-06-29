@@ -19,10 +19,6 @@ module IsoDoc
         end
       end
 
-      def i18n_init(lang, script)
-        super
-      end
-
       def fileloc(loc)
         File.join(File.dirname(__FILE__), loc)
       end

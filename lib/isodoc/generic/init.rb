@@ -12,6 +12,10 @@ module IsoDoc
       def xref_init(lang, script, klass, labels, options)
         @xrefs = Xref.new(lang, script, klass, labels, options)
       end
+
+      def i18n_init(lang, script)
+        super
+      end
     end
   end
 end
