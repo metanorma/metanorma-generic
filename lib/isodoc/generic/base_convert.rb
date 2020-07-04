@@ -6,17 +6,8 @@ module IsoDoc
     module BaseConvert
       def baselocation(loc)
         return nil if loc.nil?
-        File.expand_path(File.join(File.dirname(self.class::_file || __FILE__), "..", "..", "..", loc))
-      end
-
-      def annex_name(annex, name, div)
-        div.h1 **{ class: "Annex" } do |t|
-          t << "#{@xrefs.anchor(annex['id'], :label)} "
-          t.br
-          t.b do |b|
-            name&.children&.each { |c2| parse(c2, b) }
-          end
-        end
+        File.expand_path(File.join(
+          File.dirname(self.class::_file || __FILE__), "..", "..", "..", loc))
       end
 
       def fileloc(loc)
@@ -38,7 +29,8 @@ module IsoDoc
       end
 
       def make_body(xml, docxml)
-        body_attr = { lang: "EN-US", link: "blue", vlink: "#954F72", "xml:lang": "EN-US", class: "container" }
+        body_attr = { lang: "EN-US", link: "blue", vlink: "#954F72", 
+                      "xml:lang": "EN-US", class: "container" }
         xml.body **body_attr do |body|
           make_body1(body, docxml)
           make_body2(body, docxml)

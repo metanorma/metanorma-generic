@@ -24,7 +24,8 @@ module Asciidoctor
 
        def baselocation(loc)
         return nil if loc.nil?
-        File.expand_path(File.join(File.dirname(self.class::_file || __FILE__), "..", "..", "..", loc))
+        File.expand_path(File.join(File.dirname(
+          self.class::_file || __FILE__), "..", "..", "..", loc))
       end
 
       def metadata_author(node, xml)
@@ -144,9 +145,12 @@ module Asciidoctor
       def outputs(node, ret)
         File.open(@filename + ".xml", "w:UTF-8") { |f| f.write(ret) }
         presentation_xml_converter(node).convert(@filename + ".xml")
-        html_converter(node).convert(@filename + ".presentation.xml", nil, false, "#{@filename}.html")
-        doc_converter(node).convert(@filename + ".presentation.xml", nil, false, "#{@filename}.doc")
-        pdf_converter(node)&.convert(@filename + ".presentation.xml", nil, false, "#{@filename}.pdf")
+        html_converter(node).convert(@filename + ".presentation.xml", 
+                                     nil, false, "#{@filename}.html")
+        doc_converter(node).convert(@filename + ".presentation.xml", 
+                                    nil, false, "#{@filename}.doc")
+        pdf_converter(node)&.convert(@filename + ".presentation.xml", 
+                                     nil, false, "#{@filename}.pdf")
 
       end
 

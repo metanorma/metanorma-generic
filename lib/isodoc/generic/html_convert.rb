@@ -52,7 +52,9 @@ module IsoDoc
 
       def googlefonts
         return unless configuration.webfont
-        Array(configuration.webfont).map { |x| %{<link href="#{x.gsub(/\&amp;/, '&')}" rel="stylesheet">} }.join("\n")
+        Array(configuration.webfont).map do |x|
+          %{<link href="#{x.gsub(/\&amp;/, '&')}" rel="stylesheet">}
+        end.join("\n")
       end
 
       include BaseConvert

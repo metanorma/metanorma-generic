@@ -186,14 +186,14 @@ RSpec.describe Asciidoctor::Generic do
     </introduction>
   </preface>
   <sections>
-    <clause id='_' obligation='normative'>
+    <clause id='_' obligation='normative' type="scope">
       <title>Scope</title>
     </clause>
     <terms id='_' obligation='normative'>
       <title>Terms and definitions</title>
       <p id='_'>No terms and definitions are listed in this document.</p>
     </terms>
-    <definitions id='_'>
+    <definitions id='_' obligation="normative">
       <title>Symbols</title>
     </definitions>
     <clause id='_' obligation='normative'>
