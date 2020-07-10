@@ -40,10 +40,6 @@ module Metanorma
         "Metanorma::Generic #{Metanorma::Generic::VERSION}"
       end
 
-      def input_to_isodoc(file, filename)
-        Metanorma::Input::Asciidoc.new.process(file, filename, @asciidoctor_backend)
-      end
-
       def extract_options(file)
         head = file.sub(/\n\n.*$/m, "\n")
         /\n:htmlstylesheet: (?<htmlstylesheet>[^\n]+)\n/ =~ head
