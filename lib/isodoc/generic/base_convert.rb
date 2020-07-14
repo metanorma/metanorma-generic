@@ -10,10 +10,6 @@ module IsoDoc
           File.dirname(self.class::_file || __FILE__), "..", "..", "..", loc))
       end
 
-      def fileloc(loc)
-        File.join(File.dirname(__FILE__), loc)
-      end
-
       def cleanup(docxml)
         super
         term_cleanup(docxml)
