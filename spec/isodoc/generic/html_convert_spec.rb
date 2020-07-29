@@ -286,8 +286,9 @@ RSpec.describe IsoDoc::Generic do
     input = <<~"INPUT"
      <generic-standard xmlns="http://riboseinc.com/isoxml">
        <sections>
-       <terms id="H" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title>
+       <terms id="H" obligation="normative"><title>1.&#160; Terms, Definitions, Symbols and Abbreviated Terms</title>
          <term id="J">
+         <name>1.1.</name>
          <preferred>Term2</preferred>
        </term>
         </terms>
@@ -378,80 +379,125 @@ RSpec.describe IsoDoc::Generic do
     INPUT
 
     output = <<~"OUTPUT"
-        #{HTML_HDR}
-             <br/>
-             <div>
-               <h1 class="ForewordTitle">Foreword</h1>
-               <p id="A">This is a preamble</p>
-             </div>
-             <br/>
-             <div class="Section3" id="B">
-               <h1 class="IntroTitle">Introduction</h1>
-               <div id="C">
-          <h2>Introduction Subsection</h2>
-        </div>
-             </div>
-             <p class="zzSTDTitle1"/>
-             <div id="D">
-               <h1>1.&#160; Scope</h1>
-               <p id="E">Text</p>
-             </div>
-             <div>
-               <h1>2.&#160; Normative references</h1>
-             </div>
-             <div id="H"><h1>3.&#160; Terms, Definitions, Symbols and Abbreviated Terms</h1>
-       <div id="I">
-          <h2>3.1.&#160; Normal Terms</h2>
-          <p class="TermNum" id="J">3.1.1.</p>
-          <p class="Terms" style="text-align:left;">Term2</p>
-
-        </div><div id="K"><h2>3.2.&#160; Symbols and abbreviated terms</h2>
-          <dl><dt><p>Symbol</p></dt><dd>Definition</dd></dl>
-        </div></div>
-             <div id="L" class="Symbols">
-               <h1>4.&#160; Symbols and abbreviated terms</h1>
-               <dl>
-                 <dt>
-                   <p>Symbol</p>
-                 </dt>
-                 <dd>Definition</dd>
-               </dl>
-             </div>
-             <div id="M">
-               <h1>5.&#160; Clause 4</h1>
-               <div id="N">
-          <h2>5.1.&#160; Introduction</h2>
-        </div>
-               <div id="O">
-          <h2>5.2.&#160; Clause 4.2</h2>
-        </div>
-             </div>
-             <br/>
-             <div id="P" class="Section3">
-                <h1 class="Annex"><b>Annex A</b><br/>(normative)<br/><b>Annex</b></h1>
-               <div id="Q">
-          <h2>A.1.&#160; Annex A.1</h2>
-          <div id="Q1">
-          <h3>A.1.1.&#160; Annex A.1a</h3>
-          </div>
-        </div>
-             </div>
-             <br/>
-             <div>
-               <h1 class="Section3">Bibliography</h1>
-               <div>
-                 <h2 class="Section3">Bibliography Subsection</h2>
-               </div>
-             </div>
-           </div>
-         </body>
+    <generic-standard xmlns='http://riboseinc.com/isoxml'>
+  <preface>
+    <foreword obligation='informative'>
+      <title>Foreword</title>
+      <p id='A'>This is a preamble</p>
+    </foreword>
+    <introduction id='B' obligation='informative'>
+      <title>Introduction</title>
+      <clause id='C' inline-header='false' obligation='informative'>
+        <title depth='2'>Introduction Subsection</title>
+      </clause>
+    </introduction>
+  </preface>
+  <sections>
+    <clause id='D' obligation='normative'>
+      <title depth='1'>
+        4.
+        <tab/>
+        Scope
+      </title>
+      <p id='E'>Text</p>
+    </clause>
+    <clause id='H' obligation='normative'>
+      <title depth='1'>
+        2.
+        <tab/>
+        Terms, Definitions, Symbols and Abbreviated Terms
+      </title>
+      <terms id='I' obligation='normative'>
+        <title depth='2'>
+          2.1.
+          <tab/>
+          Normal Terms
+        </title>
+        <term id='J'>
+          <name>2.1.1.</name>
+          <preferred>Term2</preferred>
+        </term>
+      </terms>
+      <definitions id='K'>
+        <title>2.2.</title>
+        <dl>
+          <dt>Symbol</dt>
+          <dd>Definition</dd>
+        </dl>
+      </definitions>
+    </clause>
+    <definitions id='L'>
+      <title>3.</title>
+      <dl>
+        <dt>Symbol</dt>
+        <dd>Definition</dd>
+      </dl>
+    </definitions>
+    <clause id='M' inline-header='false' obligation='normative'>
+      <title depth='1'>
+        5.
+        <tab/>
+        Clause 4
+      </title>
+      <clause id='N' inline-header='false' obligation='normative'>
+        <title depth='2'>
+          5.1.
+          <tab/>
+          Introduction
+        </title>
+      </clause>
+      <clause id='O' inline-header='false' obligation='normative'>
+        <title depth='2'>
+          5.2.
+          <tab/>
+          Clause 4.2
+        </title>
+      </clause>
+    </clause>
+  </sections>
+  <annex id='P' inline-header='false' obligation='normative'>
+    <title>
+      <strong>Annex A</strong>
+      <br/>
+      (normative)
+      <br/>
+      <strong>Annex</strong>
+    </title>
+    <clause id='Q' inline-header='false' obligation='normative'>
+      <title depth='2'>
+        A.1.
+        <tab/>
+        Annex A.1
+      </title>
+      <clause id='Q1' inline-header='false' obligation='normative'>
+        <title depth='3'>
+          A.1.1.
+          <tab/>
+          Annex A.1a
+        </title>
+      </clause>
+    </clause>
+  </annex>
+  <bibliography>
+    <references id='R' obligation='informative' normative='true'>
+      <title depth='1'>
+        1.
+        <tab/>
+        Normative References
+      </title>
+    </references>
+    <clause id='S' obligation='informative'>
+      <title depth='1'>Bibliography</title>
+      <references id='T' obligation='informative' normative='false'>
+        <title depth='2'>Bibliography Subsection</title>
+      </references>
+    </clause>
+  </bibliography>
+</generic-standard>
     OUTPUT
 
     expect(
-      xmlpp(IsoDoc::Generic::HtmlConvert.new({}).convert("test", input, true).
-      gsub(%r{^.*<body}m, "<body").
-      gsub(%r{</body>.*}m, "</body>")
-    )).to be_equivalent_to xmlpp(output)
+      xmlpp(IsoDoc::Generic::PresentationXMLConvert.new({}).convert("test", input, true))).to be_equivalent_to xmlpp(output)
   end
 
 end

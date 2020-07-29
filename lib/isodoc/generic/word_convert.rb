@@ -1,4 +1,5 @@
 require_relative "base_convert"
+require_relative "init"
 require "isodoc"
 
 module IsoDoc
@@ -22,8 +23,10 @@ module IsoDoc
 
       def default_fonts(options)
         {
-          bodyfont: (options[:script] == "Hans" ? '"SimSun",serif' : configuration.word_bodyfont || '"Arial",sans-serif'),
-          headerfont: (options[:script] == "Hans" ? '"SimHei",sans-serif' :  configuration.word_headerfont ||  '"Arial",sans-serif'),
+          bodyfont: (options[:script] == "Hans" ? '"SimSun",serif' : 
+                     configuration.word_bodyfont || '"Arial",sans-serif'),
+          headerfont: (options[:script] == "Hans" ? '"SimHei",sans-serif' : 
+                       configuration.word_headerfont ||  '"Arial",sans-serif'),
           monospacefont:  configuration.word_monospacefont ||  '"Courier New",monospace'
         }
       end
@@ -51,6 +54,7 @@ module IsoDoc
       end
 
       include BaseConvert
+      include Init
     end
   end
 end

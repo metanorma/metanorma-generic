@@ -45,7 +45,7 @@
     </ext>
   </bibdata>
     <sections>
-    <clause id='_' obligation='normative'>
+    <clause id='_' obligation='normative' type="scope">
       <title>Scope</title>
       <p id='_'>1</p>
     </clause>
@@ -53,8 +53,8 @@
       <title>Terms and definitions</title>
       <p id='_'>No terms and definitions are listed in this document.</p>
     </terms>
-    <definitions id='_'>
-      <title>JKL</title>
+    <definitions id='_' obligation="normative">
+      <title>Symbols and abbreviated terms</title>
       <p id='_'>4</p>
     </definitions>
     <clause id='_' obligation='normative'>
@@ -68,7 +68,7 @@
   </annex>
   <bibliography>
     <references id='_' obligation='informative' normative="true">
-      <title>Normative References</title>
+      <title>Normative references</title>
       <p id='_'>There are no normative references in this document.</p>
       <p id='_'>2</p>
     </references>

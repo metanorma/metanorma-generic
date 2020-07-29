@@ -1,40 +1,13 @@
 require "isodoc"
-require_relative "metadata"
-require_relative "xref"
 require "fileutils"
 
 module IsoDoc
   module Generic
     module BaseConvert
-      def metadata_init(lang, script, labels)
-        @meta = Metadata.new(lang, script, labels)
-      end
-
-      def xref_init(lang, script, klass, labels, options)
-        @xrefs = Xref.new(lang, script, klass, labels, options)
-      end
-
       def baselocation(loc)
         return nil if loc.nil?
-        File.expand_path(File.join(File.dirname(self.class::_file || __FILE__), "..", "..", "..", loc))
-      end
-
-      def annex_name(annex, name, div)
-        div.h1 **{ class: "Annex" } do |t|
-          t << "#{@xrefs.anchor(annex['id'], :label)} "
-          t.br
-          t.b do |b|
-            name&.children&.each { |c2| parse(c2, b) }
-          end
-        end
-      end
-
-      def i18n_init(lang, script)
-        super
-      end
-
-      def fileloc(loc)
-        File.join(File.dirname(__FILE__), loc)
+        File.expand_path(File.join(
+          File.dirname(self.class::_file || __FILE__), "..", "..", "..", loc))
       end
 
       def cleanup(docxml)
@@ -52,7 +25,8 @@ module IsoDoc
       end
 
       def make_body(xml, docxml)
-        body_attr = { lang: "EN-US", link: "blue", vlink: "#954F72", "xml:lang": "EN-US", class: "container" }
+        body_attr = { lang: "EN-US", link: "blue", vlink: "#954F72", 
+                      "xml:lang": "EN-US", class: "container" }
         xml.body **body_attr do |body|
           make_body1(body, docxml)
           make_body2(body, docxml)
