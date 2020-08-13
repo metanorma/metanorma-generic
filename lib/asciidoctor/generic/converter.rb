@@ -28,23 +28,8 @@ module Asciidoctor
           self.class::_file || __FILE__), "..", "..", "..", loc))
       end
 
-      def metadata_author(node, xml)
-        xml.contributor do |c|
-          c.role **{ type: "author" }
-          c.organization do |a|
-            a.name configuration.organization_name_long
-          end
-        end
-        personal_author(node, xml)
-      end
-
-      def metadata_publisher(node, xml)
-        xml.contributor do |c|
-          c.role **{ type: "publisher" }
-          c.organization do |a|
-            a.name configuration.organization_name_long
-          end
-        end
+      def default_publisher
+        configuration.organization_name_long
       end
 
       def metadata_committee(node, xml)
@@ -84,18 +69,6 @@ module Asciidoctor
           i << "DUMMY"
         end
         xml.docnumber { |i| i << node.attr("docnumber") }
-      end
-
-      def metadata_copyright(node, xml)
-        from = node.attr("copyright-year") || Date.today.year
-        xml.copyright do |c|
-          c.from from
-          c.owner do |owner|
-            owner.organization do |o|
-              o.name configuration.organization_name_long
-            end
-          end
-        end
       end
 
       def metadata_ext(node, ext)
