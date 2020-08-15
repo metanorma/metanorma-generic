@@ -79,7 +79,7 @@ module Asciidoctor
       end
 
       def doctype(node)
-        d = node.attr("doctype")
+        d = super
         configuration.doctypes or return d == "article" ? "standard" : d
         default = configuration.default_doctype || Array(configuration.doctypes).dig(0) ||
           "standard"
