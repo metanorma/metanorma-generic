@@ -1,6 +1,6 @@
 require "spec_helper"
 
-logoloc = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "lib", "isodoc", "generic", "html"))
+logoloc = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "lib", "isodoc", "generic", "html"))
 
 RSpec.describe IsoDoc::Generic do
 
@@ -183,8 +183,8 @@ RSpec.describe IsoDoc::Generic do
 :insecurity=>"Client Unconfidential",
 :issueddate=>"XXX",
 :keywords=>[],
-:logo=>"#{File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "lib", "example.jpg"))}",
-:logo_paths=>["#{File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "lib", "example1.jpg"))}", "#{File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "lib", "example2.jpg"))}"],
+:logo=>"#{File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "lib", "example.jpg"))}",
+:logo_paths=>["#{File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "lib", "example1.jpg"))}", "#{File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "lib", "example2.jpg"))}"],
 :obsoleteddate=>"XXX",
 :publisheddate=>"XXX",
 :publisher=>"Acme",
