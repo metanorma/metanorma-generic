@@ -1,4 +1,5 @@
 require_relative "init"
+require_relative "metadata"
 require "isodoc"
 
 module IsoDoc

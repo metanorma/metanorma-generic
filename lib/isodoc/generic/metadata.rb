@@ -1,4 +1,5 @@
 require "isodoc"
+require_relative "init"
 
 module IsoDoc
   module Generic
@@ -22,10 +23,12 @@ module IsoDoc
         k._file = caller_locations.first.absolute_path
       end
 
-      def baselocation(loc)
+       def baselocation(loc)
         return nil if loc.nil?
-        File.expand_path(File.join(
-          File.dirname(self.class::_file || __FILE__), "..", "..", "..", loc))
+        File.expand_path(File.join(File.dirname(
+          self.class.respond_to?(:_file) ? (self.class::_file || __FILE__) :
+          __FILE__),
+        "..", "..", "..", loc))
       end
 
       def configuration

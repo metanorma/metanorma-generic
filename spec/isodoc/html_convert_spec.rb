@@ -105,6 +105,7 @@ RSpec.describe IsoDoc::Generic do
       let(:stage_abbreviations) { { "working-draft" => "wd" } }
       let(:metadata_extensions) { [ "security", "insecurity" ] }
       let(:webfont) { [ "Jack&amp;x", "Jill?x" ] }
+      let(:i18nyaml) { "spec/assets/i18n.yaml" }
 
       it 'processes default metadata' do
         Metanorma::Generic.configure do |config|
@@ -114,6 +115,17 @@ RSpec.describe IsoDoc::Generic do
           config.stage_abbreviations = stage_abbreviations
           config.metadata_extensions = metadata_extensions
           config.webfont = webfont
+          config.i18nyaml = i18nyaml
+        end
+            pcsdc = IsoDoc::Generic::PresentationXMLConvert.new({})
+            Metanorma::Generic.configure do |config|
+          config.logo_path = logo_path
+          config.logo_paths = logo_paths
+          config.published_stages = published_stages
+          config.stage_abbreviations = stage_abbreviations
+          config.metadata_extensions = metadata_extensions
+          config.webfont = webfont
+          config.i18nyaml = i18nyaml
         end
             csdc = IsoDoc::Generic::HtmlConvert.new({})
     input = <<~"INPUT"
@@ -158,7 +170,12 @@ RSpec.describe IsoDoc::Generic do
   <insecurity>Client Unconfidential</insecurity>
   </ext>
 </bibdata>
-<sections/>
+<sections>
+<clause>
+<p><xref target="A"/></p>
+<figure id="A"><name>Illustration</name></figure>
+</clause>
+</sections>
 </generic-standard>
     INPUT
 
@@ -202,14 +219,31 @@ RSpec.describe IsoDoc::Generic do
 :vote_starteddate=>"XXX"}
     OUTPUT
 
+        docxml, filename, dir = pcsdc.convert_init(input, "test", true)
         docxml, filename, dir = csdc.convert_init(input, "test", true)
         expect(htmlencode(Hash[csdc.info(docxml, nil).sort].to_s)).to be_equivalent_to output
 
         FileUtils.rm_f "test.html"
-        IsoDoc::Generic::HtmlConvert.new({}).convert("test", input, false) 
+        presxml = pcsdc.convert("test", input, true)
+        csdc.convert("test", presxml, false) 
         html = File.read("test.html", encoding: "utf-8")
         expect(html).to include '<link href="Jack&amp;x" rel="stylesheet" />'
         expect(html).to include '<link href="Jill?x" rel="stylesheet" />'
+        expect(html.gsub(%r{^.*<main}m, "<main").gsub(%r{</main>.*}m, "</main>")).to be_equivalent_to <<~OUTPUT
+        <main class="main-section"><button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+      <p class="zzSTDTitle1">Main Title</p>
+      <div>
+        <h1></h1>
+        <p>
+          <a href="#A">Illustration 1</a>
+        </p>
+        <div id="A" class="figure">
+          <p class="FigureTitle" style="text-align:center;">Illustration 1&#xA0;&#x2014; Illustration</p>
+        </div>
+      </div>
+    </main>
+        OUTPUT
+      end
 
         Metanorma::Generic.configure do |config|
           config.logo_path = Metanorma::Generic::Configuration.new.logo_path
@@ -218,7 +252,7 @@ RSpec.describe IsoDoc::Generic do
           config.stage_abbreviations = Metanorma::Generic::Configuration.new.stage_abbreviations
           config.metadata_extensions = Metanorma::Generic::Configuration.new.metadata_extensions
           config.webfont = Metanorma::Generic::Configuration.new.webfont
-        end
+          config.i18nyaml = Metanorma::Generic::Configuration.new.i18nyaml
       end
     end
   end
