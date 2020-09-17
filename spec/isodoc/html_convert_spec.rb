@@ -413,7 +413,7 @@ RSpec.describe IsoDoc::Generic do
     INPUT
 
     output = <<~"OUTPUT"
-    <generic-standard xmlns='http://riboseinc.com/isoxml'>
+    <generic-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
   <preface>
     <foreword obligation='informative'>
       <title>Foreword</title>
