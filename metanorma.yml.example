@@ -29,6 +29,8 @@ metadata_extensions:
   - security
 published_stages:
   - published
+committees:
+  - TC 1
 stage_abbreviations:
   draft-proposal:
   draft-development:

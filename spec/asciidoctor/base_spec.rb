@@ -250,6 +250,7 @@ RSpec.describe Asciidoctor::Generic do
       let(:symbols_titles) { ["GHI", "JKL"] }
       let(:normref_titles) { ["MNO", "PQR"] }
       let(:bibliography_titles) { ["STU", "VWX"] }
+      let(:committees) { ["YZ1", "234"] }
 
       it 'uses configuration options for organization and namespace' do
         Metanorma::Generic.configure do |config|
@@ -266,11 +267,13 @@ RSpec.describe Asciidoctor::Generic do
           config.symbols_titles = symbols_titles
           config.normref_titles = normref_titles
           config.bibliography_titles = bibliography_titles
+          config.committees = committees
         end
 
         FileUtils.rm_f "test.err"
         expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :generic, header_footer: true)))).to(be_equivalent_to(xmlpp(output)))
         expect(File.read("test.err")).to include "working-draft is not a recognised status"
+        expect(File.read("test.err")).to include "TC is not a recognised committee"
         expect(File.read("test.err")).to include "standard is not a legal document type: reverting to 'elephant'"
 
         Metanorma::Generic.configure do |config|

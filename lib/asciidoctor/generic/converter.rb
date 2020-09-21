@@ -153,6 +153,7 @@ module Asciidoctor
 
       def bibdata_validate(doc)
         stage_validate(doc)
+        committee_validate(doc)
       end
 
       def stage_validate(xmldoc)
@@ -161,6 +162,15 @@ module Asciidoctor
         stage = xmldoc&.at("//bibdata/status/stage")&.text
         stages.include? stage or
           @log.add("Document Attributes", nil, "#{stage} is not a recognised status")
+      end
+
+      def committee_validate(xmldoc)
+        committees = Array(configuration&.committees) || return
+        committees.empty? and return
+        xmldoc.xpath("//bibdata/ext/editorialgroup/committee").each do |c|
+          committees.include? c.text or
+            @log.add("Document Attributes", nil, "#{c.text} is not a recognised committee")
+        end
       end
 
       def sections_cleanup(x)
