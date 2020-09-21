@@ -34,6 +34,7 @@ module Metanorma
         metanorma_name
         normref_titles
         published_stages
+        relations
         default_stage
         stage_abbreviations
         scripts

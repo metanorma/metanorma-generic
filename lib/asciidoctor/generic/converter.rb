@@ -44,6 +44,10 @@ module Asciidoctor
         end
       end
 
+      def relaton_relations
+        Array(configuration.relations) || []
+      end
+
       def metadata_committee(node, xml)
         return unless node.attr("committee")
         xml.editorialgroup do |a|

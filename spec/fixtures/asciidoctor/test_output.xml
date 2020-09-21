@@ -38,6 +38,18 @@
         </organization>
       </owner>
     </copyright>
+    <relation type='supersedes'>
+  <bibitem>
+    <title>--</title>
+    <docidentifier>A1</docidentifier>
+  </bibitem>
+</relation>
+<relation type='supersededBy'>
+  <bibitem>
+    <title>--</title>
+    <docidentifier>A2</docidentifier>
+  </bibitem>
+</relation>
     <ext>
       <doctype>elephant</doctype>
       <editorialgroup>

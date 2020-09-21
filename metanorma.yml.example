@@ -31,6 +31,9 @@ published_stages:
   - published
 committees:
   - TC 1
+relations:
+  - part-of
+  - translated-from
 stage_abbreviations:
   draft-proposal:
   draft-development:

@@ -251,6 +251,7 @@ RSpec.describe Asciidoctor::Generic do
       let(:normref_titles) { ["MNO", "PQR"] }
       let(:bibliography_titles) { ["STU", "VWX"] }
       let(:committees) { ["YZ1", "234"] }
+      let(:relations) { ["supersedes", "superseded-by"] }
 
       it 'uses configuration options for organization and namespace' do
         Metanorma::Generic.configure do |config|
@@ -268,6 +269,7 @@ RSpec.describe Asciidoctor::Generic do
           config.normref_titles = normref_titles
           config.bibliography_titles = bibliography_titles
           config.committees = committees
+          config.relations = relations
         end
 
         FileUtils.rm_f "test.err"
@@ -290,6 +292,8 @@ RSpec.describe Asciidoctor::Generic do
           config.symbols_titles = Metanorma::Generic::Configuration.new.symbols_titles
           config.normref_titles = Metanorma::Generic::Configuration.new.normref_titles
           config.bibliography_titles = Metanorma::Generic::Configuration.new.bibliography_titles
+          config.committees = Metanorma::Generic::Configuration.new.committees
+          config.relations = Metanorma::Generic::Configuration.new.relations
         end
       end
     end
