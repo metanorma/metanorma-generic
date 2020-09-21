@@ -237,6 +237,7 @@ RSpec.describe Asciidoctor::Generic do
             metadata_extensions_out: "<security>Client Confidential</security><insecurity>Client Unconfidential</insecurity>",
             document_namespace: document_namespace}
       end
+
       let(:organization_name_short) { 'Test' }
       let(:organization_name_long) { 'Test Corp.' }
       let(:document_namespace) { 'https://example.com/' }
@@ -252,6 +253,8 @@ RSpec.describe Asciidoctor::Generic do
       let(:bibliography_titles) { ["STU", "VWX"] }
       let(:committees) { ["YZ1", "234"] }
       let(:relations) { ["supersedes", "superseded-by"] }
+      let(:i18nyaml) { "spec/assets/i18n.yaml" }
+      let(:i18nyaml1) { { "en" => "spec/assets/i18n.yaml" } }
 
       it 'uses configuration options for organization and namespace' do
         Metanorma::Generic.configure do |config|
@@ -270,6 +273,7 @@ RSpec.describe Asciidoctor::Generic do
           config.bibliography_titles = bibliography_titles
           config.committees = committees
           config.relations = relations
+          config.i18nyaml = i18nyaml
         end
 
         FileUtils.rm_f "test.err"
@@ -277,6 +281,29 @@ RSpec.describe Asciidoctor::Generic do
         expect(File.read("test.err")).to include "working-draft is not a recognised status"
         expect(File.read("test.err")).to include "TC is not a recognised committee"
         expect(File.read("test.err")).to include "standard is not a legal document type: reverting to 'elephant'"
+      end
+
+      it "internationalises with language" do
+        Metanorma::Generic.configure do |config|
+          config.organization_name_short = organization_name_short
+          config.organization_name_long = organization_name_long
+          config.document_namespace = document_namespace
+          config.docid_template = docid_template
+          config.metadata_extensions = metadata_extensions
+          config.stage_abbreviations = stage_abbreviations
+          config.doctypes = doctypes
+          config.default_doctype = default_doctype
+          config.default_stage = default_stage
+          config.termsdefs_titles = termsdefs_titles
+          config.symbols_titles = symbols_titles
+          config.normref_titles = normref_titles
+          config.bibliography_titles = bibliography_titles
+          config.committees = committees
+          config.relations = relations
+          config.i18nyaml = i18nyaml1
+        end
+        expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :generic, header_footer: true)))).to(be_equivalent_to(xmlpp(output)))
+    end
 
         Metanorma::Generic.configure do |config|
           config.organization_name_short = Metanorma::Generic::Configuration.new.organization_name_short
@@ -294,8 +321,8 @@ RSpec.describe Asciidoctor::Generic do
           config.bibliography_titles = Metanorma::Generic::Configuration.new.bibliography_titles
           config.committees = Metanorma::Generic::Configuration.new.committees
           config.relations = Metanorma::Generic::Configuration.new.relations
+          config.i18nyaml = Metanorma::Generic::Configuration.new.i18nyaml
         end
-      end
     end
   end
 

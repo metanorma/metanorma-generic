@@ -23,10 +23,14 @@ module IsoDoc
 
       def default_fonts(options)
         {
-          bodyfont: (options[:script] == "Hans" ? '"SimSun",serif' : 
-                     configuration.word_bodyfont || '"Arial",sans-serif'),
-          headerfont: (options[:script] == "Hans" ? '"SimHei",sans-serif' : 
-                       configuration.word_headerfont ||  '"Arial",sans-serif'),
+          bodyfont: (
+            options[:script] == "Hans" ? '"SimSun",serif' : 
+            configuration.word_bodyfont || '"Arial",sans-serif'
+          ),
+          headerfont: (
+            options[:script] == "Hans" ? '"SimHei",sans-serif' : 
+            configuration.word_headerfont ||  '"Arial",sans-serif'
+          ),
           monospacefont:  configuration.word_monospacefont ||  '"Courier New",monospace'
         }
       end
@@ -34,24 +38,27 @@ module IsoDoc
       def default_file_locations(options)
         {
           wordstylesheet: baselocation(configuration.wordstylesheet) ||
-            html_doc_path("wordstyle.scss"),
+          html_doc_path("wordstyle.scss"),
           standardstylesheet: baselocation(configuration.standardstylesheet) ||
-            html_doc_path("generic.scss"),
+          html_doc_path("generic.scss"),
           header: baselocation(configuration.header) ||
-            html_doc_path("header.html"),
+          html_doc_path("header.html"),
           wordcoverpage: baselocation(configuration.wordcoverpage) ||
-            html_doc_path("word_generic_titlepage.html"),
+          html_doc_path("word_generic_titlepage.html"),
           wordintropage: baselocation(configuration.wordintropage) ||
-            html_doc_path("word_generic_intro.html"),
-          i18nyaml: baselocation(configuration.i18nyaml),
-          ulstyle: "l3",
-          olstyle: "l2",
+          html_doc_path("word_generic_intro.html"),
+          i18nyaml: (configuration.i18nyaml.is_a?(String) ?
+                     baselocation(configuration.i18nyaml) : nil),
+        ulstyle: "l3",
+        olstyle: "l2",
         }
       end
 
+=begin
       def configuration
         Metanorma::Generic.configuration
       end
+=end
 
       include BaseConvert
       include Init

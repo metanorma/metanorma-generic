@@ -1,6 +1,8 @@
 require "isodoc"
 require_relative "metadata"
 require_relative "xref"
+require_relative "i18n"
+require_relative "utils"
 
 module IsoDoc
   module Generic
@@ -15,14 +17,13 @@ module IsoDoc
       end
 
       def i18n_init(lang, script, i18nyaml = nil)
+        f = Metanorma::Generic.configuration.i18nyaml
+        f = nil unless f.is_a? String
         @i18n = I18n.new(
-          lang, script, i18nyaml ||
-          Metanorma::Generic.configuration.i18nyaml || @i18nyaml)
+          lang, script, i18nyaml || f || @i18nyaml)
       end
 
-      def fileloc(loc)
-        File.join(File.dirname(__FILE__), loc)
-      end
+      include Utils
     end
   end
 end

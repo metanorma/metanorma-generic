@@ -24,10 +24,14 @@ module IsoDoc
 
       def default_fonts(options)
         {
-          bodyfont: (options[:script] == "Hans" ? '"SimSun",serif' 
-                     : configuration.html_bodyfont || '"Overpass",sans-serif'),
-          headerfont: (options[:script] == "Hans" ? '"SimHei",sans-serif' : 
-                       configuration.html_headerfont || '"Overpass",sans-serif'),
+          bodyfont: (
+            options[:script] == "Hans" ? '"SimSun",serif' :
+            configuration.html_bodyfont || '"Overpass",sans-serif'
+          ),
+          headerfont: (
+            options[:script] == "Hans" ? '"SimHei",sans-serif' : 
+            configuration.html_headerfont || '"Overpass",sans-serif'
+          ),
           monospacefont: configuration.html_monospacefont || '"Space Mono",monospace'
         }
       end
@@ -35,20 +39,23 @@ module IsoDoc
       def default_file_locations(_options)
         {
           htmlstylesheet: baselocation(configuration.htmlstylesheet) ||
-            html_doc_path("htmlstyle.scss"),
+          html_doc_path("htmlstyle.scss"),
           htmlcoverpage: baselocation(configuration.htmlcoverpage) ||
-            html_doc_path("html_generic_titlepage.html"),
+          html_doc_path("html_generic_titlepage.html"),
           htmlintropage: baselocation(configuration.htmlintropage) ||
-            html_doc_path("html_generic_intro.html"),
+          html_doc_path("html_generic_intro.html"),
           scripts: baselocation(configuration.scripts) ||
-            html_doc_path("scripts.html"),
-          i18nyaml: baselocation(configuration.i18nyaml)
+          html_doc_path("scripts.html"),
+          i18nyaml: (configuration.i18nyaml.is_a?(String) ? 
+                     baselocation(configuration.i18nyaml) : nil)
         }
       end
 
+=begin
       def configuration
         Metanorma::Generic.configuration
       end
+=end
 
       def googlefonts
         return unless configuration.webfont

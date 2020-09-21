@@ -4,11 +4,13 @@ require "fileutils"
 module IsoDoc
   module Generic
     module BaseConvert
+=begin
       def baselocation(loc)
         return nil if loc.nil?
         File.expand_path(File.join(
           File.dirname(self.class::_file || __FILE__), "..", "..", "..", loc))
       end
+=end
 
       def cleanup(docxml)
         super
