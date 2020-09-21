@@ -8,12 +8,14 @@
       <role type="author"/>
       <organization>
         <name>%{organization_name_long}</name>
+        <abbreviation>%{organization_name_short}</abbreviation>
       </organization>
     </contributor>
     <contributor>
       <role type="publisher"/>
       <organization>
         <name>%{organization_name_long}</name>
+        <abbreviation>%{organization_name_short}</abbreviation>
       </organization>
     </contributor>
     <edition>2</edition>
@@ -32,6 +34,7 @@
       <owner>
         <organization>
           <name>%{organization_name_long}</name>
+        <abbreviation>%{organization_name_short}</abbreviation>
         </organization>
       </owner>
     </copyright>

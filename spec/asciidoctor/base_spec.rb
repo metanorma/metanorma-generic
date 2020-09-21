@@ -79,12 +79,14 @@ RSpec.describe Asciidoctor::Generic do
     <role type="author"/>
     <organization>
       <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+      <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
     </organization>
   </contributor>
   <contributor>
     <role type="publisher"/>
     <organization>
       <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+      <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
     </organization>
   </contributor>
   <edition>2</edition>
@@ -103,6 +105,7 @@ RSpec.describe Asciidoctor::Generic do
     <owner>
       <organization>
         <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+      <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
       </organization>
     </owner>
   </copyright>
@@ -155,12 +158,14 @@ RSpec.describe Asciidoctor::Generic do
       <role type='author'/>
       <organization>
         <name>Acme Corp.</name>
+        <abbreviation>Acme</abbreviation>
       </organization>
     </contributor>
     <contributor>
       <role type='publisher'/>
       <organization>
         <name>Acme Corp.</name>
+        <abbreviation>Acme</abbreviation>
       </organization>
     </contributor>
     <language>en</language>
@@ -173,6 +178,7 @@ RSpec.describe Asciidoctor::Generic do
       <owner>
         <organization>
           <name>Acme Corp.</name>
+        <abbreviation>Acme</abbreviation>
         </organization>
       </owner>
     </copyright>

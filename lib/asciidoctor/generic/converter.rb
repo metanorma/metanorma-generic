@@ -32,6 +32,18 @@ module Asciidoctor
         configuration.organization_name_long
       end
 
+      def org_abbrev
+        if !configuration.organization_name_long.empty? &&
+            !configuration.organization_name_short.empty? &&
+            configuration.organization_name_long !=
+            configuration.organization_name_short
+          { configuration.organization_name_long =>
+            configuration.organization_name_short }
+        else
+          super
+        end
+      end
+
       def metadata_committee(node, xml)
         return unless node.attr("committee")
         xml.editorialgroup do |a|
