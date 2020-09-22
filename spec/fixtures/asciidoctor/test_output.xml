@@ -59,6 +59,7 @@
       %{metadata_extensions_out}
     </ext>
   </bibdata>
+  <boilerplate/>
     <sections>
     <clause id='_' obligation='normative' type="scope">
       <title>Skope</title>

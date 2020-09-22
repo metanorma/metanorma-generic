@@ -15,6 +15,7 @@ module Metanorma
         organization_name_short
         organization_name_long
         bibliography_titles
+        boilerplate
         committees
         document_namespace
         docid_template

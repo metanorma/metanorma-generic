@@ -255,6 +255,8 @@ RSpec.describe Asciidoctor::Generic do
       let(:relations) { ["supersedes", "superseded-by"] }
       let(:i18nyaml) { "spec/assets/i18n.yaml" }
       let(:i18nyaml1) { { "en" => "spec/assets/i18n.yaml" } }
+      let(:boilerplate) { "spec/fixtures/asciidoctor/boilerplate.xml" }
+      let(:boilerplate1) { { "en" => "spec/fixtures/asciidoctor/boilerplate.xml" } }
 
       it 'uses configuration options for organization and namespace' do
         Metanorma::Generic.configure do |config|
@@ -274,6 +276,7 @@ RSpec.describe Asciidoctor::Generic do
           config.committees = committees
           config.relations = relations
           config.i18nyaml = i18nyaml
+          config.boilerplate = boilerplate
         end
 
         FileUtils.rm_f "test.err"
@@ -301,6 +304,7 @@ RSpec.describe Asciidoctor::Generic do
           config.committees = committees
           config.relations = relations
           config.i18nyaml = i18nyaml1
+          config.boilerplate = boilerplate1
         end
         expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :generic, header_footer: true)))).to(be_equivalent_to(xmlpp(output)))
     end
@@ -322,6 +326,7 @@ RSpec.describe Asciidoctor::Generic do
           config.committees = Metanorma::Generic::Configuration.new.committees
           config.relations = Metanorma::Generic::Configuration.new.relations
           config.i18nyaml = Metanorma::Generic::Configuration.new.i18nyaml
+          config.boilerplate = Metanorma::Generic::Configuration.new.boilerplate
         end
     end
   end

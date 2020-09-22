@@ -213,6 +213,14 @@ module Asciidoctor
         end
         conv
       end
+
+      def boilerplate_file(xmldoc)
+        f = configuration.boilerplate
+        f.nil? and return super
+        f.is_a? String and return baselocation(f)
+        f.is_a? Hash and f[@lang] and return baselocation(f[@lang])
+        super
+      end
     end
   end
 end
