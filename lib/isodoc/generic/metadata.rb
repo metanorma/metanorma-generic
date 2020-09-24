@@ -1,5 +1,6 @@
 require "isodoc"
 require_relative "init"
+require_relative "utils"
 
 module IsoDoc
   module Generic
