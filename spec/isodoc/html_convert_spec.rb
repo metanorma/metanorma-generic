@@ -44,7 +44,14 @@ RSpec.describe IsoDoc::Generic do
   <editorialgroup>
     <committee type="A">TC</committee>
   </editorialgroup>
-  <security>Client Confidential</security>
+  <comment-period type="E">
+    <from>A</from>
+    <from>B</from>
+    <from>C</from>
+    <to>D</to>
+    <reply-to>F</reply-to>
+  </comment-period>
+  <security>X</security>
   </ext>
 </bibdata>
 <sections/>
@@ -72,6 +79,7 @@ RSpec.describe IsoDoc::Generic do
 :issueddate=>"XXX",
 :keywords=>[],
 :logo=>"#{File.join(logoloc, "logo.jpg")}",
+:metadata_extensions=>{"doctype"=>"standard", "editorialgroup"=>{"committee_type"=>"A", "committee"=>"TC"}, "comment-period_type"=>"E", "comment-period"=>{"from"=>["A", "B", "C"], "to"=>"D", "reply-to"=>"F"}, "security"=>"X"},
 :obsoleteddate=>"XXX",
 :publisheddate=>"XXX",
 :publisher=>"Acme",
@@ -197,18 +205,17 @@ RSpec.describe IsoDoc::Generic do
 :draftinfo=>" (draft 3.4, 2000-01-01)",
 :edition=>"2",
 :implementeddate=>"XXX",
-:insecurity=>"Client Unconfidential",
 :issueddate=>"XXX",
 :keywords=>[],
 :logo=>"#{File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "lib", "example.jpg"))}",
 :logo_paths=>["#{File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "lib", "example1.jpg"))}", "#{File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "lib", "example2.jpg"))}"],
+:metadata_extensions=>{"doctype"=>"standard", "editorialgroup"=>{"committee_type"=>"A", "committee"=>"TC"}, "security"=>"Client Confidential", "insecurity"=>"Client Unconfidential"},
 :obsoleteddate=>"XXX",
 :publisheddate=>"XXX",
 :publisher=>"Acme",
 :receiveddate=>"XXX",
 :revdate=>"2000-01-01",
 :revdate_monthyear=>"January 2000",
-:security=>"Client Confidential",
 :stage=>"Working Draft",
 :tc=>"TC",
 :transmitteddate=>"XXX",

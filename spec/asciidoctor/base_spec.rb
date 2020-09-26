@@ -244,6 +244,7 @@ RSpec.describe Asciidoctor::Generic do
       let(:document_namespace) { 'https://example.com/' }
       let(:docid_template) { "{{ organization_name_long }} {{ docnumeric }} {{ stage }}" }
       let(:metadata_extensions) { [ "security", "insecurity" ] }
+      let(:metadata_extensions1) { {"comment-period"=>{"comment-period-type"=>{"_output"=>"type", "_attribute"=>true}, "comment-period-from"=>{"_output"=>"from", "_list"=>true}, "comment-period-to"=>{"_output"=>"to"}, "reply-to"=>nil}, "security"=>nil} }
       let(:stage_abbreviations) { { "ready" => "", "steady" => "" } }
       let(:doctypes) { [ "lion", "elephant" ] }
       let(:default_doctype) { "elephant" }
@@ -287,13 +288,13 @@ RSpec.describe Asciidoctor::Generic do
         expect(File.read("test.err")).to include "standard is not a legal document type: reverting to 'elephant'"
       end
 
-      it "internationalises with language" do
+      it "internationalises with language; uses complex metadata extensions" do
         Metanorma::Generic.configure do |config|
           config.organization_name_short = organization_name_short
           config.organization_name_long = organization_name_long
           config.document_namespace = document_namespace
           config.docid_template = docid_template
-          config.metadata_extensions = metadata_extensions
+          config.metadata_extensions = metadata_extensions1
           config.stage_abbreviations = stage_abbreviations
           config.doctypes = doctypes
           config.default_doctype = default_doctype
@@ -307,6 +308,12 @@ RSpec.describe Asciidoctor::Generic do
           config.i18nyaml = i18nyaml1
           config.boilerplate = boilerplate1
         end
+        output = File.read(fixture_path('asciidoctor/test_output.xml')) %
+          { organization_name_short: organization_name_short,
+            organization_name_long: organization_name_long,
+            metadata_extensions_out: "<comment-period type='N1'><from>N2</from><from>N3</from><to>N4</to><reply-to>N5</reply-to></comment-period><security>Client Confidential</security>",
+            document_namespace: document_namespace,
+            version: Metanorma::Generic::VERSION }
         expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :generic, header_footer: true)))).to(be_equivalent_to(xmlpp(output)))
     end
 

@@ -89,20 +89,59 @@ module Asciidoctor
 
       def metadata_ext(node, ext)
         super
-        Array(configuration.metadata_extensions).each do |e|
-          a = node.attr(e) and ext.send e, a
+        if configuration.metadata_extensions.is_a? Hash
+          metadata_ext_hash(node, ext, configuration.metadata_extensions)
+        else
+          Array(configuration.metadata_extensions).each do |e|
+            a = node.attr(e) and ext.send e, a
+          end
         end
+      end
+
+      EXT_STRUCT = %w(_output _attribute _list).freeze
+
+      def metadata_ext_hash(node, ext, hash)
+        hash.each do |k, v|
+          next if EXT_STRUCT.include?(k) || !v&.is_a?(Hash) && !node.attr(k)
+          if v&.is_a?(Hash) && v["_list"]
+            csv_split(node.attr(k)).each do |val|
+              metadata_ext_hash1(k, val, ext, v, node)
+            end
+          else
+            metadata_ext_hash1(k, node.attr(k), ext, v, node)
+          end
+        end
+      end
+
+      def metadata_ext_hash1(key, value, ext, hash, node)
+        return if hash&.is_a?(Hash) && hash["_attribute"]
+        name = hash&.is_a?(Hash) ? (hash["_output"] || key) : key
+        ext.send name, **attr_code(metadata_ext_attrs(hash, node)) do |e|
+          is_hash = hash&.is_a?(Hash) &&
+            !hash.keys.reject { |n| EXT_STRUCT.include?(n) }.empty?
+            is_hash ? metadata_ext_hash(node, e, hash) : (e << value)
+        end
+      end
+
+      def metadata_ext_attrs(hash, node)
+        return {} unless hash.is_a?(Hash)
+        ret = {}
+        hash.each do |k, v|
+          next unless v.is_a?(Hash) && v["_attribute"]
+          ret[(v["_output"] || k).to_sym] = node.attr(k)
+        end
+        ret
       end
 
       def doctype(node)
         d = super
         configuration.doctypes or return d == "article" ? "standard" : d
-        default = configuration.default_doctype || Array(configuration.doctypes).dig(0) ||
-          "standard"
+        type = configuration.default_doctype ||
+          Array(configuration.doctypes).dig(0) || "standard"
         unless Array(configuration.doctypes).include? d
           @log.add("Document Attributes", nil,
-                   "#{d} is not a legal document type: reverting to '#{default}'")
-          d = default
+                   "#{d} is not a legal document type: reverting to '#{type}'")
+          d = type
         end
         d
       end
@@ -135,9 +174,9 @@ module Asciidoctor
         File.open(@filename + ".xml", "w:UTF-8") { |f| f.write(ret) }
         presentation_xml_converter(node)&.convert(@filename + ".xml")
         html_converter(node)&.convert(@filename + ".presentation.xml", 
-                                     nil, false, "#{@filename}.html")
+                                      nil, false, "#{@filename}.html")
         doc_converter(node)&.convert(@filename + ".presentation.xml", 
-                                    nil, false, "#{@filename}.doc")
+                                     nil, false, "#{@filename}.doc")
         pdf_converter(node)&.convert(@filename + ".presentation.xml", 
                                      nil, false, "#{@filename}.pdf")
 

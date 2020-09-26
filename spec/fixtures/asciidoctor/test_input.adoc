@@ -28,6 +28,10 @@ Author
 :insecurity: Client Unconfidential
 :supersedes: A1
 :superseded-by: A2
+:comment-period-type: N1
+:comment-period-from: N2,N3
+:comment-period-to: N4
+:reply-to: N5
 
 == Scope
 

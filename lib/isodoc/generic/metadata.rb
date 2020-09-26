@@ -1,6 +1,29 @@
 require "isodoc"
+require "nokogiri"
 require_relative "init"
 require_relative "utils"
+
+class Nokogiri::XML::Node
+  TYPENAMES = {1=>'element',2=>'attribute',3=>'text',4=>'cdata',8=>'comment'}
+  def to_hash
+    ret = {kind:TYPENAMES[node_type],name:name}.tap do |h|
+      h.merge! text:text&.strip 
+      a = attribute_nodes.map(&:to_hash)
+      if element? && !a.empty?
+        h.merge! attr: a.inject({}) { |m, v| m[v[:name]] = v[:text]; m }
+      end
+      c = children.map(&:to_hash)
+      if element? && !(c&.size == 1 && c[0][:kind] == "text")
+        h.merge! kids: c.delete_if { |n| n[:kind] == "text" && n[:text].empty? }
+      end
+    end
+    ret
+  end
+end
+
+class Nokogiri::XML::Document
+  def to_hash; root.to_hash; end
+end
 
 module IsoDoc
   module Generic
@@ -24,20 +47,6 @@ module IsoDoc
         k._file = caller_locations.first.absolute_path
       end
 
-=begin
-       def baselocation(loc)
-        return nil if loc.nil?
-        File.expand_path(File.join(File.dirname(
-          self.class.respond_to?(:_file) ? (self.class::_file || __FILE__) :
-          __FILE__),
-        "..", "..", "..", loc))
-      end
-
-      def configuration
-        Metanorma::Generic.configuration
-      end
-=end
-
       def author(isoxml, _out)
         super
         tc = isoxml.at(ns("//bibdata/ext/editorialgroup/committee"))
@@ -54,11 +63,34 @@ module IsoDoc
         !(Array(stages).map { |m| m.downcase }.include? status.downcase)
       end
 
-      def ext(isoxml, out)
-        Array(configuration.metadata_extensions).each do |e|
-          b = isoxml&.at(ns("//bibdata/ext/#{e}"))&.text or next
-          set(e.to_sym, b)
+      def xmlhash2hash(h)
+        ret = {}
+        return ret if h.nil? || h[:kind] != "element"
+        h[:attr].nil? or h[:attr].each do |k, v|
+          ret["#{h[:name]}_#{k}"] = v
         end
+        if h[:kids]
+          c = {}
+          h[:kids].each do |n|
+            add = xmlhash2hash(n)
+            add.each do |k1, v1|
+              c[k1] = if c[k1].nil? then v1
+                      elsif c[k1].is_a? Array then c[k1] << v1
+                      else
+                        [c[k1], v1]
+                      end
+            end
+          end
+          ret[h[:name]] = c
+          else
+        ret[h[:name]] = h[:text]
+          end
+        ret
+      end
+
+      def ext(isoxml, out)
+        b = isoxml&.at(ns("//bibdata/ext")) or return
+        set(:metadata_extensions, xmlhash2hash(b.to_hash)["ext"])
       end
 
       include Utils
