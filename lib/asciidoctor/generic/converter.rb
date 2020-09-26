@@ -1,13 +1,10 @@
 require "asciidoctor"
 require "asciidoctor/standoc/converter"
 require "fileutils"
+require_relative "front"
 
 module Asciidoctor
   module Generic
-
-    # A {Converter} implementation that generates RSD output, and a document
-    # schema encapsulation of the document for validation
-    #
     class Converter < Standoc::Converter
       XML_ROOT_TAG = "generic-standard".freeze
       XML_NAMESPACE = "https://www.metanorma.org/ns/generic".freeze
@@ -28,49 +25,6 @@ module Asciidoctor
           self.class::_file || __FILE__), "..", "..", "..", loc))
       end
 
-      def default_publisher
-        configuration.organization_name_long
-      end
-
-      def org_abbrev
-        if !configuration.organization_name_long.empty? &&
-            !configuration.organization_name_short.empty? &&
-            configuration.organization_name_long !=
-            configuration.organization_name_short
-          { configuration.organization_name_long =>
-            configuration.organization_name_short }
-        else
-          super
-        end
-      end
-
-      def relaton_relations
-        Array(configuration.relations) || []
-      end
-
-      def metadata_committee(node, xml)
-        return unless node.attr("committee")
-        xml.editorialgroup do |a|
-          a.committee node.attr("committee"),
-            **attr_code(type: node.attr("committee-type"))
-          i = 2
-          while node.attr("committee_#{i}") do
-            a.committee node.attr("committee_#{i}"),
-              **attr_code(type: node.attr("committee-type_#{i}"))
-            i += 1
-          end
-        end
-      end
-
-      def metadata_status(node, xml)
-        xml.status do |s|
-          s.stage ( node.attr("status") || node.attr("docstage") ||
-                   configuration.default_stage || "published" )
-          x = node.attr("substage") and s.substage x
-          x = node.attr("iteration") and s.iteration x
-        end
-      end
-
       def docidentifier_cleanup(xmldoc)
         template = configuration.docid_template ||
           "{{ organization_name_short }} {{ docnumeric }}"
@@ -79,30 +33,15 @@ module Asciidoctor
         id.empty? and docid.remove or docid.children = id
       end
 
-      def metadata_id(node, xml)
-        xml.docidentifier **{ type:
-                              configuration.organization_name_short } do |i|
-          i << "DUMMY"
-        end
-        xml.docnumber { |i| i << node.attr("docnumber") }
-      end
-
-      def metadata_ext(node, ext)
-        super
-        Array(configuration.metadata_extensions).each do |e|
-          a = node.attr(e) and ext.send e, a
-        end
-      end
-
       def doctype(node)
         d = super
         configuration.doctypes or return d == "article" ? "standard" : d
-        default = configuration.default_doctype || Array(configuration.doctypes).dig(0) ||
-          "standard"
+        type = configuration.default_doctype ||
+          Array(configuration.doctypes).dig(0) || "standard"
         unless Array(configuration.doctypes).include? d
           @log.add("Document Attributes", nil,
-                   "#{d} is not a legal document type: reverting to '#{default}'")
-          d = default
+                   "#{d} is not a legal document type: reverting to '#{type}'")
+          d = type
         end
         d
       end
@@ -135,9 +74,9 @@ module Asciidoctor
         File.open(@filename + ".xml", "w:UTF-8") { |f| f.write(ret) }
         presentation_xml_converter(node)&.convert(@filename + ".xml")
         html_converter(node)&.convert(@filename + ".presentation.xml", 
-                                     nil, false, "#{@filename}.html")
+                                      nil, false, "#{@filename}.html")
         doc_converter(node)&.convert(@filename + ".presentation.xml", 
-                                    nil, false, "#{@filename}.doc")
+                                     nil, false, "#{@filename}.doc")
         pdf_converter(node)&.convert(@filename + ".presentation.xml", 
                                      nil, false, "#{@filename}.pdf")
 
@@ -220,6 +159,18 @@ module Asciidoctor
         f.is_a? String and return baselocation(f)
         f.is_a? Hash and f[@lang] and return baselocation(f[@lang])
         super
+      end
+
+      def cleanup(xmldoc)
+        super
+        empty_metadata_cleanup(xmldoc)
+        xmldoc
+      end
+
+      def empty_metadata_cleanup(xmldoc)
+        xmldoc.xpath("//bibdata/ext//*").each do |x|
+          x.remove if x.children.empty?
+        end
       end
     end
   end
