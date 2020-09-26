@@ -26,6 +26,8 @@ Author
 :title: Main Title
 :security: Client Confidential
 :insecurity: Client Unconfidential
+:supersedes: A1
+:superseded-by: A2
 
 == Scope
 

@@ -82,12 +82,14 @@ BLANK_HDR = <<~"HDR"
            <role type="author"/>
            <organization>
              <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+             <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
            </organization>
          </contributor>
          <contributor>
            <role type="publisher"/>
            <organization>
              <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+             <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
            </organization>
          </contributor>
 
@@ -101,6 +103,7 @@ BLANK_HDR = <<~"HDR"
            <owner>
              <organization>
                <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+             <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
              </organization>
            </owner>
          </copyright>

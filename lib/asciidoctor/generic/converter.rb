@@ -32,6 +32,22 @@ module Asciidoctor
         configuration.organization_name_long
       end
 
+      def org_abbrev
+        if !configuration.organization_name_long.empty? &&
+            !configuration.organization_name_short.empty? &&
+            configuration.organization_name_long !=
+            configuration.organization_name_short
+          { configuration.organization_name_long =>
+            configuration.organization_name_short }
+        else
+          super
+        end
+      end
+
+      def relaton_relations
+        Array(configuration.relations) || []
+      end
+
       def metadata_committee(node, xml)
         return unless node.attr("committee")
         xml.editorialgroup do |a|
@@ -117,10 +133,10 @@ module Asciidoctor
 
       def outputs(node, ret)
         File.open(@filename + ".xml", "w:UTF-8") { |f| f.write(ret) }
-        presentation_xml_converter(node).convert(@filename + ".xml")
-        html_converter(node).convert(@filename + ".presentation.xml", 
+        presentation_xml_converter(node)&.convert(@filename + ".xml")
+        html_converter(node)&.convert(@filename + ".presentation.xml", 
                                      nil, false, "#{@filename}.html")
-        doc_converter(node).convert(@filename + ".presentation.xml", 
+        doc_converter(node)&.convert(@filename + ".presentation.xml", 
                                     nil, false, "#{@filename}.doc")
         pdf_converter(node)&.convert(@filename + ".presentation.xml", 
                                      nil, false, "#{@filename}.pdf")
@@ -141,6 +157,7 @@ module Asciidoctor
 
       def bibdata_validate(doc)
         stage_validate(doc)
+        committee_validate(doc)
       end
 
       def stage_validate(xmldoc)
@@ -149,6 +166,15 @@ module Asciidoctor
         stage = xmldoc&.at("//bibdata/status/stage")&.text
         stages.include? stage or
           @log.add("Document Attributes", nil, "#{stage} is not a recognised status")
+      end
+
+      def committee_validate(xmldoc)
+        committees = Array(configuration&.committees) || return
+        committees.empty? and return
+        xmldoc.xpath("//bibdata/ext/editorialgroup/committee").each do |c|
+          committees.include? c.text or
+            @log.add("Document Attributes", nil, "#{c.text} is not a recognised committee")
+        end
       end
 
       def sections_cleanup(x)
@@ -186,6 +212,14 @@ module Asciidoctor
           conv.i18n.set(a, configuration.send(a))
         end
         conv
+      end
+
+      def boilerplate_file(xmldoc)
+        f = configuration.boilerplate
+        f.nil? and return super
+        f.is_a? String and return baselocation(f)
+        f.is_a? Hash and f[@lang] and return baselocation(f[@lang])
+        super
       end
     end
   end

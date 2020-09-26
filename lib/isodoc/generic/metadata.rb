@@ -1,5 +1,6 @@
 require "isodoc"
 require_relative "init"
+require_relative "utils"
 
 module IsoDoc
   module Generic
@@ -23,6 +24,7 @@ module IsoDoc
         k._file = caller_locations.first.absolute_path
       end
 
+=begin
        def baselocation(loc)
         return nil if loc.nil?
         File.expand_path(File.join(File.dirname(
@@ -34,6 +36,7 @@ module IsoDoc
       def configuration
         Metanorma::Generic.configuration
       end
+=end
 
       def author(isoxml, _out)
         super
@@ -57,6 +60,8 @@ module IsoDoc
           set(e.to_sym, b)
         end
       end
+
+      include Utils
     end
   end
 end

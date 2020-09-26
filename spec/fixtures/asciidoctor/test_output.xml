@@ -8,12 +8,14 @@
       <role type="author"/>
       <organization>
         <name>%{organization_name_long}</name>
+        <abbreviation>%{organization_name_short}</abbreviation>
       </organization>
     </contributor>
     <contributor>
       <role type="publisher"/>
       <organization>
         <name>%{organization_name_long}</name>
+        <abbreviation>%{organization_name_short}</abbreviation>
       </organization>
     </contributor>
     <edition>2</edition>
@@ -32,9 +34,22 @@
       <owner>
         <organization>
           <name>%{organization_name_long}</name>
+        <abbreviation>%{organization_name_short}</abbreviation>
         </organization>
       </owner>
     </copyright>
+    <relation type='supersedes'>
+  <bibitem>
+    <title>--</title>
+    <docidentifier>A1</docidentifier>
+  </bibitem>
+</relation>
+<relation type='supersededBy'>
+  <bibitem>
+    <title>--</title>
+    <docidentifier>A2</docidentifier>
+  </bibitem>
+</relation>
     <ext>
       <doctype>elephant</doctype>
       <editorialgroup>
@@ -44,9 +59,10 @@
       %{metadata_extensions_out}
     </ext>
   </bibdata>
+  <boilerplate/>
     <sections>
     <clause id='_' obligation='normative' type="scope">
-      <title>Scope</title>
+      <title>Skope</title>
       <p id='_'>1</p>
     </clause>
     <terms id='_' obligation='normative'>

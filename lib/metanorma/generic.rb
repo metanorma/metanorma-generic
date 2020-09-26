@@ -15,6 +15,8 @@ module Metanorma
         organization_name_short
         organization_name_long
         bibliography_titles
+        boilerplate
+        committees
         document_namespace
         docid_template
         doctypes
@@ -33,6 +35,7 @@ module Metanorma
         metanorma_name
         normref_titles
         published_stages
+        relations
         default_stage
         stage_abbreviations
         scripts
