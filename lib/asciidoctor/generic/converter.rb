@@ -115,10 +115,11 @@ module Asciidoctor
 
       def metadata_ext_hash1(key, value, ext, hash, node)
         return if hash&.is_a?(Hash) && hash["_attribute"]
+        is_hash = hash&.is_a?(Hash) &&
+            !hash.keys.reject { |n| EXT_STRUCT.include?(n) }.empty?
+        return if !is_hash && (value.nil? || value.empty?)
         name = hash&.is_a?(Hash) ? (hash["_output"] || key) : key
         ext.send name, **attr_code(metadata_ext_attrs(hash, node)) do |e|
-          is_hash = hash&.is_a?(Hash) &&
-            !hash.keys.reject { |n| EXT_STRUCT.include?(n) }.empty?
             is_hash ? metadata_ext_hash(node, e, hash) : (e << value)
         end
       end

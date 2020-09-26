@@ -311,7 +311,7 @@ RSpec.describe Asciidoctor::Generic do
         output = File.read(fixture_path('asciidoctor/test_output.xml')) %
           { organization_name_short: organization_name_short,
             organization_name_long: organization_name_long,
-            metadata_extensions_out: "<comment-period type='N1'><from>N2</from><from>N3</from><to>N4</to><reply-to>N5</reply-to></comment-period><security>Client Confidential</security>",
+            metadata_extensions_out: "<comment-period type='N1'><from>N2</from><from>N3</from><to>N4</to></comment-period><security>Client Confidential</security>",
             document_namespace: document_namespace,
             version: Metanorma::Generic::VERSION }
         expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :generic, header_footer: true)))).to(be_equivalent_to(xmlpp(output)))
