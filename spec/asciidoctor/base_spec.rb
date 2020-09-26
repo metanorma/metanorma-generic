@@ -244,7 +244,7 @@ RSpec.describe Asciidoctor::Generic do
       let(:document_namespace) { 'https://example.com/' }
       let(:docid_template) { "{{ organization_name_long }} {{ docnumeric }} {{ stage }}" }
       let(:metadata_extensions) { [ "security", "insecurity" ] }
-      let(:metadata_extensions1) { {"comment-period"=>{"comment-period-type"=>{"_output"=>"type", "_attribute"=>true}, "comment-period-from"=>{"_output"=>"from", "_list"=>true}, "comment-period-to"=>{"_output"=>"to"}, "reply-to"=>nil}, "security"=>nil} }
+      let(:metadata_extensions1) { {"comment-period"=>{"comment-period-type"=>{"_output"=>"type", "_attribute"=>true}, "comment-period-from"=>{"_output"=>"from", "_list"=>true}, "comment-period-to"=>{"_output"=>"to"}, "reply-to"=>nil, "more"=>{"more1"=>nil}}, "security"=>nil} }
       let(:stage_abbreviations) { { "ready" => "", "steady" => "" } }
       let(:doctypes) { [ "lion", "elephant" ] }
       let(:default_doctype) { "elephant" }

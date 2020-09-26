@@ -66,26 +66,21 @@ module IsoDoc
       def xmlhash2hash(h)
         ret = {}
         return ret if h.nil? || h[:kind] != "element"
-        h[:attr].nil? or h[:attr].each do |k, v|
-          ret["#{h[:name]}_#{k}"] = v
-        end
-        if h[:kids]
-          c = {}
-          h[:kids].each do |n|
-            add = xmlhash2hash(n)
-            add.each do |k1, v1|
-              c[k1] = if c[k1].nil? then v1
-                      elsif c[k1].is_a? Array then c[k1] << v1
-                      else
-                        [c[k1], v1]
-                      end
-            end
-          end
-          ret[h[:name]] = c
-          else
-        ret[h[:name]] = h[:text]
-          end
+        h[:attr].nil? or h[:attr].each { |k, v| ret["#{h[:name]}_#{k}"] = v }
+        ret[h[:name]] = h[:kids] ? xmlhash2hash_kids(h) : h[:text]
         ret
+      end
+
+      def xmlhash2hash_kids(h)
+        c = {}
+        h[:kids].each do |n|
+          xmlhash2hash(n).each do |k1, v1|
+            c[k1] = c[k1].nil? ? v1 :
+              c[k1].is_a?(Array) ? c[k1] << v1 :
+              [c[k1], v1]
+          end
+        end
+        c
       end
 
       def ext(isoxml, out)
