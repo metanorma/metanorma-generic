@@ -70,7 +70,7 @@ RSpec.describe Asciidoctor::Generic do
 
     output = <<~"OUTPUT"
     <?xml version="1.0" encoding="UTF-8"?>
-<generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
+<generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}" type="semantic" version="#{Metanorma::Generic::VERSION}">
 <bibdata type="standard">
   <title language="en" format="text/plain">Main Title</title>
   <docidentifier type="Acme">Acme 1000</docidentifier>
@@ -150,7 +150,7 @@ RSpec.describe Asciidoctor::Generic do
       == Bibliography
       INPUT
     output = <<~"OUTPUT"
-    <generic-standard xmlns='https://www.metanorma.org/ns/generic'>
+    <generic-standard xmlns='https://www.metanorma.org/ns/generic'  type="semantic" version="#{Metanorma::Generic::VERSION}">
   <bibdata type='standard'>
     <title language='en' format='text/plain'>Document title</title>
     <docidentifier type='Acme'>Acme </docidentifier>
@@ -235,7 +235,8 @@ RSpec.describe Asciidoctor::Generic do
           { organization_name_short: organization_name_short,
             organization_name_long: organization_name_long,
             metadata_extensions_out: "<security>Client Confidential</security><insecurity>Client Unconfidential</insecurity>",
-            document_namespace: document_namespace}
+            document_namespace: document_namespace,
+            version: Metanorma::Generic::VERSION }
       end
 
       let(:organization_name_short) { 'Test' }
