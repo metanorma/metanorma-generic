@@ -52,13 +52,13 @@ module Asciidoctor
       end
 
       def sectiontype_streamline(ret)
-        if configuration.termsdefs_titles.map(&:downcase).include? (ret)
+        if configuration&.termsdefs_titles&.map(&:downcase)&.include? (ret)
           "terms and definitions"
-        elsif configuration.symbols_titles.map(&:downcase).include? (ret)
+        elsif configuration&.symbols_titles&.map(&:downcase)&.include? (ret)
           "symbols and abbreviated terms"
-        elsif configuration.normref_titles.map(&:downcase).include? (ret)
+        elsif configuration&.normref_titles&.map(&:downcase)&.include? (ret)
           "normative references"
-        elsif configuration.bibliography_titles.map(&:downcase).include? (ret)
+        elsif configuration&.bibliography_titles&.map(&:downcase)&.include? (ret)
           "bibliography"
         else
           ret
