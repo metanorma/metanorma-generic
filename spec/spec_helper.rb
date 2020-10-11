@@ -33,6 +33,10 @@ RSpec.configure do |config|
   end
 end
 
+def metadata(x)
+  Hash[x.sort].delete_if{ |k, v| v.nil? || v.respond_to?(:empty?) && v.empty? }
+end
+
 def fixture_path(path)
   File.join(File.expand_path('./fixtures', __dir__), path)
 end

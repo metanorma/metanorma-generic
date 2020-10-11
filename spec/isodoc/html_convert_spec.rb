@@ -61,14 +61,11 @@ RSpec.describe IsoDoc::Generic do
     output = <<~"OUTPUT"
 {:accesseddate=>"XXX",
 :agency=>"Acme",
-:authors=>[],
-:authors_affiliations=>{},
 :circulateddate=>"XXX",
 :confirmeddate=>"XXX",
 :copieddate=>"XXX",
 :createddate=>"XXX",
 :docnumber=>"1000",
-:docnumeric=>nil,
 :doctitle=>"Main Title",
 :doctype=>"Standard",
 :docyear=>"2001",
@@ -77,7 +74,6 @@ RSpec.describe IsoDoc::Generic do
 :edition=>"2",
 :implementeddate=>"XXX",
 :issueddate=>"XXX",
-:keywords=>[],
 :logo=>"#{File.join(logoloc, "logo.jpg")}",
 :metadata_extensions=>{"doctype"=>"standard", "editorialgroup"=>{"committee_type"=>"A", "committee"=>"TC"}, "comment-period_type"=>"E", "comment-period"=>{"from"=>["A", "B", "C"], "to"=>"D", "reply-to"=>"F"}, "security"=>"X"},
 :obsoleteddate=>"XXX",
@@ -98,7 +94,7 @@ RSpec.describe IsoDoc::Generic do
     OUTPUT
 
     docxml, filename, dir = csdc.convert_init(input, "test", true)
-    expect(htmlencode(Hash[csdc.info(docxml, nil).sort].to_s)).to be_equivalent_to output
+    expect(metadata(csdc.info(docxml, nil))).to be_equivalent_to output
   end
 
    context 'with configuration options' do
@@ -190,14 +186,11 @@ RSpec.describe IsoDoc::Generic do
     output = <<~"OUTPUT"
 {:accesseddate=>"XXX",
 :agency=>"Acme",
-:authors=>[],
-:authors_affiliations=>{},
 :circulateddate=>"XXX",
 :confirmeddate=>"XXX",
 :copieddate=>"XXX",
 :createddate=>"XXX",
 :docnumber=>"1000",
-:docnumeric=>nil,
 :doctitle=>"Main Title",
 :doctype=>"Standard",
 :docyear=>"2001",
@@ -206,7 +199,6 @@ RSpec.describe IsoDoc::Generic do
 :edition=>"2",
 :implementeddate=>"XXX",
 :issueddate=>"XXX",
-:keywords=>[],
 :logo=>"#{File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "lib", "example.jpg"))}",
 :logo_paths=>["#{File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "lib", "example1.jpg"))}", "#{File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "lib", "example2.jpg"))}"],
 :metadata_extensions=>{"doctype"=>"standard", "editorialgroup"=>{"committee_type"=>"A", "committee"=>"TC"}, "security"=>"Client Confidential", "insecurity"=>"Client Unconfidential"},
@@ -226,9 +218,8 @@ RSpec.describe IsoDoc::Generic do
 :vote_starteddate=>"XXX"}
     OUTPUT
 
-        docxml, filename, dir = pcsdc.convert_init(input, "test", true)
         docxml, filename, dir = csdc.convert_init(input, "test", true)
-        expect(htmlencode(Hash[csdc.info(docxml, nil).sort].to_s)).to be_equivalent_to output
+    expect(metadata(csdc.info(docxml, nil))).to be_equivalent_to output
 
         FileUtils.rm_f "test.html"
         presxml = pcsdc.convert("test", input, true)
