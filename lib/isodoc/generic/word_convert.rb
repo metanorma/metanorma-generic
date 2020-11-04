@@ -54,12 +54,6 @@ module IsoDoc
         }
       end
 
-=begin
-      def configuration
-        Metanorma::Generic.configuration
-      end
-=end
-
       include BaseConvert
       include Init
     end
