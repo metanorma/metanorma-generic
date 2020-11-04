@@ -32,7 +32,7 @@ module IsoDoc
             configuration.word_headerfont ||  '"Arial",sans-serif'
           ),
           monospacefont:  configuration.word_monospacefont ||  '"Courier New",monospace'
-        }
+        }.transform_values { |v| v&.empty? ? nil : v  }
       end
 
       def default_file_locations(options)
@@ -51,7 +51,7 @@ module IsoDoc
                      baselocation(configuration.i18nyaml) : nil),
         ulstyle: "l3",
         olstyle: "l2",
-        }
+        }.transform_values { |v| v&.empty? ? nil : v }
       end
 
       include BaseConvert
