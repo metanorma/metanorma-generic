@@ -108,12 +108,47 @@ RSpec.describe IsoDoc::Generic do
 
     context 'organization' do
       let(:published_stages) { "working-draft" }
+      let(:logo_path1) { '' }
       let(:logo_path) { 'lib/example.jpg' }
       let(:logo_paths) { ['lib/example1.jpg', 'lib/example2.jpg'] }
       let(:stage_abbreviations) { { "working-draft" => "wd" } }
       let(:metadata_extensions) { [ "security", "insecurity" ] }
       let(:webfont) { [ "Jack&amp;x", "Jill?x" ] }
       let(:i18nyaml) { "spec/assets/i18n.yaml" }
+
+      it "overrides default" do
+        Metanorma::Generic.configure do |config|
+          config.logo_path = logo_path1
+        end
+                    csdc = IsoDoc::Generic::HtmlConvert.new({})
+          docxml, filename, dir = csdc.convert_init(<<~INPUT, "test", true)
+          <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
+<bibdata type="standard">
+<langauge>en</language>
+</bibdata>
+</generic-standard>
+INPUT
+    expect(metadata(csdc.info(docxml, nil))).to be_equivalent_to <<~OUTPUT
+{:accesseddate=>"XXX",
+:circulateddate=>"XXX",
+:confirmeddate=>"XXX",
+:copieddate=>"XXX",
+:createddate=>"XXX",
+:implementeddate=>"XXX",
+:issueddate=>"XXX",
+:lang=>"en",
+:obsoleteddate=>"XXX",
+:publisheddate=>"XXX",
+:receiveddate=>"XXX",
+:script=>"Latn",
+:transmitteddate=>"XXX",
+:unchangeddate=>"XXX",
+:unpublished=>true,
+:updateddate=>"XXX",
+:vote_endeddate=>"XXX",
+:vote_starteddate=>"XXX"}
+    OUTPUT
+      end
 
       it 'processes default metadata' do
         Metanorma::Generic.configure do |config|
@@ -125,8 +160,8 @@ RSpec.describe IsoDoc::Generic do
           config.webfont = webfont
           config.i18nyaml = i18nyaml
         end
-            pcsdc = IsoDoc::Generic::PresentationXMLConvert.new({})
-            Metanorma::Generic.configure do |config|
+        pcsdc = IsoDoc::Generic::PresentationXMLConvert.new({})
+        Metanorma::Generic.configure do |config|
           config.logo_path = logo_path
           config.logo_paths = logo_paths
           config.published_stages = published_stages

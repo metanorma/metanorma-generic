@@ -33,7 +33,7 @@ module IsoDoc
             configuration.html_headerfont || '"Overpass",sans-serif'
           ),
           monospacefont: configuration.html_monospacefont || '"Space Mono",monospace'
-        }
+        }.transform_values { |v| v&.empty? ? nil : v }
       end
 
       def default_file_locations(_options)
@@ -48,7 +48,7 @@ module IsoDoc
           html_doc_path("scripts.html"),
           i18nyaml: (configuration.i18nyaml.is_a?(String) ? 
                      baselocation(configuration.i18nyaml) : nil)
-        }
+        }.transform_values { |v| v&.empty? ? nil : v }
       end
 
 =begin

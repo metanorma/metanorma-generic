@@ -27,7 +27,7 @@ module IsoDoc
           headerfont: (options[:script] == "Hans" ? '"SimHei",sans-serif' :
                        configuration.html_headerfont || '"Overpass",sans-serif'),
           monospacefont: configuration.html_monospacefont || '"Space Mono",monospace'
-        }
+        }.transform_values { |v| v&.empty? ? nil : v }
       end
 
       def default_file_locations(_options)
@@ -40,7 +40,7 @@ module IsoDoc
             html_doc_path("html_generic_intro.html"),
           scripts_pdf: baselocation(configuration.scripts_pdf) ||
             html_doc_path("scripts.pdf.html")
-        }
+        }.transform_values { |v| v&.empty? ? nil : v }
       end
 
       def googlefonts
