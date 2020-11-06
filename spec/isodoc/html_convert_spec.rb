@@ -77,7 +77,7 @@ RSpec.describe IsoDoc::Generic do
 :implementeddate=>"XXX",
 :issueddate=>"XXX",
 :lang=>"en",
-:logo=>"/Users/nickn/Documents/Arbeit/upwork/ribose/metanorma-acme/lib/isodoc/generic/html/logo.jpg",
+:logo=>"#{File.join(logoloc,"logo.jpg")}",
 :metadata_extensions=>{"doctype_abbreviation"=>"S",
 "doctype"=>"standard",
 "editorialgroup"=>{"committee_type"=>"A", "committee"=>"TC"}, "comment-period_type"=>"E", "comment-period"=>{"from"=>["A", "B", "C"], "to"=>"D", "reply-to"=>"F"},
