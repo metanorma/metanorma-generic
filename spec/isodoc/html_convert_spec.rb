@@ -59,7 +59,7 @@ RSpec.describe IsoDoc::Generic do
     INPUT
 
     output = <<~"OUTPUT"
-    {:accesseddate=>"XXX",
+{:accesseddate=>"XXX",
 :agency=>"Acme",
 :circulateddate=>"XXX",
 :confirmeddate=>"XXX",
