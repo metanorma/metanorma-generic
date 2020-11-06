@@ -246,7 +246,7 @@ RSpec.describe Asciidoctor::Generic do
       let(:metadata_extensions) { [ "security", "insecurity" ] }
       let(:metadata_extensions1) { {"comment-period"=>{"comment-period-type"=>{"_output"=>"type", "_attribute"=>true}, "comment-period-from"=>{"_output"=>"from", "_list"=>true}, "comment-period-to"=>{"_output"=>"to"}, "reply-to"=>nil, "more"=>{"more1"=>nil}}, "security"=>nil} }
       let(:stage_abbreviations) { { "ready" => "", "steady" => "" } }
-      let(:doctypes) { [ "lion", "elephant" ] }
+      let(:doctypes) { { "lion" => nil, "elephant" => "E" } }
       let(:default_doctype) { "elephant" }
       let(:default_stage) { "working-draft" }
       let(:termsdefs_titles) { ["ABC", "DEF"] }
@@ -398,7 +398,9 @@ RSpec.describe Asciidoctor::Generic do
       {
         'organization_name_short' => organization_name_short,
         'organization_name_long' => organization_name_long,
-        'document_namespace' => document_namespace
+        'document_namespace' => document_namespace,
+        "doctypes" => ["standard", "guide"],
+        "default_doctype" => "standard"
       }
     end
 
@@ -421,6 +423,49 @@ RSpec.describe Asciidoctor::Generic do
         .to(change {
           [config.organization_name_short, config.organization_name_long, config.document_namespace]
           }.from(['','','']).to([organization_name_short, organization_name_long, document_namespace]))
+    end
+
+    it "deals with array doctypes" do
+       expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :generic, header_footer: true)))).to(be_equivalent_to(xmlpp(<<~OUTPUT)))
+       <generic-standard xmlns='https://example.com/' type='semantic' version='1.7.2'>
+  <bibdata type='standard'>
+    <title language='en' format='text/plain'>Document title</title>
+    <docidentifier type='Test'>Test </docidentifier>
+    <contributor>
+      <role type='author'/>
+      <organization>
+        <name>Test Corp.</name>
+        <abbreviation>Test</abbreviation>
+      </organization>
+    </contributor>
+    <contributor>
+      <role type='publisher'/>
+      <organization>
+        <name>Test Corp.</name>
+        <abbreviation>Test</abbreviation>
+      </organization>
+    </contributor>
+    <language>en</language>
+    <script>Latn</script>
+    <status>
+      <stage>published</stage>
+    </status>
+    <copyright>
+      <from>2020</from>
+      <owner>
+        <organization>
+          <name>Test Corp.</name>
+          <abbreviation>Test</abbreviation>
+        </organization>
+      </owner>
+    </copyright>
+    <ext>
+      <doctype>standard</doctype>
+    </ext>
+  </bibdata>
+  <sections> </sections>
+</generic-standard>
+       OUTPUT
     end
   end
 

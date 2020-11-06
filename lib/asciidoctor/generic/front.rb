@@ -63,6 +63,11 @@ module Asciidoctor
         end
       end
 
+      def metadata_doctype(node, xml)
+        d = doctype(node)
+        xml.doctype d, attr_code(abbreviation: configuration&.doctypes&.dig(d))
+      end
+
       EXT_STRUCT = %w(_output _attribute _list).freeze
 
       def metadata_ext_hash(node, ext, hash)

@@ -85,6 +85,10 @@ module Metanorma
 
       def set_default_values_from_yaml_file(config_file)
         default_config_options = YAML.load(File.read(config_file))
+        if default_config_options["doctypes"]&.is_a? Array
+          default_config_options["doctypes"] = default_config_options["doctypes"].
+            each_with_object({}) { |k, m| m[k] = nil }
+        end
         CONFIG_ATTRS.each do |attr_name|
           instance_variable_set("@#{attr_name}", default_config_options[attr_name.to_s])
         end

@@ -35,10 +35,11 @@ module Asciidoctor
 
       def doctype(node)
         d = super
-        configuration.doctypes or return d == "article" ? "standard" : d
+        configuration.doctypes or return d == "article" ? 
+          (configuration.default_doctype || "standard") : d
         type = configuration.default_doctype ||
-          Array(configuration.doctypes).dig(0) || "standard"
-        unless Array(configuration.doctypes).include? d
+          configuration.doctypes.keys.dig(0) || "standard"
+        unless configuration.doctypes.keys.include? d
           @log.add("Document Attributes", nil,
                    "#{d} is not a legal document type: reverting to '#{type}'")
           d = type
