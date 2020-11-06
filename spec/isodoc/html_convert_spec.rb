@@ -40,7 +40,7 @@ RSpec.describe IsoDoc::Generic do
     </owner>
   </copyright>
   <ext>
-  <doctype>standard</doctype>
+  <doctype abbreviation="S">standard</doctype>
   <editorialgroup>
     <committee type="A">TC</committee>
   </editorialgroup>
@@ -59,7 +59,7 @@ RSpec.describe IsoDoc::Generic do
     INPUT
 
     output = <<~"OUTPUT"
-{:accesseddate=>"XXX",
+    {:accesseddate=>"XXX",
 :agency=>"Acme",
 :circulateddate=>"XXX",
 :confirmeddate=>"XXX",
@@ -68,6 +68,7 @@ RSpec.describe IsoDoc::Generic do
 :docnumber=>"1000",
 :doctitle=>"Main Title",
 :doctype=>"Standard",
+:doctype_abbr=>"S",
 :doctype_display=>"Standard",
 :docyear=>"2001",
 :draft=>"3.4",
@@ -76,8 +77,11 @@ RSpec.describe IsoDoc::Generic do
 :implementeddate=>"XXX",
 :issueddate=>"XXX",
 :lang=>"en",
-:logo=>"#{File.join(logoloc, "logo.jpg")}",
-:metadata_extensions=>{"doctype"=>"standard", "editorialgroup"=>{"committee_type"=>"A", "committee"=>"TC"}, "comment-period_type"=>"E", "comment-period"=>{"from"=>["A", "B", "C"], "to"=>"D", "reply-to"=>"F"}, "security"=>"X"},
+:logo=>"/Users/nickn/Documents/Arbeit/upwork/ribose/metanorma-acme/lib/isodoc/generic/html/logo.jpg",
+:metadata_extensions=>{"doctype_abbreviation"=>"S",
+"doctype"=>"standard",
+"editorialgroup"=>{"committee_type"=>"A", "committee"=>"TC"}, "comment-period_type"=>"E", "comment-period"=>{"from"=>["A", "B", "C"], "to"=>"D", "reply-to"=>"F"},
+"security"=>"X"},
 :obsoleteddate=>"XXX",
 :publisheddate=>"XXX",
 :publisher=>"Acme",
