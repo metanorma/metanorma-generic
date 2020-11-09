@@ -427,7 +427,7 @@ RSpec.describe Asciidoctor::Generic do
 
     it "deals with array doctypes" do
        expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :generic, header_footer: true)))).to(be_equivalent_to(xmlpp(<<~OUTPUT)))
-       <generic-standard xmlns='https://example.com/' type='semantic' version='1.7.2'>
+       <generic-standard xmlns="https://example.com/" type="semantic" version="#{Metanorma::Generic::VERSION}">
   <bibdata type='standard'>
     <title language='en' format='text/plain'>Document title</title>
     <docidentifier type='Test'>Test </docidentifier>
