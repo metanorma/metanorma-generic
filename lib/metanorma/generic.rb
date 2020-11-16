@@ -31,6 +31,10 @@ module Metanorma
         html_bodyfont
         html_headerfont
         html_monospacefont
+        html_normalfontsize
+        html_monospacefontsize
+        html_smallerfontsize
+        html_footnotefontsize
         metadata_extensions
         metanorma_name
         normref_titles
@@ -51,6 +55,10 @@ module Metanorma
         word_bodyfont
         word_headerfont
         word_monospacefont
+        word_normalfontsize
+        word_monospacefontsize
+        word_smallerfontsize
+        word_footnotefontsize
         xml_root_tag
       ].freeze
 

@@ -32,7 +32,11 @@ module IsoDoc
             options[:script] == "Hans" ? '"SimHei",sans-serif' : 
             configuration.html_headerfont || '"Overpass",sans-serif'
           ),
-          monospacefont: configuration.html_monospacefont || '"Space Mono",monospace'
+          monospacefont: configuration.html_monospacefont || '"Space Mono",monospace',
+          normalfontsize: configuration.html_normalfontsize,
+          smallerfontsize: configuration.html_smallerfontsize,
+          footnotefontsize: configuration.html_footnotefontsize,
+          monospacefontsize: configuration.html_monospacefontsize,
         }.transform_values { |v| v&.empty? ? nil : v }
       end
 
@@ -50,12 +54,6 @@ module IsoDoc
                      baselocation(configuration.i18nyaml) : nil)
         }.transform_values { |v| v&.empty? ? nil : v }
       end
-
-=begin
-      def configuration
-        Metanorma::Generic.configuration
-      end
-=end
 
       def googlefonts
         return unless configuration.webfont
