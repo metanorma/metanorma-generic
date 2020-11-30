@@ -62,6 +62,10 @@ module Metanorma
         xml_root_tag
       ].freeze
 
+      FILEPATH_ATTRS = %i[
+        i18nyaml
+      ].freeze
+
       attr_accessor(*CONFIG_ATTRS)
 
       class << self
@@ -92,13 +96,19 @@ module Metanorma
       end
 
       def set_default_values_from_yaml_file(config_file)
+        root_path = File.dirname(self.class::_file || __FILE__)
         default_config_options = YAML.load(File.read(config_file))
         if default_config_options["doctypes"]&.is_a? Array
           default_config_options["doctypes"] = default_config_options["doctypes"].
             each_with_object({}) { |k, m| m[k] = nil }
         end
         CONFIG_ATTRS.each do |attr_name|
-          instance_variable_set("@#{attr_name}", default_config_options[attr_name.to_s])
+          value = default_config_options[attr_name.to_s]
+          if value && FILEPATH_ATTRS.include?(attr_name)
+            value = File.join(root_path, "..", "..", value)
+          end
+
+          instance_variable_set("@#{attr_name}", value)
         end
       end
     end
