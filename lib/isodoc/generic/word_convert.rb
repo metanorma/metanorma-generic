@@ -31,7 +31,11 @@ module IsoDoc
             options[:script] == "Hans" ? '"SimHei",sans-serif' : 
             configuration.word_headerfont ||  '"Arial",sans-serif'
           ),
-          monospacefont:  configuration.word_monospacefont ||  '"Courier New",monospace'
+          monospacefont:  configuration.word_monospacefont ||  '"Courier New",monospace',
+          normalfontsize: configuration.word_normalfontsize,
+          smallerfontsize: configuration.word_smallerfontsize,
+          footnotefontsize: configuration.word_footnotefontsize,
+          monospacefontsize: configuration.word_monospacefontsize,
         }.transform_values { |v| v&.empty? ? nil : v  }
       end
 

@@ -119,6 +119,23 @@ RSpec.describe IsoDoc::Generic do
       let(:metadata_extensions) { [ "security", "insecurity" ] }
       let(:webfont) { [ "Jack&amp;x", "Jill?x" ] }
       let(:i18nyaml) { "spec/assets/i18n.yaml" }
+      let(:html_bodyfont) { "Zapf" }
+      let(:html_monospacefont) { "Consolas" }
+      let(:html_headerfont) { "Comic Sans" }
+      let(:html_normalfontsize) { "30pt" }
+      let(:html_monospacefontsize) { "29pt" }
+      let(:html_smallerfontsize) { "28pt" }
+      let(:html_footnotefontsize) { "27pt" }
+      let(:word_bodyfont) { "Zapf" }
+      let(:word_monospacefont) { "Consolas" }
+      let(:word_headerfont) { "Comic Sans" }
+      let(:word_normalfontsize) { "30pt" }
+      let(:word_monospacefontsize) { "29pt" }
+      let(:word_smallerfontsize) { "28pt" }
+      let(:word_footnotefontsize) { "27pt" }
+      let(:htmlstylesheet) { "spec/assets/htmlstylesheet.scss" }
+      let(:standardstylesheet) { "spec/assets/standardstylesheet.scss" }
+      let(:wordstylesheet) { "spec/assets/wordstylesheet.scss" }
 
       it "overrides default" do
         Metanorma::Generic.configure do |config|
@@ -163,6 +180,23 @@ INPUT
           config.metadata_extensions = metadata_extensions
           config.webfont = webfont
           config.i18nyaml = i18nyaml
+          config.html_bodyfont = html_bodyfont
+          config.html_monospacefont = html_monospacefont
+          config.html_headerfont = html_headerfont
+          config.html_normalfontsize = html_normalfontsize
+          config.html_monospacefontsize = html_monospacefontsize
+          config.html_smallerfontsize = html_smallerfontsize
+          config.html_footnotefontsize = html_footnotefontsize
+          config.word_bodyfont = word_bodyfont
+          config.word_monospacefont = word_monospacefont
+          config.word_headerfont = word_headerfont
+          config.word_normalfontsize = word_normalfontsize
+          config.word_monospacefontsize = word_monospacefontsize
+          config.word_smallerfontsize = word_smallerfontsize
+          config.word_footnotefontsize = word_footnotefontsize
+          config.htmlstylesheet = htmlstylesheet
+          config.standardstylesheet = standardstylesheet
+          config.wordstylesheet = wordstylesheet
         end
         pcsdc = IsoDoc::Generic::PresentationXMLConvert.new({})
         Metanorma::Generic.configure do |config|
@@ -173,8 +207,26 @@ INPUT
           config.metadata_extensions = metadata_extensions
           config.webfont = webfont
           config.i18nyaml = i18nyaml
+          config.html_bodyfont = html_bodyfont
+          config.html_monospacefont = html_monospacefont
+          config.html_headerfont = html_headerfont
+          config.html_normalfontsize = html_normalfontsize
+          config.html_monospacefontsize = html_monospacefontsize
+          config.html_smallerfontsize = html_smallerfontsize
+          config.html_footnotefontsize = html_footnotefontsize
+          config.word_bodyfont = word_bodyfont
+          config.word_monospacefont = word_monospacefont
+          config.word_headerfont = word_headerfont
+          config.word_normalfontsize = word_normalfontsize
+          config.word_monospacefontsize = word_monospacefontsize
+          config.word_smallerfontsize = word_smallerfontsize
+          config.word_footnotefontsize = word_footnotefontsize
+          config.htmlstylesheet = htmlstylesheet
+          config.standardstylesheet = standardstylesheet
+          config.wordstylesheet = wordstylesheet
         end
             csdc = IsoDoc::Generic::HtmlConvert.new({})
+            wcsdc = IsoDoc::Generic::WordConvert.new({})
     input = <<~"INPUT"
 <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
 <bibdata type="standard">
@@ -265,15 +317,35 @@ INPUT
 :vote_starteddate=>"XXX"}
     OUTPUT
 
+        docxml, filename, dir = wcsdc.convert_init(input, "test", true)
         docxml, filename, dir = csdc.convert_init(input, "test", true)
     expect(metadata(csdc.info(docxml, nil))).to be_equivalent_to output
 
         FileUtils.rm_f "test.html"
+        FileUtils.rm_f "test.doc"
         presxml = pcsdc.convert("test", input, true)
         csdc.convert("test", presxml, false) 
+        wcsdc.convert("test", presxml, false) 
+        doc = File.read("test.doc", encoding: "utf-8")
+    expect(doc).to match(/p \{[^}]*?font-family: Zapf/m)
+    expect(doc).to match(/code \{[^}]*?font-family: Consolas/m)
+    expect(doc).to match(/h1 \{[^}]*?font-family: Comic Sans/m)
+    expect(doc).to match(/p \{[^}]*?font-size: 30pt/m)
+    expect(doc).to match(/code \{[^}]*?font-size: 29pt/m)
+    expect(doc).to match(/p\.note \{[^}]*?font-size: 28pt/m)
+    expect(doc).to match(/aside \{[^}]*?font-size: 27pt/m)
+        expect(doc).to match(/Word stylesheet/)
         html = File.read("test.html", encoding: "utf-8")
         expect(html).to include '<link href="Jack&amp;x" rel="stylesheet" />'
         expect(html).to include '<link href="Jill?x" rel="stylesheet" />'
+        expect(html).to match(/I am an HTML stylesheet/)
+    expect(html).to match(/p \{[^}]*?font-family: Zapf/m)
+    expect(html).to match(/code \{[^}]*?font-family: Consolas/m)
+    expect(html).to match(/h1 \{[^}]*?font-family: Comic Sans/m)
+    expect(html).to match(/p \{[^}]*?font-size: 30pt/m)
+    expect(html).to match(/code \{[^}]*?font-size: 29pt/m)
+    expect(html).to match(/p\.note \{[^}]*?font-size: 28pt/m)
+    expect(html).to match(/aside \{[^}]*?font-size: 27pt/m)
         expect(html.gsub(%r{^.*<main}m, "<main").gsub(%r{</main>.*}m, "</main>")).to be_equivalent_to <<~OUTPUT
         <main class="main-section"><button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
       <p class="zzSTDTitle1">Main Title</p>
@@ -288,6 +360,8 @@ INPUT
       </div>
     </main>
         OUTPUT
+
+
       end
 
         Metanorma::Generic.configure do |config|
@@ -298,22 +372,39 @@ INPUT
           config.metadata_extensions = Metanorma::Generic::Configuration.new.metadata_extensions
           config.webfont = Metanorma::Generic::Configuration.new.webfont
           config.i18nyaml = Metanorma::Generic::Configuration.new.i18nyaml
-      end
+          config.html_bodyfont = Metanorma::Generic::Configuration.new.html_bodyfont
+          config.html_monospacefont = Metanorma::Generic::Configuration.new.html_monospacefont
+          config.html_headerfont = Metanorma::Generic::Configuration.new.html_headerfont
+          config.html_normalfontsize = Metanorma::Generic::Configuration.new.html_normalfontsize
+          config.html_monospacefontsize = Metanorma::Generic::Configuration.new.html_monospacefontsize
+          config.html_smallerfontsize = Metanorma::Generic::Configuration.new.html_smallerfontsize
+          config.html_footnotefontsize = Metanorma::Generic::Configuration.new.html_footnotefontsize
+          config.word_bodyfont = Metanorma::Generic::Configuration.new.word_bodyfont
+          config.word_monospacefont = Metanorma::Generic::Configuration.new.word_monospacefont
+          config.word_headerfont = Metanorma::Generic::Configuration.new.word_headerfont
+          config.word_normalfontsize = Metanorma::Generic::Configuration.new.word_normalfontsize
+          config.word_monospacefontsize = Metanorma::Generic::Configuration.new.word_monospacefontsize
+          config.word_smallerfontsize = Metanorma::Generic::Configuration.new.word_smallerfontsize
+          config.word_footnotefontsize = Metanorma::Generic::Configuration.new.word_footnotefontsize
+          config.htmlstylesheet = Metanorma::Generic::Configuration.new.htmlstylesheet
+          config.standardstylesheet = Metanorma::Generic::Configuration.new.standardstylesheet
+          config.wordstylesheet = Metanorma::Generic::Configuration.new.wordstylesheet
+        end
     end
-  end
+   end
 
 
-  it "processes pre" do
-    input = <<~"INPUT"
+   it "processes pre" do
+     input = <<~"INPUT"
 <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
 <preface><foreword>
 <pre>ABC</pre>
 </foreword></preface>
 </generic-standard>
-    INPUT
+     INPUT
 
-    output = <<~"OUTPUT"
-    #{HTML_HDR}
+     output = <<~"OUTPUT"
+     #{HTML_HDR}
              <br/>
              <div>
                <h1 class="ForewordTitle">Foreword</h1>
@@ -322,27 +413,27 @@ INPUT
              <p class="zzSTDTitle1"/>
            </div>
          </body>
-    OUTPUT
+     OUTPUT
 
-    expect(
-      IsoDoc::Generic::HtmlConvert.new({}).
-      convert("test", input, true).
-      gsub(%r{^.*<body}m, "<body").
-      gsub(%r{</body>.*}m, "</body>")
-    ).to be_equivalent_to output
-  end
+     expect(
+       IsoDoc::Generic::HtmlConvert.new({}).
+       convert("test", input, true).
+       gsub(%r{^.*<body}m, "<body").
+       gsub(%r{</body>.*}m, "</body>")
+     ).to be_equivalent_to output
+   end
 
-  it "processes keyword" do
-    input = <<~"INPUT"
+   it "processes keyword" do
+     input = <<~"INPUT"
 <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
 <preface><foreword>
 <keyword>ABC</keyword>
 </foreword></preface>
 </generic-standard>
-    INPUT
+     INPUT
 
-    output = <<~"OUTPUT"
-        #{HTML_HDR}
+     output = <<~"OUTPUT"
+     #{HTML_HDR}
              <br/>
              <div>
                <h1 class="ForewordTitle">Foreword</h1>
@@ -351,18 +442,18 @@ INPUT
              <p class="zzSTDTitle1"/>
            </div>
          </body>
-    OUTPUT
+     OUTPUT
 
-    expect(
-      IsoDoc::Generic::HtmlConvert.new({}).
-      convert("test", input, true).
-      gsub(%r{^.*<body}m, "<body").
-      gsub(%r{</body>.*}m, "</body>")
-    ).to be_equivalent_to output
-  end
+     expect(
+       IsoDoc::Generic::HtmlConvert.new({}).
+       convert("test", input, true).
+       gsub(%r{^.*<body}m, "<body").
+       gsub(%r{</body>.*}m, "</body>")
+     ).to be_equivalent_to output
+   end
 
-  it "processes simple terms & definitions" do
-    input = <<~"INPUT"
+   it "processes simple terms & definitions" do
+     input = <<~"INPUT"
      <generic-standard xmlns="http://riboseinc.com/isoxml">
        <sections>
        <terms id="H" obligation="normative"><title>1.&#160; Terms, Definitions, Symbols and Abbreviated Terms</title>
@@ -373,10 +464,10 @@ INPUT
         </terms>
         </sections>
         </generic-standard>
-    INPUT
+     INPUT
 
-    output = <<~"OUTPUT"
-        #{HTML_HDR}
+     output = <<~"OUTPUT"
+     #{HTML_HDR}
              <p class="zzSTDTitle1"/>
              <div id="H"><h1>1.&#160; Terms, Definitions, Symbols and Abbreviated Terms</h1>
        <p class="TermNum" id="J">1.1.</p>
@@ -384,18 +475,18 @@ INPUT
        </div>
            </div>
          </body>
-    OUTPUT
+     OUTPUT
 
-    expect(
-      IsoDoc::Generic::HtmlConvert.new({}).
-      convert("test", input, true).
-      gsub(%r{^.*<body}m, "<body").
-      gsub(%r{</body>.*}m, "</body>")
-    ).to be_equivalent_to output
-  end
+     expect(
+       IsoDoc::Generic::HtmlConvert.new({}).
+       convert("test", input, true).
+       gsub(%r{^.*<body}m, "<body").
+       gsub(%r{</body>.*}m, "</body>")
+     ).to be_equivalent_to output
+   end
 
-  it "processes section names" do
-    input = <<~"INPUT"
+   it "processes section names" do
+     input = <<~"INPUT"
     <generic-standard xmlns="http://riboseinc.com/isoxml">
       <preface>
       <foreword obligation="informative">
@@ -455,9 +546,9 @@ INPUT
        </clause>
        </bibliography>
        </generic-standard>
-    INPUT
+     INPUT
 
-    output = <<~"OUTPUT"
+     output = <<~"OUTPUT"
     <generic-standard xmlns='http://riboseinc.com/isoxml' type="presentation">
   <preface>
     <foreword obligation='informative'>
@@ -573,10 +664,10 @@ INPUT
     </clause>
   </bibliography>
 </generic-standard>
-    OUTPUT
+     OUTPUT
 
-    expect(
-      xmlpp(IsoDoc::Generic::PresentationXMLConvert.new({}).convert("test", input, true))).to be_equivalent_to xmlpp(output)
-  end
+     expect(
+       xmlpp(IsoDoc::Generic::PresentationXMLConvert.new({}).convert("test", input, true))).to be_equivalent_to xmlpp(output)
+   end
 
 end

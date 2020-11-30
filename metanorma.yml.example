@@ -14,6 +14,10 @@ htmlstylesheet: /metanorma-mine/lib/isodoc/mine/html/htmlstyle.scss
 html_bodyfont: '"Source Sans Pro",sans-serif'
 html_headerfont: '"Source Sans Pro",sans-serif'
 html_monospacefont: '"Source Code Pro",monospace'
+html_normalfontsize: "1.0em"
+html_monospacefontsize: "0.8em"
+html_smallerfontsize: "0.9em"
+html_footnotefontsize: "0.8em"
 scripts: /metanorma-mine/lib/isodoc/mine/html/scripts.html
 scripts_pdf: /metanorma-mine/lib/isodoc/mine/html/scripts.prd.html
 standardstylesheet: /metanorma-mine/lib/isodoc/mine/html/
@@ -24,6 +28,10 @@ wordstylesheet: /metanorma-mine/lib/isodoc/mine/html/wordstyle.scss
 word_bodyfont: '"Source Sans Pro","Arial",sans-serif'
 word_headerfont: '"Source Sans Pro","Arial",sans-serif'
 word_monospacefont: '"Source Code Pro",monospace'
+word_normalfontsize: "12.0pt"
+word_monospacefontsize: "11.0pt"
+word_smallerfontsize: "10.0pt"
+word_footnotefontsize: "9.0pt"
 docid_template: "{{ organization_name_short }} {{ docnumeric }}"
 metadata_extensions:
   - security
