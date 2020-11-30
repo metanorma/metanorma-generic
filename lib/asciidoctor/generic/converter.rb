@@ -21,6 +21,7 @@ module Asciidoctor
 
        def baselocation(loc)
         return nil if loc.nil?
+        return loc
         File.expand_path(File.join(File.dirname(
           self.class::_file || __FILE__), "..", "..", "..", loc))
       end

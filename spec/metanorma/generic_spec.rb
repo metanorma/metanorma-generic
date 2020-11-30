@@ -23,6 +23,7 @@ RSpec.describe Metanorma::Generic do
       let(:organization_name_long) { 'Test Corp.' }
       let(:document_namespace) { 'https://example.com/' }
       let(:boilerplate) {{"en"=>"lib/isodoc/bipm/i18n-en.yaml", "fr"=>"lib/isodoc/bipm/i18n-fr.yaml"}}
+      let(:logo_path) { "" }
       let(:logo_paths) { [ "lib/isodoc/bipm/html/logo.png", "lib/isodoc/bipm/html/logo1.png" ] }
       let(:boilerplate1) {{"en"=>File.join(logoloc, "lib/isodoc/bipm/i18n-en.yaml"), "fr"=> File.join(logoloc, "lib/isodoc/bipm/i18n-fr.yaml")}}
       let(:logo_paths1) { [ File.join(logoloc, "lib/isodoc/bipm/html/logo.png"), File.join(logoloc, "lib/isodoc/bipm/html/logo1.png") ] }
@@ -32,7 +33,8 @@ RSpec.describe Metanorma::Generic do
           'organization_name_long' => organization_name_long,
           'document_namespace' => document_namespace,
           'boilerplate' => boilerplate,
-          'logo_paths' => logo_paths
+          'logo_paths' => logo_paths,
+          'logo_path' => logo_path
         }
       end
 
@@ -50,6 +52,7 @@ RSpec.describe Metanorma::Generic do
         expect(config.document_namespace).to eq(document_namespace)
         expect(config.boilerplate).to eq(boilerplate1)
         expect(config.logo_paths).to eq(logo_paths1)
+        expect(config.logo_path).to eq(logo_path)
       end
     end
 

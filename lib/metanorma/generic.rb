@@ -138,7 +138,7 @@ module Metanorma
           value.reject { |a| blank?(a) }.each_with_object([]) do |v1, g|
             g << absolute_path(v1, root_path)
           end
-        elsif value.is_a? String
+        elsif value.is_a?(String) && !value.empty?
           File.join(root_path, "..", "..", value)
         else
           value
