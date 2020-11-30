@@ -15,15 +15,24 @@ RSpec.describe Metanorma::Generic do
 
     context 'YAML config support' do
       subject(:config) { Metanorma::Generic::Configuration.new }
+
+      logoloc = File.join(File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "lib", "metanorma")), "..", "..")
+
       let(:config_file_name) { Metanorma::Generic::YAML_CONFIG_FILE }
       let(:organization_name_short) { 'Test' }
       let(:organization_name_long) { 'Test Corp.' }
       let(:document_namespace) { 'https://example.com/' }
+      let(:boilerplate) {{"en"=>"lib/isodoc/bipm/i18n-en.yaml", "fr"=>"lib/isodoc/bipm/i18n-fr.yaml"}}
+      let(:logo_paths) { [ "lib/isodoc/bipm/html/logo.png", "lib/isodoc/bipm/html/logo1.png" ] }
+      let(:boilerplate1) {{"en"=>File.join(logoloc, "lib/isodoc/bipm/i18n-en.yaml"), "fr"=> File.join(logoloc, "lib/isodoc/bipm/i18n-fr.yaml")}}
+      let(:logo_paths1) { [ File.join(logoloc, "lib/isodoc/bipm/html/logo.png"), File.join(logoloc, "lib/isodoc/bipm/html/logo1.png") ] }
       let(:yaml_content) do
         {
           'organization_name_short' => organization_name_short,
           'organization_name_long' => organization_name_long,
-          'document_namespace' => document_namespace
+          'document_namespace' => document_namespace,
+          'boilerplate' => boilerplate,
+          'logo_paths' => logo_paths
         }
       end
 
@@ -39,6 +48,8 @@ RSpec.describe Metanorma::Generic do
         expect(config.organization_name_short).to eq(organization_name_short)
         expect(config.organization_name_long).to eq(organization_name_long)
         expect(config.document_namespace).to eq(document_namespace)
+        expect(config.boilerplate).to eq(boilerplate1)
+        expect(config.logo_paths).to eq(logo_paths1)
       end
     end
 

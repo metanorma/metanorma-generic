@@ -62,9 +62,25 @@ module Metanorma
         xml_root_tag
       ].freeze
 
-      FILEPATH_ATTRS = %i[
-        i18nyaml
-      ].freeze
+      def filepath_attrs
+        return %i[
+          i18nyaml
+          boilerplate
+          logo_path
+          logo_paths
+          header
+          htmlcoverpage
+          htmlintropage
+          htmlstylesheet
+          scripts
+          scripts_pdf
+          standardstylesheet
+          validate_rng_file
+          wordcoverpage
+          wordintropage
+          wordstylesheet
+        ]
+      end
 
       attr_accessor(*CONFIG_ATTRS)
 
@@ -104,14 +120,38 @@ module Metanorma
         end
         CONFIG_ATTRS.each do |attr_name|
           value = default_config_options[attr_name.to_s]
-          if value && FILEPATH_ATTRS.include?(attr_name)
-            value = File.join(root_path, "..", "..", value)
+          if value && filepath_attrs.include?(attr_name)
+            value = absolute_path(value, root_path)
           end
 
           instance_variable_set("@#{attr_name}", value)
         end
       end
+
+      def blank?(v)
+        v.nil? || v.respond_to?(:empty?) && v.empty?
+      end
+
+      def absolute_path(value, root_path)
+        if value.is_a? Hash then absolute_path1(value, root_path)
+        elsif value.is_a? Array
+          value.reject { |a| blank?(a) }.each_with_object([]) do |v1, g|
+            g << absolute_path(v1, root_path)
+          end
+        elsif value.is_a? String
+          File.join(root_path, "..", "..", value)
+        else
+          value
+        end
+      end
+
+      def absolute_path1(h, pref)
+        h.reject { |k, v| blank?(v) }.each_with_object({}) do |(k, v), g|
+          g[k] = absolute_path(v, pref)
+        end
+      end
     end
+
 
     class << self
       extend Forwardable
