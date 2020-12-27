@@ -74,7 +74,7 @@ module Asciidoctor
         hash.each do |k, v|
           next if EXT_STRUCT.include?(k) || !v&.is_a?(Hash) && !node.attr(k)
           if v&.is_a?(Hash) && v["_list"]
-            csv_split(node.attr(k)).each do |val|
+            csv_split(node.attr(k), ",").each do |val|
               metadata_ext_hash1(k, val, ext, v, node)
             end
           else
