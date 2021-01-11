@@ -174,7 +174,7 @@ RSpec.describe Asciidoctor::Generic do
       <stage>published</stage>
     </status>
     <copyright>
-      <from>2020</from>
+      <from>#{Time.now.year}</from>
       <owner>
         <organization>
           <name>Acme Corp.</name>
@@ -451,7 +451,7 @@ RSpec.describe Asciidoctor::Generic do
       <stage>published</stage>
     </status>
     <copyright>
-      <from>2020</from>
+      <from>#{Time.now.year}</from>
       <owner>
         <organization>
           <name>Test Corp.</name>
