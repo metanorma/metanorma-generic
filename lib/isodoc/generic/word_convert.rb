@@ -24,11 +24,11 @@ module IsoDoc
       def default_fonts(options)
         {
           bodyfont: (
-            options[:script] == "Hans" ? '"SimSun",serif' : 
+            options[:script] == "Hans" ? '"Source Han Sans",serif' : 
             configuration.word_bodyfont || '"Arial",sans-serif'
           ),
           headerfont: (
-            options[:script] == "Hans" ? '"SimHei",sans-serif' : 
+            options[:script] == "Hans" ? '"Source Han Sans",sans-serif' : 
             configuration.word_headerfont ||  '"Arial",sans-serif'
           ),
           monospacefont:  configuration.word_monospacefont ||  '"Courier New",monospace',
