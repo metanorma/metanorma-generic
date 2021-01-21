@@ -22,9 +22,9 @@ module IsoDoc
 
        def default_fonts(options)
         {
-          bodyfont: (options[:script] == "Hans" ? '"SimSun",serif'
+          bodyfont: (options[:script] == "Hans" ? '"Source Han Sans",serif'
                      : configuration.html_bodyfont || '"Overpass",sans-serif'),
-          headerfont: (options[:script] == "Hans" ? '"SimHei",sans-serif' :
+          headerfont: (options[:script] == "Hans" ? '"Source Han Sans",sans-serif' :
                        configuration.html_headerfont || '"Overpass",sans-serif'),
           monospacefont: configuration.html_monospacefont || '"Space Mono",monospace'
         }.transform_values { |v| v&.empty? ? nil : v }
