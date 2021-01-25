@@ -150,7 +150,7 @@ module Asciidoctor
       def boilerplate_isodoc(xmldoc)
         conv = super
         Metanorma::Generic::Configuration::CONFIG_ATTRS.each do |a|
-          conv.i18n.set(a, configuration.send(a))
+          conv.meta.set(a, configuration.send(a))
         end
         conv
       end
