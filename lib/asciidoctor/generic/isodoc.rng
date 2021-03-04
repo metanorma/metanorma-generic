@@ -812,6 +812,8 @@
       <ref name="requirement"/>
       <ref name="recommendation"/>
       <ref name="permission"/>
+      <ref name="imagemap"/>
+      <ref name="svgmap"/>
     </choice>
   </define>
   <define name="bibliography">
@@ -918,6 +920,9 @@
       </attribute>
       <ref name="bibdata"/>
       <optional>
+        <ref name="misccontainer"/>
+      </optional>
+      <optional>
         <ref name="boilerplate"/>
       </optional>
       <optional>
@@ -927,9 +932,19 @@
       <zeroOrMore>
         <ref name="annex"/>
       </zeroOrMore>
+      <optional>
+        <ref name="bibliography"/>
+      </optional>
       <zeroOrMore>
-        <ref name="references"/>
+        <ref name="indexsect"/>
       </zeroOrMore>
+    </element>
+  </define>
+  <define name="misccontainer">
+    <element name="misc-container">
+      <oneOrMore>
+        <ref name="AnyElement"/>
+      </oneOrMore>
     </element>
   </define>
   <define name="preface">
@@ -952,6 +967,11 @@
   </define>
   <define name="introduction">
     <element name="introduction">
+      <ref name="Content-Section"/>
+    </element>
+  </define>
+  <define name="indexsect">
+    <element name="indexsect">
       <ref name="Content-Section"/>
     </element>
   </define>
@@ -1633,6 +1653,67 @@
         </choice>
       </attribute>
       <text/>
+    </element>
+  </define>
+  <define name="imagemap">
+    <element name="imagemap">
+      <ref name="figure"/>
+      <zeroOrMore>
+        <element name="area">
+          <attribute name="type">
+            <choice>
+              <value>rect</value>
+              <value>circle</value>
+              <value>ellipse</value>
+              <value>poly</value>
+            </choice>
+          </attribute>
+          <choice>
+            <ref name="xref"/>
+            <ref name="hyperlink"/>
+            <ref name="eref"/>
+          </choice>
+          <oneOrMore>
+            <element name="coords">
+              <attribute name="x">
+                <data type="float"/>
+              </attribute>
+              <attribute name="y">
+                <data type="float"/>
+              </attribute>
+            </element>
+          </oneOrMore>
+          <optional>
+            <element name="radius">
+              <attribute name="x">
+                <data type="float"/>
+              </attribute>
+              <optional>
+                <attribute name="y">
+                  <data type="float"/>
+                </attribute>
+              </optional>
+            </element>
+          </optional>
+        </element>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="svgmap">
+    <element name="svgmap">
+      <ref name="figure"/>
+      <zeroOrMore>
+        <element name="target">
+          <attribute name="href">
+            <data type="anyURI"/>
+          </attribute>
+          <choice>
+            <ref name="xref"/>
+            <ref name="hyperlink"/>
+            <ref name="eref"/>
+          </choice>
+        </element>
+      </zeroOrMore>
     </element>
   </define>
 </grammar>
