@@ -27,31 +27,15 @@ module Metanorma
 
       def extract_options(file)
         head = file.sub(/\n\n.*$/m, "\n")
-        /\n:htmlstylesheet: (?<htmlstylesheet>[^\n]+)\n/ =~ head
-        /\n:htmlcoverpage: (?<htmlcoverpage>[^\n]+)\n/ =~ head
-        /\n:htmlintropage: (?<htmlintropage>[^\n]+)\n/ =~ head
-        /\n:scripts: (?<scripts>[^\n]+)\n/ =~ head
-        /\n:wordstylesheet: (?<wordstylesheet>[^\n]+)\n/ =~ head
-        /\n:standardstylesheet: (?<standardstylesheet>[^\n]+)\n/ =~ head
-        /\n:header: (?<header>[^\n]+)\n/ =~ head
-        /\n:wordcoverpage: (?<wordcoverpage>[^\n]+)\n/ =~ head
-        /\n:wordintropage: (?<wordintropage>[^\n]+)\n/ =~ head
-        /\n:ulstyle: (?<ulstyle>[^\n]+)\n/ =~ head
-        /\n:olstyle: (?<olstyle>[^\n]+)\n/ =~ head
-        new_options = {
-          htmlstylesheet: defined?(htmlstylesheet) ? htmlstylesheet : nil,
-          htmlcoverpage: defined?(htmlcoverpage) ? htmlcoverpage : nil,
-          htmlintropage: defined?(htmlintropage) ? htmlintropage : nil,
-          scripts: defined?(scripts) ? scripts : nil,
-          wordstylesheet: defined?(wordstylesheet) ? wordstylesheet : nil,
-          standardstylesheet: defined?(standardstylesheet) ? standardstylesheet : nil,
-          header: defined?(header) ? header : nil,
-          wordcoverpage: defined?(wordcoverpage) ? wordcoverpage : nil,
-          wordintropage: defined?(wordintropage) ? wordintropage : nil,
-          ulstyle: defined?(ulstyle) ? ulstyle : nil,
-          olstyle: defined?(olstyle) ? olstyle : nil,
-        }.reject { |_, val| val.nil? }
-        super.merge(new_options)
+        ret = %w(htmlstylesheet htmlcoverpage htmlintropage scripts scripts-pdf
+                 wordstylesheet standardstylesheet header wordcoverpage
+                 wordintropage datauriimage htmltoclevels doctoclevels
+                 ulstyle olstyle htmlstylesheet-override
+                 wordstylesheet-override).each_with_object({}) do |w, acc|
+          m = /\n:#{w}: ([^\n]+)\n/.match(head) or next
+          acc[w.sub(/-/, "_").to_sym] = m[1]
+        end
+        super.merge(ret)
       end
 
       def output(isodoc_node, inname, outname, format, options={})
