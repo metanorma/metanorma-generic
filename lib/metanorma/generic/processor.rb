@@ -30,7 +30,7 @@ module Metanorma
         ret = %w(htmlstylesheet htmlcoverpage htmlintropage scripts scripts-pdf
                  wordstylesheet standardstylesheet header wordcoverpage
                  wordintropage datauriimage htmltoclevels doctoclevels
-                 ulstyle olstyle htmlstylesheet-override
+                 ulstyle olstyle htmlstylesheet-override sectionsplit
                  wordstylesheet-override).each_with_object({}) do |w, acc|
           m = /\n:#{w}: ([^\n]+)\n/.match(head) or next
           acc[w.sub(/-/, "_").to_sym] = m[1]
