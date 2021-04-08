@@ -48,8 +48,7 @@ module IsoDoc
           html_doc_path("html_generic_titlepage.html"),
           htmlintropage: baselocation(configuration.htmlintropage) ||
           html_doc_path("html_generic_intro.html"),
-          scripts: baselocation(configuration.scripts) ||
-          html_doc_path("scripts.html"),
+          scripts: baselocation(configuration.scripts)
           i18nyaml: (configuration.i18nyaml.is_a?(String) ? 
                      baselocation(configuration.i18nyaml) : nil)
         }.transform_values { |v| v&.empty? ? nil : v }
