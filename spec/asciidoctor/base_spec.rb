@@ -1,19 +1,22 @@
 require "spec_helper"
 require "fileutils"
 
+OPTIONS = [backend: :generic, header_footer: true].freeze
+
 RSpec.describe Asciidoctor::Generic do
   it "processes a blank document" do
     input = <<~"INPUT"
-    #{ASCIIDOC_BLANK_HDR}
+      #{ASCIIDOC_BLANK_HDR}
     INPUT
 
     output = <<~"OUTPUT"
-    #{BLANK_HDR}
-<sections/>
-</generic-standard>
+          #{BLANK_HDR}
+      <sections/>
+      </generic-standard>
     OUTPUT
 
-    expect(xmlpp(Asciidoctor.convert(input, backend: :generic, header_footer: true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "converts a blank document" do
@@ -25,13 +28,14 @@ RSpec.describe Asciidoctor::Generic do
     INPUT
 
     output = <<~"OUTPUT"
-    #{BLANK_HDR}
-<sections/>
-</generic-standard>
+          #{BLANK_HDR}
+      <sections/>
+      </generic-standard>
     OUTPUT
 
     FileUtils.rm_f "test.html"
-    expect(xmlpp(Asciidoctor.convert(input, backend: :generic, header_footer: true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_equivalent_to xmlpp(output)
     expect(File.exist?("test.html")).to be true
   end
 
@@ -69,67 +73,68 @@ RSpec.describe Asciidoctor::Generic do
     INPUT
 
     output = <<~"OUTPUT"
-    <?xml version="1.0" encoding="UTF-8"?>
-<generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}" type="semantic" version="#{Metanorma::Generic::VERSION}">
-<bibdata type="standard">
-  <title language="en" format="text/plain">Main Title</title>
-  <docidentifier type="Acme">Acme 1000</docidentifier>
-  <docnumber>1000</docnumber>
-<contributor>
-    <role type="author"/>
-    <organization>
-      <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
-      <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
-    </organization>
-  </contributor>
-  <contributor>
-    <role type="publisher"/>
-    <organization>
-      <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
-      <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
-    </organization>
-  </contributor>
-  <edition>2</edition>
-<version>
-  <revision-date>2000-01-01</revision-date>
-  <draft>3.4</draft>
-</version>
-  <language>en</language>
-  <script>Latn</script>
-  <status>
-    <stage>working-draft</stage>
-    <iteration>3</iteration>
-  </status>
-  <copyright>
-    <from>2001</from>
-    <owner>
-      <organization>
-        <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
-      <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
-      </organization>
-    </owner>
-  </copyright>
-  <ext>
-  <doctype>standard</doctype>
-  <editorialgroup>
-    <committee type="A">TC</committee>
-    <committee type="B">TC1</committee>
-  </editorialgroup>
-  </ext>
-</bibdata>
-<sections/>
-</generic-standard>
+          <?xml version="1.0" encoding="UTF-8"?>
+      <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}" type="semantic" version="#{Metanorma::Generic::VERSION}">
+      <bibdata type="standard">
+        <title language="en" format="text/plain">Main Title</title>
+        <docidentifier type="Acme">Acme 1000</docidentifier>
+        <docnumber>1000</docnumber>
+      <contributor>
+          <role type="author"/>
+          <organization>
+            <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+            <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
+          </organization>
+        </contributor>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+            <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
+          </organization>
+        </contributor>
+        <edition>2</edition>
+      <version>
+        <revision-date>2000-01-01</revision-date>
+        <draft>3.4</draft>
+      </version>
+        <language>en</language>
+        <script>Latn</script>
+        <status>
+          <stage>working-draft</stage>
+          <iteration>3</iteration>
+        </status>
+        <copyright>
+          <from>2001</from>
+          <owner>
+            <organization>
+              <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+            <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
+            </organization>
+          </owner>
+        </copyright>
+        <ext>
+        <doctype>standard</doctype>
+        <editorialgroup>
+          <committee type="A">TC</committee>
+          <committee type="B">TC1</committee>
+        </editorialgroup>
+        </ext>
+      </bibdata>
+      <sections/>
+      </generic-standard>
     OUTPUT
 
-    expect(xmlpp(Asciidoctor.convert(input, backend: :generic, header_footer: true))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_equivalent_to xmlpp(output)
   end
 
-    it "processes default section titles" do
+  it "processes default section titles" do
     input = <<~"INPUT"
       = Document title
       Author
       :docfile: test.adoc
-      
+
       == Introduction
 
       == Scope
@@ -148,103 +153,105 @@ RSpec.describe Asciidoctor::Generic do
 
       [bibliography]
       == Bibliography
-      INPUT
+    INPUT
     output = <<~"OUTPUT"
-    <generic-standard xmlns='https://www.metanorma.org/ns/generic'  type="semantic" version="#{Metanorma::Generic::VERSION}">
-  <bibdata type='standard'>
-    <title language='en' format='text/plain'>Document title</title>
-    <docidentifier type='Acme'>Acme </docidentifier>
-    <contributor>
-      <role type='author'/>
-      <organization>
-        <name>Acme Corp.</name>
-        <abbreviation>Acme</abbreviation>
-      </organization>
-    </contributor>
-    <contributor>
-      <role type='publisher'/>
-      <organization>
-        <name>Acme Corp.</name>
-        <abbreviation>Acme</abbreviation>
-      </organization>
-    </contributor>
-    <language>en</language>
-    <script>Latn</script>
-    <status>
-      <stage>published</stage>
-    </status>
-    <copyright>
-      <from>#{Time.now.year}</from>
-      <owner>
-        <organization>
-          <name>Acme Corp.</name>
-        <abbreviation>Acme</abbreviation>
-        </organization>
-      </owner>
-    </copyright>
-    <ext>
-      <doctype>standard</doctype>
-    </ext>
-  </bibdata>
-  <preface>
-    <introduction id='_' obligation='informative'>
-      <title>Introduction</title>
-    </introduction>
-  </preface>
-  <sections>
-    <clause id='_' obligation='normative' type="scope">
-      <title>Scope</title>
-    </clause>
-    <terms id='_' obligation='normative'>
-      <title>Terms and definitions</title>
-      <p id='_'>No terms and definitions are listed in this document.</p>
-    </terms>
-    <definitions id='_' obligation="normative" type="symbols">
-      <title>Symbols</title>
-    </definitions>
-    <clause id='_' obligation='normative'>
-      <title>Clause</title>
-    </clause>
-  </sections>
-  <annex id='_' obligation='normative'>
-    <title>Annex</title>
-  </annex>
-  <bibliography>
-    <references id='_' obligation='informative' normative="true">
-      <title>Normative references</title>
-      <p id='_'>There are no normative references in this document.</p>
-    </references>
-    <references id='_' obligation='informative' normative="false">
-      <title>Bibliography</title>
-    </references>
-  </bibliography>
-</generic-standard>
-      OUTPUT
-      expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :generic, header_footer: true)))).to be_equivalent_to xmlpp(strip_guid(output))
-    end
+          <generic-standard xmlns='https://www.metanorma.org/ns/generic'  type="semantic" version="#{Metanorma::Generic::VERSION}">
+        <bibdata type='standard'>
+          <title language='en' format='text/plain'>Document title</title>
+          <docidentifier type='Acme'>Acme </docidentifier>
+          <contributor>
+            <role type='author'/>
+            <organization>
+              <name>Acme Corp.</name>
+              <abbreviation>Acme</abbreviation>
+            </organization>
+          </contributor>
+          <contributor>
+            <role type='publisher'/>
+            <organization>
+              <name>Acme Corp.</name>
+              <abbreviation>Acme</abbreviation>
+            </organization>
+          </contributor>
+          <language>en</language>
+          <script>Latn</script>
+          <status>
+            <stage>published</stage>
+          </status>
+          <copyright>
+            <from>#{Time.now.year}</from>
+            <owner>
+              <organization>
+                <name>Acme Corp.</name>
+              <abbreviation>Acme</abbreviation>
+              </organization>
+            </owner>
+          </copyright>
+          <ext>
+            <doctype>standard</doctype>
+          </ext>
+        </bibdata>
+        <preface>
+          <introduction id='_' obligation='informative'>
+            <title>Introduction</title>
+          </introduction>
+        </preface>
+        <sections>
+          <clause id='_' obligation='normative' type="scope">
+            <title>Scope</title>
+          </clause>
+          <terms id='_' obligation='normative'>
+            <title>Terms and definitions</title>
+            <p id='_'>No terms and definitions are listed in this document.</p>
+          </terms>
+          <definitions id='_' obligation="normative" type="symbols">
+            <title>Symbols</title>
+          </definitions>
+          <clause id='_' obligation='normative'>
+            <title>Clause</title>
+          </clause>
+        </sections>
+        <annex id='_' obligation='normative'>
+          <title>Annex</title>
+        </annex>
+        <bibliography>
+          <references id='_' obligation='informative' normative="true">
+            <title>Normative references</title>
+            <p id='_'>There are no normative references in this document.</p>
+          </references>
+          <references id='_' obligation='informative' normative="false">
+            <title>Bibliography</title>
+          </references>
+        </bibliography>
+      </generic-standard>
+    OUTPUT
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(strip_guid(output))
+  end
 
-  context 'with configuration options' do
+  context "with configuration options" do
     subject(:convert) do
-      xmlpp(Asciidoctor.convert(input, backend: :generic, header_footer: true))
+      xmlpp(Asciidoctor.convert(input, *OPTIONS))
     end
 
-    context 'organization' do
-      let(:input) { File.read(fixture_path('asciidoctor/test_input.adoc')) }
+    context "organization" do
+      let(:input) { File.read(fixture_path("asciidoctor/test_input.adoc")) }
       let(:output) do
-        File.read(fixture_path('asciidoctor/test_output.xml')) %
+        File.read(fixture_path("asciidoctor/test_output.xml")) %
           { organization_name_short: organization_name_short,
             organization_name_long: organization_name_long,
-            metadata_extensions_out: "<security>Client Confidential</security><insecurity>Client Unconfidential</insecurity>",
+            metadata_extensions_out: "<security>Client Confidential</security>"\
+            "<insecurity>Client Unconfidential</insecurity>",
             document_namespace: document_namespace,
             version: Metanorma::Generic::VERSION }
       end
 
-      let(:organization_name_short) { 'Test' }
-      let(:organization_name_long) { 'Test Corp.' }
-      let(:document_namespace) { 'https://example.com/' }
+      let(:organization_name_short) { "Test" }
+      let(:organization_name_long) { "Test Corp." }
+      let(:document_namespace) { "https://example.com/" }
       let(:docid_template) { "{{ organization_name_long }} {{ docnumeric }} {{ stage }}" }
-      let(:metadata_extensions) { [ "security", "insecurity" ] }
-      let(:metadata_extensions1) { {"comment-period"=>{"comment-period-type"=>{"_output"=>"type", "_attribute"=>true}, "comment-period-from"=>{"_output"=>"from", "_list"=>true}, "comment-period-to"=>{"_output"=>"to"}, "reply-to"=>nil, "more"=>{"more1"=>nil}}, "security"=>nil} }
+      let(:metadata_extensions) { ["security", "insecurity"] }
+      let(:metadata_extensions1) { { "comment-period" => { "comment-period-type" => { "_output" => "type", "_attribute" => true }, "comment-period-from" => { "_output" => "from", "_list" => true }, "comment-period-to" => { "_output" => "to" }, "reply-to" => nil, "more" => { "more1" => nil } }, "security" => nil } }
       let(:stage_abbreviations) { { "ready" => "", "steady" => "" } }
       let(:doctypes) { { "lion" => nil, "elephant" => "E" } }
       let(:default_doctype) { "elephant" }
@@ -260,7 +267,7 @@ RSpec.describe Asciidoctor::Generic do
       let(:boilerplate) { "spec/fixtures/asciidoctor/boilerplate.xml" }
       let(:boilerplate1) { { "en" => "spec/fixtures/asciidoctor/boilerplate.xml" } }
 
-      it 'uses configuration options for organization and namespace' do
+      it "uses configuration options for organization and namespace" do
         Metanorma::Generic.configure do |config|
           config.organization_name_short = organization_name_short
           config.organization_name_long = organization_name_long
@@ -282,10 +289,14 @@ RSpec.describe Asciidoctor::Generic do
         end
 
         FileUtils.rm_f "test.err"
-        expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :generic, header_footer: true)))).to(be_equivalent_to(xmlpp(output)))
-        expect(File.read("test.err")).to include "working-draft is not a recognised status"
-        expect(File.read("test.err")).to include "TC is not a recognised committee"
-        expect(File.read("test.err")).to include "standard is not a legal document type: reverting to 'elephant'"
+        expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+          .to(be_equivalent_to(xmlpp(output)))
+        expect(File.read("test.err"))
+          .to include "working-draft is not a recognised status"
+        expect(File.read("test.err"))
+          .to include "TC is not a recognised committee"
+        expect(File.read("test.err"))
+          .to include "standard is not a legal document type: reverting to 'elephant'"
       end
 
       it "internationalises with language; uses complex metadata extensions" do
@@ -308,58 +319,62 @@ RSpec.describe Asciidoctor::Generic do
           config.i18nyaml = i18nyaml1
           config.boilerplate = boilerplate1
         end
-        output = File.read(fixture_path('asciidoctor/test_output.xml')) %
+        output = File.read(fixture_path("asciidoctor/test_output.xml")) %
           { organization_name_short: organization_name_short,
             organization_name_long: organization_name_long,
-            metadata_extensions_out: "<comment-period type='N1'><from>N2</from><from>N3</from><to>N4</to></comment-period><security>Client Confidential</security>",
+            metadata_extensions_out: "<comment-period type='N1'><from>N2"\
+            "</from><from>N3</from><to>N4</to></comment-period>"\
+            "<security>Client Confidential</security>",
             document_namespace: document_namespace,
             version: Metanorma::Generic::VERSION }
-        expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :generic, header_footer: true)))).to(be_equivalent_to(xmlpp(output)))
-    end
+        expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+          .to(be_equivalent_to(xmlpp(output)))
+      end
 
-        Metanorma::Generic.configure do |config|
-          config.organization_name_short = Metanorma::Generic::Configuration.new.organization_name_short
-          config.organization_name_long = Metanorma::Generic::Configuration.new.organization_name_long
-          config.document_namespace = Metanorma::Generic::Configuration.new.document_namespace
-          config.docid_template = Metanorma::Generic::Configuration.new.docid_template
-          config.metadata_extensions = Metanorma::Generic::Configuration.new.metadata_extensions
-          config.stage_abbreviations = Metanorma::Generic::Configuration.new.stage_abbreviations
-          config.doctypes = Metanorma::Generic::Configuration.new.doctypes
-          config.default_doctype = Metanorma::Generic::Configuration.new.default_doctype
-          config.default_stage = Metanorma::Generic::Configuration.new.default_stage
-          config.termsdefs_titles = Metanorma::Generic::Configuration.new.termsdefs_titles
-          config.symbols_titles = Metanorma::Generic::Configuration.new.symbols_titles
-          config.normref_titles = Metanorma::Generic::Configuration.new.normref_titles
-          config.bibliography_titles = Metanorma::Generic::Configuration.new.bibliography_titles
-          config.committees = Metanorma::Generic::Configuration.new.committees
-          config.relations = Metanorma::Generic::Configuration.new.relations
-          config.i18nyaml = Metanorma::Generic::Configuration.new.i18nyaml
-          config.boilerplate = Metanorma::Generic::Configuration.new.boilerplate
-        end
+      Metanorma::Generic.configure do |config|
+        config.organization_name_short = Metanorma::Generic::Configuration.new.organization_name_short
+        config.organization_name_long = Metanorma::Generic::Configuration.new.organization_name_long
+        config.document_namespace = Metanorma::Generic::Configuration.new.document_namespace
+        config.docid_template = Metanorma::Generic::Configuration.new.docid_template
+        config.metadata_extensions = Metanorma::Generic::Configuration.new.metadata_extensions
+        config.stage_abbreviations = Metanorma::Generic::Configuration.new.stage_abbreviations
+        config.doctypes = Metanorma::Generic::Configuration.new.doctypes
+        config.default_doctype = Metanorma::Generic::Configuration.new.default_doctype
+        config.default_stage = Metanorma::Generic::Configuration.new.default_stage
+        config.termsdefs_titles = Metanorma::Generic::Configuration.new.termsdefs_titles
+        config.symbols_titles = Metanorma::Generic::Configuration.new.symbols_titles
+        config.normref_titles = Metanorma::Generic::Configuration.new.normref_titles
+        config.bibliography_titles = Metanorma::Generic::Configuration.new.bibliography_titles
+        config.committees = Metanorma::Generic::Configuration.new.committees
+        config.relations = Metanorma::Generic::Configuration.new.relations
+        config.i18nyaml = Metanorma::Generic::Configuration.new.i18nyaml
+        config.boilerplate = Metanorma::Generic::Configuration.new.boilerplate
+      end
     end
   end
 
   it "strips inline header" do
     input = <<~"INPUT"
       #{ASCIIDOC_BLANK_HDR}
-      This is a preamble
+        This is a preamble
 
-      == Section 1
+        == Section 1
     INPUT
 
     output = <<~"OUTPUT"
-    #{BLANK_HDR}
-             <preface><foreword id="_" obligation="informative">
-         <title>Foreword</title>
-         <p id="_">This is a preamble</p>
-       </foreword></preface><sections>
-       <clause id="_" obligation="normative">
-         <title>Section 1</title>
-       </clause></sections>
-       </generic-standard>
+      #{BLANK_HDR}
+                 <preface><foreword id="_" obligation="informative">
+             <title>Foreword</title>
+             <p id="_">This is a preamble</p>
+           </foreword></preface><sections>
+           <clause id="_" obligation="normative">
+             <title>Section 1</title>
+           </clause></sections>
+           </generic-standard>
     OUTPUT
 
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :generic, header_footer: true)))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "uses default fonts" do
@@ -371,20 +386,23 @@ RSpec.describe Asciidoctor::Generic do
     INPUT
 
     FileUtils.rm_f "test.html"
-    Asciidoctor.convert(input, backend: :generic, header_footer: true)
+    Asciidoctor.convert(input, *OPTIONS)
 
     html = File.read("test.html", encoding: "utf-8")
-    expect(html).to match(%r[\bpre[^{]+\{[^}]+font-family: "Space Mono", monospace;]m)
-    expect(html).to match(%r[ div[^{]+\{[^}]+font-family: "Overpass", sans-serif;]m)
-    expect(html).to match(%r[h1, h2, h3, h4, h5, h6 \{[^}]+font-family: "Overpass", sans-serif;]m)
+    expect(html)
+      .to match(%r[\bpre[^{]+\{[^}]+font-family: "Space Mono", monospace;]m)
+    expect(html)
+      .to match(%r[ div[^{]+\{[^}]+font-family: "Overpass", sans-serif;]m)
+    expect(html)
+      .to match(%r[h1, h2, h3, h4, h5, h6 \{[^}]+font-family: "Overpass", sans-serif;]m)
   end
 
-  context 'customize directive' do
+  context "customize directive" do
     subject(:config) { Metanorma::Generic.configuration }
-    let(:config_file) { Tempfile.new('my_custom_config_file.yml') }
-    let(:organization_name_short) { 'Test' }
-    let(:organization_name_long) { 'Test Corp.' }
-    let(:document_namespace) { 'https://example.com/' }
+    let(:config_file) { Tempfile.new("my_custom_config_file.yml") }
+    let(:organization_name_short) { "Test" }
+    let(:organization_name_long) { "Test Corp." }
+    let(:document_namespace) { "https://example.com/" }
     let(:input) do
       <<~"INPUT"
         = Document title
@@ -396,11 +414,11 @@ RSpec.describe Asciidoctor::Generic do
     end
     let(:yaml_content) do
       {
-        'organization_name_short' => organization_name_short,
-        'organization_name_long' => organization_name_long,
-        'document_namespace' => document_namespace,
+        "organization_name_short" => organization_name_short,
+        "organization_name_long" => organization_name_long,
+        "document_namespace" => document_namespace,
         "doctypes" => ["standard", "guide"],
-        "default_doctype" => "standard"
+        "default_doctype" => "standard",
       }
     end
 
@@ -408,9 +426,9 @@ RSpec.describe Asciidoctor::Generic do
       FileUtils.rm_f "test.html"
       config_file.tap { |file| file.puts(yaml_content.to_yaml) }.close
       Metanorma::Generic.configure do |config|
-        config.organization_name_short = ''
-        config.organization_name_long = ''
-        config.document_namespace = ''
+        config.organization_name_short = ""
+        config.organization_name_long = ""
+        config.document_namespace = ""
       end
     end
 
@@ -418,54 +436,56 @@ RSpec.describe Asciidoctor::Generic do
       FileUtils.rm_f "test.html"
     end
 
-    it 'recognizes `customize` option and uses supplied file as the config file' do
-      expect { Asciidoctor.convert(input, backend: :generic, header_footer: true) }
-        .to(change {
-          [config.organization_name_short, config.organization_name_long, config.document_namespace]
-          }.from(['','','']).to([organization_name_short, organization_name_long, document_namespace]))
+    it "recognizes `customize` option and uses supplied file as the config file" do
+      expect { Asciidoctor.convert(input, *OPTIONS) }
+        .to(change do
+              [config.organization_name_short, config.organization_name_long, config.document_namespace]
+            end.from(["", "", ""])
+              .to([organization_name_short, organization_name_long, document_namespace]))
     end
 
     it "deals with array doctypes" do
-       expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :generic, header_footer: true)))).to(be_equivalent_to(xmlpp(<<~OUTPUT)))
-       <generic-standard xmlns="https://example.com/" type="semantic" version="#{Metanorma::Generic::VERSION}">
-  <bibdata type='standard'>
-    <title language='en' format='text/plain'>Document title</title>
-    <docidentifier type='Test'>Test </docidentifier>
-    <contributor>
-      <role type='author'/>
-      <organization>
-        <name>Test Corp.</name>
-        <abbreviation>Test</abbreviation>
-      </organization>
-    </contributor>
-    <contributor>
-      <role type='publisher'/>
-      <organization>
-        <name>Test Corp.</name>
-        <abbreviation>Test</abbreviation>
-      </organization>
-    </contributor>
-    <language>en</language>
-    <script>Latn</script>
-    <status>
-      <stage>published</stage>
-    </status>
-    <copyright>
-      <from>#{Time.now.year}</from>
-      <owner>
-        <organization>
-          <name>Test Corp.</name>
-          <abbreviation>Test</abbreviation>
-        </organization>
-      </owner>
-    </copyright>
-    <ext>
-      <doctype>standard</doctype>
-    </ext>
-  </bibdata>
-  <sections> </sections>
-</generic-standard>
-       OUTPUT
+      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to(be_equivalent_to(xmlpp(<<~OUTPUT)))
+                 <generic-standard xmlns="https://example.com/" type="semantic" version="#{Metanorma::Generic::VERSION}">
+            <bibdata type='standard'>
+              <title language='en' format='text/plain'>Document title</title>
+              <docidentifier type='Test'>Test </docidentifier>
+              <contributor>
+                <role type='author'/>
+                <organization>
+                  <name>Test Corp.</name>
+                  <abbreviation>Test</abbreviation>
+                </organization>
+              </contributor>
+              <contributor>
+                <role type='publisher'/>
+                <organization>
+                  <name>Test Corp.</name>
+                  <abbreviation>Test</abbreviation>
+                </organization>
+              </contributor>
+              <language>en</language>
+              <script>Latn</script>
+              <status>
+                <stage>published</stage>
+              </status>
+              <copyright>
+                <from>#{Time.now.year}</from>
+                <owner>
+                  <organization>
+                    <name>Test Corp.</name>
+                    <abbreviation>Test</abbreviation>
+                  </organization>
+                </owner>
+              </copyright>
+              <ext>
+                <doctype>standard</doctype>
+              </ext>
+            </bibdata>
+            <sections> </sections>
+          </generic-standard>
+        OUTPUT
     end
   end
 
@@ -479,12 +499,15 @@ RSpec.describe Asciidoctor::Generic do
     INPUT
 
     FileUtils.rm_f "test.html"
-    Asciidoctor.convert(input, backend: :generic, header_footer: true)
+    Asciidoctor.convert(input, *OPTIONS)
 
     html = File.read("test.html", encoding: "utf-8")
-    expect(html).to match(%r[\bpre[^{]+\{[^}]+font-family: "Space Mono", monospace;]m)
-    expect(html).to match(%r[ div[^{]+\{[^}]+font-family: "Source Han Sans", serif;]m)
-    expect(html).to match(%r[h1, h2, h3, h4, h5, h6 \{[^}]+font-family: "Source Han Sans", sans-serif;]m)
+    expect(html)
+      .to match(%r[\bpre[^{]+\{[^}]+font-family: "Space Mono", monospace;]m)
+    expect(html)
+      .to match(%r[ div[^{]+\{[^}]+font-family: "Source Han Sans", serif;]m)
+    expect(html)
+      .to match(%r[h1, h2, h3, h4, h5, h6 \{[^}]+font-family: "Source Han Sans", sans-serif;]m)
   end
 
   it "uses specified fonts" do
@@ -500,57 +523,58 @@ RSpec.describe Asciidoctor::Generic do
     INPUT
 
     FileUtils.rm_f "test.html"
-    Asciidoctor.convert(input, backend: :generic, header_footer: true)
+    Asciidoctor.convert(input, *OPTIONS)
 
     html = File.read("test.html", encoding: "utf-8")
     expect(html).to match(%r[\bpre[^{]+\{[^{]+font-family: Andale Mono;]m)
     expect(html).to match(%r[ div[^{]+\{[^}]+font-family: Zapf Chancery;]m)
-    expect(html).to match(%r[h1, h2, h3, h4, h5, h6 \{[^}]+font-family: Comic Sans;]m)
+    expect(html)
+      .to match(%r[h1, h2, h3, h4, h5, h6 \{[^}]+font-family: Comic Sans;]m)
   end
 
   it "processes inline_quoted formatting" do
     input = <<~"INPUT"
       #{ASCIIDOC_BLANK_HDR}
-      _emphasis_
-      *strong*
-      `monospace`
-      "double quote"
-      'single quote'
-      super^script^
-      sub~script~
-      stem:[a_90]
-      stem:[<mml:math><mml:msub xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"> <mml:mrow> <mml:mrow> <mml:mi mathvariant="bold-italic">F</mml:mi> </mml:mrow> </mml:mrow> <mml:mrow> <mml:mrow> <mml:mi mathvariant="bold-italic">&#x391;</mml:mi> </mml:mrow> </mml:mrow> </mml:msub> </mml:math>]
-      [keyword]#keyword#
-      [strike]#strike#
-      [smallcap]#smallcap#
+        _emphasis_
+        *strong*
+        `monospace`
+        "double quote"
+        'single quote'
+        super^script^
+        sub~script~
+        stem:[a_90]
+        stem:[<mml:math><mml:msub xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"> <mml:mrow> <mml:mrow> <mml:mi mathvariant="bold-italic">F</mml:mi> </mml:mrow> </mml:mrow> <mml:mrow> <mml:mrow> <mml:mi mathvariant="bold-italic">&#x391;</mml:mi> </mml:mrow> </mml:mrow> </mml:msub> </mml:math>]
+        [keyword]#keyword#
+        [strike]#strike#
+        [smallcap]#smallcap#
     INPUT
 
     output = <<~"OUTPUT"
-            #{BLANK_HDR}
-       <sections>
-        <p id="_"><em>emphasis</em>
-       <strong>strong</strong>
-       <tt>monospace</tt>
-       “double quote”
-       ‘single quote’
-       super<sup>script</sup>
-       sub<sub>script</sub>
-       <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mrow>
-  <mi>a</mi>
-</mrow>
-<mrow>
-  <mn>90</mn>
-</mrow>
-</msub></math></stem>
-       <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub> <mrow> <mrow> <mi mathvariant="bold-italic">F</mi> </mrow> </mrow> <mrow> <mrow> <mi mathvariant="bold-italic">Α</mi> </mrow> </mrow> </msub> </math></stem>
-       <keyword>keyword</keyword>
-       <strike>strike</strike>
-       <smallcap>smallcap</smallcap></p>
-       </sections>
-       </generic-standard>
+      #{BLANK_HDR}
+               <sections>
+                <p id="_"><em>emphasis</em>
+               <strong>strong</strong>
+               <tt>monospace</tt>
+               “double quote”
+               ‘single quote’
+               super<sup>script</sup>
+               sub<sub>script</sub>
+               <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mrow>
+          <mi>a</mi>
+        </mrow>
+        <mrow>
+          <mn>90</mn>
+        </mrow>
+        </msub></math></stem>
+               <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub> <mrow> <mrow> <mi mathvariant="bold-italic">F</mi> </mrow> </mrow> <mrow> <mrow> <mi mathvariant="bold-italic">Α</mi> </mrow> </mrow> </msub> </math></stem>
+               <keyword>keyword</keyword>
+               <strike>strike</strike>
+               <smallcap>smallcap</smallcap></p>
+               </sections>
+               </generic-standard>
     OUTPUT
 
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, backend: :generic, header_footer: true)))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to xmlpp(output)
   end
-
 end
