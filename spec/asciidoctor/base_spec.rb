@@ -356,9 +356,9 @@ RSpec.describe Asciidoctor::Generic do
   it "strips inline header" do
     input = <<~"INPUT"
       #{ASCIIDOC_BLANK_HDR}
-        This is a preamble
+      This is a preamble
 
-        == Section 1
+      == Section 1
     INPUT
 
     output = <<~"OUTPUT"
@@ -535,18 +535,18 @@ RSpec.describe Asciidoctor::Generic do
   it "processes inline_quoted formatting" do
     input = <<~"INPUT"
       #{ASCIIDOC_BLANK_HDR}
-        _emphasis_
-        *strong*
-        `monospace`
-        "double quote"
-        'single quote'
-        super^script^
-        sub~script~
-        stem:[a_90]
-        stem:[<mml:math><mml:msub xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"> <mml:mrow> <mml:mrow> <mml:mi mathvariant="bold-italic">F</mml:mi> </mml:mrow> </mml:mrow> <mml:mrow> <mml:mrow> <mml:mi mathvariant="bold-italic">&#x391;</mml:mi> </mml:mrow> </mml:mrow> </mml:msub> </mml:math>]
-        [keyword]#keyword#
-        [strike]#strike#
-        [smallcap]#smallcap#
+      _emphasis_
+      *strong*
+      `monospace`
+      "double quote"
+      'single quote'
+      super^script^
+      sub~script~
+      stem:[a_90]
+      stem:[<mml:math><mml:msub xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"> <mml:mrow> <mml:mrow> <mml:mi mathvariant="bold-italic">F</mml:mi> </mml:mrow> </mml:mrow> <mml:mrow> <mml:mrow> <mml:mi mathvariant="bold-italic">&#x391;</mml:mi> </mml:mrow> </mml:mrow> </mml:msub> </mml:math>]
+      [keyword]#keyword#
+      [strike]#strike#
+      [smallcap]#smallcap#
     INPUT
 
     output = <<~"OUTPUT"
