@@ -32,6 +32,18 @@
         <ref name="DocumentType"/>
       </element>
     </define>
+    <define name="section-title">
+      <element name="title">
+        <zeroOrMore>
+          <ref name="TextElement"/>
+        </zeroOrMore>
+      </element>
+      <zeroOrMore>
+        <element name="variant-title">
+          <ref name="TypedTitleString"/>
+        </element>
+      </zeroOrMore>
+    </define>
     <define name="hyperlink">
       <element name="link">
         <attribute name="target">
@@ -201,6 +213,18 @@
         </oneOrMore>
         <zeroOrMore>
           <ref name="note"/>
+        </zeroOrMore>
+      </element>
+    </define>
+    <define name="dt">
+      <element name="dt">
+        <optional>
+          <attribute name="id">
+            <data type="ID"/>
+          </attribute>
+        </optional>
+        <zeroOrMore>
+          <ref name="TextElement"/>
         </zeroOrMore>
       </element>
     </define>
@@ -899,7 +923,7 @@
   </include>
   <!-- end overrides -->
   <define name="docsubtype">
-    <element name="docsubtype">
+    <element name="subdoctype">
       <ref name="DocumentSubtype"/>
     </element>
   </define>
@@ -955,6 +979,16 @@
   <define name="concept">
     <element name="concept">
       <optional>
+        <attribute name="ital">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="ref">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
         <element name="refterm">
           <zeroOrMore>
             <choice>
@@ -989,7 +1023,13 @@
       <ref name="imagemap"/>
       <ref name="svgmap"/>
       <ref name="inputform"/>
+      <ref name="toc"/>
     </choice>
+  </define>
+  <define name="toc">
+    <element name="toc">
+      <ref name="ul"/>
+    </element>
   </define>
   <define name="inputform">
     <element name="form">
@@ -998,6 +1038,9 @@
       </attribute>
       <attribute name="name"/>
       <attribute name="action"/>
+      <optional>
+        <attribute name="class"/>
+      </optional>
       <zeroOrMore>
         <choice>
           <ref name="TextElement"/>
@@ -1228,6 +1271,12 @@
     </optional>
     <optional>
       <attribute name="type"/>
+    </optional>
+    <optional>
+      <attribute name="identifier"/>
+    </optional>
+    <optional>
+      <attribute name="prefix"/>
     </optional>
     <text/>
   </define>
@@ -1490,26 +1539,26 @@
     <optional>
       <ref name="section-title"/>
     </optional>
-    <group>
+    <choice>
       <choice>
         <group>
-          <zeroOrMore>
+          <oneOrMore>
             <ref name="BasicBlock"/>
-          </zeroOrMore>
+          </oneOrMore>
           <zeroOrMore>
             <ref name="note"/>
           </zeroOrMore>
         </group>
         <ref name="amend"/>
       </choice>
-      <zeroOrMore>
+      <oneOrMore>
         <choice>
           <ref name="clause-subsection"/>
           <ref name="terms"/>
           <ref name="definitions"/>
         </choice>
-      </zeroOrMore>
-    </group>
+      </oneOrMore>
+    </choice>
   </define>
   <define name="Annex-Section">
     <optional>

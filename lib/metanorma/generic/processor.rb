@@ -17,7 +17,6 @@ module Metanorma
         super.merge(
           html: "html",
           doc: "doc",
-          pdf: "pdf"
         )
       end
 
@@ -44,8 +43,6 @@ module Metanorma
           IsoDoc::Generic::HtmlConvert.new(options).convert(inname, isodoc_node, nil, outname)
         when :doc
           IsoDoc::Generic::WordConvert.new(options).convert(inname, isodoc_node, nil, outname)
-        when :pdf
-          IsoDoc::Generic::PdfConvert.new(options).convert(inname, isodoc_node, nil, outname)
         when :presentation
           IsoDoc::Generic::PresentationXMLConvert.new(options).convert(inname, isodoc_node, nil, outname)
         else
