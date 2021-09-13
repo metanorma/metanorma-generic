@@ -19,11 +19,13 @@ module Asciidoctor
         configuration.document_namespace || XML_NAMESPACE
       end
 
-       def baselocation(loc)
+      def baselocation(loc)
         return nil if loc.nil?
+
         return loc
         File.expand_path(File.join(File.dirname(
-          self.class::_file || __FILE__), "..", "..", "..", loc))
+                                     self.class::_file || __FILE__,
+                                   ), "..", "..", "..", loc))
       end
 
       def docidentifier_cleanup(xmldoc)
@@ -36,7 +38,7 @@ module Asciidoctor
 
       def doctype(node)
         d = super
-        configuration.doctypes or return d == "article" ? 
+        configuration.doctypes or return d == "article" ?
           (configuration.default_doctype || "standard") : d
         type = configuration.default_doctype ||
           configuration.doctypes.keys.dig(0) || "standard"
@@ -49,18 +51,18 @@ module Asciidoctor
       end
 
       def read_config_file(path_to_config_file)
-        Metanorma::Generic.configuration.
-          set_default_values_from_yaml_file(path_to_config_file)
+        Metanorma::Generic.configuration
+          .set_default_values_from_yaml_file(path_to_config_file)
       end
 
       def sectiontype_streamline(ret)
-        if configuration&.termsdefs_titles&.map(&:downcase)&.include? (ret)
+        if configuration&.termsdefs_titles&.map(&:downcase)&.include? ret
           "terms and definitions"
-        elsif configuration&.symbols_titles&.map(&:downcase)&.include? (ret)
+        elsif configuration&.symbols_titles&.map(&:downcase)&.include? ret
           "symbols and abbreviated terms"
-        elsif configuration&.normref_titles&.map(&:downcase)&.include? (ret)
+        elsif configuration&.normref_titles&.map(&:downcase)&.include? ret
           "normative references"
-        elsif configuration&.bibliography_titles&.map(&:downcase)&.include? (ret)
+        elsif configuration&.bibliography_titles&.map(&:downcase)&.include? ret
           "bibliography"
         else
           ret
@@ -73,15 +75,14 @@ module Asciidoctor
       end
 
       def outputs(node, ret)
-        File.open(@filename + ".xml", "w:UTF-8") { |f| f.write(ret) }
-        presentation_xml_converter(node)&.convert(@filename + ".xml")
-        html_converter(node)&.convert(@filename + ".presentation.xml", 
+        File.open("#{@filename}.xml", "w:UTF-8") { |f| f.write(ret) }
+        presentation_xml_converter(node)&.convert("#{@filename}.xml")
+        html_converter(node)&.convert("#{@filename}.presentation.xml",
                                       nil, false, "#{@filename}.html")
-        doc_converter(node)&.convert(@filename + ".presentation.xml", 
+        doc_converter(node)&.convert("#{@filename}.presentation.xml",
                                      nil, false, "#{@filename}.doc")
-        pdf_converter(node)&.convert(@filename + ".presentation.xml", 
+        pdf_converter(node)&.convert("#{@filename}.presentation.xml",
                                      nil, false, "#{@filename}.pdf")
-
       end
 
       def validate(doc)
@@ -106,7 +107,8 @@ module Asciidoctor
         stages.empty? and return
         stage = xmldoc&.at("//bibdata/status/stage")&.text
         stages.include? stage or
-          @log.add("Document Attributes", nil, "#{stage} is not a recognised status")
+          @log.add("Document Attributes", nil,
+                   "#{stage} is not a recognised status")
       end
 
       def committee_validate(xmldoc)
@@ -114,13 +116,14 @@ module Asciidoctor
         committees.empty? and return
         xmldoc.xpath("//bibdata/ext/editorialgroup/committee").each do |c|
           committees.include? c.text or
-            @log.add("Document Attributes", nil, "#{c.text} is not a recognised committee")
+            @log.add("Document Attributes", nil,
+                     "#{c.text} is not a recognised committee")
         end
       end
 
-      def sections_cleanup(x)
+      def sections_cleanup(xml)
         super
-        x.xpath("//*[@inline-header]").each do |h|
+        xml.xpath("//*[@inline-header]").each do |h|
           h.delete("inline-header")
         end
       end
@@ -132,7 +135,8 @@ module Asciidoctor
       end
 
       def presentation_xml_converter(node)
-        IsoDoc::Generic::PresentationXMLConvert.new(html_extract_attributes(node))
+        IsoDoc::Generic::PresentationXMLConvert
+          .new(html_extract_attributes(node))
       end
 
       alias_method :pdf_converter, :html_converter

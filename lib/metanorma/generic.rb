@@ -1,14 +1,14 @@
 require "metanorma/generic/processor"
 require "metanorma/generic/version"
-require 'forwardable'
-require 'yaml'
+require "forwardable"
+require "yaml"
 
 module Metanorma
   module Generic
     ORGANIZATION_NAME_SHORT = "Acme"
     ORGANIZATION_NAME_LONG = "Acme Corp."
     DOCUMENT_NAMESPACE = "https://www.metanorma.org/ns/generic"
-    YAML_CONFIG_FILE = 'metanorma.yml'
+    YAML_CONFIG_FILE = "metanorma.yml"
 
     class Configuration
       CONFIG_ATTRS = %i[
@@ -63,7 +63,7 @@ module Metanorma
       ].freeze
 
       def filepath_attrs
-        return %i[
+        %i[
           i18nyaml
           boilerplate
           logo_path
@@ -88,24 +88,26 @@ module Metanorma
         attr_accessor :_file
       end
 
-      def self.inherited( k )
-        k._file = caller_locations.first.absolute_path
+      def self.inherited(klass)
+        klass._file = caller_locations(1..1).first.absolute_path
       end
 
       def initialize(*args)
         super
         # Try to set config values from yaml file in current directory
-        @yaml = File.join(File.dirname(self.class::_file || __FILE__), "..", "..", YAML_CONFIG_FILE)
+        @yaml = File.join(File.dirname(self.class::_file || __FILE__), "..",
+                          "..", YAML_CONFIG_FILE)
         set_default_values_from_yaml_file(@yaml) if File.file?(@yaml)
         self.organization_name_short ||= ORGANIZATION_NAME_SHORT
         self.organization_name_long ||= ORGANIZATION_NAME_LONG
         self.document_namespace ||= DOCUMENT_NAMESPACE
-        self.termsdefs_titles ||= 
+        self.termsdefs_titles ||=
           ["Terms and definitions", "Terms, definitions, symbols and abbreviated terms",
            "Terms, definitions, symbols and abbreviations", "Terms, definitions and symbols",
            "Terms, definitions and abbreviations", "Terms, definitions and abbreviated terms"]
         self.symbols_titles ||=
-          ["Symbols and abbreviated terms", "Symbols", "Abbreviated terms", "Abbreviations"]
+          ["Symbols and abbreviated terms", "Symbols", "Abbreviated terms",
+           "Abbreviations"]
         self.normref_titles ||=
           ["Normative references"]
         self.bibliography_titles ||= ["Bibliography"]
@@ -114,9 +116,11 @@ module Metanorma
       def set_default_values_from_yaml_file(config_file)
         root_path = File.dirname(self.class::_file || __FILE__)
         default_config_options = YAML.load(File.read(config_file))
-        if default_config_options["doctypes"]&.is_a? Array
-          default_config_options["doctypes"] = default_config_options["doctypes"].
-            each_with_object({}) { |k, m| m[k] = nil }
+        if default_config_options["doctypes"].is_a? Array
+          default_config_options["doctypes"] =
+            default_config_options["doctypes"].each_with_object({}) do |k, m|
+              m[k] = nil
+            end
         end
         CONFIG_ATTRS.each do |attr_name|
           value = default_config_options[attr_name.to_s]
@@ -128,8 +132,8 @@ module Metanorma
         end
       end
 
-      def blank?(v)
-        v.nil? || v.respond_to?(:empty?) && v.empty?
+      def blank?(val)
+        val.nil? || val.respond_to?(:empty?) && val.empty?
       end
 
       def absolute_path(value, root_path)
@@ -145,13 +149,13 @@ module Metanorma
         end
       end
 
-      def absolute_path1(h, pref)
-        h.reject { |k, v| blank?(v) }.each_with_object({}) do |(k, v), g|
+      def absolute_path1(hash, pref)
+        hash.reject { |_k, v| blank?(v) }
+          .each_with_object({}) do |(k, v), g|
           g[k] = absolute_path(v, pref)
         end
       end
     end
-
 
     class << self
       extend Forwardable
