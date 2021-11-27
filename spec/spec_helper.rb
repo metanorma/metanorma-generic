@@ -10,7 +10,6 @@ require "equivalent-xml"
 require "htmlentities"
 require "metanorma"
 require "rexml/document"
-require 'byebug'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
