@@ -12,14 +12,15 @@ module IsoDoc
       def term_cleanup(docxml)
         docxml.xpath("//p[@class = 'Terms']").each do |d|
           h2 = d.at("./preceding-sibling::*[@class = 'TermNum'][1]")
-          h2.add_child("&nbsp;")
-          h2.add_child(d.remove)
+          d["id"] = h2["id"]
+          d.children.first.previous =
+            "<strong>#{h2.remove.children.to_xml}</strong>&nbsp;"
         end
         docxml
       end
 
       def make_body(xml, docxml)
-        body_attr = { lang: "EN-US", link: "blue", vlink: "#954F72", 
+        body_attr = { lang: "EN-US", link: "blue", vlink: "#954F72",
                       "xml:lang": "EN-US", class: "container" }
         xml.body **body_attr do |body|
           make_body1(body, docxml)
