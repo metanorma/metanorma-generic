@@ -4,7 +4,7 @@ require "forwardable"
 require "yaml"
 
 module Metanorma
-  module Generic
+  module Generic # rubocop:disable Style/MutableConstant
     ORGANIZATION_NAME_SHORT = "Acme"
     ORGANIZATION_NAME_LONG = "Acme Corp."
     DOCUMENT_NAMESPACE = "https://www.metanorma.org/ns/generic"
@@ -63,23 +63,10 @@ module Metanorma
       ].freeze
 
       def filepath_attrs
-        %i[
-          i18nyaml
-          boilerplate
-          logo_path
-          logo_paths
-          header
-          htmlcoverpage
-          htmlintropage
-          htmlstylesheet
-          scripts
-          scripts_pdf
-          standardstylesheet
-          validate_rng_file
-          wordcoverpage
-          wordintropage
-          wordstylesheet
-        ]
+        %i[i18nyaml boilerplate logo_path logo_paths header
+           htmlcoverpage htmlintropage htmlstylesheet scripts scripts_pdf
+           standardstylesheet validate_rng_file wordcoverpage wordintropage
+           wordstylesheet]
       end
 
       attr_accessor(*CONFIG_ATTRS)
@@ -88,7 +75,7 @@ module Metanorma
         attr_accessor :_file
       end
 
-      def self.inherited(klass)
+      def self.inherited(klass) # rubocop:disable Lint/MissingSuper
         klass._file = caller_locations(1..1).first.absolute_path
       end
 
@@ -115,7 +102,8 @@ module Metanorma
 
       def set_default_values_from_yaml_file(config_file)
         root_path = File.dirname(self.class::_file || __FILE__)
-        default_config_options = YAML.load(File.read(config_file))
+        default_config_options =
+          YAML.safe_load(File.read(config_file, encoding: "UTF-8"))
         if default_config_options["doctypes"].is_a? Array
           default_config_options["doctypes"] =
             default_config_options["doctypes"].each_with_object({}) do |k, m|
@@ -133,7 +121,7 @@ module Metanorma
       end
 
       def blank?(val)
-        val.nil? || val.respond_to?(:empty?) && val.empty?
+        val.nil? || (val.respond_to?(:empty?) && val.empty?)
       end
 
       def absolute_path(value, root_path)
