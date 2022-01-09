@@ -1,6 +1,6 @@
 require "metanorma/generic"
 require "asciidoctor"
-require "asciidoctor/generic"
+require "metanorma/generic/converter"
 require "isodoc/generic"
 
 if defined? Metanorma

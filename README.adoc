@@ -31,7 +31,7 @@ Metanorma::Generic.configure do |config|
   config.document_namespace = 'https://open.ribose.com/standards/mine'
   config.xml_root_tag = 'mine-standard'
   config.logo_path = '/metanorma-mine/lib/isodoc/mine/html/logo.jpg'
-  config.validate_rng_file = '/metanorma-mine/lib/asciidoctor/mine/mine.rng'
+  config.validate_rng_file = '/metanorma-mine/lib/metanorma/mine/mine.rng'
   config.htmlcoverpage = '/metanorma-mine/lib/isodoc/mine/html/html_mine_titlepage.html'
   config.htmlintropage = '/metanorma-mine/lib/isodoc/mine/html/html_mine_intro.html'
   config.htmlstylesheet = '/metanorma-mine/lib/isodoc/mine/html/htmlstyle.scss'

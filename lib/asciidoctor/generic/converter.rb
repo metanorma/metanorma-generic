@@ -1,3 +1,3 @@
 require "asciidoctor/generic/deprecated"
-require "metanorma/generic"
+require "metanorma/generic/converter"
 

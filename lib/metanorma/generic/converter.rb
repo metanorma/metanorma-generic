@@ -1,9 +1,9 @@
 require "asciidoctor"
-require "asciidoctor/standoc/converter"
+require "metanorma/standoc/converter"
 require "fileutils"
 require_relative "front"
 
-module Asciidoctor
+module Metanorma
   module Generic
     class Converter < Standoc::Converter
       XML_ROOT_TAG = "generic-standard".freeze

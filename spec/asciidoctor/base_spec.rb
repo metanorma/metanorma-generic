@@ -3,7 +3,7 @@ require "fileutils"
 
 OPTIONS = [backend: :generic, header_footer: true].freeze
 
-RSpec.describe Asciidoctor::Generic do
+RSpec.describe Metanorma::Generic do
   it "processes a blank document" do
     input = <<~"INPUT"
       #{ASCIIDOC_BLANK_HDR}
@@ -235,9 +235,9 @@ RSpec.describe Asciidoctor::Generic do
     end
 
     context "organization" do
-      let(:input) { File.read(fixture_path("asciidoctor/test_input.adoc")) }
+      let(:input) { File.read(fixture_path("metanorma/test_input.adoc")) }
       let(:output) do
-        File.read(fixture_path("asciidoctor/test_output.xml")) %
+        File.read(fixture_path("metanorma/test_output.xml")) %
           { organization_name_short: organization_name_short,
             organization_name_long: organization_name_long,
             metadata_extensions_out: "<security>Client Confidential</security>"\
@@ -264,8 +264,8 @@ RSpec.describe Asciidoctor::Generic do
       let(:relations) { ["supersedes", "superseded-by"] }
       let(:i18nyaml) { "spec/assets/i18n.yaml" }
       let(:i18nyaml1) { { "en" => "spec/assets/i18n.yaml" } }
-      let(:boilerplate) { "spec/fixtures/asciidoctor/boilerplate.xml" }
-      let(:boilerplate1) { { "en" => "spec/fixtures/asciidoctor/boilerplate.xml" } }
+      let(:boilerplate) { "spec/fixtures/metanorma/boilerplate.xml" }
+      let(:boilerplate1) { { "en" => "spec/fixtures/metanorma/boilerplate.xml" } }
 
       it "uses configuration options for organization and namespace" do
         Metanorma::Generic.configure do |config|
@@ -319,7 +319,7 @@ RSpec.describe Asciidoctor::Generic do
           config.i18nyaml = i18nyaml1
           config.boilerplate = boilerplate1
         end
-        output = File.read(fixture_path("asciidoctor/test_output.xml")) %
+        output = File.read(fixture_path("metanorma/test_output.xml")) %
           { organization_name_short: organization_name_short,
             organization_name_long: organization_name_long,
             metadata_extensions_out: "<comment-period type='N1'><from>N2"\

@@ -1,4 +1,4 @@
-module Asciidoctor
+module Metanorma
   module Generic
     class Converter < Standoc::Converter
       def default_publisher
