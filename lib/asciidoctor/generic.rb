@@ -1,7 +1,3 @@
-require "asciidoctor/generic/converter"
+require "asciidoctor/generic/deprecated"
+require "metanorma/generic"
 
-module Asciidoctor
-  module Generic
-
-  end
-end
