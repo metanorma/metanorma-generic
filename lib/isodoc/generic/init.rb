@@ -11,7 +11,7 @@ module IsoDoc
         @meta = Metadata.new(lang, script, i18n)
       end
 
-      def xref_init(lang, script, klass, i18n, options)
+      def xref_init(lang, script, _klass, i18n, options)
         html = HtmlConvert.new(language: lang, script: script)
         @xrefs = Xref.new(lang, script, html, i18n, options)
       end
@@ -20,7 +20,7 @@ module IsoDoc
         f = Metanorma::Generic.configuration.i18nyaml
         f = nil unless f.is_a? String
         @i18n = I18n.new(
-          lang, script, i18nyaml || f || @i18nyaml)
+          lang, script, i18nyaml: i18nyaml || f || @i18nyaml)
       end
 
       include Utils
