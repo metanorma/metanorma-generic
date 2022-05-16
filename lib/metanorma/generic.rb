@@ -3,7 +3,6 @@ require "metanorma/generic/version"
 require "forwardable"
 require "yaml"
 
-
 module Metanorma
   module Generic # rubocop:disable Style/MutableConstant
     ORGANIZATION_NAME_SHORT = "Acme"

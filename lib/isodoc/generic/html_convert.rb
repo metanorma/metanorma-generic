@@ -4,7 +4,6 @@ require "isodoc"
 
 module IsoDoc
   module Generic
-
     # A {Converter} implementation that generates HTML output, and a document
     # schema encapsulation of the document for validation
     #
@@ -18,19 +17,25 @@ module IsoDoc
         attr_accessor :_file
       end
 
-      def self.inherited( k )
-        k._file = caller_locations.first.absolute_path
+      def self.inherited(k)
+        k._file = caller_locations(1..1).first.absolute_path
       end
 
       def default_fonts(options)
         {
           bodyfont: (
-            options[:script] == "Hans" ? '"Source Han Sans",serif' :
-            configuration.html_bodyfont || '"Overpass",sans-serif'
+            if options[:script] == "Hans"
+              '"Source Han Sans",serif'
+            else
+              configuration.html_bodyfont || '"Overpass",sans-serif'
+            end
           ),
           headerfont: (
-            options[:script] == "Hans" ? '"Source Han Sans",sans-serif' : 
-            configuration.html_headerfont || '"Overpass",sans-serif'
+            if options[:script] == "Hans"
+              '"Source Han Sans",sans-serif'
+            else
+              configuration.html_headerfont || '"Overpass",sans-serif'
+            end
           ),
           monospacefont: configuration.html_monospacefont || '"Space Mono",monospace',
           normalfontsize: configuration.html_normalfontsize,
@@ -43,21 +48,23 @@ module IsoDoc
       def default_file_locations(_options)
         {
           htmlstylesheet: baselocation(configuration.htmlstylesheet) ||
-          html_doc_path("htmlstyle.scss"),
+            html_doc_path("htmlstyle.scss"),
           htmlcoverpage: baselocation(configuration.htmlcoverpage) ||
-          html_doc_path("html_generic_titlepage.html"),
+            html_doc_path("html_generic_titlepage.html"),
           htmlintropage: baselocation(configuration.htmlintropage) ||
-          html_doc_path("html_generic_intro.html"),
+            html_doc_path("html_generic_intro.html"),
           scripts: baselocation(configuration.scripts),
-          i18nyaml: (configuration.i18nyaml.is_a?(String) ? 
-                     baselocation(configuration.i18nyaml) : nil)
+          i18nyaml: (if configuration.i18nyaml.is_a?(String)
+                       baselocation(configuration.i18nyaml)
+                     end),
         }.transform_values { |v| v&.empty? ? nil : v }
       end
 
       def googlefonts
         return unless configuration.webfont
+
         Array(configuration.webfont).map do |x|
-          %{<link href="#{x.gsub(/\&amp;/, '&')}" rel="stylesheet">}
+          %{<link href="#{x}" rel="stylesheet"/>}
         end.join("\n")
       end
 
@@ -66,4 +73,3 @@ module IsoDoc
     end
   end
 end
-
