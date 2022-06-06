@@ -340,7 +340,7 @@ RSpec.describe IsoDoc::Generic do
         expect(doc).to match(/aside \{[^}]*?font-size: 27pt/m)
         expect(doc).to match(/Word stylesheet/)
         html = File.read("test.html", encoding: "utf-8")
-        expect(html).to include '<link href="Jack&amp;x" rel="stylesheet" />'
+        expect(html).to include '<link href="Jack&#x26;x" rel="stylesheet" />'
         expect(html).to include '<link href="Jill?x" rel="stylesheet" />'
         expect(html).to match(/I am an HTML stylesheet/)
         expect(html).to match(/p \{[^}]*?font-family: Zapf/m)
