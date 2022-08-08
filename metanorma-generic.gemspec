@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = Gem::Requirement.new(">= 2.5.0")
 
   spec.add_dependency "htmlentities", "~> 4.3.4"
-  spec.add_dependency "metanorma-standoc", "~> 2.1.0"
+  spec.add_dependency "metanorma-standoc", "~> 2.2.0"
   spec.add_dependency "ruby-jing"
 
   spec.add_development_dependency "debug"

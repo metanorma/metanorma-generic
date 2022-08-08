@@ -65,7 +65,7 @@ module Metanorma
         elsif configuration&.bibliography_titles&.map(&:downcase)&.include? ret
           "bibliography"
         else
-          ret
+          super
         end
       end
 
