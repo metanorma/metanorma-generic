@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary       = "Metanorma template gem for customisation."
   spec.description   = <<~DESCRIPTION
         Metanorma template gem for customisation. This gem is meant to be customised for any downstream use.
-    #{'    '}
+
         Formerly known as metanorma-acme
   DESCRIPTION
 
@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = Gem::Requirement.new(">= 2.5.0")
 
   spec.add_dependency "htmlentities", "~> 4.3.4"
-  spec.add_dependency "metanorma-standoc", "~> 2.2.2"
+  spec.add_dependency "metanorma-standoc", "~> 2.2.4"
   spec.add_dependency "ruby-jing"
 
   spec.add_development_dependency "debug"

@@ -28,7 +28,7 @@ end
 module IsoDoc
   module Generic
     class Metadata < IsoDoc::Metadata
-      def initialize(lang, script, labels)
+      def initialize(lang, script, locale, labels)
         super
         here = File.dirname(__FILE__)
         default_logo_path =
