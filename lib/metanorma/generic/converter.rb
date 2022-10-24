@@ -33,13 +33,12 @@ module Metanorma
           "{{ organization_name_short }} {{ docnumeric }}"
         docid = xmldoc.at("//bibdata/docidentifier")
         id = boilerplate_isodoc(xmldoc).populate_template(template, nil)
-        id.empty? and docid.remove or docid.children = id
+        (id.empty? and docid.remove) or docid.children = id
       end
 
       def doctype(node)
         d = super
-        configuration.doctypes or return d == "article" ?
-          (configuration.default_doctype || "standard") : d
+        configuration.doctypes or return d == "article" ? (configuration.default_doctype || "standard") : d
         type = configuration.default_doctype ||
           configuration.doctypes.keys.dig(0) || "standard"
         unless configuration.doctypes.keys.include? d
@@ -56,13 +55,13 @@ module Metanorma
       end
 
       def sectiontype_streamline(ret)
-        if configuration&.termsdefs_titles&.map(&:downcase)&.include? ret
+        if configuration.termsdefs_titles&.map(&:downcase)&.include? ret
           "terms and definitions"
-        elsif configuration&.symbols_titles&.map(&:downcase)&.include? ret
+        elsif configuration.symbols_titles&.map(&:downcase)&.include? ret
           "symbols and abbreviated terms"
-        elsif configuration&.normref_titles&.map(&:downcase)&.include? ret
+        elsif configuration.normref_titles&.map(&:downcase)&.include? ret
           "normative references"
-        elsif configuration&.bibliography_titles&.map(&:downcase)&.include? ret
+        elsif configuration.bibliography_titles&.map(&:downcase)&.include? ret
           "bibliography"
         else
           super
@@ -103,7 +102,7 @@ module Metanorma
       end
 
       def stage_validate(xmldoc)
-        stages = configuration&.stage_abbreviations&.keys || return
+        stages = configuration.stage_abbreviations&.keys || return
         stages.empty? and return
         stage = xmldoc&.at("//bibdata/status/stage")&.text
         stages.include? stage or
