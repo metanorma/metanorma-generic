@@ -32,105 +32,106 @@ RSpec.configure do |config|
   end
 end
 
-def metadata(x)
-  Hash[x.sort].delete_if{ |k, v| v.nil? || v.respond_to?(:empty?) && v.empty? }
+def metadata(xml)
+  xml.sort.to_h.delete_if do |_k, v|
+    v.nil? || (v.respond_to?(:empty?) && v.empty?)
+  end
 end
 
 def fixture_path(path)
-  File.join(File.expand_path('./fixtures', __dir__), path)
+  File.join(File.expand_path("./fixtures", __dir__), path)
 end
 
-def strip_guid(x)
-  x.gsub(%r{ id="_[^"]+"}, ' id="_"').gsub(%r{ target="_[^"]+"}, ' target="_"')
+def strip_guid(xml)
+  xml.gsub(%r{ id="_[^"]+"}, ' id="_"').gsub(%r{ target="_[^"]+"}, ' target="_"')
 end
 
-def htmlencode(x)
-  HTMLEntities.new.encode(x, :hexadecimal).gsub(/&#x3e;/, ">").gsub(/&#xa;/, "\n").
-    gsub(/&#x22;/, '"').gsub(/&#x3c;/, "<").gsub(/&#x26;/, '&').gsub(/&#x27;/, "'").
-    gsub(/\\u(....)/) { |s| "&#x#{$1.downcase};" }
+def htmlencode(xml)
+  HTMLEntities.new.encode(xml, :hexadecimal).gsub(/&#x3e;/, ">")
+    .gsub(/&#xa;/, "\n")
+    .gsub(/&#x22;/, '"').gsub(/&#x3c;/, "<").gsub(/&#x26;/, "&")
+    .gsub(/&#x27;/, "'").gsub(/\\u(....)/) do |_s|
+    "&#x#{$1.downcase};"
+  end
 end
 
-def xmlpp(x)
-  s = ""
-  f = REXML::Formatters::Pretty.new(2)
-  f.compact = true
-  f.write(REXML::Document.new(x),s)
-  s
+def xmlpp(xml)
+  Nokogiri::XML(xml).to_xml(indent: 2, encoding: "UTF-8")
 end
 
 ASCIIDOC_BLANK_HDR = <<~"HDR"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :novalid:
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
+  :novalid:
 
 HDR
 
 VALIDATING_BLANK_HDR = <<~"HDR"
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
+  = Document title
+  Author
+  :docfile: test.adoc
+  :nodoc:
 
 HDR
 
 BLANK_HDR = <<~"HDR"
-       <?xml version="1.0" encoding="UTF-8"?>
-       <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}" type="semantic" version="#{Metanorma::Generic::VERSION}">
-       <bibdata type="standard">
-        <title language="en" format="text/plain">Document title</title>
-         <docidentifier type="Acme">Acme </docidentifier>
-         <contributor>
-           <role type="author"/>
-           <organization>
-             <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
-             <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
-             <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
-           </organization>
-         </contributor>
+  <?xml version="1.0" encoding="UTF-8"?>
+  <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}" type="semantic" version="#{Metanorma::Generic::VERSION}">
+  <bibdata type="standard">
+   <title language="en" format="text/plain">Document title</title>
+    <docidentifier type="Acme">Acme </docidentifier>
+    <contributor>
+      <role type="author"/>
+      <organization>
+        <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+        <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
+      </organization>
+    </contributor>
+    <contributor>
+      <role type="publisher"/>
+      <organization>
+        <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+        <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
+      </organization>
+    </contributor>
 
-         <language>en</language>
-         <script>Latn</script>
-         <status>
-                <stage>published</stage>
-        </status>
-         <copyright>
-           <from>#{Time.new.year}</from>
-           <owner>
-             <organization>
-               <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
-             <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
-             </organization>
-           </owner>
-         </copyright>
-         <ext>
-         <doctype>standard</doctype>
-         </ext>
-       </bibdata>
+    <language>en</language>
+    <script>Latn</script>
+    <status>
+           <stage>published</stage>
+   </status>
+    <copyright>
+      <from>#{Time.new.year}</from>
+      <owner>
+        <organization>
+          <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+        <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
+        </organization>
+      </owner>
+    </copyright>
+    <ext>
+    <doctype>standard</doctype>
+    </ext>
+  </bibdata>
 HDR
 
 HTML_HDR = <<~"HDR"
-           <body lang="EN-US" link="blue" vlink="#954F72" xml:lang="EN-US" class="container">
-           <div class="title-section">
-             <p>&#160;</p>
-           </div>
-           <br/>
-           <div class="prefatory-section">
-             <p>&#160;</p>
-           </div>
-           <br/>
-           <div class="main-section">
+  <body lang="EN-US" link="blue" vlink="#954F72" xml:lang="EN-US" class="container">
+  <div class="title-section">
+    <p>&#160;</p>
+  </div>
+  <br/>
+  <div class="prefatory-section">
+    <p>&#160;</p>
+  </div>
+  <br/>
+  <div class="main-section">
 HDR
 
 def mock_pdf
-  allow(::Mn2pdf).to receive(:convert) do |url, output, c, d|
+  allow(::Mn2pdf).to receive(:convert) do |url, output, _c, _d|
     FileUtils.cp(url.gsub(/"/, ""), output.gsub(/"/, ""))
   end
 end
