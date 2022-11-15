@@ -42,7 +42,8 @@ def fixture_path(path)
 end
 
 def strip_guid(xml)
-  xml.gsub(%r{ id="_[^"]+"}, ' id="_"').gsub(%r{ target="_[^"]+"}, ' target="_"')
+  xml.gsub(%r{ id="_[^"]+"}, ' id="_"').gsub(%r{ target="_[^"]+"},
+                                             ' target="_"')
 end
 
 def htmlencode(xml)
@@ -55,7 +56,7 @@ def htmlencode(xml)
 end
 
 def xmlpp(xml)
-   xsl = <<~XSL
+  xsl = <<~XSL
     <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
       <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
       <xsl:strip-space elements="*"/>
