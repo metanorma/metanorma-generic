@@ -8,7 +8,7 @@ module IsoDoc
       def annex1(elem)
         lbl = @xrefs.anchor(elem["id"], :label)
         if t = elem.at(ns("./title"))
-          t.children = "<strong>#{t.children.to_xml}</strong>"
+          t.children = "<strong>#{to_xml(t.children)}</strong>"
         end
         prefix_name(elem, "<br/>", lbl, "title")
       end
