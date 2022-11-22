@@ -14,7 +14,7 @@ module IsoDoc
           h2 = d.at("./preceding-sibling::*[@class = 'TermNum'][1]")
           d["id"] = h2["id"]
           d.children.first.previous =
-            "<strong>#{h2.remove.children.to_xml}</strong>&#xa0;"
+            "<strong>#{to_xml(h2.remove.children)}</strong>&#xa0;"
         end
         docxml
       end
