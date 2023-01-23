@@ -669,7 +669,7 @@ RSpec.describe IsoDoc::Generic do
     OUTPUT
 
     expect(
-      xmlpp(IsoDoc::Generic::PresentationXMLConvert.new({})
+      xmlpp(IsoDoc::Generic::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)),
     ).to be_equivalent_to xmlpp(output)
   end

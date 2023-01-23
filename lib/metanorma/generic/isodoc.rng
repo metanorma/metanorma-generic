@@ -572,6 +572,11 @@
           </attribute>
         </optional>
         <optional>
+          <attribute name="linenums">
+            <data type="boolean"/>
+          </attribute>
+        </optional>
+        <optional>
           <ref name="tname"/>
         </optional>
         <oneOrMore>
@@ -1239,6 +1244,11 @@
   <define name="concept">
     <element name="concept">
       <optional>
+        <attribute name="bold">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <optional>
         <attribute name="ital">
           <data type="boolean"/>
         </attribute>
@@ -1570,7 +1580,7 @@
     </element>
   </define>
   <define name="misccontainer">
-    <element name="misc-container">
+    <element name="metanorma-extension">
       <oneOrMore>
         <ref name="AnyElement"/>
       </oneOrMore>
@@ -2653,7 +2663,7 @@
       <value>full</value>
       <value>short</value>
       <value>id</value>
-      <value>modspec</value>
+      <text/>
     </choice>
   </define>
   <define name="erefTypeWithConnective">
