@@ -88,6 +88,63 @@ RSpec.describe Metanorma::Generic do
         expect(config.document_namespace)
           .to(eq(default_document_namespace))
       end
+
+      it "processes docidentifier override" do
+        input = <<~INPUT
+          = Document title
+          Author
+          :docfile: test.adoc
+          :nodoc:
+          :novalid:
+          :no-isobib:
+          :docidentifier: OVERRIDE
+          :docnumber: 1000
+        INPUT
+        output = <<~OUTPUT
+          <generic-standard xmlns="https://www.metanorma.org/ns/generic" type="semantic" version="2.3.0">
+            <bibdata type="standard">
+              <title language="en" format="text/plain">Document title</title>
+              <docidentifier type="Acme">OVERRIDE</docidentifier>
+              <docnumber>1000</docnumber>
+              <contributor>
+                <role type="author"/>
+                <organization>
+                  <name>Acme Corp.</name>
+                  <abbreviation>Acme</abbreviation>
+                </organization>
+              </contributor>
+              <contributor>
+                <role type="publisher"/>
+                <organization>
+                  <name>Acme Corp.</name>
+                  <abbreviation>Acme</abbreviation>
+                </organization>
+              </contributor>
+              <language>en</language>
+              <script>Latn</script>
+              <status>
+                <stage>published</stage>
+              </status>
+              <copyright>
+                <from>2023</from>
+                <owner>
+                  <organization>
+                    <name>Acme Corp.</name>
+                    <abbreviation>Acme</abbreviation>
+                  </organization>
+                </owner>
+              </copyright>
+              <ext>
+                <doctype>standard</doctype>
+              </ext>
+            </bibdata>
+            <sections/>
+          </generic-standard>
+        OUTPUT
+        expect(xmlpp(Asciidoctor.convert(input, backend: :generic,
+                                                header_footer: true)))
+          .to be_equivalent_to xmlpp(output)
+      end
     end
 
     context "attribute setters" do

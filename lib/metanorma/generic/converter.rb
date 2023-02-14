@@ -32,6 +32,7 @@ module Metanorma
         template = configuration.docid_template ||
           "{{ organization_name_short }} {{ docnumeric }}"
         docid = xmldoc.at("//bibdata/docidentifier")
+        docid&.text&.empty? or return
         id = boilerplate_isodoc(xmldoc).populate_template(template, nil)
         (id.empty? and docid.remove) or docid.children = id
       end
