@@ -141,8 +141,10 @@ RSpec.describe Metanorma::Generic do
             <sections/>
           </generic-standard>
         OUTPUT
-        expect(xmlpp(Asciidoctor.convert(input, backend: :generic,
-                                                header_footer: true)))
+        xml = Nokogiri::XML(Asciidoctor.convert(input, backend: :generic,
+                                                header_footer: true))
+        xml.at("//xmlns:metanorma-extension").remove
+        expect(xmlpp(xml.to_xml))
           .to be_equivalent_to xmlpp(output)
       end
     end

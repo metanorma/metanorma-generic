@@ -121,6 +121,20 @@ RSpec.describe Metanorma::Generic do
         </editorialgroup>
         </ext>
       </bibdata>
+               <metanorma-extension>
+           <presentation-metadata>
+             <name>TOC Heading Levels</name>
+             <value>2</value>
+           </presentation-metadata>
+           <presentation-metadata>
+             <name>HTML TOC Heading Levels</name>
+             <value>2</value>
+           </presentation-metadata>
+           <presentation-metadata>
+             <name>DOC TOC Heading Levels</name>
+             <value>2</value>
+           </presentation-metadata>
+         </metanorma-extension>
       <sections/>
       </generic-standard>
     OUTPUT
@@ -156,41 +170,6 @@ RSpec.describe Metanorma::Generic do
     INPUT
     output = <<~"OUTPUT"
           <generic-standard xmlns='https://www.metanorma.org/ns/generic'  type="semantic" version="#{Metanorma::Generic::VERSION}">
-        <bibdata type='standard'>
-          <title language='en' format='text/plain'>Document title</title>
-          <docidentifier type='Acme'>Acme </docidentifier>
-          <contributor>
-            <role type='author'/>
-            <organization>
-              <name>Acme Corp.</name>
-              <abbreviation>Acme</abbreviation>
-            </organization>
-          </contributor>
-          <contributor>
-            <role type='publisher'/>
-            <organization>
-              <name>Acme Corp.</name>
-              <abbreviation>Acme</abbreviation>
-            </organization>
-          </contributor>
-          <language>en</language>
-          <script>Latn</script>
-          <status>
-            <stage>published</stage>
-          </status>
-          <copyright>
-            <from>#{Time.now.year}</from>
-            <owner>
-              <organization>
-                <name>Acme Corp.</name>
-              <abbreviation>Acme</abbreviation>
-              </organization>
-            </owner>
-          </copyright>
-          <ext>
-            <doctype>standard</doctype>
-          </ext>
-        </bibdata>
         <preface>
           <introduction id='_' obligation='informative'>
             <title>Introduction</title>
@@ -225,8 +204,11 @@ RSpec.describe Metanorma::Generic do
         </bibliography>
       </generic-standard>
     OUTPUT
-    expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to xmlpp(strip_guid(output))
+    xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
+    xml.at("//xmlns:bibdata").remove
+    xml.at("//xmlns:metanorma-extension").remove
+    expect(xmlpp(strip_guid(xml.to_xml)))
+      .to be_equivalent_to xmlpp(strip_guid((output)))
   end
 
   context "with configuration options" do
@@ -240,8 +222,8 @@ RSpec.describe Metanorma::Generic do
         File.read(fixture_path("metanorma/test_output.xml")) %
           { organization_name_short: organization_name_short,
             organization_name_long: organization_name_long,
-            metadata_extensions_out: "<security>Client Confidential</security>"\
-            "<insecurity>Client Unconfidential</insecurity>",
+            metadata_extensions_out: "<security>Client Confidential</security>" \
+                                     "<insecurity>Client Unconfidential</insecurity>",
             document_namespace: document_namespace,
             version: Metanorma::Generic::VERSION }
       end
@@ -249,9 +231,21 @@ RSpec.describe Metanorma::Generic do
       let(:organization_name_short) { "Test" }
       let(:organization_name_long) { "Test Corp." }
       let(:document_namespace) { "https://example.com/" }
-      let(:docid_template) { "{{ organization_name_long }} {{ docnumeric }} {{ stage }}" }
+      let(:docid_template) do
+        "{{ organization_name_long }} {{ docnumeric }} {{ stage }}"
+      end
       let(:metadata_extensions) { ["security", "insecurity"] }
-      let(:metadata_extensions1) { { "comment-period" => { "comment-period-type" => { "_output" => "type", "_attribute" => true }, "comment-period-from" => { "_output" => "from", "_list" => true }, "comment-period-to" => { "_output" => "to" }, "reply-to" => nil, "more" => { "more1" => nil } }, "security" => nil } }
+      let(:metadata_extensions1) do
+        {
+          "comment-period" => {
+            "comment-period-type" => { "_output" => "type",
+                                       "_attribute" => true },
+            "comment-period-from" => { "_output" => "from", "_list" => true },
+            "comment-period-to" => { "_output" => "to" },
+            "reply-to" => nil, "more" => { "more1" => nil }
+          }, "security" => nil
+        }
+      end
       let(:stage_abbreviations) { { "ready" => "", "steady" => "" } }
       let(:doctypes) { { "lion" => nil, "elephant" => "E" } }
       let(:default_doctype) { "elephant" }
@@ -265,7 +259,9 @@ RSpec.describe Metanorma::Generic do
       let(:i18nyaml) { "spec/assets/i18n.yaml" }
       let(:i18nyaml1) { { "en" => "spec/assets/i18n.yaml" } }
       let(:boilerplate) { "spec/fixtures/metanorma/boilerplate.xml" }
-      let(:boilerplate1) { { "en" => "spec/fixtures/metanorma/boilerplate.xml" } }
+      let(:boilerplate1) do
+        { "en" => "spec/fixtures/metanorma/boilerplate.xml" }
+      end
 
       it "uses configuration options for organization and namespace" do
         Metanorma::Generic.configure do |config|
@@ -322,9 +318,9 @@ RSpec.describe Metanorma::Generic do
         output = File.read(fixture_path("metanorma/test_output.xml")) %
           { organization_name_short: organization_name_short,
             organization_name_long: organization_name_long,
-            metadata_extensions_out: "<comment-period type='N1'><from>N2"\
-            "</from><from>N3</from><to>N4</to></comment-period>"\
-            "<security>Client Confidential</security>",
+            metadata_extensions_out: "<comment-period type='N1'><from>N2" \
+                                     "</from><from>N3</from><to>N4</to></comment-period>" \
+                                     "<security>Client Confidential</security>",
             document_namespace: document_namespace,
             version: Metanorma::Generic::VERSION }
         expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
@@ -439,53 +435,55 @@ RSpec.describe Metanorma::Generic do
     it "recognizes `customize` option and uses supplied file as the config file" do
       expect { Asciidoctor.convert(input, *OPTIONS) }
         .to(change do
-              [config.organization_name_short, config.organization_name_long, config.document_namespace]
+              [config.organization_name_short, config.organization_name_long,
+               config.document_namespace]
             end.from(["", "", ""])
-              .to([organization_name_short, organization_name_long, document_namespace]))
+              .to([organization_name_short, organization_name_long,
+                   document_namespace]))
     end
 
     it "deals with array doctypes" do
-      expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to(be_equivalent_to(xmlpp(<<~OUTPUT)))
-                 <generic-standard xmlns="https://example.com/" type="semantic" version="#{Metanorma::Generic::VERSION}">
-            <bibdata type='standard'>
-              <title language='en' format='text/plain'>Document title</title>
-              <docidentifier type='Test'>Test </docidentifier>
-              <contributor>
-                <role type='author'/>
-                <organization>
-                  <name>Test Corp.</name>
-                  <abbreviation>Test</abbreviation>
-                </organization>
-              </contributor>
-              <contributor>
-                <role type='publisher'/>
-                <organization>
-                  <name>Test Corp.</name>
-                  <abbreviation>Test</abbreviation>
-                </organization>
-              </contributor>
-              <language>en</language>
-              <script>Latn</script>
-              <status>
-                <stage>published</stage>
-              </status>
-              <copyright>
-                <from>#{Time.now.year}</from>
-                <owner>
-                  <organization>
-                    <name>Test Corp.</name>
-                    <abbreviation>Test</abbreviation>
-                  </organization>
-                </owner>
-              </copyright>
-              <ext>
-                <doctype>standard</doctype>
-              </ext>
-            </bibdata>
-            <sections> </sections>
-          </generic-standard>
-        OUTPUT
+      output = <<~OUTPUT
+        <bibdata type='standard'>
+          <title language='en' format='text/plain'>Document title</title>
+          <docidentifier type='Test'>Test </docidentifier>
+          <contributor>
+            <role type='author'/>
+            <organization>
+              <name>Test Corp.</name>
+              <abbreviation>Test</abbreviation>
+            </organization>
+          </contributor>
+          <contributor>
+            <role type='publisher'/>
+            <organization>
+              <name>Test Corp.</name>
+              <abbreviation>Test</abbreviation>
+            </organization>
+          </contributor>
+          <language>en</language>
+          <script>Latn</script>
+          <status>
+            <stage>published</stage>
+          </status>
+          <copyright>
+            <from>#{Time.now.year}</from>
+            <owner>
+              <organization>
+                <name>Test Corp.</name>
+                <abbreviation>Test</abbreviation>
+              </organization>
+            </owner>
+          </copyright>
+          <ext>
+            <doctype>standard</doctype>
+          </ext>
+        </bibdata>
+      OUTPUT
+      xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
+      xml = xml.at("//xmlns:bibdata")
+      expect(xmlpp(xml.to_xml))
+        .to(be_equivalent_to(xmlpp(output)))
     end
   end
 
