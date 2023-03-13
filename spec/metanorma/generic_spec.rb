@@ -101,7 +101,7 @@ RSpec.describe Metanorma::Generic do
           :docnumber: 1000
         INPUT
         output = <<~OUTPUT
-          <generic-standard xmlns="https://www.metanorma.org/ns/generic" type="semantic" version="2.3.0">
+          <generic-standard xmlns="https://www.metanorma.org/ns/generic" type="semantic">
             <bibdata type="standard">
               <title language="en" format="text/plain">Document title</title>
               <docidentifier type="Acme">OVERRIDE</docidentifier>
@@ -144,6 +144,7 @@ RSpec.describe Metanorma::Generic do
         xml = Nokogiri::XML(Asciidoctor.convert(input, backend: :generic,
                                                 header_footer: true))
         xml.at("//xmlns:metanorma-extension").remove
+        xml.at("//xmlns:generic-standard/@version").remove
         expect(xmlpp(xml.to_xml))
           .to be_equivalent_to xmlpp(output)
       end
