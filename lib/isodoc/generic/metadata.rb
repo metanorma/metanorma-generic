@@ -11,7 +11,10 @@ class Nokogiri::XML::Node
       h[:text] = text&.strip
       a = attribute_nodes.map(&:to_hash)
       if element? && !a.empty?
-        h[:attr] = a.inject({}) { |m, v| m[v[:name]] = v[:text]; m }
+        h[:attr] = a.inject({}) do |m, v|
+          m[v[:name]] = v[:text]
+          m
+        end
       end
       c = children.map(&:to_hash)
       if element? && !(c&.size == 1 && c[0][:kind] == "text")

@@ -12,11 +12,16 @@ module IsoDoc
       def baselocation(loc)
         return nil if loc.nil?
         return "" if loc.empty?
+
         return loc
-        f = defined?(self.class::_file) ? (self.class::_file || __FILE__) :
-          __FILE__
+        f = if defined?(self.class::_file)
+              (self.class::_file || __FILE__)
+            else
+              __FILE__
+            end
         File.expand_path(File.join(
-          File.dirname(f), "..", "..", "..", loc))
+                           File.dirname(f), "..", "..", "..", loc
+                         ))
       end
     end
   end

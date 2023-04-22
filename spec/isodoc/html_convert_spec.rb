@@ -350,9 +350,12 @@ RSpec.describe IsoDoc::Generic do
         expect(html).to match(/code \{[^}]*?font-size: 29pt/m)
         expect(html).to match(/p\.note \{[^}]*?font-size: 28pt/m)
         expect(html).to match(/aside \{[^}]*?font-size: 27pt/m)
-        expect(html.gsub(%r{^.*<main}m, "<main")
-          .gsub(%r{</main>.*}m, "</main>")).to be_equivalent_to <<~OUTPUT
+        expect(xmlpp(html
+          .gsub(%r{^.*<main}m, "<main")
+          .gsub(%r{</main>.*}m, "</main>")))
+          .to be_equivalent_to xmlpp(<<~OUTPUT)
                 <main class="main-section"><button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+                <br/>
               <p class="zzSTDTitle1">Main Title</p>
               <div>
                 <h1></h1>
@@ -553,11 +556,14 @@ RSpec.describe IsoDoc::Generic do
     output = <<~"OUTPUT"
        <generic-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
          <preface>
-           <foreword obligation='informative' displayorder='1'>
+           <clause type="toc" displayorder="1">
+                <title depth="1">Table of contents</title>
+            </clause>
+           <foreword obligation='informative' displayorder='2'>
              <title>Foreword</title>
              <p id='A'>This is a preamble</p>
            </foreword>
-           <introduction id='B' obligation='informative' displayorder='2'>
+           <introduction id='B' obligation='informative' displayorder='3'>
              <title>Introduction</title>
              <clause id='C' inline-header='false' obligation='informative'>
                <title depth='2'>Introduction Subsection</title>
@@ -565,7 +571,7 @@ RSpec.describe IsoDoc::Generic do
            </introduction>
          </preface>
          <sections>
-           <clause id='D' obligation='normative' displayorder='6'>
+           <clause id='D' obligation='normative' displayorder='7'>
              <title depth='1'>
                4.
                <tab/>
@@ -573,7 +579,7 @@ RSpec.describe IsoDoc::Generic do
              </title>
              <p id='E'>Text</p>
            </clause>
-           <clause id='H' obligation='normative' displayorder='4'>
+           <clause id='H' obligation='normative' displayorder='5'>
              <title depth='1'>
                2.
                <tab/>
@@ -598,14 +604,14 @@ RSpec.describe IsoDoc::Generic do
                </dl>
              </definitions>
            </clause>
-           <definitions id='L' displayorder='5'>
+           <definitions id='L' displayorder='6'>
              <title>3.</title>
              <dl>
                <dt>Symbol</dt>
                <dd>Definition</dd>
              </dl>
            </definitions>
-           <clause id='M' inline-header='false' obligation='normative' displayorder='7'>
+           <clause id='M' inline-header='false' obligation='normative' displayorder='8'>
              <title depth='1'>
                5.
                <tab/>
@@ -627,7 +633,7 @@ RSpec.describe IsoDoc::Generic do
              </clause>
            </clause>
          </sections>
-         <annex id='P' inline-header='false' obligation='normative' displayorder='8'>
+         <annex id='P' inline-header='false' obligation='normative' displayorder='9'>
            <title>
              <strong>Annex A</strong>
              <br/>
@@ -651,14 +657,14 @@ RSpec.describe IsoDoc::Generic do
            </clause>
          </annex>
          <bibliography>
-           <references id='R' obligation='informative' normative='true' displayorder='3'>
+           <references id='R' obligation='informative' normative='true' displayorder='4'>
              <title depth='1'>
                1.
                <tab/>
                Normative References
              </title>
            </references>
-           <clause id='S' obligation='informative' displayorder='9'>
+           <clause id='S' obligation='informative' displayorder='10'>
              <title depth='1'>Bibliography</title>
              <references id='T' obligation='informative' normative='false'>
                <title depth='2'>Bibliography Subsection</title>
