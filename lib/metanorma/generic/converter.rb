@@ -42,7 +42,8 @@ module Metanorma
         configuration.doctypes or return d == "standard" ? (configuration.default_doctype || "standard") : d
         type = configuration.default_doctype ||
           configuration.doctypes.keys.dig(0) || "standard"
-        unless configuration.doctypes.keys.include?(d) && node.attr("doctype")
+        if !configuration.doctypes.keys.include?(d) &&
+            (node.attr("doctype") && node.attr("doctype") != "article") # factory default
           @log.add("Document Attributes", nil,
                    "#{d} is not a legal document type: reverting to '#{type}'")
           d = type
