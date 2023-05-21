@@ -20,7 +20,7 @@ RSpec.describe Metanorma::Generic do
   end
 
   it "converts a blank document" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       = Document title
       Author
       :docfile: test.adoc
@@ -40,7 +40,7 @@ RSpec.describe Metanorma::Generic do
   end
 
   it "processes default metadata" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       = Document title
       Author
       :docfile: test.adoc
@@ -144,7 +144,7 @@ RSpec.describe Metanorma::Generic do
   end
 
   it "processes default section titles" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       = Document title
       Author
       :docfile: test.adoc
@@ -208,7 +208,7 @@ RSpec.describe Metanorma::Generic do
     xml.at("//xmlns:bibdata").remove
     xml.at("//xmlns:metanorma-extension").remove
     expect(xmlpp(strip_guid(xml.to_xml)))
-      .to be_equivalent_to xmlpp(strip_guid((output)))
+      .to be_equivalent_to xmlpp(strip_guid(output))
   end
 
   context "with configuration options" do
@@ -374,7 +374,7 @@ RSpec.describe Metanorma::Generic do
   end
 
   it "uses default fonts" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       = Document title
       Author
       :docfile: test.adoc
@@ -488,7 +488,7 @@ RSpec.describe Metanorma::Generic do
   end
 
   it "uses Chinese fonts" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       = Document title
       Author
       :docfile: test.adoc
@@ -509,7 +509,7 @@ RSpec.describe Metanorma::Generic do
   end
 
   it "uses specified fonts" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       = Document title
       Author
       :docfile: test.adoc
