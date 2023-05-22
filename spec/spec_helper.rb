@@ -75,7 +75,7 @@ def xmlpp(xml)
     .gsub(%r{ schema-version="[^"]+"}, "")
 end
 
-ASCIIDOC_BLANK_HDR = <<~"HDR"
+ASCIIDOC_BLANK_HDR = <<~HDR
   = Document title
   Author
   :docfile: test.adoc
@@ -84,7 +84,7 @@ ASCIIDOC_BLANK_HDR = <<~"HDR"
 
 HDR
 
-VALIDATING_BLANK_HDR = <<~"HDR"
+VALIDATING_BLANK_HDR = <<~HDR
   = Document title
   Author
   :docfile: test.adoc
@@ -147,7 +147,7 @@ BLANK_HDR = <<~"HDR"
           </metanorma-extension>
 HDR
 
-HTML_HDR = <<~"HDR"
+HTML_HDR = <<~HDR
   <body lang="EN-US" link="blue" vlink="#954F72" xml:lang="EN-US" class="container">
   <div class="title-section">
     <p>&#160;</p>

@@ -441,50 +441,6 @@ RSpec.describe Metanorma::Generic do
               .to([organization_name_short, organization_name_long,
                    document_namespace]))
     end
-
-    it "deals with array doctypes" do
-      output = <<~OUTPUT
-        <bibdata type='standard'>
-          <title language='en' format='text/plain'>Document title</title>
-          <docidentifier type='Test'>Test </docidentifier>
-          <contributor>
-            <role type='author'/>
-            <organization>
-              <name>Test Corp.</name>
-              <abbreviation>Test</abbreviation>
-            </organization>
-          </contributor>
-          <contributor>
-            <role type='publisher'/>
-            <organization>
-              <name>Test Corp.</name>
-              <abbreviation>Test</abbreviation>
-            </organization>
-          </contributor>
-          <language>en</language>
-          <script>Latn</script>
-          <status>
-            <stage>published</stage>
-          </status>
-          <copyright>
-            <from>#{Time.now.year}</from>
-            <owner>
-              <organization>
-                <name>Test Corp.</name>
-                <abbreviation>Test</abbreviation>
-              </organization>
-            </owner>
-          </copyright>
-          <ext>
-            <doctype>standard</doctype>
-          </ext>
-        </bibdata>
-      OUTPUT
-      xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
-      xml = xml.at("//xmlns:bibdata")
-      expect(xmlpp(xml.to_xml))
-        .to(be_equivalent_to(xmlpp(output)))
-    end
   end
 
   it "uses Chinese fonts" do

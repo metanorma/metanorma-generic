@@ -14,7 +14,7 @@ RSpec.describe Metanorma::Generic::Processor do
   end
 
   it "registers output formats against metanorma" do
-    output = <<~"OUTPUT"
+    output = <<~OUTPUT
       [[:doc, "doc"], [:html, "html"], [:presentation, "presentation.xml"], [:rxl, "rxl"], [:xml, "xml"]]
     OUTPUT
 
@@ -36,13 +36,14 @@ RSpec.describe Metanorma::Generic::Processor do
       </generic-standard>
     OUTPUT
 
-    expect(xmlpp(processor.input_to_isodoc(input,
-                                           nil))).to be_equivalent_to xmlpp(output)
+    expect(xmlpp(processor
+      .input_to_isodoc(input, nil)))
+      .to be_equivalent_to xmlpp(output)
   end
 
   it "generates HTML from IsoDoc XML" do
     FileUtils.rm_f "test.xml"
-    input = <<~"INPUT"
+    input = <<~INPUT
       <generic-standard xmlns="http://riboseinc.com/isoxml">
         <sections>
           <terms id="H" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title>
@@ -54,7 +55,7 @@ RSpec.describe Metanorma::Generic::Processor do
       </generic-standard>
     INPUT
 
-    output = <<~"OUTPUT"
+    output = <<~OUTPUT
       <main class="main-section">
         <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
         <p class="zzSTDTitle1"></p>

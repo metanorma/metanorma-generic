@@ -99,6 +99,7 @@ RSpec.describe Metanorma::Generic do
           :no-isobib:
           :docidentifier: OVERRIDE
           :docnumber: 1000
+          :doctype: standard
         INPUT
         output = <<~OUTPUT
           <generic-standard xmlns="https://www.metanorma.org/ns/generic" type="semantic">
