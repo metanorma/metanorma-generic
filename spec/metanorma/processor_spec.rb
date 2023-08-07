@@ -46,7 +46,7 @@ RSpec.describe Metanorma::Generic::Processor do
     input = <<~INPUT
       <generic-standard xmlns="http://riboseinc.com/isoxml">
         <sections>
-          <terms id="H" obligation="normative"><title>Terms, Definitions, Symbols and Abbreviated Terms</title>
+          <terms id="H" obligation="normative" displayorder="1"><title>Terms, Definitions, Symbols and Abbreviated Terms</title>
             <term id="J">
               <preferred>Term2</preferred>
             </term>
@@ -58,7 +58,6 @@ RSpec.describe Metanorma::Generic::Processor do
     output = <<~OUTPUT
       <main class="main-section">
         <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
-        <p class="zzSTDTitle1"></p>
         <div id="H">
           <h1  id='_'>Terms, Definitions, Symbols and Abbreviated Terms</h1>
           <p class='Terms' style='text-align:left;' id='J'>

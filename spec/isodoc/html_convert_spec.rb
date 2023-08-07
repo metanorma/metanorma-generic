@@ -402,7 +402,7 @@ RSpec.describe IsoDoc::Generic do
   it "processes pre" do
     input = <<~"INPUT"
       <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
-      <preface><foreword>
+      <preface><foreword displayorder="1">
       <pre>ABC</pre>
       </foreword></preface>
       </generic-standard>
@@ -415,7 +415,6 @@ RSpec.describe IsoDoc::Generic do
                 <h1 class="ForewordTitle">Foreword</h1>
                 <pre>ABC</pre>
               </div>
-              <p class="zzSTDTitle1"/>
             </div>
           </body>
     OUTPUT
@@ -431,7 +430,7 @@ RSpec.describe IsoDoc::Generic do
   it "processes keyword" do
     input = <<~"INPUT"
       <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
-      <preface><foreword>
+      <preface><foreword displayorder="1">
       <keyword>ABC</keyword>
       </foreword></preface>
       </generic-standard>
@@ -444,7 +443,6 @@ RSpec.describe IsoDoc::Generic do
                 <h1 class="ForewordTitle">Foreword</h1>
                 <span class="keyword">ABC</span>
               </div>
-              <p class="zzSTDTitle1"/>
             </div>
           </body>
     OUTPUT
@@ -461,7 +459,7 @@ RSpec.describe IsoDoc::Generic do
     input = <<~INPUT
       <generic-standard xmlns="http://riboseinc.com/isoxml">
         <sections>
-        <terms id="H" obligation="normative"><title>1.&#160; Terms, Definitions, Symbols and Abbreviated Terms</title>
+        <terms id="H" obligation="normative" displayorder="1"><title>1.&#160; Terms, Definitions, Symbols and Abbreviated Terms</title>
           <term id="J">
           <name>1.1.</name>
           <preferred>Term2</preferred>
@@ -473,7 +471,6 @@ RSpec.describe IsoDoc::Generic do
 
     output = <<~"OUTPUT"
       #{HTML_HDR}
-              <p class="zzSTDTitle1"/>
               <div id="H"><h1>1.&#160; Terms, Definitions, Symbols and Abbreviated Terms</h1>
         <p class="TermNum" id="J">1.1.</p>
           <p class="Terms" style="text-align:left;">Term2</p>
@@ -632,6 +629,13 @@ RSpec.describe IsoDoc::Generic do
               </title>
             </clause>
           </clause>
+          <references id='R' obligation='informative' normative='true' displayorder='4'>
+            <title depth='1'>
+              1.
+              <tab/>
+              Normative References
+            </title>
+          </references>
         </sections>
         <annex id='P' inline-header='false' obligation='normative' displayorder='9'>
           <title>
@@ -657,13 +661,6 @@ RSpec.describe IsoDoc::Generic do
           </clause>
         </annex>
         <bibliography>
-          <references id='R' obligation='informative' normative='true' displayorder='4'>
-            <title depth='1'>
-              1.
-              <tab/>
-              Normative References
-            </title>
-          </references>
           <clause id='S' obligation='informative' displayorder='10'>
             <title depth='1'>Bibliography</title>
             <references id='T' obligation='informative' normative='false'>
