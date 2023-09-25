@@ -5,6 +5,5 @@ require "isodoc/generic/presentation_xml_convert"
 
 module IsoDoc
   module Generic
-
   end
 end

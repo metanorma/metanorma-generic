@@ -88,6 +88,10 @@ module Metanorma
         self.organization_name_short ||= ORGANIZATION_NAME_SHORT
         self.organization_name_long ||= ORGANIZATION_NAME_LONG
         self.document_namespace ||= DOCUMENT_NAMESPACE
+        default_titles
+      end
+
+      def default_titles
         self.termsdefs_titles ||=
           ["Terms and definitions", "Terms, definitions, symbols and abbreviated terms",
            "Terms, definitions, symbols and abbreviations", "Terms, definitions and symbols",
@@ -101,23 +105,26 @@ module Metanorma
       end
 
       def set_default_values_from_yaml_file(config_file)
+        root_path, default_config_options =
+          set_default_values_from_yaml_file_prep(config_file)
+        CONFIG_ATTRS.each do |attr_name|
+          value = default_config_options[attr_name.to_s]
+          value && filepath_attrs.include?(attr_name) and
+            value = absolute_path(value, root_path)
+          instance_variable_set("@#{attr_name}", value)
+        end
+      end
+
+      def set_default_values_from_yaml_file_prep(config_file)
         root_path = File.dirname(self.class::_file || __FILE__)
         default_config_options =
           YAML.safe_load(File.read(config_file, encoding: "UTF-8"))
-        if default_config_options["doctypes"].is_a? Array
+        default_config_options["doctypes"].is_a? Array and
           default_config_options["doctypes"] =
             default_config_options["doctypes"].each_with_object({}) do |k, m|
               m[k] = nil
             end
-        end
-        CONFIG_ATTRS.each do |attr_name|
-          value = default_config_options[attr_name.to_s]
-          if value && filepath_attrs.include?(attr_name)
-            value = absolute_path(value, root_path)
-          end
-
-          instance_variable_set("@#{attr_name}", value)
-        end
+        [root_path, default_config_options]
       end
 
       def blank?(val)
@@ -132,15 +139,13 @@ module Metanorma
           end
         elsif value.is_a?(String) && !value.empty?
           File.join(root_path, "..", "..", value)
-        else
-          value
+        else value
         end
       end
 
       def absolute_path1(hash, pref)
-        hash.reject { |_k, v| blank?(v) }
-          .each_with_object({}) do |(k, v), g|
-          g[k] = absolute_path(v, pref)
+        hash.reject { |_k, v| blank?(v) }.transform_values do |v|
+          absolute_path(v, pref)
         end
       end
     end

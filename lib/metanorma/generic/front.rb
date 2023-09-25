@@ -22,8 +22,7 @@ module Metanorma
       end
 
       def metadata_committee(node, xml)
-        return unless node.attr("committee")
-
+        node.attr("committee") or return
         xml.editorialgroup do |a|
           a.committee node.attr("committee"),
                       **attr_code(type: node.attr("committee-type"))
@@ -73,8 +72,7 @@ module Metanorma
 
       def metadata_ext_hash(node, ext, hash)
         hash.each do |k, v|
-          next if EXT_STRUCT.include?(k) || (!v.is_a?(Hash) && !node.attr(k))
-
+          EXT_STRUCT.include?(k) || (!v.is_a?(Hash) && !node.attr(k)) and next
           if v.is_a?(Hash) && v["_list"]
             csv_split(node.attr(k), ",").each do |val|
               metadata_ext_hash1(k, val, ext, v, node)
@@ -86,13 +84,11 @@ module Metanorma
       end
 
       def metadata_ext_hash1(key, value, ext, hash, node)
-        return if hash.is_a?(Hash) && hash["_attribute"]
-
-        is_hash = hash.is_a?(Hash) &&
-          !hash.keys.reject { |n| EXT_STRUCT.include?(n) }.empty?
-        return if !is_hash && (value.nil? || value.empty?)
-
-        name = hash.is_a?(Hash) ? (hash["_output"] || key) : key
+        h = hash.is_a?(Hash)
+        h && hash["_attribute"] and return
+        is_hash = h && !hash.keys.reject { |n| EXT_STRUCT.include?(n) }.empty?
+        !is_hash && (value.nil? || value.empty?) and return
+        name = h ? (hash["_output"] || key) : key
         ext.send name, **attr_code(metadata_ext_attrs(hash, node)) do |e|
           is_hash ? metadata_ext_hash(node, e, hash) : (e << value)
         end

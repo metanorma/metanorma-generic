@@ -7,10 +7,11 @@ module Metanorma
         Metanorma::Generic.configuration
       end
 
-      def initialize
-        @short = configuration&.metanorma_name&.to_sym || :generic
+      def initialize # rubocop:disable Lint/MissingSuper
+        n = configuration&.metanorma_name&.to_sym
+        @short = n || :generic
         @input_format = :asciidoc
-        @asciidoctor_backend = configuration&.metanorma_name&.to_sym || :generic
+        @asciidoctor_backend = n || :generic
       end
 
       def output_formats
@@ -32,22 +33,23 @@ module Metanorma
                  ulstyle olstyle htmlstylesheet-override sectionsplit
                  wordstylesheet-override).each_with_object({}) do |w, acc|
           m = /\n:#{w}: ([^\n]+)\n/.match(head) or next
-          acc[w.sub(/-/, "_").to_sym] = m[1]
+          acc[w.sub("-", "_").to_sym] = m[1]
         end
         super.merge(ret)
       end
 
-      def output(isodoc_node, inname, outname, format, options={})
+      def output(isodoc_node, inname, outname, format, options = {})
         case format
         when :html
-          IsoDoc::Generic::HtmlConvert.new(options).convert(inname, isodoc_node, nil, outname)
+          IsoDoc::Generic::HtmlConvert.new(options)
+            .convert(inname, isodoc_node, nil, outname)
         when :doc
-          IsoDoc::Generic::WordConvert.new(options).convert(inname, isodoc_node, nil, outname)
+          IsoDoc::Generic::WordConvert.new(options)
+            .convert(inname, isodoc_node, nil, outname)
         when :presentation
-          IsoDoc::Generic::PresentationXMLConvert.new(options).convert(inname, isodoc_node, nil, outname)
-        else
-          super
-        end
+          IsoDoc::Generic::PresentationXMLConvert.new(options)
+            .convert(inname, isodoc_node, nil, outname)
+        else super end
       end
     end
   end
