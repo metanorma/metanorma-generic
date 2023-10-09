@@ -284,14 +284,14 @@ RSpec.describe Metanorma::Generic do
           config.boilerplate = boilerplate
         end
 
-        FileUtils.rm_f "test.err"
+        FileUtils.rm_f "test.err.html"
         expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
           .to(be_equivalent_to(xmlpp(output)))
-        expect(File.read("test.err"))
+        expect(File.read("test.err.html"))
           .to include "working-draft is not a recognised status"
-        expect(File.read("test.err"))
+        expect(File.read("test.err.html"))
           .to include "TC is not a recognised committee"
-        expect(File.read("test.err"))
+        expect(File.read("test.err.html"))
           .to include "standard is not a legal document type: reverting to 'elephant'"
       end
 
