@@ -141,7 +141,8 @@ module Metanorma
 
       def presentation_xml_converter(node)
         IsoDoc::Generic::PresentationXMLConvert
-          .new(html_extract_attributes(node))
+          .new(html_extract_attributes(node)
+          .merge(output_formats: ::Metanorma::Generic::Processor.new.output_formats))
       end
 
       alias_method :pdf_converter, :html_converter
