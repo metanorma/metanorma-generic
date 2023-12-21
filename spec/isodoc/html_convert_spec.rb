@@ -63,7 +63,9 @@ RSpec.describe IsoDoc::Generic do
 
     output = <<~"OUTPUT"
       {:accesseddate=>"XXX",
+      :adapteddate=>"XXX",
       :agency=>"Acme",
+      :announceddate=>"XXX",
       :circulateddate=>"XXX",
       :confirmeddate=>"XXX",
       :copieddate=>"XXX",
@@ -93,6 +95,7 @@ RSpec.describe IsoDoc::Generic do
       :revdate=>"2000-01-01",
       :revdate_monthyear=>"January 2000",
       :script=>"Latn",
+      :stable_untildate=>"XXX",
       :stage=>"Working Draft",
       :stage_display=>"Working Draft",
       :stageabbr=>"WD",
@@ -155,6 +158,8 @@ RSpec.describe IsoDoc::Generic do
         INPUT
         expect(metadata(csdc.info(docxml, nil))).to be_equivalent_to <<~OUTPUT
           {:accesseddate=>"XXX",
+          :adapteddate=>"XXX",
+          :announceddate=>"XXX",
           :circulateddate=>"XXX",
           :confirmeddate=>"XXX",
           :copieddate=>"XXX",
@@ -167,6 +172,7 @@ RSpec.describe IsoDoc::Generic do
           :publisheddate=>"XXX",
           :receiveddate=>"XXX",
           :script=>"Latn",
+          :stable_untildate=>"XXX",
           :transmitteddate=>"XXX",
           :unchangeddate=>"XXX",
           :unpublished=>true,
@@ -285,7 +291,9 @@ RSpec.describe IsoDoc::Generic do
 
         output = <<~OUTPUT
           {:accesseddate=>"XXX",
+          :adapteddate=>"XXX",
           :agency=>"Acme",
+          :announceddate=>"XXX",
           :circulateddate=>"XXX",
           :confirmeddate=>"XXX",
           :copieddate=>"XXX",
@@ -312,6 +320,7 @@ RSpec.describe IsoDoc::Generic do
           :revdate=>"2000-01-01",
           :revdate_monthyear=>"January 2000",
           :script=>"Latn",
+          :stable_untildate=>"XXX",
           :stage=>"Working Draft",
           :stage_display=>"Working Draft",
           :tc=>"TC",
