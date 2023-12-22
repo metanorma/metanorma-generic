@@ -7,6 +7,35 @@ logoloc = File.expand_path(
 )
 
 RSpec.describe IsoDoc::Generic do
+  before do
+    Metanorma::Generic.configure do |config|
+      config.logo_path = Metanorma::Generic::Configuration.new.logo_path
+      config.logo_paths = Metanorma::Generic::Configuration.new.logo_paths
+      config.published_stages = Metanorma::Generic::Configuration.new.published_stages
+      config.stage_abbreviations = Metanorma::Generic::Configuration.new.stage_abbreviations
+      config.metadata_extensions = Metanorma::Generic::Configuration.new.metadata_extensions
+      config.webfont = Metanorma::Generic::Configuration.new.webfont
+      config.i18nyaml = Metanorma::Generic::Configuration.new.i18nyaml
+      config.html_bodyfont = Metanorma::Generic::Configuration.new.html_bodyfont
+      config.html_monospacefont = Metanorma::Generic::Configuration.new.html_monospacefont
+      config.html_headerfont = Metanorma::Generic::Configuration.new.html_headerfont
+      config.html_normalfontsize = Metanorma::Generic::Configuration.new.html_normalfontsize
+      config.html_monospacefontsize = Metanorma::Generic::Configuration.new.html_monospacefontsize
+      config.html_smallerfontsize = Metanorma::Generic::Configuration.new.html_smallerfontsize
+      config.html_footnotefontsize = Metanorma::Generic::Configuration.new.html_footnotefontsize
+      config.word_bodyfont = Metanorma::Generic::Configuration.new.word_bodyfont
+      config.word_monospacefont = Metanorma::Generic::Configuration.new.word_monospacefont
+      config.word_headerfont = Metanorma::Generic::Configuration.new.word_headerfont
+      config.word_normalfontsize = Metanorma::Generic::Configuration.new.word_normalfontsize
+      config.word_monospacefontsize = Metanorma::Generic::Configuration.new.word_monospacefontsize
+      config.word_smallerfontsize = Metanorma::Generic::Configuration.new.word_smallerfontsize
+      config.word_footnotefontsize = Metanorma::Generic::Configuration.new.word_footnotefontsize
+      config.htmlstylesheet = Metanorma::Generic::Configuration.new.htmlstylesheet
+      config.standardstylesheet = Metanorma::Generic::Configuration.new.standardstylesheet
+      config.wordstylesheet = Metanorma::Generic::Configuration.new.wordstylesheet
+    end
+  end
+
   it "processes default metadata" do
     csdc = IsoDoc::Generic::HtmlConvert.new({})
     input = <<~"INPUT"
@@ -382,31 +411,33 @@ RSpec.describe IsoDoc::Generic do
           OUTPUT
       end
 
-      Metanorma::Generic.configure do |config|
-        config.logo_path = Metanorma::Generic::Configuration.new.logo_path
-        config.logo_paths = Metanorma::Generic::Configuration.new.logo_paths
-        config.published_stages = Metanorma::Generic::Configuration.new.published_stages
-        config.stage_abbreviations = Metanorma::Generic::Configuration.new.stage_abbreviations
-        config.metadata_extensions = Metanorma::Generic::Configuration.new.metadata_extensions
-        config.webfont = Metanorma::Generic::Configuration.new.webfont
-        config.i18nyaml = Metanorma::Generic::Configuration.new.i18nyaml
-        config.html_bodyfont = Metanorma::Generic::Configuration.new.html_bodyfont
-        config.html_monospacefont = Metanorma::Generic::Configuration.new.html_monospacefont
-        config.html_headerfont = Metanorma::Generic::Configuration.new.html_headerfont
-        config.html_normalfontsize = Metanorma::Generic::Configuration.new.html_normalfontsize
-        config.html_monospacefontsize = Metanorma::Generic::Configuration.new.html_monospacefontsize
-        config.html_smallerfontsize = Metanorma::Generic::Configuration.new.html_smallerfontsize
-        config.html_footnotefontsize = Metanorma::Generic::Configuration.new.html_footnotefontsize
-        config.word_bodyfont = Metanorma::Generic::Configuration.new.word_bodyfont
-        config.word_monospacefont = Metanorma::Generic::Configuration.new.word_monospacefont
-        config.word_headerfont = Metanorma::Generic::Configuration.new.word_headerfont
-        config.word_normalfontsize = Metanorma::Generic::Configuration.new.word_normalfontsize
-        config.word_monospacefontsize = Metanorma::Generic::Configuration.new.word_monospacefontsize
-        config.word_smallerfontsize = Metanorma::Generic::Configuration.new.word_smallerfontsize
-        config.word_footnotefontsize = Metanorma::Generic::Configuration.new.word_footnotefontsize
-        config.htmlstylesheet = Metanorma::Generic::Configuration.new.htmlstylesheet
-        config.standardstylesheet = Metanorma::Generic::Configuration.new.standardstylesheet
-        config.wordstylesheet = Metanorma::Generic::Configuration.new.wordstylesheet
+      after do
+        Metanorma::Generic.configure do |config|
+          config.logo_path = Metanorma::Generic::Configuration.new.logo_path
+          config.logo_paths = Metanorma::Generic::Configuration.new.logo_paths
+          config.published_stages = Metanorma::Generic::Configuration.new.published_stages
+          config.stage_abbreviations = Metanorma::Generic::Configuration.new.stage_abbreviations
+          config.metadata_extensions = Metanorma::Generic::Configuration.new.metadata_extensions
+          config.webfont = Metanorma::Generic::Configuration.new.webfont
+          config.i18nyaml = Metanorma::Generic::Configuration.new.i18nyaml
+          config.html_bodyfont = Metanorma::Generic::Configuration.new.html_bodyfont
+          config.html_monospacefont = Metanorma::Generic::Configuration.new.html_monospacefont
+          config.html_headerfont = Metanorma::Generic::Configuration.new.html_headerfont
+          config.html_normalfontsize = Metanorma::Generic::Configuration.new.html_normalfontsize
+          config.html_monospacefontsize = Metanorma::Generic::Configuration.new.html_monospacefontsize
+          config.html_smallerfontsize = Metanorma::Generic::Configuration.new.html_smallerfontsize
+          config.html_footnotefontsize = Metanorma::Generic::Configuration.new.html_footnotefontsize
+          config.word_bodyfont = Metanorma::Generic::Configuration.new.word_bodyfont
+          config.word_monospacefont = Metanorma::Generic::Configuration.new.word_monospacefont
+          config.word_headerfont = Metanorma::Generic::Configuration.new.word_headerfont
+          config.word_normalfontsize = Metanorma::Generic::Configuration.new.word_normalfontsize
+          config.word_monospacefontsize = Metanorma::Generic::Configuration.new.word_monospacefontsize
+          config.word_smallerfontsize = Metanorma::Generic::Configuration.new.word_smallerfontsize
+          config.word_footnotefontsize = Metanorma::Generic::Configuration.new.word_footnotefontsize
+          config.htmlstylesheet = Metanorma::Generic::Configuration.new.htmlstylesheet
+          config.standardstylesheet = Metanorma::Generic::Configuration.new.standardstylesheet
+          config.wordstylesheet = Metanorma::Generic::Configuration.new.wordstylesheet
+        end
       end
     end
   end
