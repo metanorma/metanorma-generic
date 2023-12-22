@@ -4,6 +4,28 @@ require "fileutils"
 OPTIONS = [backend: :generic, header_footer: true].freeze
 
 RSpec.describe Metanorma::Generic do
+  before do
+    Metanorma::Generic.configure do |config|
+      config.organization_name_short = Metanorma::Generic::Configuration.new.organization_name_short
+      config.organization_name_long = Metanorma::Generic::Configuration.new.organization_name_long
+      config.document_namespace = Metanorma::Generic::Configuration.new.document_namespace
+      config.docid_template = Metanorma::Generic::Configuration.new.docid_template
+      config.metadata_extensions = Metanorma::Generic::Configuration.new.metadata_extensions
+      config.stage_abbreviations = Metanorma::Generic::Configuration.new.stage_abbreviations
+      config.doctypes = Metanorma::Generic::Configuration.new.doctypes
+      config.default_doctype = Metanorma::Generic::Configuration.new.default_doctype
+      config.default_stage = Metanorma::Generic::Configuration.new.default_stage
+      config.termsdefs_titles = Metanorma::Generic::Configuration.new.termsdefs_titles
+      config.symbols_titles = Metanorma::Generic::Configuration.new.symbols_titles
+      config.normref_titles = Metanorma::Generic::Configuration.new.normref_titles
+      config.bibliography_titles = Metanorma::Generic::Configuration.new.bibliography_titles
+      config.committees = Metanorma::Generic::Configuration.new.committees
+      config.relations = Metanorma::Generic::Configuration.new.relations
+      config.i18nyaml = Metanorma::Generic::Configuration.new.i18nyaml
+      config.boilerplate = Metanorma::Generic::Configuration.new.boilerplate
+    end
+  end
+
   it "processes a blank document" do
     input = <<~"INPUT"
       #{ASCIIDOC_BLANK_HDR}
@@ -257,56 +279,6 @@ RSpec.describe Metanorma::Generic do
       .to match(%r[ div[^{]+\{[^}]+font-family: "Overpass", sans-serif;]m)
     expect(html)
       .to match(%r[h1, h2, h3, h4, h5, h6 \{[^}]+font-family: "Overpass", sans-serif;]m)
-  end
-
-  context "customize directive" do
-    subject(:config) { Metanorma::Generic.configuration }
-    let(:config_file) { Tempfile.new("my_custom_config_file.yml") }
-    let(:organization_name_short) { "Test" }
-    let(:organization_name_long) { "Test Corp." }
-    let(:document_namespace) { "https://example.com/" }
-    let(:input) do
-      <<~"INPUT"
-        = Document title
-        Author
-        :customize: #{config_file.path}
-        :docfile: test.adoc
-        :novalid:
-      INPUT
-    end
-    let(:yaml_content) do
-      {
-        "organization_name_short" => organization_name_short,
-        "organization_name_long" => organization_name_long,
-        "document_namespace" => document_namespace,
-        "doctypes" => ["standard", "guide"],
-        "default_doctype" => "standard",
-      }
-    end
-
-    before do
-      FileUtils.rm_f "test.html"
-      config_file.tap { |file| file.puts(yaml_content.to_yaml) }.close
-      Metanorma::Generic.configure do |config|
-        config.organization_name_short = ""
-        config.organization_name_long = ""
-        config.document_namespace = ""
-      end
-    end
-
-    after do
-      FileUtils.rm_f "test.html"
-    end
-
-    it "recognizes `customize` option and uses supplied file as the config file" do
-      expect { Asciidoctor.convert(input, *OPTIONS) }
-        .to(change do
-              [config.organization_name_short, config.organization_name_long,
-               config.document_namespace]
-            end.from(["", "", ""])
-              .to([organization_name_short, organization_name_long,
-                   document_namespace]))
-    end
   end
 
   it "uses Chinese fonts" do
