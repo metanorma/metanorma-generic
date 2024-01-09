@@ -127,7 +127,7 @@ RSpec.describe Metanorma::Generic do
                 <stage>published</stage>
               </status>
               <copyright>
-                <from>2023</from>
+                <from>#{Date.today.year}</from>
                 <owner>
                   <organization>
                     <name>Acme Corp.</name>
