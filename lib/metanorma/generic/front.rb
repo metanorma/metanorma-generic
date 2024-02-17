@@ -49,7 +49,6 @@ module Metanorma
                               configuration.organization_name_short do |i|
           i << (node.attr("docidentifier") || "")
         end
-        xml.docnumber { |i| i << node.attr("docnumber") }
       end
 
       def metadata_ext(node, ext)
