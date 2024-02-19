@@ -27,9 +27,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.required_ruby_version = Gem::Requirement.new(">= 2.7.0")
 
-  spec.add_dependency "htmlentities", "~> 4.3.4"
   spec.add_dependency "metanorma-standoc", "~> 2.8.2"
-  spec.add_dependency "ruby-jing"
 
   spec.add_development_dependency "debug"
   spec.add_development_dependency "equivalent-xml", "~> 0.6"
