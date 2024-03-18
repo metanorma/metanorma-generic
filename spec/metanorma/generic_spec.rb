@@ -105,7 +105,7 @@ RSpec.describe Metanorma::Generic do
           <generic-standard xmlns="https://www.metanorma.org/ns/generic" type="semantic">
             <bibdata type="standard">
               <title language="en" format="text/plain">Document title</title>
-              <docidentifier type="Acme">OVERRIDE</docidentifier>
+              <docidentifier primary="true" type="Acme">OVERRIDE</docidentifier>
               <docnumber>1000</docnumber>
               <contributor>
                 <role type="author"/>

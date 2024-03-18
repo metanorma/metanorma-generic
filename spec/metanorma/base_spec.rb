@@ -99,7 +99,7 @@ RSpec.describe Metanorma::Generic do
       <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}" type="semantic" version="#{Metanorma::Generic::VERSION}">
       <bibdata type="standard">
         <title language="en" format="text/plain">Main Title</title>
-        <docidentifier type="Acme">Acme 1000</docidentifier>
+        <docidentifier primary="true" type="Acme">Acme 1000</docidentifier>
         <docnumber>1000</docnumber>
       <contributor>
           <role type="author"/>

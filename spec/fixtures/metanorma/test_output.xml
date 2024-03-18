@@ -2,7 +2,7 @@
 <generic-standard xmlns="%{document_namespace}" type="semantic"  version="%{version}"> 
   <bibdata type="standard">
     <title language="en" format="text/plain">Main Title</title>
-    <docidentifier type="Test">Test Corp. 1000 Working Draft</docidentifier>
+    <docidentifier primary="true" type="Test">Test Corp. 1000 Working Draft</docidentifier>
     <docnumber>1000</docnumber>
     <contributor>
       <role type="author"/>
