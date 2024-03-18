@@ -75,7 +75,7 @@ def xmlpp(xml)
     .gsub(%r{ schema-version="[^"]+"}, "")
 end
 
-ASCIIDOC_BLANK_HDR = <<~HDR
+ASCIIDOC_BLANK_HDR = <<~HDR.freeze
   = Document title
   Author
   :docfile: test.adoc
@@ -84,7 +84,7 @@ ASCIIDOC_BLANK_HDR = <<~HDR
 
 HDR
 
-VALIDATING_BLANK_HDR = <<~HDR
+VALIDATING_BLANK_HDR = <<~HDR.freeze
   = Document title
   Author
   :docfile: test.adoc
@@ -92,12 +92,12 @@ VALIDATING_BLANK_HDR = <<~HDR
 
 HDR
 
-BLANK_HDR = <<~"HDR"
+BLANK_HDR = <<~"HDR".freeze
   <?xml version="1.0" encoding="UTF-8"?>
   <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}" type="semantic" version="#{Metanorma::Generic::VERSION}">
   <bibdata type="standard">
    <title language="en" format="text/plain">Document title</title>
-    <docidentifier type="Acme">Acme </docidentifier>
+    <docidentifier primary="true" type="Acme">Acme </docidentifier>
     <contributor>
       <role type="author"/>
       <organization>
@@ -151,7 +151,7 @@ BLANK_HDR = <<~"HDR"
           </metanorma-extension>
 HDR
 
-HTML_HDR = <<~HDR
+HTML_HDR = <<~HDR.freeze
   <body lang="EN-US" link="blue" vlink="#954F72" xml:lang="EN-US" class="container">
   <div class="title-section">
     <p>&#160;</p>
