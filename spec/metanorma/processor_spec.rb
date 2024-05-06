@@ -57,13 +57,15 @@ RSpec.describe Metanorma::Generic::Processor do
 
     output = <<~OUTPUT
       <main class="main-section">
-        <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
-        <div id="H">
-          <h1  id='_'>Terms, Definitions, Symbols and Abbreviated Terms</h1>
-          <p class='Terms' style='text-align:left;' id='J'>
-            <strong/>&#xA0;Term2</p>
-        </div>
-      </main>
+         <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+         <div id="H">
+           <h1 id="_">
+             <a class="anchor" href="#H"/>
+             <a class="header" href="#H">Terms, Definitions, Symbols and Abbreviated Terms</a>
+           </h1>
+           <p class="Terms" style="text-align:left;" id="J"><strong/> Term2</p>
+         </div>
+       </main>
     OUTPUT
 
     processor.output(input, "test.xml", "test.html", :html)
