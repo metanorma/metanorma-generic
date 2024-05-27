@@ -1,8 +1,6 @@
 require "spec_helper"
 require "fileutils"
 
-OPTIONS = [backend: :generic, header_footer: true].freeze
-
 RSpec.describe Metanorma::Generic do
   before do
     Metanorma::Generic.configure do |config|

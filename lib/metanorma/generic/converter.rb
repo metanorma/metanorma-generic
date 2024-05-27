@@ -40,12 +40,12 @@ module Metanorma
       def doctype(node)
         d = super
         node.attr("doctype") == "article" and d = "article"
+        a = configuration.default_doctype and @default_doctype = a
         unless configuration.doctypes
-          d == "article" and return (configuration.default_doctype || "standard")
+          d == "article" and return @default_doctype
           return d
         end
-        type = configuration.default_doctype ||
-          configuration.doctypes.keys[0] || "standard"
+        type = @default_doctype || configuration.doctypes.keys[0]
         if !configuration.doctypes.key?(d)
           (node.attr("doctype") && node.attr("doctype") != "article") and # factory default
             @log.add("Document Attributes", nil,

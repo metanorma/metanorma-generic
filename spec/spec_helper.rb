@@ -164,6 +164,8 @@ HTML_HDR = <<~HDR.freeze
   <div class="main-section">
 HDR
 
+OPTIONS = [backend: :generic, header_footer: true].freeze
+
 def mock_pdf
   allow(Mn2pdf).to receive(:convert) do |url, output, _c, _d|
     FileUtils.cp(url.gsub(/"/, ""), output.gsub(/"/, ""))
