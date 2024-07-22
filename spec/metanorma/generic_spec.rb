@@ -146,8 +146,8 @@ RSpec.describe Metanorma::Generic do
                                                 header_footer: true))
         xml.at("//xmlns:metanorma-extension").remove
         xml.at("//xmlns:generic-standard/@version").remove
-        expect(Xml::C14n.format(xml.to_xml))
-          .to be_equivalent_to Xml::C14n.format(output)
+        expect(strip_guid(Xml::C14n.format(xml.to_xml)))
+          .to be_equivalent_to strip_guid(Xml::C14n.format(output))
       end
     end
 
