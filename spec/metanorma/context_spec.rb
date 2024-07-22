@@ -54,7 +54,7 @@ RSpec.describe Metanorma::Generic do
 
   context "with configuration options" do
     subject(:convert) do
-      xmlpp(Asciidoctor.convert(input, *OPTIONS))
+      Xml::C14n.format(Asciidoctor.convert(input, *OPTIONS))
     end
 
     context "organization" do
@@ -128,8 +128,8 @@ RSpec.describe Metanorma::Generic do
 
       it "uses configuration options for organization and namespace" do
         FileUtils.rm_f "test.err.html"
-        expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-          .to(be_equivalent_to(xmlpp(output)))
+        expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+          .to(be_equivalent_to(Xml::C14n.format(output)))
         expect(File.read("test.err.html"))
           .to include "working-draft is not a recognised status"
         expect(File.read("test.err.html"))
@@ -166,8 +166,8 @@ RSpec.describe Metanorma::Generic do
                                      "<security>Client Confidential</security>",
             document_namespace: document_namespace,
             version: Metanorma::Generic::VERSION }
-        expect(xmlpp(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-          .to(be_equivalent_to(xmlpp(output)))
+        expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+          .to(be_equivalent_to(Xml::C14n.format(output)))
       end
 
       after do
