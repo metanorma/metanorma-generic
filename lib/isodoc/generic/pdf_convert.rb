@@ -11,7 +11,7 @@ module IsoDoc
       end
 
       def pdf_stylesheet(docxml)
-        Metanorma::Generic.configuration.pdf_stylesheet
+        configuration.pdf_stylesheet
       end
 
       include BaseConvert
