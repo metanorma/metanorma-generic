@@ -116,7 +116,8 @@ module Metanorma
       end
 
       def set_default_values_from_yaml_file_prep(config_file)
-        root_path = File.dirname(self.class::_file || __FILE__)
+        #root_path = File.dirname(self.class::_file || __FILE__)
+        root_path = File.dirname(config_file)
         default_config_options =
           YAML.safe_load(File.read(config_file, encoding: "UTF-8"))
         default_config_options["doctypes"].is_a? Array and
@@ -138,7 +139,7 @@ module Metanorma
             g << absolute_path(v1, root_path)
           end
         elsif value.is_a?(String) && !value.empty?
-          File.join(root_path, "..", "..", value)
+          Pathname.new(value).absolute? ? value : File.join(root_path, value)
         else value
         end
       end

@@ -5,6 +5,7 @@ RSpec.describe Metanorma::Generic do
   context "customize directive" do
     subject(:config) { Metanorma::Generic.configuration }
     let(:config_file) { Tempfile.new("my_custom_config_file.yml") }
+    let(:outdir) { File.dirname(config_file) }
     let(:organization_name_short) { "Test" }
     let(:organization_name_long) { "Test Corp." }
     let(:document_namespace) { "https://example.com/" }
@@ -29,11 +30,16 @@ RSpec.describe Metanorma::Generic do
 
     before do
       FileUtils.rm_f "test.html"
+      FileUtils.mkdir_p "#{outdir}/ass1ets"
+      FileUtils.cp "spec/assets/i18n.yaml", "#{outdir}/ass1ets"
+      yaml_content["i18nyaml"] = "#{outdir}/ass1ets/i18n.yaml"
       config_file.tap { |file| file.puts(yaml_content.to_yaml) }.close
+
       Metanorma::Generic.configure do |config|
         config.organization_name_short = ""
         config.organization_name_long = ""
         config.document_namespace = ""
+        config.i18nyaml = ""
       end
     end
 
@@ -45,10 +51,10 @@ RSpec.describe Metanorma::Generic do
       expect { Asciidoctor.convert(input, *OPTIONS) }
         .to(change do
               [config.organization_name_short, config.organization_name_long,
-               config.document_namespace]
-            end.from(["", "", ""])
+               config.document_namespace, config.i18nyaml]
+            end.from(["", "", "", ""])
               .to([organization_name_short, organization_name_long,
-                   document_namespace]))
+                   document_namespace, "#{outdir}/ass1ets/i18n.yaml"]))
     end
   end
 
