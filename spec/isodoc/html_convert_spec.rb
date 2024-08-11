@@ -33,6 +33,7 @@ RSpec.describe IsoDoc::Generic do
       config.htmlstylesheet = Metanorma::Generic::Configuration.new.htmlstylesheet
       config.standardstylesheet = Metanorma::Generic::Configuration.new.standardstylesheet
       config.wordstylesheet = Metanorma::Generic::Configuration.new.wordstylesheet
+      config.pdf_stylesheet = Metanorma::Generic::Configuration.new.pdf_stylesheet
     end
   end
 
@@ -143,7 +144,8 @@ RSpec.describe IsoDoc::Generic do
 
   context "with configuration options" do
     subject(:convert) do
-      Xml::C14n.format(Asciidoctor.convert(input, backend: :generic, header_footer: true))
+      Xml::C14n.format(Asciidoctor.convert(input, backend: :generic,
+                                                  header_footer: true))
     end
 
     context "organization" do
@@ -172,6 +174,7 @@ RSpec.describe IsoDoc::Generic do
       let(:htmlstylesheet) { "spec/assets/htmlstylesheet.scss" }
       let(:standardstylesheet) { "spec/assets/standardstylesheet.scss" }
       let(:wordstylesheet) { "spec/assets/wordstylesheet.scss" }
+      let(:pdf_stylesheet) { "spec/assets/pdf.xsl" }
 
       it "overrides default" do
         Metanorma::Generic.configure do |config|
@@ -237,6 +240,7 @@ RSpec.describe IsoDoc::Generic do
           config.htmlstylesheet = htmlstylesheet
           config.standardstylesheet = standardstylesheet
           config.wordstylesheet = wordstylesheet
+          config.pdf_stylesheet = pdf_stylesheet
         end
         pcsdc = IsoDoc::Generic::PresentationXMLConvert.new({})
         Metanorma::Generic.configure do |config|
@@ -264,7 +268,9 @@ RSpec.describe IsoDoc::Generic do
           config.htmlstylesheet = htmlstylesheet
           config.standardstylesheet = standardstylesheet
           config.wordstylesheet = wordstylesheet
+          config.pdf_stylesheet = pdf_stylesheet
         end
+
         csdc = IsoDoc::Generic::HtmlConvert.new({})
         wcsdc = IsoDoc::Generic::WordConvert.new({})
         input = <<~"INPUT"
@@ -411,6 +417,15 @@ RSpec.describe IsoDoc::Generic do
           OUTPUT
       end
 
+      it "configure XSLT stylesheet" do
+        stylesheet_mock("spec/assets/xsl.pdf")
+        convert_mock(Pathname.new(File.join(File.dirname(__FILE__), "..", "..",
+                                            "spec", "assets",
+                                            "xsl.pdf")).cleanpath.to_s)
+        Asciidoctor.convert(File.read("spec/assets/test.pdf.adoc"), *OPTIONS)
+        FileUtils.rm_rf("tmp.yml")
+      end
+
       after do
         Metanorma::Generic.configure do |config|
           config.logo_path = Metanorma::Generic::Configuration.new.logo_path
@@ -437,6 +452,7 @@ RSpec.describe IsoDoc::Generic do
           config.htmlstylesheet = Metanorma::Generic::Configuration.new.htmlstylesheet
           config.standardstylesheet = Metanorma::Generic::Configuration.new.standardstylesheet
           config.wordstylesheet = Metanorma::Generic::Configuration.new.wordstylesheet
+          config.pdf_stylesheet = Metanorma::Generic::Configuration.new.pdf_stylesheet
         end
       end
     end
@@ -715,8 +731,23 @@ RSpec.describe IsoDoc::Generic do
     OUTPUT
 
     expect(
-      Xml::C14n.format(strip_guid(IsoDoc::Generic::PresentationXMLConvert.new(presxml_options)
+      Xml::C14n.format(strip_guid(IsoDoc::Generic::PresentationXMLConvert
+      .new(presxml_options)
       .convert("test", input, true))),
     ).to be_equivalent_to Xml::C14n.format(output)
+  end
+
+  private
+
+  def stylesheet_mock(dir)
+    allow_any_instance_of(::IsoDoc::XslfoPdfConvert)
+      .to receive(:pdf_stylesheet)
+      .and_return(dir)
+  end
+
+  def convert_mock(dir)
+    allow_any_instance_of(::Metanorma::Output::XslfoPdf)
+      .to receive(:convert)
+      .with(anything, anything, dir, anything)
   end
 end
