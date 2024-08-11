@@ -17,8 +17,7 @@ RSpec.describe Metanorma::Generic do
       subject(:config) { Metanorma::Generic::Configuration.new }
 
       logoloc = File.join(
-        File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "lib",
-                                   "metanorma")), "..", ".."
+        File.expand_path(File.join(File.dirname(__FILE__), "..", "..")),
       )
 
       let(:config_file_name) { Metanorma::Generic::YAML_CONFIG_FILE }
