@@ -21,6 +21,10 @@ module Metanorma
         )
       end
 
+      def fonts_manifest
+        configuration&.fonts_manifest
+      end
+
       def version
         "Metanorma::Generic #{Metanorma::Generic::VERSION}"
       end

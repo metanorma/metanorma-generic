@@ -9,6 +9,9 @@ RSpec.describe Metanorma::Generic do
     let(:organization_name_short) { "Test" }
     let(:organization_name_long) { "Test Corp." }
     let(:document_namespace) { "https://example.com/" }
+    let(:fonts_manifest) do
+      { "TeXGyreChorus" => ["Regular"] }
+    end
     let(:input) do
       <<~"INPUT"
         = Document title
@@ -25,6 +28,7 @@ RSpec.describe Metanorma::Generic do
         "document_namespace" => document_namespace,
         "doctypes" => ["standard", "guide"],
         "default_doctype" => "standard",
+        "fonts_manifest" => fonts_manifest,
       }
     end
 
@@ -55,6 +59,13 @@ RSpec.describe Metanorma::Generic do
             end.from(["", "", "", ""])
               .to([organization_name_short, organization_name_long,
                    document_namespace, "#{outdir}/ass1ets/i18n.yaml"]))
+    end
+
+    it "uses config to populate fonts" do
+      registry = Metanorma::Registry.instance
+      registry.register(Metanorma::Generic::Processor)
+      expect(registry.find_processor(:generic).fonts_manifest)
+        .to be_equivalent_to(fonts_manifest)
     end
   end
 
@@ -134,7 +145,8 @@ RSpec.describe Metanorma::Generic do
 
       it "uses configuration options for organization and namespace" do
         FileUtils.rm_f "test.err.html"
-        expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input,
+                                                               *OPTIONS))))
           .to(be_equivalent_to(Xml::C14n.format(output)))
         expect(File.read("test.err.html"))
           .to include "working-draft is not a recognised status"
@@ -172,7 +184,8 @@ RSpec.describe Metanorma::Generic do
                                      "<security>Client Confidential</security>",
             document_namespace: document_namespace,
             version: Metanorma::Generic::VERSION }
-        expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input,
+                                                               *OPTIONS))))
           .to(be_equivalent_to(Xml::C14n.format(output)))
       end
 

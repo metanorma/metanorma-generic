@@ -21,6 +21,7 @@ module Metanorma
         docid_template
         doctypes
         default_doctype
+        fonts_manifest
         i18nyaml
         logo_path
         logo_paths
@@ -116,7 +117,7 @@ module Metanorma
       end
 
       def set_default_values_from_yaml_file_prep(config_file)
-        #root_path = File.dirname(self.class::_file || __FILE__)
+        # root_path = File.dirname(self.class::_file || __FILE__)
         root_path = File.dirname(config_file)
         default_config_options =
           YAML.safe_load(File.read(config_file, encoding: "UTF-8"))
