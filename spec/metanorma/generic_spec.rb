@@ -17,8 +17,7 @@ RSpec.describe Metanorma::Generic do
       subject(:config) { Metanorma::Generic::Configuration.new }
 
       logoloc = File.join(
-        File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "lib",
-                                   "metanorma")), "..", ".."
+        File.expand_path(File.join(File.dirname(__FILE__), "..", "..")),
       )
 
       let(:config_file_name) { Metanorma::Generic::YAML_CONFIG_FILE }
@@ -41,6 +40,9 @@ RSpec.describe Metanorma::Generic do
         [File.join(logoloc, "lib/isodoc/bipm/html/logo.png"),
          File.join(logoloc, "lib/isodoc/bipm/html/logo1.png")]
       end
+      let(:fonts_manifest) do
+        { "TeXGyreChorus" => ["Regular"] }
+      end
       let(:yaml_content) do
         {
           "organization_name_short" => organization_name_short,
@@ -49,6 +51,7 @@ RSpec.describe Metanorma::Generic do
           "boilerplate" => boilerplate,
           "logo_paths" => logo_paths,
           "logo_path" => logo_path,
+          "fonts_manifest" => fonts_manifest,
         }
       end
 
@@ -69,6 +72,7 @@ RSpec.describe Metanorma::Generic do
         expect(config.boilerplate).to eq(boilerplate1)
         expect(config.logo_paths).to eq(logo_paths1)
         expect(config.logo_path).to eq(logo_path)
+        expect(config.fonts_manifest).to eq(fonts_manifest)
       end
     end
 
@@ -143,7 +147,7 @@ RSpec.describe Metanorma::Generic do
           </generic-standard>
         OUTPUT
         xml = Nokogiri::XML(Asciidoctor.convert(input, backend: :generic,
-                                                header_footer: true))
+                                                       header_footer: true))
         xml.at("//xmlns:metanorma-extension").remove
         xml.at("//xmlns:generic-standard/@version").remove
         expect(strip_guid(Xml::C14n.format(xml.to_xml)))

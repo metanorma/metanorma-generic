@@ -21,6 +21,7 @@ module Metanorma
         docid_template
         doctypes
         default_doctype
+        fonts_manifest
         i18nyaml
         logo_path
         logo_paths
@@ -60,13 +61,14 @@ module Metanorma
         word_smallerfontsize
         word_footnotefontsize
         xml_root_tag
+        pdf_stylesheet
       ].freeze
 
       def filepath_attrs
-        %i[i18nyaml boilerplate logo_path logo_paths header
+        %i[i18nyaml boilerplate logo_path logo_paths header boilerplate
            htmlcoverpage htmlintropage htmlstylesheet scripts scripts_pdf
            standardstylesheet validate_rng_file wordcoverpage wordintropage
-           wordstylesheet]
+           wordstylesheet pdf_stylesheet]
       end
 
       attr_accessor(*CONFIG_ATTRS)
@@ -116,7 +118,8 @@ module Metanorma
       end
 
       def set_default_values_from_yaml_file_prep(config_file)
-        root_path = File.dirname(self.class::_file || __FILE__)
+        # root_path = File.dirname(self.class::_file || __FILE__)
+        root_path = File.dirname(config_file)
         default_config_options =
           YAML.safe_load(File.read(config_file, encoding: "UTF-8"))
         default_config_options["doctypes"].is_a? Array and
@@ -133,12 +136,10 @@ module Metanorma
 
       def absolute_path(value, root_path)
         if value.is_a? Hash then absolute_path1(value, root_path)
-        elsif value.is_a? Array
-          value.reject { |a| blank?(a) }.each_with_object([]) do |v1, g|
-            g << absolute_path(v1, root_path)
-          end
-        elsif value.is_a?(String) && !value.empty?
-          File.join(root_path, "..", "..", value)
+        elsif value.is_a? Array then absolute_path1_array(value, root_path)
+        elsif value.is_a?(String) && !value.empty? &&
+            !Pathname.new(value).absolute?
+          Pathname.new(File.join(root_path, value)).cleanpath.to_s
         else value
         end
       end
@@ -146,6 +147,12 @@ module Metanorma
       def absolute_path1(hash, pref)
         hash.reject { |_k, v| blank?(v) }.transform_values do |v|
           absolute_path(v, pref)
+        end
+      end
+
+      def absolute_path1_array(value, pref)
+        value.reject { |a| blank?(a) }.each_with_object([]) do |v1, g|
+          g << absolute_path(v1, pref)
         end
       end
     end

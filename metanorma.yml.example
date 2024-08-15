@@ -25,6 +25,7 @@ header: /metanorma-mine/lib/isodoc/mine/html/header.html
 wordcoverpage: /metanorma-mine/lib/isodoc/mine/html/word_mine_titlepage.html
 wordintropage: /metanorma-mine/lib/isodoc/mine/html/word_mine_intro.html
 wordstylesheet: /metanorma-mine/lib/isodoc/mine/html/wordstyle.scss
+pdf_stylesheet: /metanorma-mine/lib/isodoc/mine/html/mine.xsl
 word_bodyfont: '"Source Sans Pro","Arial",sans-serif'
 word_headerfont: '"Source Sans Pro","Arial",sans-serif'
 word_monospacefont: '"Source Code Pro",monospace'
@@ -72,3 +73,6 @@ normref_titles:
   - Normative references
 bibliography_titles:
   - Bibliography
+fonts_manifest:
+  - Font1
+  - Font2
