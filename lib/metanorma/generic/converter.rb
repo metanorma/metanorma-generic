@@ -84,7 +84,7 @@ module Metanorma
         if node.attr("customize")
           p = node.attr("customize")
           (Pathname.new p).absolute? or
-            p = File.expand(File.join(Metanorma::Utils::localdir(node), p))
+            p = File.expand_path(File.join(Metanorma::Utils::localdir(node), p))
           read_config_file(p)
         end
         super
