@@ -2,6 +2,8 @@ require "asciidoctor"
 require "metanorma/standoc/converter"
 require "fileutils"
 require_relative "front"
+require "metanorma"
+require "pathname"
 
 module Metanorma
   module Generic
@@ -58,6 +60,10 @@ module Metanorma
       def read_config_file(path_to_config_file)
         Metanorma::Generic.configuration
           .set_default_values_from_yaml_file(path_to_config_file)
+        # reregister Processor to Metanorma with updated values
+        if defined? Metanorma::Registry
+          Metanorma::Registry.instance.register(Metanorma::Generic::Processor)
+        end
       end
 
       def sectiontype_streamline(ret)
@@ -75,7 +81,12 @@ module Metanorma
       end
 
       def document(node)
-        read_config_file(node.attr("customize")) if node.attr("customize")
+        if node.attr("customize")
+          p = node.attr("customize")
+          (Pathname.new p).absolute? or
+            p = File.expand_path(File.join(Metanorma::Utils::localdir(node), p))
+          read_config_file(p)
+        end
         super
       end
 

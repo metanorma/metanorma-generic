@@ -8,6 +8,10 @@ logo_paths:
   - /metanorma-mine/lib/isodoc/mine/html/logo1.jpg
   - /metanorma-mine/lib/isodoc/mine/html/logo2.jpg
 validate_rng_file: /metanorma-mine/lib/metanorma/mine/mine.rng
+formats:
+  - html
+  - pdf
+  - doc
 htmlcoverpage: /metanorma-mine/lib/isodoc/mine/html/html_mine_titlepage.html
 htmlintropage: /metanorma-mine/lib/isodoc/mine/html/html_mine_intro.html
 htmlstylesheet: /metanorma-mine/lib/isodoc/mine/html/htmlstyle.scss
@@ -74,5 +78,5 @@ normref_titles:
 bibliography_titles:
   - Bibliography
 fonts_manifest:
-  - Font1
-  - Font2
+  Font1:
+  Font2:

@@ -13,12 +13,49 @@ RSpec.describe Metanorma::Generic::Processor do
     expect(processor).not_to be nil
   end
 
-  it "registers output formats against metanorma" do
-    output = <<~OUTPUT
-      [[:doc, "doc"], [:html, "html"], [:presentation, "presentation.xml"], [:rxl, "rxl"], [:xml, "xml"]]
-    OUTPUT
+  context "configure processor" do
+    before do
+      FileUtils.rm_f(Metanorma::Generic::YAML_CONFIG_FILE)
+    end
 
-    expect(processor.output_formats.sort.to_s).to be_equivalent_to output
+    after do
+      FileUtils.rm_f(Metanorma::Generic::YAML_CONFIG_FILE)
+    end
+
+    it "registers output formats against metanorma" do
+      output = <<~OUTPUT
+        [[:doc, "doc"], [:html, "html"], [:presentation, "presentation.xml"], [:rxl, "rxl"], [:xml, "xml"]]
+      OUTPUT
+
+      Metanorma::Generic.configuration = nil
+      Metanorma::Generic.configure {}
+      expect(Metanorma::Generic::Processor.new.output_formats.sort.to_s)
+        .to be_equivalent_to output
+    end
+
+    it "sets output formats by configuration" do
+      output = <<~OUTPUT
+        [[:html, "html"], [:pdf, "pdf"], [:presentation, "presentation.xml"], [:rxl, "rxl"], [:xml, "xml"]]
+      OUTPUT
+
+      yaml_content = { "formats" => %w(html pdf) }
+
+      FileUtils.rm_f(Metanorma::Generic::YAML_CONFIG_FILE)
+      File.new(Metanorma::Generic::YAML_CONFIG_FILE, "w+").tap do |file|
+        file.puts(yaml_content.to_yaml)
+      end.close
+
+      Metanorma::Generic.configuration = nil
+      Metanorma::Generic.configure {}
+      expect(Metanorma::Generic::Processor.new.output_formats.sort.to_s)
+        .to be_equivalent_to output.to_s
+
+      Metanorma::Generic.configure do |config|
+        config.formats = Metanorma::Generic::Configuration.new.formats
+      end
+
+      FileUtils.rm_f(Metanorma::Generic::YAML_CONFIG_FILE)
+    end
   end
 
   it "registers version against metanorma" do
