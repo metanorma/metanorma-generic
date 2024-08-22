@@ -3,6 +3,7 @@ require "metanorma/standoc/converter"
 require "fileutils"
 require_relative "front"
 require "metanorma"
+require "pathname"
 
 module Metanorma
   module Generic
@@ -57,6 +58,8 @@ module Metanorma
       end
 
       def read_config_file(path_to_config_file)
+        (::Pathname.new path_to_config_file).absolute? or
+          path_to_config_file = File.join(@localdir, path_to_config_file)
         Metanorma::Generic.configuration
           .set_default_values_from_yaml_file(path_to_config_file)
         # reregister Processor to Metanorma with updated values
