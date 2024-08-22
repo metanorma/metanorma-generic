@@ -91,7 +91,11 @@ module Metanorma
         # Try to set config values from yaml file in current directory
         @yaml = File.join(File.dirname(self.class::_file || __FILE__), "..",
                           "..", YAML_CONFIG_FILE)
-        set_default_values_from_yaml_file(@yaml) if File.file?(@yaml)
+        set_default_values_from_yaml_file(@yaml)
+      end
+
+      # may be invoked multiple times, needs to not overwrite
+      def postprocess_defaults
         default_org
         default_formats
         default_titles
@@ -103,7 +107,10 @@ module Metanorma
         self.document_namespace ||= DOCUMENT_NAMESPACE
       end
 
+      # convert array to hash; if already is hash (no override in customize),
+      # don't reconvert
       def default_formats
+        formats.is_a?(Hash) and return
         self.formats ||= %w(html doc)
         self.formats = self.formats.each_with_object({}) do |k, m|
           m[k.to_sym] = k
@@ -125,14 +132,22 @@ module Metanorma
       end
 
       def set_default_values_from_yaml_file(config_file)
-        root_path, default_config_options =
-          set_default_values_from_yaml_file_prep(config_file)
-        CONFIG_ATTRS.each do |attr_name|
-          value = default_config_options[attr_name.to_s]
-          value && filepath_attrs.include?(attr_name) and
-            value = absolute_path(value, root_path)
-          instance_variable_set("@#{attr_name}", value)
+        if File.file?(config_file)
+          root_path, default_config_options =
+            set_default_values_from_yaml_file_prep(config_file)
+          CONFIG_ATTRS.each do |attr|
+            set_default_value_from_yaml_file(attr, root_path,
+                                             default_config_options)
+          end
         end
+        postprocess_defaults
+      end
+
+      def set_default_value_from_yaml_file(attr, root_path, default_options)
+        value = default_options[attr.to_s]
+        value && filepath_attrs.include?(attr) and
+          value = absolute_path(value, root_path)
+        instance_variable_set("@#{attr}", value)
       end
 
       def set_default_values_from_yaml_file_prep(config_file)
