@@ -2,6 +2,7 @@ require "asciidoctor"
 require "metanorma/standoc/converter"
 require "fileutils"
 require_relative "front"
+require "metanorma"
 
 module Metanorma
   module Generic
@@ -58,6 +59,10 @@ module Metanorma
       def read_config_file(path_to_config_file)
         Metanorma::Generic.configuration
           .set_default_values_from_yaml_file(path_to_config_file)
+        # reregister Processor to Metanorma with updated values
+        if defined? Metanorma::Registry
+          Metanorma::Registry.instance.register(Metanorma::Generic::Processor)
+        end
       end
 
       def sectiontype_streamline(ret)
