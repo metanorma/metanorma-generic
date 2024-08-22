@@ -58,8 +58,6 @@ module Metanorma
       end
 
       def read_config_file(path_to_config_file)
-        (::Pathname.new path_to_config_file).absolute? or
-          path_to_config_file = File.join(@localdir, path_to_config_file)
         Metanorma::Generic.configuration
           .set_default_values_from_yaml_file(path_to_config_file)
         # reregister Processor to Metanorma with updated values
@@ -83,7 +81,12 @@ module Metanorma
       end
 
       def document(node)
-        read_config_file(node.attr("customize")) if node.attr("customize")
+        if node.attr("customize")
+          p = node.attr("customize")
+          (Pathname.new p).absolute? or
+            p = File.join(Metanorma::Utils::localdir(node), p)
+          read_config_file(p)
+        end
         super
       end
 
