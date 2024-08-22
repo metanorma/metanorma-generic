@@ -10,6 +10,10 @@ module Metanorma
     DOCUMENT_NAMESPACE = "https://www.metanorma.org/ns/generic"
     YAML_CONFIG_FILE = "metanorma.yml"
 
+    class DummyProcessor < ::Metanorma::Processor
+      def initialize; end # rubocop:disable Lint/MissingSuper
+    end
+
     class Configuration
       CONFIG_ATTRS = %i[
         organization_name_short
@@ -62,6 +66,7 @@ module Metanorma
         word_footnotefontsize
         xml_root_tag
         pdf_stylesheet
+        formats
       ].freeze
 
       def filepath_attrs
@@ -87,10 +92,23 @@ module Metanorma
         @yaml = File.join(File.dirname(self.class::_file || __FILE__), "..",
                           "..", YAML_CONFIG_FILE)
         set_default_values_from_yaml_file(@yaml) if File.file?(@yaml)
+        default_org
+        default_formats
+        default_titles
+      end
+
+      def default_org
         self.organization_name_short ||= ORGANIZATION_NAME_SHORT
         self.organization_name_long ||= ORGANIZATION_NAME_LONG
         self.document_namespace ||= DOCUMENT_NAMESPACE
-        default_titles
+      end
+
+      def default_formats
+        self.formats ||= %w(html doc)
+        self.formats = self.formats.each_with_object({}) do |k, m|
+          m[k.to_sym] = k
+        end
+        self.formats.merge! DummyProcessor.new.output_formats
       end
 
       def default_titles
@@ -118,7 +136,6 @@ module Metanorma
       end
 
       def set_default_values_from_yaml_file_prep(config_file)
-        # root_path = File.dirname(self.class::_file || __FILE__)
         root_path = File.dirname(config_file)
         default_config_options =
           YAML.safe_load(File.read(config_file, encoding: "UTF-8"))
@@ -135,11 +152,14 @@ module Metanorma
       end
 
       def absolute_path(value, root_path)
-        if value.is_a? Hash then absolute_path1(value, root_path)
-        elsif value.is_a? Array then absolute_path1_array(value, root_path)
-        elsif value.is_a?(String) && !value.empty? &&
-            !Pathname.new(value).absolute?
-          Pathname.new(File.join(root_path, value)).cleanpath.to_s
+        case value
+        when Hash then absolute_path1(value, root_path)
+        when Array then absolute_path1_array(value, root_path)
+        when String
+          if !value.empty? && !Pathname.new(value).absolute?
+            Pathname.new(File.join(root_path, value)).cleanpath.to_s
+          else value
+          end
         else value
         end
       end

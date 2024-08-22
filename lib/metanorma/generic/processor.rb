@@ -15,10 +15,7 @@ module Metanorma
       end
 
       def output_formats
-        super.merge(
-          html: "html",
-          doc: "doc",
-        )
+        configuration.formats
       end
 
       def fonts_manifest
