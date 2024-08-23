@@ -36,7 +36,7 @@ RSpec.describe Metanorma::Generic do
     FileUtils.rm_f "test.err.html"
     Asciidoctor.convert(input, backend: :generic, header_footer: true)
     expect(File.read("test.err.html"))
-      .to include "is not a legal document type: reverting to"
+      .to include("is not a legal document type: reverting to")
 
     Metanorma::Generic.configure do |config|
       config.default_doctype = "pizza"
@@ -50,6 +50,6 @@ RSpec.describe Metanorma::Generic do
     FileUtils.rm_f "test.err.html"
     Asciidoctor.convert(input, backend: :generic, header_footer: true)
     expect(File.read("test.err.html"))
-      .not_to include "is not a legal document type: reverting to"
+      .not_to include("is not a legal document type: reverting to")
   end
 end

@@ -149,11 +149,11 @@ RSpec.describe Metanorma::Generic do
                                                                *OPTIONS))))
           .to(be_equivalent_to(Xml::C14n.format(output)))
         expect(File.read("test.err.html"))
-          .to include "working-draft is not a recognised status"
+          .to include("working-draft is not a recognised status")
         expect(File.read("test.err.html"))
-          .to include "TC is not a recognised committee"
+          .to include("TC is not a recognised committee")
         expect(File.read("test.err.html"))
-          .to include "standard is not a legal document type: reverting to 'elephant'"
+          .to include("standard is not a legal document type: reverting to 'elephant'")
       end
 
       it "internationalises with language; uses complex metadata extensions" do
