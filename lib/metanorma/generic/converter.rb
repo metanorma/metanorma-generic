@@ -22,20 +22,17 @@ module Metanorma
       end
 
       def baselocation(loc)
-        return nil if loc.nil?
-
+        loc.nil? and return nil
         return loc
-        File.expand_path(File.join(File.dirname(
-                                     self.class::_file || __FILE__,
-                                   ), "..", "..", "..", loc))
       end
 
       def docidentifier_cleanup(xmldoc)
+        b = boilerplate_isodoc(xmldoc) or return
         template = configuration.docid_template ||
           "{{ organization_name_short }} {{ docnumeric }}"
         docid = xmldoc.at("//bibdata/docidentifier")
         docid&.text&.empty? or return
-        id = boilerplate_isodoc(xmldoc).populate_template(template, nil)
+        id = b.populate_template(template, nil)
         (id.empty? and docid.remove) or docid.children = id
       end
 
@@ -169,7 +166,7 @@ module Metanorma
       end
 
       def boilerplate_isodoc(xmldoc)
-        conv = super
+        conv = super or return nil
         Metanorma::Generic::Configuration::CONFIG_ATTRS.each do |a|
           conv.meta.set(a, configuration.send(a))
         end
