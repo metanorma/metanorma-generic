@@ -135,6 +135,7 @@ RSpec.describe Metanorma::Generic do
         </copyright>
         <ext>
         <doctype>standard</doctype>
+        <flavor>generic</flavor>
         <editorialgroup>
           <committee type="A">TC</committee>
           <committee type="B">TC1</committee>

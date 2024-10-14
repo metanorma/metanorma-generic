@@ -141,6 +141,7 @@ RSpec.describe Metanorma::Generic do
               </copyright>
               <ext>
                 <doctype>standard</doctype>
+                <flavor>generic</flavor>
               </ext>
             </bibdata>
             <sections/>
