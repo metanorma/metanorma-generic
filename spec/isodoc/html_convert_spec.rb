@@ -501,7 +501,7 @@ RSpec.describe IsoDoc::Generic do
   it "processes pre" do
     input = <<~"INPUT"
       <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
-      <preface><foreword displayorder="1">
+      <preface><foreword displayorder="1"><title>Foreword</title>
       <pre>ABC</pre>
       </foreword></preface>
       </generic-standard>
@@ -529,7 +529,7 @@ RSpec.describe IsoDoc::Generic do
   it "processes keyword" do
     input = <<~"INPUT"
       <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
-      <preface><foreword displayorder="1">
+      <preface><foreword displayorder="1"><title>Foreword</title>
       <keyword>ABC</keyword>
       </foreword></preface>
       </generic-standard>
@@ -693,7 +693,11 @@ RSpec.describe IsoDoc::Generic do
               </term>
             </terms>
             <definitions id='K'>
-              <title>2.2.</title>
+             <title depth="2">
+               2.2.
+               <tab/>
+               Symbols
+            </title>
               <dl>
                 <dt>Symbol</dt>
                 <dd>Definition</dd>
@@ -701,7 +705,11 @@ RSpec.describe IsoDoc::Generic do
             </definitions>
           </clause>
           <definitions id='L' displayorder='6'>
-            <title>3.</title>
+          <title depth="1">
+            3.
+            <tab/>
+            Symbols
+         </title>
             <dl>
               <dt>Symbol</dt>
               <dd>Definition</dd>
