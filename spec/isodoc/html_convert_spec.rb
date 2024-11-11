@@ -110,7 +110,7 @@ RSpec.describe IsoDoc::Generic do
       </generic-standard>
     INPUT
 
-    output = <<~"OUTPUT"
+    output = 
       {:accesseddate=>"XXX",
       :adapteddate=>"XXX",
       :agency=>"Acme",
@@ -155,8 +155,6 @@ RSpec.describe IsoDoc::Generic do
       :updateddate=>"XXX",
       :vote_endeddate=>"XXX",
       :vote_starteddate=>"XXX"}
-    OUTPUT
-
     docxml, = csdc.convert_init(input, "test", true)
     expect(metadata(csdc.info(docxml, nil))).to be_equivalent_to output
   end
@@ -207,8 +205,7 @@ RSpec.describe IsoDoc::Generic do
           </bibdata>
           </generic-standard>
         INPUT
-        expect(metadata(csdc.info(docxml, nil))).to be_equivalent_to <<~OUTPUT
-          {:accesseddate=>"XXX",
+        expect(metadata(csdc.info(docxml, nil))).to be_equivalent_to({:accesseddate=>"XXX",
           :adapteddate=>"XXX",
           :announceddate=>"XXX",
           :circulateddate=>"XXX",
@@ -229,8 +226,7 @@ RSpec.describe IsoDoc::Generic do
           :unpublished=>true,
           :updateddate=>"XXX",
           :vote_endeddate=>"XXX",
-          :vote_starteddate=>"XXX"}
-        OUTPUT
+          :vote_starteddate=>"XXX"})
       end
 
       it "processes default metadata" do
@@ -343,7 +339,7 @@ RSpec.describe IsoDoc::Generic do
           </generic-standard>
         INPUT
 
-        output = <<~OUTPUT
+        output = 
           {:accesseddate=>"XXX",
           :adapteddate=>"XXX",
           :agency=>"Acme",
@@ -384,7 +380,6 @@ RSpec.describe IsoDoc::Generic do
           :updateddate=>"XXX",
           :vote_endeddate=>"XXX",
           :vote_starteddate=>"XXX"}
-        OUTPUT
 
         docxml, = wcsdc.convert_init(input, "test", true)
         expect(metadata(wcsdc.info(docxml, nil))).to be_equivalent_to output
