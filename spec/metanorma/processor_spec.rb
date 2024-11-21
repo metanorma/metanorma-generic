@@ -83,7 +83,7 @@ RSpec.describe Metanorma::Generic::Processor do
     input = <<~INPUT
       <generic-standard xmlns="http://riboseinc.com/isoxml">
         <sections>
-          <terms id="H" obligation="normative" displayorder="1"><title>Terms, Definitions, Symbols and Abbreviated Terms</title>
+          <terms id="H" obligation="normative" displayorder="1"><fmt-title>Terms, Definitions, Symbols and Abbreviated Terms</fmt-title>
             <term id="J">
               <preferred>Term2</preferred>
             </term>
