@@ -653,25 +653,19 @@ RSpec.describe IsoDoc::Generic do
              <foreword obligation="informative" displayorder="2">
                 <title id="_">Foreword</title>
                 <fmt-title depth="1">
-                   <span class="fmt-caption-label">
-                      <semx element="title" source="_">Foreword</semx>
-                   </span>
+                   <semx element="title" source="_">Foreword</semx>
                 </fmt-title>
                 <p id="A">This is a preamble</p>
              </foreword>
              <introduction id="B" obligation="informative" displayorder="3">
                 <title id="_">Introduction</title>
                 <fmt-title depth="1">
-                   <span class="fmt-caption-label">
-                      <semx element="title" source="_">Introduction</semx>
-                   </span>
+                   <semx element="title" source="_">Introduction</semx>
                 </fmt-title>
                 <clause id="C" inline-header="false" obligation="informative">
                    <title id="_">Introduction Subsection</title>
                    <fmt-title depth="2">
-                      <span class="fmt-caption-label">
-                         <semx element="title" source="_">Introduction Subsection</semx>
-                      </span>
+                      <semx element="title" source="_">Introduction Subsection</semx>
                    </fmt-title>
                 </clause>
              </introduction>
@@ -683,11 +677,11 @@ RSpec.describe IsoDoc::Generic do
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="D">4</semx>
                       <span class="fmt-autonum-delim">.</span>
-                      <span class="fmt-caption-delim">
-                         <tab/>
-                      </span>
-                      <semx element="title" source="_">Scope</semx>
                    </span>
+                   <span class="fmt-caption-delim">
+                      <tab/>
+                   </span>
+                   <semx element="title" source="_">Scope</semx>
                 </fmt-title>
                 <fmt-xref-label>
                    <span class="fmt-element-name">Clause</span>
@@ -701,11 +695,11 @@ RSpec.describe IsoDoc::Generic do
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="H">2</semx>
                       <span class="fmt-autonum-delim">.</span>
-                      <span class="fmt-caption-delim">
-                         <tab/>
-                      </span>
-                      <semx element="title" source="_">Terms, Definitions, Symbols and Abbreviated Terms</semx>
                    </span>
+                   <span class="fmt-caption-delim">
+                      <tab/>
+                   </span>
+                   <semx element="title" source="_">Terms, Definitions, Symbols and Abbreviated Terms</semx>
                 </fmt-title>
                 <fmt-xref-label>
                    <span class="fmt-element-name">Clause</span>
@@ -715,28 +709,40 @@ RSpec.describe IsoDoc::Generic do
                    <title id="_">Normal Terms</title>
                    <fmt-title depth="2">
                       <span class="fmt-caption-label">
-                         <semx element="autonum" source="I">2.1</semx>
+                         <semx element="autonum" source="H">2</semx>
                          <span class="fmt-autonum-delim">.</span>
-                         <span class="fmt-caption-delim">
-                            <tab/>
-                         </span>
-                         <semx element="title" source="_">Normal Terms</semx>
+                         <semx element="autonum" source="I">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
                       </span>
+                      <span class="fmt-caption-delim">
+                         <tab/>
+                      </span>
+                      <semx element="title" source="_">Normal Terms</semx>
                    </fmt-title>
                    <fmt-xref-label>
                       <span class="fmt-element-name">Clause</span>
-                      <semx element="autonum" source="I">2.1</semx>
+                      <semx element="autonum" source="H">2</semx>
+                      <span class="fmt-autonum-delim">.</span>
+                      <semx element="autonum" source="I">1</semx>
                    </fmt-xref-label>
                    <term id="J">
                       <fmt-name>
                          <span class="fmt-caption-label">
-                            <semx element="autonum" source="J">2.1.1</semx>
+                            <semx element="autonum" source="H">2</semx>
+                            <span class="fmt-autonum-delim">.</span>
+                            <semx element="autonum" source="I">1</semx>
+                            <span class="fmt-autonum-delim">.</span>
+                            <semx element="autonum" source="J">1</semx>
                             <span class="fmt-autonum-delim">.</span>
                          </span>
                       </fmt-name>
                       <fmt-xref-label>
                          <span class="fmt-element-name">Clause</span>
-                         <semx element="autonum" source="J">2.1.1</semx>
+                         <semx element="autonum" source="H">2</semx>
+                         <span class="fmt-autonum-delim">.</span>
+                         <semx element="autonum" source="I">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
+                         <semx element="autonum" source="J">1</semx>
                       </fmt-xref-label>
                       <preferred>Term2</preferred>
                    </term>
@@ -745,17 +751,21 @@ RSpec.describe IsoDoc::Generic do
                    <title id="_">Symbols</title>
                    <fmt-title depth="2">
                       <span class="fmt-caption-label">
-                         <semx element="autonum" source="K">2.2</semx>
+                         <semx element="autonum" source="H">2</semx>
                          <span class="fmt-autonum-delim">.</span>
-                         <span class="fmt-caption-delim">
-                            <tab/>
-                         </span>
-                         <semx element="title" source="_">Symbols</semx>
+                         <semx element="autonum" source="K">2</semx>
+                         <span class="fmt-autonum-delim">.</span>
                       </span>
+                      <span class="fmt-caption-delim">
+                         <tab/>
+                      </span>
+                      <semx element="title" source="_">Symbols</semx>
                    </fmt-title>
                    <fmt-xref-label>
                       <span class="fmt-element-name">Clause</span>
-                      <semx element="autonum" source="K">2.2</semx>
+                      <semx element="autonum" source="H">2</semx>
+                      <span class="fmt-autonum-delim">.</span>
+                      <semx element="autonum" source="K">2</semx>
                    </fmt-xref-label>
                    <dl>
                       <dt>Symbol</dt>
@@ -769,11 +779,11 @@ RSpec.describe IsoDoc::Generic do
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="L">3</semx>
                       <span class="fmt-autonum-delim">.</span>
-                      <span class="fmt-caption-delim">
-                         <tab/>
-                      </span>
-                      <semx element="title" source="_">Symbols</semx>
                    </span>
+                   <span class="fmt-caption-delim">
+                      <tab/>
+                   </span>
+                   <semx element="title" source="_">Symbols</semx>
                 </fmt-title>
                 <fmt-xref-label>
                    <span class="fmt-element-name">Clause</span>
@@ -790,11 +800,11 @@ RSpec.describe IsoDoc::Generic do
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="M">5</semx>
                       <span class="fmt-autonum-delim">.</span>
-                      <span class="fmt-caption-delim">
-                         <tab/>
-                      </span>
-                      <semx element="title" source="_">Clause 4</semx>
                    </span>
+                   <span class="fmt-caption-delim">
+                      <tab/>
+                   </span>
+                   <semx element="title" source="_">Clause 4</semx>
                 </fmt-title>
                 <fmt-xref-label>
                    <span class="fmt-element-name">Clause</span>
@@ -804,34 +814,42 @@ RSpec.describe IsoDoc::Generic do
                    <title id="_">Introduction</title>
                    <fmt-title depth="2">
                       <span class="fmt-caption-label">
-                         <semx element="autonum" source="N">5.1</semx>
+                         <semx element="autonum" source="M">5</semx>
                          <span class="fmt-autonum-delim">.</span>
-                         <span class="fmt-caption-delim">
-                            <tab/>
-                         </span>
-                         <semx element="title" source="_">Introduction</semx>
+                         <semx element="autonum" source="N">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
                       </span>
+                      <span class="fmt-caption-delim">
+                         <tab/>
+                      </span>
+                      <semx element="title" source="_">Introduction</semx>
                    </fmt-title>
                    <fmt-xref-label>
                       <span class="fmt-element-name">Clause</span>
-                      <semx element="autonum" source="N">5.1</semx>
+                      <semx element="autonum" source="M">5</semx>
+                      <span class="fmt-autonum-delim">.</span>
+                      <semx element="autonum" source="N">1</semx>
                    </fmt-xref-label>
                 </clause>
                 <clause id="O" inline-header="false" obligation="normative">
                    <title id="_">Clause 4.2</title>
                    <fmt-title depth="2">
                       <span class="fmt-caption-label">
-                         <semx element="autonum" source="O">5.2</semx>
+                         <semx element="autonum" source="M">5</semx>
                          <span class="fmt-autonum-delim">.</span>
-                         <span class="fmt-caption-delim">
-                            <tab/>
-                         </span>
-                         <semx element="title" source="_">Clause 4.2</semx>
+                         <semx element="autonum" source="O">2</semx>
+                         <span class="fmt-autonum-delim">.</span>
                       </span>
+                      <span class="fmt-caption-delim">
+                         <tab/>
+                      </span>
+                      <semx element="title" source="_">Clause 4.2</semx>
                    </fmt-title>
                    <fmt-xref-label>
                       <span class="fmt-element-name">Clause</span>
-                      <semx element="autonum" source="O">5.2</semx>
+                      <semx element="autonum" source="M">5</semx>
+                      <span class="fmt-autonum-delim">.</span>
+                      <semx element="autonum" source="O">2</semx>
                    </fmt-xref-label>
                 </clause>
              </clause>
@@ -841,11 +859,11 @@ RSpec.describe IsoDoc::Generic do
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="R">1</semx>
                       <span class="fmt-autonum-delim">.</span>
-                      <span class="fmt-caption-delim">
-                         <tab/>
-                      </span>
-                      <semx element="title" source="_">Normative References</semx>
                    </span>
+                   <span class="fmt-caption-delim">
+                      <tab/>
+                   </span>
+                   <semx element="title" source="_">Normative References</semx>
                 </fmt-title>
                 <fmt-xref-label>
                    <span class="fmt-element-name">Clause</span>
@@ -858,20 +876,20 @@ RSpec.describe IsoDoc::Generic do
                 <strong>Annex</strong>
              </title>
              <fmt-title>
-                <span class="fmt-caption-label">
-                   <strong>
+                <strong>
+                   <span class="fmt-caption-label">
                       <span class="fmt-element-name">Annex</span>
                       <semx element="autonum" source="P">A</semx>
-                   </strong>
-                   <br/>
-                   <span class="fmt-obligation">(normative)</span>
-                   <span class="fmt-caption-delim">
-                      <br/>
                    </span>
-                   <semx element="title" source="_">
-                      <strong>Annex</strong>
-                   </semx>
+                </strong>
+                <br/>
+                <span class="fmt-obligation">(normative)</span>
+                <span class="fmt-caption-delim">
+                   <br/>
                 </span>
+                <semx element="title" source="_">
+                   <strong>Annex</strong>
+                </semx>
              </fmt-title>
              <fmt-xref-label>
                 <span class="fmt-element-name">Annex</span>
@@ -881,33 +899,45 @@ RSpec.describe IsoDoc::Generic do
                 <title id="_">Annex A.1</title>
                 <fmt-title depth="2">
                    <span class="fmt-caption-label">
-                      <semx element="autonum" source="Q">A.1</semx>
+                      <semx element="autonum" source="P">A</semx>
                       <span class="fmt-autonum-delim">.</span>
-                      <span class="fmt-caption-delim">
-                         <tab/>
-                      </span>
-                      <semx element="title" source="_">Annex A.1</semx>
+                      <semx element="autonum" source="Q">1</semx>
+                      <span class="fmt-autonum-delim">.</span>
                    </span>
+                   <span class="fmt-caption-delim">
+                      <tab/>
+                   </span>
+                   <semx element="title" source="_">Annex A.1</semx>
                 </fmt-title>
                 <fmt-xref-label>
                    <span class="fmt-element-name">Annex</span>
-                   <semx element="autonum" source="Q">A.1</semx>
+                   <semx element="autonum" source="P">A</semx>
+                   <span class="fmt-autonum-delim">.</span>
+                   <semx element="autonum" source="Q">1</semx>
                 </fmt-xref-label>
                 <clause id="Q1" inline-header="false" obligation="normative" autonum="A.1.1">
                    <title id="_">Annex A.1a</title>
                    <fmt-title depth="3">
                       <span class="fmt-caption-label">
-                         <semx element="autonum" source="Q1">A.1.1</semx>
+                         <semx element="autonum" source="P">A</semx>
                          <span class="fmt-autonum-delim">.</span>
-                         <span class="fmt-caption-delim">
-                            <tab/>
-                         </span>
-                         <semx element="title" source="_">Annex A.1a</semx>
+                         <semx element="autonum" source="Q">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
+                         <semx element="autonum" source="Q1">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
                       </span>
+                      <span class="fmt-caption-delim">
+                         <tab/>
+                      </span>
+                      <semx element="title" source="_">Annex A.1a</semx>
                    </fmt-title>
                    <fmt-xref-label>
                       <span class="fmt-element-name">Annex</span>
-                      <semx element="autonum" source="Q1">A.1.1</semx>
+                      <semx element="autonum" source="P">A</semx>
+                      <span class="fmt-autonum-delim">.</span>
+                      <semx element="autonum" source="Q">1</semx>
+                      <span class="fmt-autonum-delim">.</span>
+                      <semx element="autonum" source="Q1">1</semx>
                    </fmt-xref-label>
                 </clause>
              </clause>
@@ -916,16 +946,12 @@ RSpec.describe IsoDoc::Generic do
              <clause id="S" obligation="informative" displayorder="10">
                 <title id="_">Bibliography</title>
                 <fmt-title depth="1">
-                   <span class="fmt-caption-label">
-                      <semx element="title" source="_">Bibliography</semx>
-                   </span>
+                   <semx element="title" source="_">Bibliography</semx>
                 </fmt-title>
                 <references id="T" obligation="informative" normative="false">
                    <title id="_">Bibliography Subsection</title>
                    <fmt-title depth="2">
-                      <span class="fmt-caption-label">
-                         <semx element="title" source="_">Bibliography Subsection</semx>
-                      </span>
+                      <semx element="title" source="_">Bibliography Subsection</semx>
                    </fmt-title>
                 </references>
              </clause>
