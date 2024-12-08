@@ -5,12 +5,8 @@ require "isodoc"
 module IsoDoc
   module Generic
     class PresentationXMLConvert < IsoDoc::PresentationXMLConvert
-      def annex1(elem)
-        lbl = @xrefs.anchor(elem["id"], :label)
-        if t = elem.at(ns("./title"))
-          t.children = "<strong>#{to_xml(t.children)}</strong>"
-        end
-        prefix_name(elem, "<br/>", lbl, "title")
+      def annex_delim(_elem)
+        "<br/>"
       end
 
       include Init
