@@ -85,7 +85,7 @@ RSpec.describe Metanorma::Generic::Processor do
         <sections>
           <terms id="H" obligation="normative" displayorder="1"><fmt-title>Terms, Definitions, Symbols and Abbreviated Terms</fmt-title>
             <term id="J">
-              <preferred>Term2</preferred>
+              <fmt-preferred><p>Term2</p></fmt-preferred>
             </term>
           </terms>
         </sections>

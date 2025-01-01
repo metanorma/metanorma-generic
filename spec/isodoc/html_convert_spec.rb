@@ -556,7 +556,7 @@ RSpec.describe IsoDoc::Generic do
         <terms id="H" obligation="normative" displayorder="1"><fmt-title>1.&#160; Terms, Definitions, Symbols and Abbreviated Terms</fmt-title>
           <term id="J">
           <fmt-name>1.1.</fmt-name>
-          <preferred>Term2</preferred>
+          <fmt-preferred><p>Term2</p></fmt-preferred>
         </term>
          </terms>
          </sections>
@@ -744,7 +744,7 @@ RSpec.describe IsoDoc::Generic do
                          <span class="fmt-autonum-delim">.</span>
                          <semx element="autonum" source="J">1</semx>
                       </fmt-xref-label>
-                      <preferred>Term2</preferred>
+                      <preferred id="_">Term2</preferred>
                    </term>
                 </terms>
                 <definitions id="K">
