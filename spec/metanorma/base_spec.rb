@@ -32,7 +32,7 @@ RSpec.describe Metanorma::Generic do
     output = <<~"OUTPUT"
           #{BLANK_HDR}
       <sections/>
-      </generic-standard>
+      </metanorma>
     OUTPUT
 
     expect(strip_guid(Xml::C14n.format(Asciidoctor.convert(input, *OPTIONS))))
@@ -50,7 +50,7 @@ RSpec.describe Metanorma::Generic do
     output = <<~"OUTPUT"
           #{BLANK_HDR}
       <sections/>
-      </generic-standard>
+      </metanorma>
     OUTPUT
 
     FileUtils.rm_f "test.html"
@@ -94,7 +94,7 @@ RSpec.describe Metanorma::Generic do
 
     output = <<~"OUTPUT"
           <?xml version="1.0" encoding="UTF-8"?>
-      <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}" type="semantic" version="#{Metanorma::Generic::VERSION}">
+      <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Generic::VERSION}">
       <bibdata type="standard">
         <title language="en" format="text/plain">Main Title</title>
         <docidentifier primary="true" type="Acme">Acme 1000</docidentifier>
@@ -161,7 +161,7 @@ RSpec.describe Metanorma::Generic do
           </presentation-metadata>
          </metanorma-extension>
       <sections/>
-      </generic-standard>
+      </metanorma>
     OUTPUT
 
     expect(strip_guid(Xml::C14n.format(Asciidoctor.convert(input, *OPTIONS))))
@@ -194,7 +194,7 @@ RSpec.describe Metanorma::Generic do
       == Bibliography
     INPUT
     output = <<~"OUTPUT"
-          <generic-standard xmlns='https://www.metanorma.org/ns/generic'  type="semantic" version="#{Metanorma::Generic::VERSION}">
+          <metanorma xmlns='https://www.metanorma.org/ns/standoc'  type="semantic" version="#{Metanorma::Generic::VERSION}">
         <preface>
           <introduction id='_' obligation='informative'>
             <title>Introduction</title>
@@ -227,7 +227,7 @@ RSpec.describe Metanorma::Generic do
             <title>Bibliography</title>
           </references>
         </bibliography>
-      </generic-standard>
+      </metanorma>
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
     xml.at("//xmlns:bibdata").remove
@@ -253,7 +253,7 @@ RSpec.describe Metanorma::Generic do
            <clause id="_" obligation="normative">
              <title>Section 1</title>
            </clause></sections>
-           </generic-standard>
+           </metanorma>
     OUTPUT
 
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
@@ -339,7 +339,7 @@ RSpec.describe Metanorma::Generic do
                <strike>strike</strike>
                <smallcap>smallcap</smallcap></p>
                </sections>
-               </generic-standard>
+               </metanorma>
     OUTPUT
 
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))

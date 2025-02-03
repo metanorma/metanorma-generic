@@ -13,13 +13,13 @@ module Metanorma
 
       register_for "generic"
 
-      def xml_root_tag
-        configuration.xml_root_tag || XML_ROOT_TAG
-      end
-
-      def xml_namespace
-        configuration.document_namespace || XML_NAMESPACE
-      end
+      #def xml_root_tag
+        #configuration.xml_root_tag || XML_ROOT_TAG
+      #end
+#
+      #def xml_namespace
+        #configuration.document_namespace || XML_NAMESPACE
+      #end
 
       def baselocation(loc)
         loc.nil? and return nil

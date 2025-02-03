@@ -70,7 +70,7 @@ RSpec.describe Metanorma::Generic::Processor do
     output = <<~"OUTPUT"
           #{BLANK_HDR}
       <sections/>
-      </generic-standard>
+      </metanorma>
     OUTPUT
 
     expect(strip_guid(Xml::C14n.format(processor
@@ -81,7 +81,7 @@ RSpec.describe Metanorma::Generic::Processor do
   it "generates HTML from IsoDoc XML" do
     FileUtils.rm_f "test.xml"
     input = <<~INPUT
-      <generic-standard xmlns="http://riboseinc.com/isoxml">
+      <metanorma xmlns="http://riboseinc.com/isoxml">
         <sections>
           <terms id="H" obligation="normative" displayorder="1"><fmt-title>Terms, Definitions, Symbols and Abbreviated Terms</fmt-title>
             <term id="J">
@@ -89,7 +89,7 @@ RSpec.describe Metanorma::Generic::Processor do
             </term>
           </terms>
         </sections>
-      </generic-standard>
+      </metanorma>
     INPUT
 
     output = <<~OUTPUT
