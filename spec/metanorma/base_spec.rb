@@ -94,7 +94,7 @@ RSpec.describe Metanorma::Generic do
 
     output = <<~"OUTPUT"
           <?xml version="1.0" encoding="UTF-8"?>
-      <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Generic::VERSION}">
+      <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Generic::VERSION}" flavor="generic">
       <bibdata type="standard">
         <title language="en" format="text/plain">Main Title</title>
         <docidentifier primary="true" type="Acme">Acme 1000</docidentifier>
@@ -194,7 +194,7 @@ RSpec.describe Metanorma::Generic do
       == Bibliography
     INPUT
     output = <<~"OUTPUT"
-          <metanorma xmlns='https://www.metanorma.org/ns/standoc'  type="semantic" version="#{Metanorma::Generic::VERSION}">
+          <metanorma xmlns='https://www.metanorma.org/ns/standoc'  type="semantic" version="#{Metanorma::Generic::VERSION}" flavor="generic">
         <preface>
           <introduction id='_' obligation='informative'>
             <title>Introduction</title>
