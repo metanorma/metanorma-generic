@@ -411,15 +411,18 @@ RSpec.describe IsoDoc::Generic do
         expect(html).to match(/code \{[^}]*?font-size: 29pt/m)
         expect(html).to match(/p\.note \{[^}]*?font-size: 28pt/m)
         expect(html).to match(/aside \{[^}]*?font-size: 27pt/m)
-        expect(Xml::C14n.format(html
+        expect(Xml::C14n.format(strip_guid(html)
           .gsub(%r{^.*<main}m, "<main")
           .gsub(%r{</main>.*}m, "</main>")))
           .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
                 <main class="main-section"><button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
                 <br/>
               <p class="zzSTDTitle1">Main Title</p>
-              <div>
-                <h1></h1>
+              <div id="_">
+                    <h1 id="_">
+                <a class="anchor" href="#_"/>
+                <a class="header" href="#_">1.</a>
+                    </h1>
                 <p>
                   <a href="#A">Illustration 1</a>
                 </p>
@@ -650,7 +653,7 @@ RSpec.describe IsoDoc::Generic do
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Table of contents</fmt-title>
              </clause>
-             <foreword obligation="informative" displayorder="2">
+             <foreword obligation="informative" displayorder="2" id="_">
                 <title id="_">Foreword</title>
                 <fmt-title depth="1">
                    <semx element="title" source="_">Foreword</semx>
