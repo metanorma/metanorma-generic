@@ -81,7 +81,7 @@ RSpec.describe Metanorma::Generic do
       let(:default_organization_name_short) { "Acme" }
       let(:default_organization_name_long) { "Acme Corp." }
       let(:default_document_namespace) do
-        "https://www.metanorma.org/ns/generic"
+        "https://www.metanorma.org/ns/standoc"
       end
 
       it "sets default atrributes" do
@@ -89,8 +89,6 @@ RSpec.describe Metanorma::Generic do
           .to(eq(default_organization_name_short))
         expect(config.organization_name_long)
           .to(eq(default_organization_name_long))
-        expect(config.document_namespace)
-          .to(eq(default_document_namespace))
       end
 
       it "processes docidentifier override" do
@@ -106,7 +104,7 @@ RSpec.describe Metanorma::Generic do
           :doctype: standard
         INPUT
         output = <<~OUTPUT
-          <generic-standard xmlns="https://www.metanorma.org/ns/generic" type="semantic">
+          <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" flavor="generic">
             <bibdata type="standard">
               <title language="en" format="text/plain">Document title</title>
               <docidentifier primary="true" type="Acme">OVERRIDE</docidentifier>
@@ -145,12 +143,12 @@ RSpec.describe Metanorma::Generic do
               </ext>
             </bibdata>
             <sections/>
-          </generic-standard>
+          </metanorma>
         OUTPUT
         xml = Nokogiri::XML(Asciidoctor.convert(input, backend: :generic,
                                                        header_footer: true))
         xml.at("//xmlns:metanorma-extension").remove
-        xml.at("//xmlns:generic-standard/@version").remove
+        xml.at("//xmlns:metanorma/@version").remove
         expect(strip_guid(Xml::C14n.format(xml.to_xml)))
           .to be_equivalent_to strip_guid(Xml::C14n.format(output))
       end

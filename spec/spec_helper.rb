@@ -27,7 +27,7 @@ RSpec.configure do |config|
     Metanorma::Generic.configure do |cn|
       cn.organization_name_short = Metanorma::Generic::ORGANIZATION_NAME_SHORT
       cn.organization_name_long = Metanorma::Generic::ORGANIZATION_NAME_LONG
-      cn.document_namespace = Metanorma::Generic::DOCUMENT_NAMESPACE
+      #cn.document_namespace = Metanorma::Generic::DOCUMENT_NAMESPACE
     end
   end
 end
@@ -46,6 +46,7 @@ def strip_guid(xml)
   xml.gsub(%r{ id="_[^"]+"}, ' id="_"')
     .gsub(%r{ target="_[^"]+"}, ' target="_"')
     .gsub(%r{ source="_[^"]+"}, ' source="_"')
+    .gsub(%r{ href="#_[^"]+"}, ' href="#_"')
     .gsub(%r{<fetched>[^<]+</fetched>}, "<fetched/>")
     .gsub(%r{ schema-version="[^"]+"}, "")
 end
@@ -82,7 +83,7 @@ HDR
 
 BLANK_HDR = <<~"HDR".freeze
   <?xml version="1.0" encoding="UTF-8"?>
-  <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}" type="semantic" version="#{Metanorma::Generic::VERSION}">
+  <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Generic::VERSION}" flavor="generic">
   <bibdata type="standard">
    <title language="en" format="text/plain">Document title</title>
     <docidentifier primary="true" type="Acme">Acme </docidentifier>
