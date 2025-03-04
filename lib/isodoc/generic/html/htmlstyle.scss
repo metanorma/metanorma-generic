@@ -7,7 +7,7 @@
    License: none (public domain)
 */
 
-@import 'base_style/all';
+@use 'base_style/all' as *;
 
 body {
   @include bodyStyle1(15px, 1.4em, #1d1d1d, #ffffff, 300);
