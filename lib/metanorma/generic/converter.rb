@@ -8,22 +8,11 @@ require "pathname"
 module Metanorma
   module Generic
     class Converter < Standoc::Converter
-      XML_ROOT_TAG = "generic-standard".freeze
-      XML_NAMESPACE = "https://www.metanorma.org/ns/generic".freeze
-
       register_for "generic"
-
-      #def xml_root_tag
-        #configuration.xml_root_tag || XML_ROOT_TAG
-      #end
-#
-      #def xml_namespace
-        #configuration.document_namespace || XML_NAMESPACE
-      #end
 
       def baselocation(loc)
         loc.nil? and return nil
-        return loc
+        loc
       end
 
       def docidentifier_cleanup(xmldoc)
@@ -46,7 +35,7 @@ module Metanorma
         end
         type = @default_doctype || configuration.doctypes.keys[0]
         if !configuration.doctypes.key?(d)
-          (node.attr("doctype") && node.attr("doctype") != "article") and # factory default
+          node.attr("doctype") && node.attr("doctype") != "article" and # factory default
             @log.add("Document Attributes", nil,
                      "#{d} is not a legal document type: reverting to '#{type}'")
           d = type
@@ -98,11 +87,13 @@ module Metanorma
                                      nil, false, "#{@filename}.pdf")
       end
 
-      def validate(doc)
-        content_validate(doc)
-        schema_validate(formattedstr_strip(doc.dup),
-                        baselocation(configuration.validate_rng_file) ||
-                        File.join(File.dirname(__FILE__), "generic.rng"))
+      def schema_location
+        baselocation(configuration.validate_rng_file) ||
+          File.join(File.dirname(__FILE__), "generic.rng")
+      end
+
+      def schema_file
+        configuration.validate_rng_file || "generic.rng"
       end
 
       def content_validate(doc)
@@ -118,7 +109,7 @@ module Metanorma
       def stage_validate(xmldoc)
         stages = configuration.stage_abbreviations&.keys || return
         stages.empty? and return
-        stage = xmldoc&.at("//bibdata/status/stage")&.text
+        stage = xmldoc.at("//bibdata/status/stage")&.text
         stages.include? stage or
           @log.add("Document Attributes", nil,
                    "#{stage} is not a recognised status")
@@ -150,7 +141,8 @@ module Metanorma
       def presentation_xml_converter(node)
         IsoDoc::Generic::PresentationXMLConvert
           .new(html_extract_attributes(node)
-          .merge(output_formats: ::Metanorma::Generic::Processor.new.output_formats))
+          .merge(output_formats: ::Metanorma::Generic::Processor.new
+          .output_formats))
       end
 
       alias_method :pdf_converter, :html_converter
