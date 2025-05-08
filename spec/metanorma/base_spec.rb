@@ -195,39 +195,39 @@ RSpec.describe Metanorma::Generic do
     INPUT
     output = <<~"OUTPUT"
           <metanorma xmlns='https://www.metanorma.org/ns/standoc'  type="semantic" version="#{Metanorma::Generic::VERSION}" flavor="generic">
-        <preface>
-          <introduction id='_' obligation='informative'>
-            <title>Introduction</title>
-          </introduction>
-        </preface>
-        <sections>
-          <clause id='_' obligation='normative' type="scope">
-            <title>Scope</title>
-          </clause>
-          <terms id='_' obligation='normative'>
-            <title>Terms and definitions</title>
-            <p id='_'>No terms and definitions are listed in this document.</p>
-          </terms>
-          <definitions id='_' obligation="normative" type="symbols">
-            <title>Symbols</title>
-          </definitions>
-          <clause id='_' obligation='normative'>
-            <title>Clause</title>
-          </clause>
-        </sections>
-        <annex id='_' obligation='normative'>
-          <title>Annex</title>
-        </annex>
-        <bibliography>
-          <references id='_' obligation='informative' normative="true">
-            <title>Normative references</title>
-            <p id='_'>There are no normative references in this document.</p>
-          </references>
-          <references id='_' obligation='informative' normative="false">
-            <title>Bibliography</title>
-          </references>
-        </bibliography>
-      </metanorma>
+          <preface>
+             <introduction id="_" anchor="_introduction" obligation="informative">
+                <title>Introduction</title>
+             </introduction>
+          </preface>
+          <sections>
+             <clause id="_" anchor="_scope" type="scope" obligation="normative">
+                <title>Scope</title>
+             </clause>
+             <terms id="_" anchor="_terms_and_definitions" obligation="normative">
+                <title>Terms and definitions</title>
+                <p id="_">No terms and definitions are listed in this document.</p>
+             </terms>
+             <definitions id="_" anchor="_symbols" type="symbols" obligation="normative">
+                <title>Symbols</title>
+             </definitions>
+             <clause id="_" anchor="_clause" obligation="normative">
+                <title>Clause</title>
+             </clause>
+          </sections>
+          <annex id="_" anchor="_annex" obligation="normative">
+             <title>Annex</title>
+          </annex>
+          <bibliography>
+             <references id="_" anchor="_normative_references" normative="true" obligation="informative">
+                <title>Normative references</title>
+                <p id="_">There are no normative references in this document.</p>
+             </references>
+             <references id="_" anchor="_bibliography" normative="false" obligation="informative">
+                <title>Bibliography</title>
+             </references>
+          </bibliography>
+       </metanorma>
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
     xml.at("//xmlns:bibdata").remove
@@ -250,7 +250,7 @@ RSpec.describe Metanorma::Generic do
              <title>Foreword</title>
              <p id="_">This is a preamble</p>
            </foreword></preface><sections>
-           <clause id="_" obligation="normative">
+           <clause id="_" anchor="_section_1" obligation="normative">
              <title>Section 1</title>
            </clause></sections>
            </metanorma>

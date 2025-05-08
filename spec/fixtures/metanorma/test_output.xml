@@ -78,39 +78,39 @@
              <value>2</value>
            </presentation-metadata>
          </metanorma-extension>
-  <boilerplate/>
-    <sections>
-    <clause id='_' obligation='normative' type="scope">
-      <title>Skope</title>
-      <p id='_'>1</p>
-    </clause>
-    <terms id='_' obligation='normative'>
-      <title>Terms and definitions</title>
-      <p id='_'>No terms and definitions are listed in this document.</p>
-      <p id='_'>3</p>
-    </terms>
-    <definitions id='_' obligation="normative">
-      <title>Symbols and abbreviated terms</title>
-      <p id='_'>4</p>
-    </definitions>
-    <clause id='_' obligation='normative'>
-      <title>Clause</title>
-      <p id='_'>5</p>
-    </clause>
-  </sections>
-  <annex id='_' obligation='normative'>
-    <title>AnnexA</title>
-    <p id='_'>6</p>
-  </annex>
-  <bibliography>
-    <references id='_' obligation='informative' normative="true">
-      <title>Normative references</title>
-      <p id='_'>There are no normative references in this document.</p>
-      <p id='_'>2</p>
-    </references>
-    <references id='_' obligation='informative' normative="false">
-      <title>Bibliography</title>
-      <p id='_'>7</p>
-    </references>
-  </bibliography>
-</metanorma>
+         <boilerplate/>
+                   <sections>
+             <clause id="_" anchor="_scope" type="scope" obligation="normative">
+                <title>Skope</title>
+                <p id="_">1</p>
+             </clause>
+             <terms id="_" anchor="_def" obligation="normative">
+                <title>Terms and definitions</title>
+                <p id="_">No terms and definitions are listed in this document.</p>
+                <p id="_">3</p>
+             </terms>
+             <definitions id="_" anchor="_jkl" obligation="normative">
+                <title>Symbols and abbreviated terms</title>
+                <p id="_">4</p>
+             </definitions>
+             <clause id="_" anchor="_clause" obligation="normative">
+                <title>Clause</title>
+                <p id="_">5</p>
+             </clause>
+          </sections>
+          <annex id="_" anchor="_annexa" obligation="normative">
+             <title>AnnexA</title>
+             <p id="_">6</p>
+          </annex>
+          <bibliography>
+             <references id="_" anchor="_pqr" normative="true" obligation="informative">
+                <title>Normative references</title>
+                <p id="_">There are no normative references in this document.</p>
+                <p id="_">2</p>
+             </references>
+             <references id="_" anchor="_vwx" normative="false" obligation="informative">
+                <title>Bibliography</title>
+                <p id="_">7</p>
+             </references>
+          </bibliography>
+       </metanorma>
