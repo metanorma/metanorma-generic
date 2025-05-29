@@ -81,35 +81,35 @@
          <boilerplate/>
                    <sections>
              <clause id="_" type="scope" obligation="normative">
-                <title>Skope</title>
+                <title id="_">Skope</title>
                 <p id="_">1</p>
              </clause>
              <terms id="_" obligation="normative">
-                <title>Terms and definitions</title>
+                <title id="_">Terms and definitions</title>
                 <p id="_">No terms and definitions are listed in this document.</p>
                 <p id="_">3</p>
              </terms>
              <definitions id="_" obligation="normative">
-                <title>Symbols and abbreviated terms</title>
+                <title id="_">Symbols and abbreviated terms</title>
                 <p id="_">4</p>
              </definitions>
              <clause id="_" obligation="normative">
-                <title>Clause</title>
+                <title id="_">Clause</title>
                 <p id="_">5</p>
              </clause>
           </sections>
           <annex id="_" obligation="normative">
-             <title>AnnexA</title>
+             <title id="_">AnnexA</title>
              <p id="_">6</p>
           </annex>
           <bibliography>
              <references id="_" normative="true" obligation="informative">
-                <title>Normative references</title>
+                <title id="_">Normative references</title>
                 <p id="_">There are no normative references in this document.</p>
                 <p id="_">2</p>
              </references>
              <references id="_" normative="false" obligation="informative">
-                <title>Bibliography</title>
+                <title id="_">Bibliography</title>
                 <p id="_">7</p>
              </references>
           </bibliography>

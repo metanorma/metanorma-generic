@@ -197,34 +197,34 @@ RSpec.describe Metanorma::Generic do
           <metanorma xmlns='https://www.metanorma.org/ns/standoc'  type="semantic" version="#{Metanorma::Generic::VERSION}" flavor="generic">
           <preface>
              <introduction id="_" obligation="informative">
-                <title>Introduction</title>
+                <title id="_">Introduction</title>
              </introduction>
           </preface>
           <sections>
              <clause id="_" type="scope" obligation="normative">
-                <title>Scope</title>
+                <title id="_">Scope</title>
              </clause>
              <terms id="_" obligation="normative">
-                <title>Terms and definitions</title>
+                <title id="_">Terms and definitions</title>
                 <p id="_">No terms and definitions are listed in this document.</p>
              </terms>
              <definitions id="_" type="symbols" obligation="normative">
-                <title>Symbols</title>
+                <title id="_">Symbols</title>
              </definitions>
              <clause id="_" obligation="normative">
-                <title>Clause</title>
+                <title id="_">Clause</title>
              </clause>
           </sections>
           <annex id="_" obligation="normative">
-             <title>Annex</title>
+             <title id="_">Annex</title>
           </annex>
           <bibliography>
              <references id="_" normative="true" obligation="informative">
-                <title>Normative references</title>
+                <title id="_">Normative references</title>
                 <p id="_">There are no normative references in this document.</p>
              </references>
              <references id="_" normative="false" obligation="informative">
-                <title>Bibliography</title>
+                <title id="_">Bibliography</title>
              </references>
           </bibliography>
        </metanorma>
@@ -247,11 +247,11 @@ RSpec.describe Metanorma::Generic do
     output = <<~"OUTPUT"
       #{BLANK_HDR}
                  <preface><foreword id="_" obligation="informative">
-             <title>Foreword</title>
+             <title id="_">Foreword</title>
              <p id="_">This is a preamble</p>
            </foreword></preface><sections>
            <clause id="_" obligation="normative">
-             <title>Section 1</title>
+             <title id="_">Section 1</title>
            </clause></sections>
            </metanorma>
     OUTPUT
