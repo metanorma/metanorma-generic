@@ -2,6 +2,7 @@ require "asciidoctor"
 require "metanorma/standoc/converter"
 require "fileutils"
 require_relative "front"
+require_relative "bibdata_config"
 require "metanorma"
 require "pathname"
 
@@ -16,23 +17,25 @@ module Metanorma
       end
 
       def docidentifier_cleanup(xmldoc)
+        docid = xmldoc.at("//bibdata/docidentifier") or return
+        docid.text.empty? or return
+        id = docidentifier_from_template(xmldoc) or return
+        (id.empty? and docid.remove) or docid.children = id
+      end
+
+      def docidentifier_from_template(xmldoc)
         b = boilerplate_isodoc(xmldoc) or return
         template = configuration.docid_template ||
           "{{ organization_name_short }} {{ docnumeric }}"
-        docid = xmldoc.at("//bibdata/docidentifier")
-        docid&.text&.empty? or return
-        id = b.populate_template(template, nil)
-        (id.empty? and docid.remove) or docid.children = id
+        b.populate_template(template, nil)
       end
 
       def doctype(node)
         d = super
         node.attr("doctype") == "article" and d = "article"
         a = configuration.default_doctype and @default_doctype = a
-        unless configuration.doctypes
-          d == "article" and return @default_doctype
-          return d
-        end
+        configuration.doctypes or
+          return d == "article" ? @default_doctype : d
         type = @default_doctype || configuration.doctypes.keys[0]
         if !configuration.doctypes.key?(d)
           node.attr("doctype") && node.attr("doctype") != "article" and # factory default
@@ -162,7 +165,14 @@ module Metanorma
         Metanorma::Generic::Configuration::CONFIG_ATTRS.each do |a|
           conv.meta.set(a, configuration.send(a))
         end
+        conv.meta.set(:bibdata, bibdata_hash(xmldoc))
         conv
+      end
+
+      def bibdata_hash(xmldoc)
+        b = xmldoc.at("//bibdata")
+        BibdataConfig.from_xml("<metanorma>#{b.to_xml}</metanorma")
+          .bibdata.to_hash
       end
 
       def boilerplate_file(xmldoc)
