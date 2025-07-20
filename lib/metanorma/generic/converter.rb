@@ -170,7 +170,7 @@ module Metanorma
       end
 
       def bibdata_hash(xmldoc)
-        b = xmldoc.at("//bibdata")
+        b = xmldoc.at("//bibdata") || xmldoc.at("//xmlns:bibdata")
         BibdataConfig.from_xml("<metanorma>#{b.to_xml}</metanorma")
           .bibdata.to_hash
       end
