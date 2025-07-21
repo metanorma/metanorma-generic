@@ -108,6 +108,17 @@ RSpec.describe Metanorma::Generic do
           }, "security" => nil
         }
       end
+      let(:metadata_extensions2) do
+        {
+          "comment-period" => {
+            "comment-period-typex" => { "_output" => "type",
+                                       "_attribute" => true },
+            "comment-period-fromx" => { "_output" => "from", "_list" => true },
+            "comment-period-tox" => { "_output" => "to" },
+            "reply-to" => nil, "more" => { "more1" => nil }
+          }, "security" => nil
+        }
+      end
       let(:stage_abbreviations) { { "ready" => "", "steady" => "" } }
       let(:doctypes) { { "lion" => nil, "elephant" => "E" } }
       let(:default_doctype) { "elephant" }
@@ -186,6 +197,21 @@ RSpec.describe Metanorma::Generic do
             metadata_extensions_out: "<comment-period type='N1'><from>N2" \
                                      "</from><from>N3</from><to>N4</to></comment-period>" \
                                      "<security>Client Confidential</security>",
+            document_namespace: document_namespace,
+            docidentifier: "working-draft elephant 1000",
+            version: Metanorma::Generic::VERSION }
+        expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input,
+                                                               *OPTIONS))))
+          .to(be_equivalent_to(Xml::C14n.format(output)))
+
+
+        Metanorma::Generic.configure do |config|
+          config.metadata_extensions = metadata_extensions2
+        end
+                output = File.read(fixture_path("metanorma/test_output.xml")) %
+          { organization_name_short: organization_name_short,
+            organization_name_long: organization_name_long,
+            metadata_extensions_out: "<security>Client Confidential</security>",
             document_namespace: document_namespace,
             docidentifier: "working-draft elephant 1000",
             version: Metanorma::Generic::VERSION }

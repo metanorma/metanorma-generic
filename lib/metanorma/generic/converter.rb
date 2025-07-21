@@ -171,7 +171,7 @@ module Metanorma
 
       def bibdata_hash(xmldoc)
         b = xmldoc.at("//bibdata") || xmldoc.at("//xmlns:bibdata")
-        BibdataConfig.from_xml("<metanorma>#{b.to_xml}</metanorma")
+        BibdataConfig.from_xml("<metanorma>#{b.to_xml}</metanorma>")
           .bibdata.to_hash
       end
 
@@ -181,18 +181,6 @@ module Metanorma
         f.is_a? String and return baselocation(f)
         f.is_a? Hash and f[@lang] and return baselocation(f[@lang])
         super
-      end
-
-      def cleanup(xmldoc)
-        super
-        empty_metadata_cleanup(xmldoc)
-        xmldoc
-      end
-
-      def empty_metadata_cleanup(xmldoc)
-        xmldoc.xpath("//bibdata/ext//*").each do |x|
-          x.remove if x.children.empty?
-        end
       end
     end
   end

@@ -60,6 +60,22 @@ module Metanorma
             a = node.attr(e) and ext.send e, a
           end
         end
+        empty_metadata_cleanup(ext.parent)
+      end
+
+      # Keep cleaning until no more elements are removed (recursive depth-first)
+      # Process elements in reverse doc order to handle nested removals properly
+      def empty_metadata_cleanup(ext)
+        loop do
+          removed_count = 0
+          ext.xpath(".//*").reverse_each do |element|
+            element.children.empty? && element.attributes.empty? or next
+            element.remove
+            removed_count += 1
+          end
+          removed_count.zero? and break # Stop when no elems removed this pass
+
+        end
       end
 
       def metadata_doctype(node, xml)
