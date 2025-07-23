@@ -165,7 +165,7 @@ module Metanorma
         Metanorma::Generic::Configuration::CONFIG_ATTRS.each do |a|
           conv.meta.set(a, configuration.send(a))
         end
-        conv.meta.set(:bibdata, bibdata_hash(xmldoc))
+        #conv.meta.set(:bibdata, bibdata_hash(xmldoc))
         conv
       end
 

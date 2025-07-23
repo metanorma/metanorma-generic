@@ -176,7 +176,8 @@ RSpec.describe Metanorma::Generic do
           config.organization_name_short = organization_name_short
           config.organization_name_long = organization_name_long
           config.document_namespace = document_namespace
-          config.docid_template = docid_template_bibdata
+          #config.docid_template = docid_template_bibdata
+          config.docid_template = docid_template
           config.metadata_extensions = metadata_extensions1
           config.stage_abbreviations = stage_abbreviations
           config.doctypes = doctypes
@@ -198,12 +199,12 @@ RSpec.describe Metanorma::Generic do
                                      "</from><from>N3</from><to>N4</to></comment-period>" \
                                      "<security>Client Confidential</security>",
             document_namespace: document_namespace,
-            docidentifier: "working-draft elephant 1000",
+            #docidentifier: "working-draft elephant 1000",
+            docidentifier: "Test Corp. 1000 Working Draft",
             version: Metanorma::Generic::VERSION }
         expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input,
                                                                *OPTIONS))))
           .to(be_equivalent_to(Xml::C14n.format(output)))
-
 
         Metanorma::Generic.configure do |config|
           config.metadata_extensions = metadata_extensions2
@@ -213,7 +214,8 @@ RSpec.describe Metanorma::Generic do
             organization_name_long: organization_name_long,
             metadata_extensions_out: "<security>Client Confidential</security>",
             document_namespace: document_namespace,
-            docidentifier: "working-draft elephant 1000",
+            #docidentifier: "working-draft elephant 1000",
+            docidentifier: "Test Corp. 1000 Working Draft",
             version: Metanorma::Generic::VERSION }
         expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input,
                                                                *OPTIONS))))
