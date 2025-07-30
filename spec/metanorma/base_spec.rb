@@ -35,8 +35,8 @@ RSpec.describe Metanorma::Generic do
       </metanorma>
     OUTPUT
 
-    expect(strip_guid(Xml::C14n.format(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to strip_guid(Xml::C14n.format(output))
+    expect(strip_guid(Canon.format_xml(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to strip_guid(Canon.format_xml(output))
   end
 
   it "converts a blank document" do
@@ -54,8 +54,8 @@ RSpec.describe Metanorma::Generic do
     OUTPUT
 
     FileUtils.rm_f "test.html"
-    expect(strip_guid(Xml::C14n.format(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to strip_guid(Xml::C14n.format(output))
+    expect(strip_guid(Canon.format_xml(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to strip_guid(Canon.format_xml(output))
     expect(File.exist?("test.html")).to be true
   end
 
@@ -164,8 +164,8 @@ RSpec.describe Metanorma::Generic do
       </metanorma>
     OUTPUT
 
-    expect(strip_guid(Xml::C14n.format(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to strip_guid(Xml::C14n.format(output))
+    expect(strip_guid(Canon.format_xml(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to strip_guid(Canon.format_xml(output))
   end
 
   it "processes default section titles" do
@@ -232,8 +232,8 @@ RSpec.describe Metanorma::Generic do
     xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
     xml.at("//xmlns:bibdata").remove
     xml.at("//xmlns:metanorma-extension").remove
-    expect(strip_guid(Xml::C14n.format(strip_guid(xml.to_xml))))
-      .to be_equivalent_to strip_guid(Xml::C14n.format(output))
+    expect(strip_guid(Canon.format_xml(strip_guid(xml.to_xml))))
+      .to be_equivalent_to strip_guid(Canon.format_xml(output))
   end
 
   it "strips inline header" do
@@ -256,8 +256,8 @@ RSpec.describe Metanorma::Generic do
            </metanorma>
     OUTPUT
 
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "uses default fonts" do
@@ -342,7 +342,7 @@ RSpec.describe Metanorma::Generic do
                </metanorma>
     OUTPUT
 
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 end

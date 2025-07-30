@@ -73,9 +73,9 @@ RSpec.describe Metanorma::Generic::Processor do
       </metanorma>
     OUTPUT
 
-    expect(strip_guid(Xml::C14n.format(processor
+    expect(strip_guid(Canon.format_xml(processor
       .input_to_isodoc(input, nil))))
-      .to be_equivalent_to strip_guid(Xml::C14n.format(output))
+      .to be_equivalent_to strip_guid(Canon.format_xml(output))
   end
 
   it "generates HTML from IsoDoc XML" do
@@ -108,9 +108,9 @@ RSpec.describe Metanorma::Generic::Processor do
     processor.output(input, "test.xml", "test.html", :html)
 
     expect(
-      Xml::C14n.format(strip_guid(File.read("test.html", encoding: "utf-8")
+      Canon.format_xml(strip_guid(File.read("test.html", encoding: "utf-8")
       .gsub(%r{^.*<main}m, "<main")
       .gsub(%r{</main>.*}m, "</main>"))),
-    ).to be_equivalent_to Xml::C14n.format(output)
+    ).to be_equivalent_to Canon.format_xml(output)
   end
 end

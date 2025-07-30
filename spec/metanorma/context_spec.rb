@@ -71,7 +71,7 @@ RSpec.describe Metanorma::Generic do
 
   context "with configuration options" do
     subject(:convert) do
-      Xml::C14n.format(Asciidoctor.convert(input, *OPTIONS))
+      Canon.format_xml(Asciidoctor.convert(input, *OPTIONS))
     end
 
     context "organization" do
@@ -160,9 +160,9 @@ RSpec.describe Metanorma::Generic do
 
       it "uses configuration options for organization and namespace" do
         FileUtils.rm_f "test.err.html"
-        expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input,
+        expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input,
                                                                *OPTIONS))))
-          .to(be_equivalent_to(Xml::C14n.format(output)))
+          .to(be_equivalent_to(Canon.format_xml(output)))
         expect(File.read("test.err.html"))
           .to include("working-draft is not a recognised status")
         expect(File.read("test.err.html"))
@@ -202,9 +202,9 @@ RSpec.describe Metanorma::Generic do
             #docidentifier: "working-draft elephant 1000",
             docidentifier: "Test Corp. 1000 Working Draft",
             version: Metanorma::Generic::VERSION }
-        expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input,
+        expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input,
                                                                *OPTIONS))))
-          .to(be_equivalent_to(Xml::C14n.format(output)))
+          .to(be_equivalent_to(Canon.format_xml(output)))
 
         Metanorma::Generic.configure do |config|
           config.metadata_extensions = metadata_extensions2
@@ -217,9 +217,9 @@ RSpec.describe Metanorma::Generic do
             #docidentifier: "working-draft elephant 1000",
             docidentifier: "Test Corp. 1000 Working Draft",
             version: Metanorma::Generic::VERSION }
-        expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input,
+        expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input,
                                                                *OPTIONS))))
-          .to(be_equivalent_to(Xml::C14n.format(output)))
+          .to(be_equivalent_to(Canon.format_xml(output)))
       end
 
       after do

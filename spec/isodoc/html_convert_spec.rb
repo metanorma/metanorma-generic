@@ -167,7 +167,7 @@ RSpec.describe IsoDoc::Generic do
 
   context "with configuration options" do
     subject(:convert) do
-      Xml::C14n.format(Asciidoctor.convert(input, backend: :generic,
+      Canon.format_xml(Asciidoctor.convert(input, backend: :generic,
                                                   header_footer: true))
     end
 
@@ -422,10 +422,10 @@ RSpec.describe IsoDoc::Generic do
         expect(html).to match(/code \{[^}]*?font-size: 29pt/m)
         expect(html).to match(/p\.note \{[^}]*?font-size: 28pt/m)
         expect(html).to match(/aside \{[^}]*?font-size: 27pt/m)
-        expect(Xml::C14n.format(strip_guid(html)
+        expect(Canon.format_xml(strip_guid(html)
           .gsub(%r{^.*<main}m, "<main")
           .gsub(%r{</main>.*}m, "</main>")))
-          .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
+          .to be_equivalent_to Canon.format_xml(<<~OUTPUT)
                 <main class="main-section"><button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
                 <br/>
               <p class="zzSTDTitle1">Main Title</p>
@@ -974,10 +974,10 @@ RSpec.describe IsoDoc::Generic do
     OUTPUT
 
     expect(
-      Xml::C14n.format(strip_guid(IsoDoc::Generic::PresentationXMLConvert
+      Canon.format_xml(strip_guid(IsoDoc::Generic::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))),
-    ).to be_equivalent_to Xml::C14n.format(output)
+    ).to be_equivalent_to Canon.format_xml(output)
   end
 
   private
