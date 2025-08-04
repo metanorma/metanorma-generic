@@ -106,6 +106,7 @@ RSpec.describe IsoDoc::Generic do
         <security>X</security>
         </ext>
       </bibdata>
+      <metanorma-extension><semantic-metadata><stage-published>false</stage-published></semantic-metadata></metanorma-extension>
       <sections/>
       </generic-standard>
     INPUT
