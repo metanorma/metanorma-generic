@@ -27,6 +27,7 @@ RSpec.describe Metanorma::Generic do
         "organization_name_long" => organization_name_long,
         "document_namespace" => document_namespace,
         "doctypes" => ["standard", "guide"],
+        "published_stages" => ["approved"],
         "default_doctype" => "standard",
         "fonts_manifest" => fonts_manifest,
       }
@@ -84,6 +85,8 @@ RSpec.describe Metanorma::Generic do
                                      "<insecurity>Client Unconfidential</insecurity>",
             document_namespace: document_namespace,
             docidentifier: "Test Corp. 1000 Working Draft",
+            stage_published: false,
+            stage: "working-draft",
             version: Metanorma::Generic::VERSION }
       end
 
@@ -131,6 +134,7 @@ RSpec.describe Metanorma::Generic do
       let(:relations) { ["supersedes", "superseded-by"] }
       let(:i18nyaml) { "spec/assets/i18n.yaml" }
       let(:i18nyaml1) { { "en" => "spec/assets/i18n.yaml" } }
+      let(:published_stages) { ["approved"] }
       let(:boilerplate) { "spec/fixtures/metanorma/boilerplate.xml" }
       let(:boilerplate1) do
         { "en" => "spec/fixtures/metanorma/boilerplate.xml" }
@@ -155,6 +159,7 @@ RSpec.describe Metanorma::Generic do
           config.relations = relations
           config.i18nyaml = i18nyaml
           config.boilerplate = boilerplate
+          config.published_stages = published_stages
         end
       end
 
@@ -201,6 +206,8 @@ RSpec.describe Metanorma::Generic do
             document_namespace: document_namespace,
             #docidentifier: "working-draft elephant 1000",
             docidentifier: "Test Corp. 1000 Working Draft",
+            stage_published: false,
+            stage: "working-draft",
             version: Metanorma::Generic::VERSION }
         expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input,
                                                                *OPTIONS))))
@@ -208,6 +215,7 @@ RSpec.describe Metanorma::Generic do
 
         Metanorma::Generic.configure do |config|
           config.metadata_extensions = metadata_extensions2
+          config.default_stage = "approved"
         end
                 output = File.read(fixture_path("metanorma/test_output.xml")) %
           { organization_name_short: organization_name_short,
@@ -215,7 +223,9 @@ RSpec.describe Metanorma::Generic do
             metadata_extensions_out: "<security>Client Confidential</security>",
             document_namespace: document_namespace,
             #docidentifier: "working-draft elephant 1000",
-            docidentifier: "Test Corp. 1000 Working Draft",
+            docidentifier: "Test Corp. 1000 Approved",
+            stage_published: true,
+            stage: "approved",
             version: Metanorma::Generic::VERSION }
         expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input,
                                                                *OPTIONS))))
@@ -241,6 +251,7 @@ RSpec.describe Metanorma::Generic do
           config.relations = Metanorma::Generic::Configuration.new.relations
           config.i18nyaml = Metanorma::Generic::Configuration.new.i18nyaml
           config.boilerplate = Metanorma::Generic::Configuration.new.boilerplate
+          config.published_stages = Metanorma::Generic::Configuration.new.published_stages
         end
       end
     end

@@ -26,7 +26,7 @@
     <language>en</language>
     <script>Latn</script>
     <status>
-      <stage>working-draft</stage>
+      <stage>%{stage}</stage>
       <iteration>3</iteration>
     </status>
     <copyright>
@@ -62,7 +62,7 @@
   </bibdata>
   <metanorma-extension>
           <semantic-metadata>
-         <stage-published>false</stage-published>
+            <stage-published>%{stage_published}</stage-published>
       </semantic-metadata>
            <presentation-metadata>
              <name>TOC Heading Levels</name>
