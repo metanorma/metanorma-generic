@@ -4,7 +4,7 @@ Formerly known as metanorma-acme
 
 image:https://img.shields.io/gem/v/metanorma-generic.svg["Gem Version", link="https://rubygems.org/gems/metanorma-generic"]
 image:https://github.com/metanorma/metanorma-generic/workflows/rake/badge.svg["Build Status", link="https://github.com/metanorma/metanorma-generic/actions?workflow=rake"]
-image:https://codeclimate.com/github/metanorma/metanorma-acme/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/metanorma/metanorma-acme"]
+// image:https://codeclimate.com/github/metanorma/metanorma-acme/badges/gpa.svg["Code Climate", link="https://codeclimate.com/github/metanorma/metanorma-acme"]
 image:https://img.shields.io/github/issues-pr-raw/metanorma/metanorma-generic.svg["Pull Requests", link="https://github.com/metanorma/metanorma-generic/pulls"]
 image:https://img.shields.io/github/commits-since/metanorma/metanorma-generic/latest.svg["Commits since latest",link="https://github.com/metanorma/metanorma-generic/releases"]
 
