@@ -63,11 +63,6 @@ module IsoDoc
         Hash(configuration.stage_abbreviations).dig(status)
       end
 
-      def unpublished(status)
-        stages = configuration&.published_stages || ["published"]
-        !(Array(stages).map { |m| m.downcase }.include? status.downcase)
-      end
-
       def doctype(isoxml, _out)
         super
         b = isoxml&.at(ns("//bibdata/ext/doctype#{currlang}")) ||

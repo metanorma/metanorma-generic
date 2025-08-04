@@ -182,6 +182,11 @@ module Metanorma
         f.is_a? Hash and f[@lang] and return baselocation(f[@lang])
         super
       end
+
+      def published?(status, _xmldoc)
+        stages = configuration&.published_stages || ["published"]
+        (Array(stages).map(&:downcase).include? status.downcase)
+      end
     end
   end
 end
