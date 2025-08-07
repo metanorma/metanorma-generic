@@ -11,6 +11,32 @@
         <abbreviation>%{organization_name_short}</abbreviation>
       </organization>
     </contributor>
+      <contributor>
+         <role type="author">
+            <description>Committee</description>
+         </role>
+         <organization>
+           <name>%{organization_name_long}</name>
+            <subdivision type="Committee" subtype="A">
+               <name>TC</name>
+               <identifier>A 1</identifier>
+               <identifier type="full">A 1</identifier>
+            </subdivision>
+         </organization>
+      </contributor>
+      <contributor>
+         <role type="author">
+            <description>Committee</description>
+         </role>
+         <organization>
+           <name>%{organization_name_long}</name>
+            <subdivision type="Committee" subtype="B">
+               <name>TC1</name>
+               <identifier>B 1</identifier>
+               <identifier type="full">B 1</identifier>
+            </subdivision>
+         </organization>
+      </contributor>
     <contributor>
       <role type="publisher"/>
       <organization>
