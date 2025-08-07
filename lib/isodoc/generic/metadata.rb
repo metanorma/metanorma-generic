@@ -53,13 +53,13 @@ module IsoDoc
 
       def author(isoxml, _out)
         super
-        tc = isoxml.at(ns("//bibdata/ext/editorialgroup/committee"))
+        #tc = isoxml.at(ns("//bibdata/ext/editorialgroup/committee"))
+        tc = isoxml.at(ns("//bibdata/contributor[role/description = 'Committee']/organization/subdivision[@type = 'Committee']/name"))
         set(:tc, tc.text) if tc
       end
 
       def stage_abbr(status)
-        return super unless configuration.stage_abbreviations
-
+        configuration.stage_abbreviations or return super
         Hash(configuration.stage_abbreviations).dig(status)
       end
 
@@ -72,10 +72,8 @@ module IsoDoc
 
       def xmlhash2hash(hash)
         ret = {}
-        return ret if hash.nil? || hash[:kind] != "element"
-
-        hash[:attr].nil? or
-          hash[:attr].each { |k, v| ret["#{hash[:name]}_#{k}"] = v }
+        hash.nil? || hash[:kind] != "element" and return ret
+        hash[:attr]&.each { |k, v| ret["#{hash[:name]}_#{k}"] = v }
         ret[hash[:name]] = hash[:kids] ? xmlhash2hash_kids(hash) : hash[:text]
         ret
       end

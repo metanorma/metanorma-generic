@@ -74,6 +74,32 @@ RSpec.describe IsoDoc::Generic do
             <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
           </organization>
         </contributor>
+      <contributor>
+         <role type="author">
+            <description>Committee</description>
+         </role>
+         <organization>
+            <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+            <subdivision type="Committee" subtype="A">
+               <name>TC</name>
+               <identifier>A 1</identifier>
+               <identifier type="full">A 1</identifier>
+            </subdivision>
+         </organization>
+      </contributor>
+      <contributor>
+         <role type="author">
+            <description>Committee</description>
+         </role>
+         <organization>
+            <name>Acme Corp.</name>
+            <subdivision type="Committee" subtype="B">
+               <name>TC1</name>
+               <identifier>B 1</identifier>
+               <identifier type="full">B 1</identifier>
+            </subdivision>
+         </organization>
+      </contributor>
         <contributor>
           <role type="publisher"/>
           <organization>
@@ -312,6 +338,32 @@ RSpec.describe IsoDoc::Generic do
                 <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
               </organization>
             </contributor>
+      <contributor>
+         <role type="author">
+            <description>Committee</description>
+         </role>
+         <organization>
+            <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+            <subdivision type="Committee" subtype="A">
+               <name>TC</name>
+               <identifier>A 1</identifier>
+               <identifier type="full">A 1</identifier>
+            </subdivision>
+         </organization>
+      </contributor>
+      <contributor>
+         <role type="author">
+            <description>Committee</description>
+         </role>
+         <organization>
+            <name>Acme Corp.</name>
+            <subdivision type="Committee" subtype="B">
+               <name>TC1</name>
+               <identifier>B 1</identifier>
+               <identifier type="full">B 1</identifier>
+            </subdivision>
+         </organization>
+      </contributor>
             <contributor>
               <role type="publisher"/>
               <organization>
