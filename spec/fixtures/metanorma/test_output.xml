@@ -13,7 +13,7 @@
     </contributor>
       <contributor>
          <role type="author">
-            <description>Committee</description>
+            <description>committee</description>
          </role>
          <organization>
            <name>%{organization_name_long}</name>
@@ -26,7 +26,7 @@
       </contributor>
       <contributor>
          <role type="author">
-            <description>Committee</description>
+            <description>committee</description>
          </role>
          <organization>
            <name>%{organization_name_long}</name>

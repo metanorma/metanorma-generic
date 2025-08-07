@@ -115,7 +115,7 @@ RSpec.describe Metanorma::Generic do
         </contributor>
       <contributor>
          <role type="author">
-            <description>Committee</description>
+            <description>committee</description>
          </role>
          <organization>
             <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
@@ -128,7 +128,7 @@ RSpec.describe Metanorma::Generic do
       </contributor>
       <contributor>
          <role type="author">
-            <description>Committee</description>
+            <description>committee</description>
          </role>
          <organization>
             <name>Acme Corp.</name>
