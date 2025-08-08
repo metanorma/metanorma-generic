@@ -87,6 +87,8 @@ RSpec.describe Metanorma::Generic do
             docidentifier: "Test Corp. 1000 Working Draft",
             stage_published: false,
             stage: "working-draft",
+            workgroup1: "",
+            workgroup2: "",
             version: Metanorma::Generic::VERSION }
       end
 
@@ -201,23 +203,28 @@ RSpec.describe Metanorma::Generic do
           { organization_name_short: organization_name_short,
             organization_name_long: organization_name_long,
             metadata_extensions_out: "<comment-period type='N1'><from>N2" \
-                                     "</from><from>N3</from><to>N4</to></comment-period>" \
-                                     "<security>Client Confidential</security>",
+            "</from><from>N3</from><to>N4</to></comment-period>" \
+            "<security>Client Confidential</security>",
             document_namespace: document_namespace,
             #docidentifier: "working-draft elephant 1000",
             docidentifier: "Test Corp. 1000 Working Draft",
             stage_published: false,
             stage: "working-draft",
+            workgroup1: "",
+            workgroup2: "",
             version: Metanorma::Generic::VERSION }
         expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input,
                                                                *OPTIONS))))
           .to(be_equivalent_to(Canon.format_xml(output)))
+      end
 
+      it "configures committees, docidentifier template with bibdata metadata" do
         Metanorma::Generic.configure do |config|
           config.metadata_extensions = metadata_extensions2
           config.default_stage = "approved"
+          config.committee_types = ["workgroup", "committee"]
         end
-                output = File.read(fixture_path("metanorma/test_output.xml")) %
+        output = (File.read(fixture_path("metanorma/test_output.xml")) %
           { organization_name_short: organization_name_short,
             organization_name_long: organization_name_long,
             metadata_extensions_out: "<security>Client Confidential</security>",
@@ -226,7 +233,23 @@ RSpec.describe Metanorma::Generic do
             docidentifier: "Test Corp. 1000 Approved",
             stage_published: true,
             stage: "approved",
-            version: Metanorma::Generic::VERSION }
+            workgroup1: <<~XML,
+                   <subdivision type="Workgroup" subtype="C">
+                      <name>WG</name>
+                      <identifier>C 3</identifier>
+                      <identifier type="full">C 3/A 1</identifier>
+                   </subdivision>
+            XML
+            workgroup2: <<~XML,
+           <subdivision type="Workgroup" subtype="Ca">
+              <name>WGX</name>
+              <identifier>Ca 3.1</identifier>
+              <identifier type="full">Ca 3.1/B 1</identifier>
+           </subdivision>
+            XML
+            version: Metanorma::Generic::VERSION })
+          .sub('<identifier type="full">A 1</identifier>', "")
+          .sub('<identifier type="full">B 1</identifier>', "")
         expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input,
                                                                *OPTIONS))))
           .to(be_equivalent_to(Canon.format_xml(output)))
@@ -248,6 +271,7 @@ RSpec.describe Metanorma::Generic do
           config.normref_titles = Metanorma::Generic::Configuration.new.normref_titles
           config.bibliography_titles = Metanorma::Generic::Configuration.new.bibliography_titles
           config.committees = Metanorma::Generic::Configuration.new.committees
+          config.committee_types = Metanorma::Generic::Configuration.new.committee_types
           config.relations = Metanorma::Generic::Configuration.new.relations
           config.i18nyaml = Metanorma::Generic::Configuration.new.i18nyaml
           config.boilerplate = Metanorma::Generic::Configuration.new.boilerplate

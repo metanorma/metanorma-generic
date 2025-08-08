@@ -17,6 +17,7 @@
          </role>
          <organization>
            <name>%{organization_name_long}</name>
+            %{workgroup1}
             <subdivision type="Committee" subtype="A">
                <name>TC</name>
                <identifier>A 1</identifier>
@@ -30,6 +31,7 @@
          </role>
          <organization>
            <name>%{organization_name_long}</name>
+            %{workgroup2}
             <subdivision type="Committee" subtype="B">
                <name>TC1</name>
                <identifier>B 1</identifier>

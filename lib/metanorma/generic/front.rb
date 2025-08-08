@@ -22,7 +22,7 @@ module Metanorma
       end
 
       def metadata_committee_types(_node)
-        %w(committee)
+        Array(configuration.committee_types || "committee")
       end
 
       def metadata_committee(node, xml)

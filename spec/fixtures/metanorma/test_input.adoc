@@ -19,6 +19,9 @@ Author
 :workgroup: WG
 :workgroup-number: 3
 :workgroup-type: C
+:workgroup_2: WGX
+:workgroup-number_2: 3.1
+:workgroup-type_2: Ca
 :secretariat: SECRETARIAT
 :copyright-year: 2001
 :iteration: 3
