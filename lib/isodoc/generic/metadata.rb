@@ -54,7 +54,7 @@ module IsoDoc
       def author(isoxml, _out)
         super
         #tc = isoxml.at(ns("//bibdata/ext/editorialgroup/committee"))
-        tc = isoxml.at(ns("//bibdata/contributor[role/description = 'Committee']/organization/subdivision[@type = 'Committee']/name"))
+        tc = isoxml.at(ns("//bibdata/contributor[role/description = 'committee']/organization/subdivision[@type = 'Committee']/name"))
         set(:tc, tc.text) if tc
       end
 
