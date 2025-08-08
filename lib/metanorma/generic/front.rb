@@ -21,6 +21,10 @@ module Metanorma
         Array(configuration.relations) || []
       end
 
+      def metadata_committee_types(_node)
+        Array(configuration.committee_types || "committee")
+      end
+
       def metadata_committee(node, xml)
         node.attr("committee") or return
         xml.editorialgroup do |a|

@@ -21,6 +21,7 @@ module Metanorma
         bibliography_titles
         boilerplate
         committees
+        committee_types
         document_namespace
         docid_template
         doctypes
