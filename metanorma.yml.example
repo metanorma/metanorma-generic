@@ -42,6 +42,9 @@ metadata_extensions:
   - security
 published_stages:
   - published
+committee_types:
+  - Committee
+  - Workgroup
 committees:
   - TC 1
 relations:
