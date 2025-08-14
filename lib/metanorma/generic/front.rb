@@ -25,20 +25,6 @@ module Metanorma
         Array(configuration.committee_types || "committee")
       end
 
-      def metadata_committee(node, xml)
-        node.attr("committee") or return
-        xml.editorialgroup do |a|
-          a.committee node.attr("committee"),
-                      **attr_code(type: node.attr("committee-type"))
-          i = 2
-          while node.attr("committee_#{i}")
-            a.committee node.attr("committee_#{i}"),
-                        **attr_code(type: node.attr("committee-type_#{i}"))
-            i += 1
-          end
-        end
-      end
-
       def metadata_status(node, xml)
         xml.status do |s|
           s.stage ( node.attr("status") || node.attr("docstage") ||
