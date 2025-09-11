@@ -106,7 +106,7 @@ RSpec.describe Metanorma::Generic do
         output = <<~OUTPUT
           <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" flavor="generic">
             <bibdata type="standard">
-              <title language="en" format="text/plain">Document title</title>
+              <title language="en" type="main">Document title</title>
               <docidentifier primary="true" type="Acme">OVERRIDE</docidentifier>
               <docnumber>1000</docnumber>
               <contributor>
