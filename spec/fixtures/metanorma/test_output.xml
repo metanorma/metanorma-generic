@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic"  version="%{version}" flavor="generic"> 
   <bibdata type="standard">
-    <title language="en" format="text/plain">Main Title</title>
+    <title language="en" type="main">Main Title</title>
     <docidentifier primary="true" type="Test">%{docidentifier}</docidentifier>
     <docnumber>1000</docnumber>
     <contributor>

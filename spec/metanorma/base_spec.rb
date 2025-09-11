@@ -96,7 +96,7 @@ RSpec.describe Metanorma::Generic do
           <?xml version="1.0" encoding="UTF-8"?>
       <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Generic::VERSION}" flavor="generic">
       <bibdata type="standard">
-        <title language="en" format="text/plain">Main Title</title>
+        <title language="en" type="main">Main Title</title>
         <docidentifier primary="true" type="Acme">Acme 1000</docidentifier>
         <docnumber>1000</docnumber>
       <contributor>
