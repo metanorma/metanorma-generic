@@ -51,6 +51,9 @@ module Metanorma
         when :presentation
           IsoDoc::Generic::PresentationXMLConvert.new(options)
             .convert(inname, isodoc_node, nil, outname)
+                 when :pdf
+        IsoDoc::Generic::PdfConvert.new(options)
+            .convert(inname, isodoc_node, nil, outname)
         else super end
       end
     end

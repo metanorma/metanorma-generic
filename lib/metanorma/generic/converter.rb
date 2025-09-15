@@ -167,7 +167,8 @@ module Metanorma
           conv.meta.set(a, configuration.send(a))
         end
         #conv.meta.set(:bibdata, bibdata_hash(xmldoc))
-        conv
+        @isodoc = conv
+        @isodoc
       end
 
       def bibdata_hash(xmldoc)
