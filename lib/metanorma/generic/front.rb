@@ -35,8 +35,9 @@ module Metanorma
       end
 
       def metadata_id(node, xml)
-        xml.docidentifier primary: "true",
-                          type: configuration.organization_name_short do |i|
+        id_type = node.attr("publisher_abbr") || node.attr("publisher") ||
+          configuration.organization_name_short
+        xml.docidentifier primary: "true", type: id_type do |i|
           i << (node.attr("docidentifier") || "")
         end
       end

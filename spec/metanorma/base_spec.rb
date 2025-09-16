@@ -97,7 +97,7 @@ RSpec.describe Metanorma::Generic do
       <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Generic::VERSION}" flavor="generic">
       <bibdata type="standard">
         <title language="en" type="main">Main Title</title>
-        <docidentifier primary="true" type="Acme">Acme 1000</docidentifier>
+        <docidentifier primary="true" type="#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}">#{Metanorma::Generic::ORGANIZATION_NAME_SHORT} 1000</docidentifier>
         <docnumber>1000</docnumber>
       <contributor>
           <role type="author"/>
@@ -191,6 +191,107 @@ RSpec.describe Metanorma::Generic do
 
     expect(strip_guid(Canon.format_xml(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to strip_guid(Canon.format_xml(output))
+
+    output = <<~OUTPUT
+      <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Generic::VERSION}" flavor="generic">
+         <bibdata type="standard">
+             <title language="en" type="main">Main Title</title>
+             <docidentifier primary="true" type="SWF">SWF 1000</docidentifier>
+             <docnumber>1000</docnumber>
+             <contributor>
+                <role type="author"/>
+                <organization>
+                   <name>Spatial Web Foundation</name>
+                   <abbreviation>SWF</abbreviation>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="author">
+                   <description>committee</description>
+                </role>
+                <organization>
+                   <name>Spatial Web Foundation</name>
+                   <subdivision type="Committee" subtype="A">
+                      <name>TC</name>
+                      <identifier>A 1</identifier>
+                      <identifier type="full">A 1</identifier>
+                   </subdivision>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="author">
+                   <description>committee</description>
+                </role>
+                <organization>
+                   <name>Spatial Web Foundation</name>
+                   <subdivision type="Committee" subtype="B">
+                      <name>TC1</name>
+                      <identifier>B 1</identifier>
+                      <identifier type="full">B 1</identifier>
+                   </subdivision>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="publisher"/>
+                <organization>
+                   <name>Spatial Web Foundation</name>
+                   <abbreviation>SWF</abbreviation>
+                </organization>
+             </contributor>
+             <edition>2</edition>
+             <version>
+                <revision-date>2000-01-01</revision-date>
+                <draft>3.4</draft>
+             </version>
+             <language>en</language>
+             <script>Latn</script>
+             <status>
+                <stage>working-draft</stage>
+                <iteration>3</iteration>
+             </status>
+             <copyright>
+                <from>2001</from>
+                <owner>
+                   <organization>
+                      <name>Spatial Web Foundation</name>
+                      <abbreviation>SWF</abbreviation>
+                   </organization>
+                </owner>
+             </copyright>
+             <ext>
+                <doctype>standard</doctype>
+                <flavor>generic</flavor>
+             </ext>
+          </bibdata>
+          <metanorma-extension>
+             <semantic-metadata>
+                <stage-published>false</stage-published>
+             </semantic-metadata>
+             <presentation-metadata>
+                <name>TOC Heading Levels</name>
+                <value>2</value>
+             </presentation-metadata>
+             <presentation-metadata>
+                <name>HTML TOC Heading Levels</name>
+                <value>2</value>
+             </presentation-metadata>
+             <presentation-metadata>
+                <name>DOC TOC Heading Levels</name>
+                <value>2</value>
+             </presentation-metadata>
+             <presentation-metadata>
+                <name>PDF TOC Heading Levels</name>
+                <value>2</value>
+             </presentation-metadata>
+          </metanorma-extension>
+          <sections> </sections>
+       </metanorma>
+    OUTPUT
+    expect(strip_guid(Canon.format_xml(Asciidoctor.convert(
+                                         input.sub("SECRETARIAT",
+                                                   "SECRETARIAT\n:publisher_abbr: SWF\n:publisher: Spatial Web Foundation"), *OPTIONS
+                                       ))))
+      .to be_equivalent_to strip_guid(Canon.format_xml(output))
   end
 
   it "processes default section titles" do
@@ -219,40 +320,40 @@ RSpec.describe Metanorma::Generic do
       == Bibliography
     INPUT
     output = <<~"OUTPUT"
-          <metanorma xmlns='https://www.metanorma.org/ns/standoc'  type="semantic" version="#{Metanorma::Generic::VERSION}" flavor="generic">
-          <preface>
-             <introduction id="_" obligation="informative">
-                <title id="_">Introduction</title>
-             </introduction>
-          </preface>
-          <sections>
-             <clause id="_" type="scope" obligation="normative">
-                <title id="_">Scope</title>
-             </clause>
-             <terms id="_" obligation="normative">
-                <title id="_">Terms and definitions</title>
-                <p id="_">No terms and definitions are listed in this document.</p>
-             </terms>
-             <definitions id="_" type="symbols" obligation="normative">
-                <title id="_">Symbols</title>
-             </definitions>
-             <clause id="_" obligation="normative">
-                <title id="_">Clause</title>
-             </clause>
-          </sections>
-          <annex id="_" obligation="normative">
-             <title id="_">Annex</title>
-          </annex>
-          <bibliography>
-             <references id="_" normative="true" obligation="informative">
-                <title id="_">Normative references</title>
-                <p id="_">There are no normative references in this document.</p>
-             </references>
-             <references id="_" normative="false" obligation="informative">
-                <title id="_">Bibliography</title>
-             </references>
-          </bibliography>
-       </metanorma>
+         <metanorma xmlns='https://www.metanorma.org/ns/standoc'  type="semantic" version="#{Metanorma::Generic::VERSION}" flavor="generic">
+         <preface>
+            <introduction id="_" obligation="informative">
+               <title id="_">Introduction</title>
+            </introduction>
+         </preface>
+         <sections>
+            <clause id="_" type="scope" obligation="normative">
+               <title id="_">Scope</title>
+            </clause>
+            <terms id="_" obligation="normative">
+               <title id="_">Terms and definitions</title>
+               <p id="_">No terms and definitions are listed in this document.</p>
+            </terms>
+            <definitions id="_" type="symbols" obligation="normative">
+               <title id="_">Symbols</title>
+            </definitions>
+            <clause id="_" obligation="normative">
+               <title id="_">Clause</title>
+            </clause>
+         </sections>
+         <annex id="_" obligation="normative">
+            <title id="_">Annex</title>
+         </annex>
+         <bibliography>
+            <references id="_" normative="true" obligation="informative">
+               <title id="_">Normative references</title>
+               <p id="_">There are no normative references in this document.</p>
+            </references>
+            <references id="_" normative="false" obligation="informative">
+               <title id="_">Bibliography</title>
+            </references>
+         </bibliography>
+      </metanorma>
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
     xml.at("//xmlns:bibdata").remove
