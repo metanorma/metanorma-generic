@@ -26,7 +26,7 @@ module Metanorma
       def docidentifier_from_template(xmldoc)
         b = boilerplate_isodoc(xmldoc) or return
         template = configuration.docid_template ||
-          "{{ organization_name_short }} {{ docnumeric }}"
+          "{{ agency }} {{ docnumeric }}"
         b.populate_template(template, nil)
       end
 
