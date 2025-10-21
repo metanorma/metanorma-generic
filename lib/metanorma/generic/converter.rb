@@ -39,8 +39,7 @@ module Metanorma
         type = @default_doctype || configuration.doctypes.keys[0]
         if !configuration.doctypes.key?(d)
           node.attr("doctype") && node.attr("doctype") != "article" and # factory default
-            @log.add("Document Attributes", nil,
-                     "#{d} is not a legal document type: reverting to '#{type}'")
+            @log.add("GENERIC_1", nil, params: [d, type])
           d = type
         end
         d
@@ -114,8 +113,7 @@ module Metanorma
         stages.empty? and return
         stage = xmldoc.at("//bibdata/status/stage")&.text
         stages.include? stage or
-          @log.add("Document Attributes", nil,
-                   "#{stage} is not a recognised status")
+          @log.add("GENERIC_2", nil, params: [stage])
       end
 
       def committee_validate(xmldoc)
@@ -124,8 +122,7 @@ module Metanorma
         xmldoc.xpath("//bibdata/contributor[role/description = 'committee']/" \
             "organization/subdivision/name").each do |c|
           committees.include? c.text or
-            @log.add("Document Attributes", nil,
-                     "#{c.text} is not a recognised committee")
+            @log.add("GENERIC_3", nil, params: [c.text])
         end
       end
 
@@ -166,7 +163,7 @@ module Metanorma
         Metanorma::Generic::Configuration::CONFIG_ATTRS.each do |a|
           conv.meta.set(a, configuration.send(a))
         end
-        #conv.meta.set(:bibdata, bibdata_hash(xmldoc))
+        # conv.meta.set(:bibdata, bibdata_hash(xmldoc))
         @isodoc = conv
         @isodoc
       end
@@ -192,3 +189,5 @@ module Metanorma
     end
   end
 end
+
+require "metanorma/generic/log"
