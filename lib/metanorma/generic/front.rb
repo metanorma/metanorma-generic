@@ -27,10 +27,14 @@ module Metanorma
 
       def metadata_status(node, xml)
         xml.status do |s|
-          s.stage ( node.attr("status") || node.attr("docstage") ||
+          add_noko_elem(s, "stage", node.attr("status") || node.attr("docstage") ||
                    configuration.default_stage || "published")
-          x = node.attr("substage") and s.substage x
-          x = node.attr("iteration") and s.iteration x
+          # s.stage ( node.attr("status") || node.attr("docstage") ||
+          # configuration.default_stage || "published")
+          add_noko_elem(s, "substage", node.attr("substage"))
+          # x = node.attr("substage") and s.substage x
+          add_noko_elem(s, "iteration", node.attr("iteration"))
+          # x = node.attr("iteration") and s.iteration x
         end
       end
 
@@ -65,13 +69,14 @@ module Metanorma
             removed_count += 1
           end
           removed_count.zero? and break # Stop when no elems removed this pass
-
         end
       end
 
       def metadata_doctype(node, xml)
         d = doctype(node)
-        xml.doctype d, attr_code(abbreviation: configuration&.doctypes&.dig(d))
+        add_noko_elem(xml, "doctype", d,
+                      abbreviation: configuration&.doctypes&.dig(d))
+        # xml.doctype d, attr_code(abbreviation: configuration&.doctypes&.dig(d))
       end
 
       EXT_STRUCT = %w(_output _attribute _list).freeze
