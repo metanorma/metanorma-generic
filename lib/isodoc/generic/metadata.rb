@@ -31,24 +31,22 @@ end
 module IsoDoc
   module Generic
     class Metadata < IsoDoc::Metadata
-      def initialize(lang, script, locale, labels)
-        super
-        here = File.dirname(__FILE__)
-        default_logo_path =
-          File.expand_path(File.join(here, "html", "logo.jpg"))
-        set(:logo, baselocation(configuration.logo_path) || default_logo_path)
-        unless configuration.logo_paths.nil?
-          set(:logo_paths,
-              Array(configuration.logo_paths).map { |p| baselocation(p) })
-        end
-      end
-
       class << self
         attr_accessor :_file
       end
 
       def self.inherited(klass) # rubocop:disable Lint/MissingSuper
         klass._file = caller_locations(1..1).first.absolute_path
+      end
+
+      def images(isoxml, out)
+        default_logo_path =
+          File.expand_path(File.join(File.dirname(__FILE__), "html", "logo.jpg"))
+        set(:logo, baselocation(configuration.logo_path) || default_logo_path)
+        unless configuration.logo_paths.nil?
+          set(:logo_paths,
+              Array(configuration.logo_paths).map { |p| baselocation(p) })
+        end
       end
 
       def author(isoxml, _out)
