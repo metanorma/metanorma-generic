@@ -27,23 +27,28 @@ module Metanorma
 
       def metadata_status(node, xml)
         xml.status do |s|
-          add_noko_elem(s, "stage", node.attr("status") || node.attr("docstage") ||
+          add_noko_elem(s, "stage", node.attr("status") ||
+                        node.attr("docstage") ||
                    configuration.default_stage || "published")
-          # s.stage ( node.attr("status") || node.attr("docstage") ||
-          # configuration.default_stage || "published")
           add_noko_elem(s, "substage", node.attr("substage"))
-          # x = node.attr("substage") and s.substage x
           add_noko_elem(s, "iteration", node.attr("iteration"))
-          # x = node.attr("iteration") and s.iteration x
         end
       end
 
       def metadata_id(node, xml)
-        id_type = node.attr("publisher_abbr") || node.attr("publisher") ||
-          configuration.organization_name_short
-        xml.docidentifier primary: "true", type: id_type do |i|
-          i << (node.attr("docidentifier") || "")
+        if id = node.attr("docidentifier") || configuration.docid_template ||
+            "{{ agency }} {{ docnumeric }}"
+          add_noko_elem(xml, "docidentifier",
+                        id, primary: "true", boilerplate: true,
+                            type: metadata_id_primary_type(node))
+        else
+          metadata_id_primary(node, xml)
         end
+      end
+
+      def metadata_id_primary_type(node)
+        node.attr("publisher_abbr") || node.attr("publisher") ||
+          configuration.organization_name_short
       end
 
       def metadata_ext(node, ext)
@@ -76,7 +81,6 @@ module Metanorma
         d = doctype(node)
         add_noko_elem(xml, "doctype", d,
                       abbreviation: configuration&.doctypes&.dig(d))
-        # xml.doctype d, attr_code(abbreviation: configuration&.doctypes&.dig(d))
       end
 
       EXT_STRUCT = %w(_output _attribute _list).freeze

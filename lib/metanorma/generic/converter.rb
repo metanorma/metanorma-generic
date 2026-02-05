@@ -16,6 +16,7 @@ module Metanorma
         loc
       end
 
+=begin
       def docidentifier_cleanup(xmldoc)
         docid = xmldoc.at("//bibdata/docidentifier") or return
         docid.text.empty? or return
@@ -29,6 +30,7 @@ module Metanorma
           "{{ agency }} {{ docnumeric }}"
         b.populate_template(template, nil)
       end
+=end
 
       def doctype(node)
         d = super
