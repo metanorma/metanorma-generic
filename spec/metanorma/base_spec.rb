@@ -249,7 +249,7 @@ RSpec.describe Metanorma::Generic do
                 </owner>
              </copyright>
              <ext>
-                <doctype>standard</doctype>
+                <doctype abbreviation="Std">standard</doctype>
                 <flavor>generic</flavor>
              </ext>
           </bibdata>
@@ -269,7 +269,8 @@ RSpec.describe Metanorma::Generic do
     OUTPUT
     expect(strip_guid(Canon.format_xml(Asciidoctor.convert(
                                          input.sub("SECRETARIAT",
-                                                   "SECRETARIAT\n:publisher_abbr: SWF\n:publisher: Spatial Web Foundation"), *OPTIONS
+                                                   "SECRETARIAT\n:publisher_abbr: SWF\n:publisher: Spatial Web Foundation\n:doctype-abbrev: Std"),
+                                         *OPTIONS,
                                        ))))
       .to be_equivalent_to strip_guid(Canon.format_xml(output))
   end
