@@ -29,7 +29,8 @@ module Metanorma
         xml.status do |s|
           add_noko_elem(s, "stage", node.attr("status") ||
                         node.attr("docstage") ||
-                   configuration.default_stage || "published")
+                   configuration.default_stage || "published",
+                        abbreviation: node.attr("docstage-abbrev"))
           add_noko_elem(s, "substage", node.attr("substage"))
           add_noko_elem(s, "iteration", node.attr("iteration"))
         end
