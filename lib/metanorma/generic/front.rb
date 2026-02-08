@@ -80,7 +80,8 @@ module Metanorma
       def metadata_doctype(node, xml)
         d = doctype(node)
         add_noko_elem(xml, "doctype", d,
-                      abbreviation: configuration&.doctypes&.dig(d))
+                      abbreviation: node.attr("doctype-abbrev") ||
+                      configuration&.doctypes&.dig(d))
       end
 
       EXT_STRUCT = %w(_output _attribute _list).freeze
