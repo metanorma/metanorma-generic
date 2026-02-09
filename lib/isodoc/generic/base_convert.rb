@@ -21,7 +21,7 @@ module IsoDoc
       def make_body(xml, docxml)
         body_attr = { lang: "EN-US", link: "blue", vlink: "#954F72",
                       "xml:lang": "EN-US", class: "container" }
-        xml.body **body_attr do |body|
+        xml.body(**body_attr) do |body|
           make_body1(body, docxml)
           make_body2(body, docxml)
           make_body3(body, docxml)
