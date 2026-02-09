@@ -1,6 +1,5 @@
 require "isodoc"
 require "nokogiri"
-require_relative "init"
 require_relative "utils"
 
 class Nokogiri::XML::Node
@@ -41,7 +40,8 @@ module IsoDoc
 
       def images(isoxml, out)
         default_logo_path =
-          File.expand_path(File.join(File.dirname(__FILE__), "html", "logo.jpg"))
+          File.expand_path(File.join(File.dirname(__FILE__), "html",
+                                     "logo.jpg"))
         set(:logo, baselocation(configuration.logo_path) || default_logo_path)
         unless configuration.logo_paths.nil?
           set(:logo_paths,
