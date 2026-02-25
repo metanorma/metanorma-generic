@@ -1,6 +1,13 @@
 module Metanorma
   module Generic
     class Validate < Standoc::Validate
+      def self.delegator_methods
+        super + %i[baselocation]
+      end
+
+      # Delegate additional methods specific to Generic
+      def_delegators :@converter, :baselocation
+
       def schema_location
         baselocation(configuration.validate_rng_file) ||
           File.join(File.dirname(__FILE__), "generic.rng")
