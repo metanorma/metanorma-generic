@@ -3,12 +3,6 @@ module Metanorma
     class Cleanup < Standoc::Cleanup
       extend Forwardable
 
-      def self.delegator_methods
-        super + %i[baselocation]
-      end
-
-      def_delegators :@converter, *delegator_methods
-
       def sections_cleanup(xml)
         super
         xml.xpath("//*[@inline-header]").each do |h|
@@ -35,8 +29,8 @@ module Metanorma
       def boilerplate_file(xmldoc)
         f = configuration.boilerplate
         f.nil? and return super
-        f.is_a? String and return baselocation(f)
-        f.is_a? Hash and f[@lang] and return baselocation(f[@lang])
+        f.is_a? String and return @converter.baselocation(f)
+        f.is_a? Hash and f[@lang] and return @converter.baselocation(f[@lang])
         super
       end
 
