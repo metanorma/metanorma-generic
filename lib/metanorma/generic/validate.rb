@@ -46,7 +46,7 @@ module Metanorma
       end
 
       def configuration
-        Metanorma::Generic.configuration
+        @converter.configuration
       end
     end
   end
