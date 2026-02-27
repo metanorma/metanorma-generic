@@ -2,7 +2,7 @@ module Metanorma
   module Generic
     class Validate < Standoc::Validate
       def schema_location
-        @converter.baselocation(configuration.validate_rng_file) ||
+        @conv.baselocation(configuration.validate_rng_file) ||
           File.join(File.dirname(__FILE__), "generic.rng")
       end
 
@@ -39,7 +39,7 @@ module Metanorma
       end
 
       def configuration
-        @converter.configuration
+        @conv.configuration
       end
     end
   end

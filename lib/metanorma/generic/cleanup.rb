@@ -29,8 +29,8 @@ module Metanorma
       def boilerplate_file(xmldoc)
         f = configuration.boilerplate
         f.nil? and return super
-        f.is_a? String and return @converter.baselocation(f)
-        f.is_a? Hash and f[@lang] and return @converter.baselocation(f[@lang])
+        f.is_a? String and return @conv.baselocation(f)
+        f.is_a? Hash and f[@lang] and return @conv.baselocation(f[@lang])
         super
       end
 
@@ -40,7 +40,7 @@ module Metanorma
       end
 
       def configuration
-        @converter.configuration
+        @conv.configuration
       end
     end
   end
