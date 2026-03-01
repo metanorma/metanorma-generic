@@ -490,9 +490,9 @@ RSpec.describe IsoDoc::Generic do
                 <p>
                   <a href="#A">Illustration 1</a>
                 </p>
-                <div id="A" class="figure">
-                  <p class="FigureTitle" style="text-align:center;">Illustration 1&#xA0;&#x2014; Illustration</p>
-                </div>
+                <figure id="A" class="figure">
+                  <figcaption>Illustration 1 — Illustration</figcaption>
+                </figure>
               </div>
             </main>
           OUTPUT
