@@ -1,5 +1,0 @@
-gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "main"
-gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "fix/ruby-4.0"
-gem "lutaml", git: "https://github.com/lutaml/lutaml", branch: "fix/expressir-2.2.x"
-gem "expressir", git: "https://github.com/lutaml/expressir", branch: "fix/remove-exit"
-
