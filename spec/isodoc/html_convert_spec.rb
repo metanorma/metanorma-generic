@@ -939,9 +939,7 @@ RSpec.describe IsoDoc::Generic do
             </references>
          </sections>
          <annex id="P" inline-header="false" obligation="normative" autonum="A" displayorder="9">
-            <title id="_">
-               <strong>Annex</strong>
-            </title>
+         <title id="_">Annex</title>
             <fmt-title id="_">
                <strong>
                   <span class="fmt-caption-label">
@@ -962,6 +960,16 @@ RSpec.describe IsoDoc::Generic do
                <span class="fmt-element-name">Annex</span>
                <semx element="autonum" source="P">A</semx>
             </fmt-xref-label>
+      <variant-title type="toc">
+         <span class="fmt-caption-label">
+            <span class="fmt-element-name">Annex</span>
+            <semx element="autonum" source="P">A</semx>
+         </span>
+         <span class="fmt-caption-delim">
+            <tab/>
+         </span>
+         <semx element="title" source="_">Annex</semx>
+      </variant-title>
             <clause id="Q" inline-header="false" obligation="normative" autonum="A.1">
                <title id="_">Annex A.1</title>
                <fmt-title id="_" depth="2">
