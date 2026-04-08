@@ -31,7 +31,7 @@ RSpec.describe Metanorma::Generic do
 
     output = <<~"OUTPUT"
           #{BLANK_HDR}
-      <sections/>
+      <sections> </sections>
       </metanorma>
     OUTPUT
 
@@ -49,7 +49,7 @@ RSpec.describe Metanorma::Generic do
 
     output = <<~"OUTPUT"
           #{BLANK_HDR}
-      <sections/>
+      <sections> </sections>
       </metanorma>
     OUTPUT
 
@@ -93,7 +93,6 @@ RSpec.describe Metanorma::Generic do
     INPUT
 
     output = <<~"OUTPUT"
-          <?xml version="1.0" encoding="UTF-8"?>
       <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Generic::VERSION}" flavor="generic">
       <bibdata type="standard">
         <title language="en" type="main">Main Title</title>
@@ -175,7 +174,7 @@ RSpec.describe Metanorma::Generic do
          <pdf-toc-heading-levels>2</pdf-toc-heading-levels>
           </presentation-metadata>
          </metanorma-extension>
-      <sections/>
+      <sections> </sections>
       </metanorma>
     OUTPUT
 

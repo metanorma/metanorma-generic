@@ -69,7 +69,7 @@ RSpec.describe Metanorma::Generic::Processor do
 
     output = <<~"OUTPUT"
           #{BLANK_HDR}
-      <sections/>
+          <sections> </sections>
       </metanorma>
     OUTPUT
 
