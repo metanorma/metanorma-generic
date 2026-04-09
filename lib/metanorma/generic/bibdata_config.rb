@@ -2,7 +2,7 @@ module Metanorma
   module Generic
     class BibdataConfig < ::Lutaml::Model::Serializable
       class Bibdata < ::Lutaml::Model::Serializable
-        model ::RelatonBib::BibliographicItem
+        model ::Relaton::Bib::ItemData
       end
 
       attribute :bibdata, Bibdata
