@@ -194,8 +194,7 @@ RSpec.describe IsoDoc::Generic do
 
   context "with configuration options" do
     subject(:convert) do
-      Canon.format_xml(Asciidoctor.convert(input, backend: :generic,
-                                                  header_footer: true))
+      Asciidoctor.convert(input, backend: :generic, header_footer: true)
     end
 
     context "organization" do
@@ -323,80 +322,80 @@ RSpec.describe IsoDoc::Generic do
         csdc = IsoDoc::Generic::HtmlConvert.new({})
         wcsdc = IsoDoc::Generic::WordConvert.new({})
         input = <<~"INPUT"
-          <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
-          <bibdata type="standard">
-            <title language="en" format="plain">Main Title</title>
-            <docidentifier>1000</docidentifier>
-            <edition>2</edition>
-            <version>
-            <revision-date>2000-01-01</revision-date>
-            <draft>3.4</draft>
-          </version>
-            <contributor>
-              <role type="author"/>
-              <organization>
-                <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
-              </organization>
-            </contributor>
-      <contributor>
-         <role type="author">
-            <description>committee</description>
-         </role>
-         <organization>
-            <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
-            <subdivision type="Committee" subtype="A">
-               <name>TC</name>
-               <identifier>A 1</identifier>
-               <identifier type="full">A 1</identifier>
-            </subdivision>
-         </organization>
-      </contributor>
-      <contributor>
-         <role type="author">
-            <description>committee</description>
-         </role>
-         <organization>
-            <name>Acme Corp.</name>
-            <subdivision type="Committee" subtype="B">
-               <name>TC1</name>
-               <identifier>B 1</identifier>
-               <identifier type="full">B 1</identifier>
-            </subdivision>
-         </organization>
-      </contributor>
-            <contributor>
-              <role type="publisher"/>
-              <organization>
-                <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
-              </organization>
-            </contributor>
-            <language>en</language>
-            <script>Latn</script>
-            <status><stage>working-draft</stage></status>
-            <copyright>
-              <from>2001</from>
-              <owner>
-                <organization>
-                  <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
-                </organization>
-              </owner>
-            </copyright>
-            <ext>
-            <doctype>standard</doctype>
-            <editorialgroup>
-              <committee type="A">TC</committee>
-            </editorialgroup>
-            <security>Client Confidential</security>
-            <insecurity>Client Unconfidential</insecurity>
-            </ext>
-          </bibdata>
-          <sections>
-          <clause>
-          <p><xref target="A"/></p>
-          <figure id="A"><name>Illustration</name></figure>
-          </clause>
-          </sections>
-          </generic-standard>
+              <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
+              <bibdata type="standard">
+                <title language="en" format="plain">Main Title</title>
+                <docidentifier>1000</docidentifier>
+                <edition>2</edition>
+                <version>
+                <revision-date>2000-01-01</revision-date>
+                <draft>3.4</draft>
+              </version>
+                <contributor>
+                  <role type="author"/>
+                  <organization>
+                    <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
+                  </organization>
+                </contributor>
+          <contributor>
+             <role type="author">
+                <description>committee</description>
+             </role>
+             <organization>
+                <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+                <subdivision type="Committee" subtype="A">
+                   <name>TC</name>
+                   <identifier>A 1</identifier>
+                   <identifier type="full">A 1</identifier>
+                </subdivision>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>committee</description>
+             </role>
+             <organization>
+                <name>Acme Corp.</name>
+                <subdivision type="Committee" subtype="B">
+                   <name>TC1</name>
+                   <identifier>B 1</identifier>
+                   <identifier type="full">B 1</identifier>
+                </subdivision>
+             </organization>
+          </contributor>
+                <contributor>
+                  <role type="publisher"/>
+                  <organization>
+                    <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
+                  </organization>
+                </contributor>
+                <language>en</language>
+                <script>Latn</script>
+                <status><stage>working-draft</stage></status>
+                <copyright>
+                  <from>2001</from>
+                  <owner>
+                    <organization>
+                      <name>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</name>
+                    </organization>
+                  </owner>
+                </copyright>
+                <ext>
+                <doctype>standard</doctype>
+                <editorialgroup>
+                  <committee type="A">TC</committee>
+                </editorialgroup>
+                <security>Client Confidential</security>
+                <insecurity>Client Unconfidential</insecurity>
+                </ext>
+              </bibdata>
+              <sections>
+              <clause>
+              <p><xref target="A"/></p>
+              <figure id="A"><name>Illustration</name></figure>
+              </clause>
+              </sections>
+              </generic-standard>
         INPUT
 
         output =
@@ -475,10 +474,10 @@ RSpec.describe IsoDoc::Generic do
         expect(html).to match(/code \{[^}]*?font-size: 29pt/m)
         expect(html).to match(/p\.note \{[^}]*?font-size: 28pt/m)
         expect(html).to match(/aside \{[^}]*?font-size: 27pt/m)
-        expect(Canon.format_xml(strip_guid(html)
+        expect(strip_guid(html)
           .gsub(%r{^.*<main}m, "<main")
-          .gsub(%r{</main>.*}m, "</main>")))
-          .to be_equivalent_to Canon.format_xml(<<~OUTPUT)
+          .gsub(%r{</main>.*}m, "</main>"))
+          .to be_xml_equivalent_to <<~OUTPUT
                 <main class="main-section"><button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
                 <br/>
               <p class="zzSTDTitle1">Main Title</p>
@@ -1034,23 +1033,21 @@ RSpec.describe IsoDoc::Generic do
       </generic-standard>
     OUTPUT
 
-    expect(
-      Canon.format_xml(strip_guid(IsoDoc::Generic::PresentationXMLConvert
+    expect(strip_guid(IsoDoc::Generic::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true))),
-    ).to be_equivalent_to Canon.format_xml(output)
+      .convert("test", input, true))).to be_xml_equivalent_to output
   end
 
   private
 
   def stylesheet_mock(dir)
-    allow_any_instance_of(::IsoDoc::XslfoPdfConvert)
+    allow_any_instance_of(IsoDoc::XslfoPdfConvert)
       .to receive(:pdf_stylesheet)
       .and_return(dir)
   end
 
   def convert_mock(dir)
-    allow_any_instance_of(::Metanorma::Output::XslfoPdf)
+    allow_any_instance_of(Metanorma::Output::XslfoPdf)
       .to receive(:convert)
       .with(anything, anything, dir, anything)
   end

@@ -31,12 +31,12 @@ RSpec.describe Metanorma::Generic do
 
     output = <<~"OUTPUT"
           #{BLANK_HDR}
-      <sections/>
+      <sections> </sections>
       </metanorma>
     OUTPUT
 
-    expect(strip_guid(Canon.format_xml(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to strip_guid(Canon.format_xml(output))
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to strip_guid(output)
   end
 
   it "converts a blank document" do
@@ -49,13 +49,13 @@ RSpec.describe Metanorma::Generic do
 
     output = <<~"OUTPUT"
           #{BLANK_HDR}
-      <sections/>
+      <sections> </sections>
       </metanorma>
     OUTPUT
 
     FileUtils.rm_f "test.html"
-    expect(strip_guid(Canon.format_xml(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to strip_guid(Canon.format_xml(output))
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to strip_guid(output)
     expect(File.exist?("test.html")).to be true
   end
 
@@ -93,26 +93,18 @@ RSpec.describe Metanorma::Generic do
     INPUT
 
     output = <<~"OUTPUT"
-          <?xml version="1.0" encoding="UTF-8"?>
       <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Generic::VERSION}" flavor="generic">
       <bibdata type="standard">
         <title language="en" type="main">Main Title</title>
         <docidentifier primary="true" type="#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}">#{Metanorma::Generic::ORGANIZATION_NAME_SHORT} 1000</docidentifier>
         <docnumber>1000</docnumber>
       <contributor>
-          <role type="author"/>
-          <organization>
-            <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
-            <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="publisher"/>
-          <organization>
-            <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
-            <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
-          </organization>
-        </contributor>
+        <role type="author"/>
+        <organization>
+          <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+          <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
+        </organization>
+      </contributor>
       <contributor>
          <role type="author">
             <description>committee</description>
@@ -138,6 +130,13 @@ RSpec.describe Metanorma::Generic do
                <identifier type="full">B 1</identifier>
             </subdivision>
          </organization>
+      </contributor>
+      <contributor>
+        <role type="publisher"/>
+        <organization>
+          <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+          <abbreviation>#{Metanorma::Generic::ORGANIZATION_NAME_SHORT}</abbreviation>
+        </organization>
       </contributor>
         <edition>2</edition>
       <version>
@@ -175,12 +174,12 @@ RSpec.describe Metanorma::Generic do
          <pdf-toc-heading-levels>2</pdf-toc-heading-levels>
           </presentation-metadata>
          </metanorma-extension>
-      <sections/>
+      <sections> </sections>
       </metanorma>
     OUTPUT
 
-    expect(strip_guid(Canon.format_xml(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to strip_guid(Canon.format_xml(output))
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to strip_guid(output)
 
     output = <<~OUTPUT
       <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Generic::VERSION}" flavor="generic">
@@ -267,12 +266,12 @@ RSpec.describe Metanorma::Generic do
           <sections> </sections>
        </metanorma>
     OUTPUT
-    expect(strip_guid(Canon.format_xml(Asciidoctor.convert(
-                                         input.sub("SECRETARIAT",
-                                                   "SECRETARIAT\n:publisher_abbr: SWF\n:publisher: Spatial Web Foundation\n:doctype-abbrev: Std"),
-                                         *OPTIONS,
-                                       ))))
-      .to be_equivalent_to strip_guid(Canon.format_xml(output))
+    expect(strip_guid(Asciidoctor.convert(
+                        input.sub("SECRETARIAT",
+                                  "SECRETARIAT\n:publisher_abbr: SWF\n:publisher: Spatial Web Foundation\n:doctype-abbrev: Std"),
+                        *OPTIONS,
+                      )))
+      .to be_xml_equivalent_to strip_guid(output)
   end
 
   it "processes default section titles" do
@@ -339,8 +338,8 @@ RSpec.describe Metanorma::Generic do
     xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
     xml.at("//xmlns:bibdata").remove
     xml.at("//xmlns:metanorma-extension").remove
-    expect(strip_guid(Canon.format_xml(strip_guid(xml.to_xml))))
-      .to be_equivalent_to strip_guid(Canon.format_xml(output))
+    expect(strip_guid(strip_guid(xml.to_xml)))
+      .to be_xml_equivalent_to strip_guid(output)
   end
 
   it "strips inline header" do
@@ -363,8 +362,8 @@ RSpec.describe Metanorma::Generic do
            </metanorma>
     OUTPUT
 
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "uses default fonts" do
@@ -449,7 +448,7 @@ RSpec.describe Metanorma::Generic do
                </metanorma>
     OUTPUT
 
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 end

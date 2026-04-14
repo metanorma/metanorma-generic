@@ -11,6 +11,8 @@ require "htmlentities"
 require "metanorma"
 require "canon"
 
+Canon::Config.instance.profile = :metanorma
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"
@@ -83,11 +85,10 @@ VALIDATING_BLANK_HDR = <<~HDR.freeze
 HDR
 
 BLANK_HDR = <<~"HDR".freeze
-  <?xml version="1.0" encoding="UTF-8"?>
   <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Generic::VERSION}" flavor="generic">
   <bibdata type="standard">
    <title language="en" type="main">Document title</title>
-    <docidentifier primary="true" type="Acme">Acme </docidentifier>
+    <docidentifier primary="true" type="Acme">Acme</docidentifier>
     <contributor>
       <role type="author"/>
       <organization>

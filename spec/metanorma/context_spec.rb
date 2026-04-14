@@ -72,7 +72,7 @@ RSpec.describe Metanorma::Generic do
 
   context "with configuration options" do
     subject(:convert) do
-      Canon.format_xml(Asciidoctor.convert(input, *OPTIONS))
+      Asciidoctor.convert(input, *OPTIONS)
     end
 
     context "organization" do
@@ -117,7 +117,7 @@ RSpec.describe Metanorma::Generic do
         {
           "comment-period" => {
             "comment-period-typex" => { "_output" => "type",
-                                       "_attribute" => true },
+                                        "_attribute" => true },
             "comment-period-fromx" => { "_output" => "from", "_list" => true },
             "comment-period-tox" => { "_output" => "to" },
             "reply-to" => nil, "more" => { "more1" => nil }
@@ -167,9 +167,9 @@ RSpec.describe Metanorma::Generic do
 
       it "uses configuration options for organization and namespace" do
         FileUtils.rm_f "test.err.html"
-        expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input,
-                                                               *OPTIONS))))
-          .to(be_equivalent_to(Canon.format_xml(output)))
+        expect(strip_guid(Asciidoctor.convert(input,
+                                              *OPTIONS)))
+          .to be_xml_equivalent_to(output)
         expect(File.read("test.err.html"))
           .to include("working-draft is not a recognised status")
         expect(File.read("test.err.html"))
@@ -183,7 +183,7 @@ RSpec.describe Metanorma::Generic do
           config.organization_name_short = organization_name_short
           config.organization_name_long = organization_name_long
           config.document_namespace = document_namespace
-          #config.docid_template = docid_template_bibdata
+          # config.docid_template = docid_template_bibdata
           config.docid_template = docid_template
           config.metadata_extensions = metadata_extensions1
           config.stage_abbreviations = stage_abbreviations
@@ -203,19 +203,18 @@ RSpec.describe Metanorma::Generic do
           { organization_name_short: organization_name_short,
             organization_name_long: organization_name_long,
             metadata_extensions_out: "<comment-period type='N1'><from>N2" \
-            "</from><from>N3</from><to>N4</to></comment-period>" \
-            "<security>Client Confidential</security>",
+                                     "</from><from>N3</from><to>N4</to></comment-period>" \
+                                     "<security>Client Confidential</security>",
             document_namespace: document_namespace,
-            #docidentifier: "working-draft elephant 1000",
+            # docidentifier: "working-draft elephant 1000",
             docidentifier: "Test Corp. 1000 Working Draft",
             stage_published: false,
             stage: "working-draft",
             workgroup1: "",
             workgroup2: "",
             version: Metanorma::Generic::VERSION }
-        expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input,
-                                                               *OPTIONS))))
-          .to(be_equivalent_to(Canon.format_xml(output)))
+        expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+          .to be_xml_equivalent_to(output)
       end
 
       it "configures committees, docidentifier template with bibdata metadata" do
@@ -229,30 +228,29 @@ RSpec.describe Metanorma::Generic do
             organization_name_long: organization_name_long,
             metadata_extensions_out: "<security>Client Confidential</security>",
             document_namespace: document_namespace,
-            #docidentifier: "working-draft elephant 1000",
+            # docidentifier: "working-draft elephant 1000",
             docidentifier: "Test Corp. 1000 Approved",
             stage_published: true,
             stage: "approved",
             workgroup1: <<~XML,
-                   <subdivision type="Workgroup" subtype="C">
-                      <name>WG</name>
-                      <identifier>C 3</identifier>
-                      <identifier type="full">C 3/A 1</identifier>
-                   </subdivision>
+              <subdivision type="Workgroup" subtype="C">
+                 <name>WG</name>
+                 <identifier>C 3</identifier>
+                 <identifier type="full">C 3/A 1</identifier>
+              </subdivision>
             XML
             workgroup2: <<~XML,
-           <subdivision type="Workgroup" subtype="Ca">
-              <name>WGX</name>
-              <identifier>Ca 3.1</identifier>
-              <identifier type="full">Ca 3.1/B 1</identifier>
-           </subdivision>
+              <subdivision type="Workgroup" subtype="Ca">
+                 <name>WGX</name>
+                 <identifier>Ca 3.1</identifier>
+                 <identifier type="full">Ca 3.1/B 1</identifier>
+              </subdivision>
             XML
             version: Metanorma::Generic::VERSION })
           .sub('<identifier type="full">A 1</identifier>', "")
           .sub('<identifier type="full">B 1</identifier>', "")
-        expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input,
-                                                               *OPTIONS))))
-          .to(be_equivalent_to(Canon.format_xml(output)))
+        expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+          .to be_xml_equivalent_to(output)
       end
 
       after do
