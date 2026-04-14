@@ -22,8 +22,9 @@ module Metanorma
 
       def bibdata_hash(xmldoc)
         b = xmldoc.at("//bibdata") || xmldoc.at("//xmlns:bibdata")
-        BibdataConfig.from_xml("<metanorma>#{b.to_xml}</metanorma>")
-          .bibdata.to_hash
+        bib = BibdataConfig.from_xml("<metanorma>#{b.to_xml}</metanorma>").bibdata
+        YAML.safe_load(bib.to_yaml, permitted_classes: [Date, Symbol],
+                                    symbolize_names: true)
       end
 
       def boilerplate_file(xmldoc)
