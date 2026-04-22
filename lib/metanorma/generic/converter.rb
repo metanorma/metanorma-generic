@@ -3,7 +3,7 @@ require "metanorma-standoc"
 require "fileutils"
 require_relative "front"
 require_relative "bibdata_config"
-require "metanorma"
+require "metanorma-core"
 require "pathname"
 
 module Metanorma

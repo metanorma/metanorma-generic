@@ -8,7 +8,7 @@ require "metanorma-generic"
 require "rspec/matchers"
 require "equivalent-xml"
 require "htmlentities"
-require "metanorma"
+require "metanorma-core"
 require "canon"
 
 Canon::Config.instance.profile = :metanorma

@@ -1,4 +1,5 @@
 require "spec_helper"
+require "metanorma"
 
 RSpec.describe Metanorma::Generic do
   context "when xref_error.adoc compilation" do
