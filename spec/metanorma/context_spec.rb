@@ -183,8 +183,7 @@ RSpec.describe Metanorma::Generic do
           config.organization_name_short = organization_name_short
           config.organization_name_long = organization_name_long
           config.document_namespace = document_namespace
-          # config.docid_template = docid_template_bibdata
-          config.docid_template = docid_template
+          config.docid_template = docid_template_bibdata
           config.metadata_extensions = metadata_extensions1
           config.stage_abbreviations = stage_abbreviations
           config.doctypes = doctypes
@@ -206,8 +205,7 @@ RSpec.describe Metanorma::Generic do
                                      "</from><from>N3</from><to>N4</to></comment-period>" \
                                      "<security>Client Confidential</security>",
             document_namespace: document_namespace,
-            # docidentifier: "working-draft elephant 1000",
-            docidentifier: "Test Corp. 1000 Working Draft",
+            docidentifier: "working-draft elephant 1000",
             stage_published: false,
             stage: "working-draft",
             workgroup1: "",
@@ -228,8 +226,7 @@ RSpec.describe Metanorma::Generic do
             organization_name_long: organization_name_long,
             metadata_extensions_out: "<security>Client Confidential</security>",
             document_namespace: document_namespace,
-            # docidentifier: "working-draft elephant 1000",
-            docidentifier: "Test Corp. 1000 Approved",
+            docidentifier: "approved elephant 1000",
             stage_published: true,
             stage: "approved",
             workgroup1: <<~XML,
