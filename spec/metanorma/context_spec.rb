@@ -99,7 +99,7 @@ RSpec.describe Metanorma::Generic do
         "{{ organization_name_long }} {{ docnumeric }} {{ stage }}"
       end
       let(:docid_template_bibdata) do
-        "{{ bibdata.docstatus.stage.value }} {{ bibdata.ext.doctype.type }} {{ bibdata.docnumber }}"
+        "{{ bibdata.status.stage.content }} {{ bibdata.ext.doctype.content }} {{ bibdata.docnumber }}"
       end
       let(:metadata_extensions) { ["security", "insecurity"] }
       let(:metadata_extensions1) do
@@ -178,7 +178,7 @@ RSpec.describe Metanorma::Generic do
           .to include("standard is not a legal document type: reverting to 'elephant'")
       end
 
-      it "internationalises with language; uses complex metadata extensions" do
+      it "internationalises with language; uses complex metadata extensions; docidentifier template with bibdata metadata" do
         Metanorma::Generic.configure do |config|
           config.organization_name_short = organization_name_short
           config.organization_name_long = organization_name_long
@@ -215,11 +215,12 @@ RSpec.describe Metanorma::Generic do
           .to be_xml_equivalent_to(output)
       end
 
-      it "configures committees, docidentifier template with bibdata metadata" do
+      it "configures committees, default values in docidentifier template with bibdata metadata" do
         Metanorma::Generic.configure do |config|
           config.metadata_extensions = metadata_extensions2
           config.default_stage = "approved"
           config.committee_types = ["workgroup", "committee"]
+          config.docid_template = docid_template_bibdata
         end
         output = (File.read(fixture_path("metanorma/test_output.xml")) %
           { organization_name_short: organization_name_short,
