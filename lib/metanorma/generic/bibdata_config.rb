@@ -1,3 +1,5 @@
+require "relaton-cli"
+
 module Metanorma
   module Generic
     class BibdataConfig < ::Lutaml::Model::Serializable

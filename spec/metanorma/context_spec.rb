@@ -99,7 +99,7 @@ RSpec.describe Metanorma::Generic do
         "{{ organization_name_long }} {{ docnumeric }} {{ stage }}"
       end
       let(:docid_template_bibdata) do
-        "{{ bibdata.docstatus.stage.value }} {{ bibdata.ext.doctype.type }} {{ bibdata.docnumber }}"
+        "{{ bibdata.status.stage.content }} {{ bibdata.ext.doctype.content }} {{ bibdata.docnumber }}"
       end
       let(:metadata_extensions) { ["security", "insecurity"] }
       let(:metadata_extensions1) do
@@ -178,13 +178,12 @@ RSpec.describe Metanorma::Generic do
           .to include("standard is not a legal document type: reverting to 'elephant'")
       end
 
-      it "internationalises with language; uses complex metadata extensions" do
+      it "internationalises with language; uses complex metadata extensions; docidentifier template with bibdata metadata" do
         Metanorma::Generic.configure do |config|
           config.organization_name_short = organization_name_short
           config.organization_name_long = organization_name_long
           config.document_namespace = document_namespace
-          # config.docid_template = docid_template_bibdata
-          config.docid_template = docid_template
+          config.docid_template = docid_template_bibdata
           config.metadata_extensions = metadata_extensions1
           config.stage_abbreviations = stage_abbreviations
           config.doctypes = doctypes
@@ -206,8 +205,7 @@ RSpec.describe Metanorma::Generic do
                                      "</from><from>N3</from><to>N4</to></comment-period>" \
                                      "<security>Client Confidential</security>",
             document_namespace: document_namespace,
-            # docidentifier: "working-draft elephant 1000",
-            docidentifier: "Test Corp. 1000 Working Draft",
+            docidentifier: "working-draft elephant 1000",
             stage_published: false,
             stage: "working-draft",
             workgroup1: "",
@@ -217,19 +215,19 @@ RSpec.describe Metanorma::Generic do
           .to be_xml_equivalent_to(output)
       end
 
-      it "configures committees, docidentifier template with bibdata metadata" do
+      it "configures committees, default values in docidentifier template with bibdata metadata" do
         Metanorma::Generic.configure do |config|
           config.metadata_extensions = metadata_extensions2
           config.default_stage = "approved"
           config.committee_types = ["workgroup", "committee"]
+          config.docid_template = docid_template_bibdata
         end
         output = (File.read(fixture_path("metanorma/test_output.xml")) %
           { organization_name_short: organization_name_short,
             organization_name_long: organization_name_long,
             metadata_extensions_out: "<security>Client Confidential</security>",
             document_namespace: document_namespace,
-            # docidentifier: "working-draft elephant 1000",
-            docidentifier: "Test Corp. 1000 Approved",
+            docidentifier: "approved elephant 1000",
             stage_published: true,
             stage: "approved",
             workgroup1: <<~XML,

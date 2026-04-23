@@ -15,14 +15,18 @@ module Metanorma
         Metanorma::Generic::Configuration::CONFIG_ATTRS.each do |a|
           conv.meta.set(a, configuration.send(a))
         end
-        # conv.meta.set(:bibdata, bibdata_hash(xmldoc))
+        conv.meta.set(:bibdata, bibdata_hash(xmldoc))
         @isodoc = conv
         @isodoc
       end
 
       def bibdata_hash(xmldoc)
-        b = xmldoc.at("//bibdata") || xmldoc.at("//xmlns:bibdata")
-        bib = BibdataConfig.from_xml("<metanorma>#{b.to_xml}</metanorma>").bibdata
+        b = xmldoc.at("//bibdata") || xmldoc.at("//xmlns:bibdata") or return nil
+        stripped = Nokogiri::XML(b.to_xml)
+        stripped.remove_namespaces!
+        bib = BibdataConfig.from_xml(
+          "<metanorma>#{stripped.root.to_xml}</metanorma>",
+        ).bibdata or return nil
         YAML.safe_load(bib.to_yaml, permitted_classes: [Date, Symbol],
                                     symbolize_names: true)
       end
