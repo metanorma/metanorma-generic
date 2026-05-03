@@ -96,19 +96,15 @@ RSpec.describe Metanorma::Generic::Processor do
       <main class="main-section">
          <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
          <div id="H">
-           <h1 id="_">
-             <a class="anchor" href="#H"/>
-             <a class="header" href="#H">Terms, Definitions, Symbols and Abbreviated Terms</a>
-           </h1>
-           <p class="Terms" style="text-align:left;" id="J"><strong/> Term2</p>
+           <h1 id="_"><a class="anchor" href="#H"></a><a class="header" href="#H">Terms, Definitions, Symbols and Abbreviated Terms</a></h1>
+           <p class="Terms" style="text-align:left;" id="J"><strong></strong> Term2</p>
          </div>
        </main>
     OUTPUT
 
     processor.output(input, "test.xml", "test.html", :html)
-
-    expect(strip_guid(File.read("test.html", encoding: "utf-8"
+    expect(strip_guid(File.read("test.html", encoding: "utf-8")
       .gsub(%r{^.*<main}m, "<main")
-      .gsub(%r{</main>.*}m, "</main>")))).to be_html5_equivalent_to output
+      .gsub(%r{</main>.*}m, "</main>"))).to be_html5_equivalent_to output
   end
 end
