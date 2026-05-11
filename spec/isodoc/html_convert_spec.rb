@@ -63,11 +63,9 @@ RSpec.describe IsoDoc::Generic do
       <bibdata type="standard">
         <title language="en" format="plain">Main Title</title>
         <docidentifier>1000</docidentifier>
+        <date type="updated"><on>2000-01-01</on></date>
         <edition>2</edition>
-        <version>
-        <revision-date>2000-01-01</revision-date>
-        <draft>3.4</draft>
-      </version>
+        <version>3.4</version>
         <contributor>
           <role type="author"/>
           <organization>
@@ -179,7 +177,7 @@ RSpec.describe IsoDoc::Generic do
       :transmitteddate=>"XXX",
       :unchangeddate=>"XXX",
       :unpublished=>true,
-      :updateddate=>"XXX",
+      :updateddate=>"2000-01-01",
       :vote_endeddate=>"XXX",
       :vote_starteddate=>"XXX"}
     docxml, = csdc.convert_init(input, "test", true)
@@ -320,11 +318,9 @@ RSpec.describe IsoDoc::Generic do
               <bibdata type="standard">
                 <title language="en" format="plain">Main Title</title>
                 <docidentifier>1000</docidentifier>
+                <date type="updated"><on>2000-01-01</on></date>
                 <edition>2</edition>
-                <version>
-                <revision-date>2000-01-01</revision-date>
-                <draft>3.4</draft>
-              </version>
+                <version>3.4</version>
                 <contributor>
                   <role type="author"/>
                   <organization>
@@ -430,7 +426,7 @@ RSpec.describe IsoDoc::Generic do
           :transmitteddate=>"XXX",
           :unchangeddate=>"XXX",
           :unpublished=>false,
-          :updateddate=>"XXX",
+          :updateddate=>"2000-01-01",
           :vote_endeddate=>"XXX",
           :vote_starteddate=>"XXX"}
 
