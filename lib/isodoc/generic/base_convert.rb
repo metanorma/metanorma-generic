@@ -13,7 +13,8 @@ module IsoDoc
         docxml.xpath("//p[@class = 'Terms']").each do |d|
           h2 = d.at("./preceding-sibling::*[@class = 'TermNum'][1]")
           d["id"] = h2["id"]
-          d.add_first_child "<strong>#{to_xml(h2.remove.children)}</strong>&#xa0;"
+          n = to_xml(h2.remove.children)
+          d.add_first_child "<span class='TermNum'>#{n}</span>&#xa0;"
         end
         docxml
       end
