@@ -82,7 +82,7 @@ figure {
   @include figureBlock();
 }
 
-table figure {
+table figure, figure pre {
   padding: 0;
   margin: 0;
 }
