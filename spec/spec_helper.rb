@@ -35,8 +35,10 @@ RSpec.configure do |config|
 end
 
 def metadata(xml)
-  xml.sort.to_h.delete_if do |_k, v|
-    v.nil? || (v.respond_to?(:empty?) && v.empty?)
+  # :bibdata is the full relaton hash of //bibdata, populated and
+  # tested in isodoc; too bulky to pin in each metadata test
+  xml.sort.to_h.delete_if do |k, v|
+    k == :bibdata || v.nil? || (v.respond_to?(:empty?) && v.empty?)
   end
 end
 
