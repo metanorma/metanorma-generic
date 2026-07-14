@@ -170,12 +170,43 @@ RSpec.describe Metanorma::Generic do
         expect(strip_guid(Asciidoctor.convert(input,
                                               *OPTIONS)))
           .to be_xml_equivalent_to(output)
+        # the configured default stage is recognised by definition:
+        # stage_abbreviations ∪ published_stages ∪ default_stage
         expect(File.read("test.err.html"))
-          .to include("working-draft is not a recognised status")
+          .not_to include("is not a recognised status")
         expect(File.read("test.err.html"))
           .to include("TC is not a recognised committee")
         expect(File.read("test.err.html"))
           .to include("standard is not a legal document type: reverting to 'elephant'")
+      end
+
+      it "validates stage against flavour repertoire and docstage-valid" do
+        FileUtils.rm_f "test.err.html"
+        Asciidoctor.convert(
+          input.sub(":docnumber:", ":docstage: bogus\n:docnumber:"), *OPTIONS
+        )
+        expect(File.read("test.err.html"))
+          .to include("bogus is not a recognised status")
+
+        # a taste's stage repertoire (:docstage-valid:) supersedes the
+        # flavour's own
+        FileUtils.rm_f "test.err.html"
+        Asciidoctor.convert(
+          input.sub(":docnumber:",
+                    ":docstage: draft\n:docstage-valid: draft, " \
+                    "published\n:docnumber:"), *OPTIONS
+        )
+        expect(File.read("test.err.html"))
+          .not_to include("is not a recognised status")
+
+        FileUtils.rm_f "test.err.html"
+        Asciidoctor.convert(
+          input.sub(":docnumber:",
+                    ":docstage: steady\n:docstage-valid: draft, " \
+                    "published\n:docnumber:"), *OPTIONS
+        )
+        expect(File.read("test.err.html"))
+          .to include("steady is not a recognised status")
       end
 
       it "internationalises with language; uses complex metadata extensions; docidentifier template with bibdata metadata" do
