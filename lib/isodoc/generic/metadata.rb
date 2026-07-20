@@ -38,7 +38,7 @@ module IsoDoc
         klass._file = caller_locations(1..1).first.absolute_path
       end
 
-      def images(isoxml, out)
+      def images(_isoxml, _out)
         default_logo_path =
           File.expand_path(File.join(File.dirname(__FILE__), "html",
                                      "logo.jpg"))
