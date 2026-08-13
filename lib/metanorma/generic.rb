@@ -1,6 +1,7 @@
 require "metanorma/generic/committee"
 require "metanorma/generic/processor"
 require "metanorma/generic/version"
+require "metanorma/generic/document"
 require "forwardable"
 require "yaml"
 
