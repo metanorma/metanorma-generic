@@ -8,6 +8,7 @@ end
 
 module Metanorma
   module Generic::Document
+    autoload :Root, "metanorma/generic/document/root"
   end
 end
 
@@ -27,5 +28,7 @@ Metanorma::Core::Flavors.register(Metanorma::Core::Flavor.new(
   gem: "metanorma-generic",
   model_root: Metanorma::Generic::Document::Root,
   pubid_module: nil,
-  renderers: { html: Metanorma::Html::StandardRenderer },
+  renderers: { html: lambda do |_document, **_options|
+    Metanorma::Html::StandardRenderer
+  end },
 ))

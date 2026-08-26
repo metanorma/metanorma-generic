@@ -3,26 +3,26 @@
 module Metanorma
   module Generic::Document
     class Root < Lutaml::Model::Serializable
-      include Metanorma::StandardDocument::RootAttributes
+      include Metanorma::Standoc::Document::RootAttributes
 
       attribute :bibdata,
-                Metanorma::StandardDocument::Metadata::StandardBibData
+                Metanorma::Standoc::Document::Metadata::StandardBibData
       attribute :preface,
-                Metanorma::StandardDocument::Sections::Preface
+                Metanorma::Standoc::Document::Sections::Preface
       attribute :sections,
-                Metanorma::StandardDocument::Sections::Sections,
+                Metanorma::Standoc::Document::Sections::Sections,
                 collection: true
       attribute :annex,
-                Metanorma::StandardDocument::Sections::AnnexSection,
+                Metanorma::Standoc::Document::Sections::AnnexSection,
                 collection: true
       attribute :misccontainer,
-                Metanorma::StandardDocument::Sections::MiscContainer
+                Metanorma::Standoc::Document::Sections::MiscContainer
 
       xml do
         element "metanorma"
-        namespace Metanorma::StandardDocument::Namespace
+        namespace Metanorma::Standoc::Document::Namespace
 
-        Metanorma::StandardDocument::RootXmlMapping.apply(self)
+        Metanorma::Standoc::Document::RootXmlMapping.apply(self)
 
         map_element "misc-container", to: :misccontainer
       end
