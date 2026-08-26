@@ -9,4 +9,3 @@ require "metanorma-core"
 if defined? Metanorma::Registry
   Metanorma::Registry.instance.register(Metanorma::Generic::Processor)
 end
-require "metanorma/generic/document"
