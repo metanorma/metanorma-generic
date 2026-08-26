@@ -209,5 +209,6 @@ module Metanorma
     end
 
     configure {}
+    autoload :Document, "metanorma/generic/document"
   end
 end
