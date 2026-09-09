@@ -1,5 +1,5 @@
 module Metanorma
   module Generic
-    VERSION = "3.4.4".freeze
+    VERSION = "3.5.1".freeze
   end
 end
