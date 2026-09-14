@@ -56,6 +56,48 @@ RSpec.describe Metanorma::Generic::Processor do
 
       FileUtils.rm_f(Metanorma::Generic::YAML_CONFIG_FILE)
     end
+
+    it "always includes presentation.xml after a customize formats list" do
+      # Tastes (e.g. IALA) ship a customize metanorma.yml that lists only the
+      # user-facing formats. Infrastructure formats (xml/presentation/rxl) must
+      # still be present with the correct suffixes, or html/doc write to a bare
+      # basename (e.g. "document.") and fail with ENOENT on presentation.xml.
+      yaml_content = { "formats" => %w(html doc) }
+      FileUtils.rm_f(Metanorma::Generic::YAML_CONFIG_FILE)
+      File.write(Metanorma::Generic::YAML_CONFIG_FILE, yaml_content.to_yaml)
+
+      Metanorma::Generic.configuration = nil
+      Metanorma::Generic.configure {}
+      Metanorma::Generic.configuration
+        .set_default_values_from_yaml_file(Metanorma::Generic::YAML_CONFIG_FILE)
+
+      formats = Metanorma::Generic::Processor.new.output_formats
+      expect(formats[:presentation]).to eq("presentation.xml")
+      expect(formats[:xml]).to eq("xml")
+      expect(formats[:rxl]).to eq("rxl")
+      expect(formats[:html]).to eq("html")
+      expect(formats[:doc]).to eq("doc")
+    ensure
+      FileUtils.rm_f(Metanorma::Generic::YAML_CONFIG_FILE)
+    end
+
+    it "does not share a mutable formats hash with callers" do
+      # Compile#get_isodoc_options historically did select! on the returned
+      # hash. If that is the live configuration.formats, presentation is
+      # permanently deleted and every subsequent html/doc build breaks.
+      Metanorma::Generic.configuration = nil
+      Metanorma::Generic.configure {}
+      processor = Metanorma::Generic::Processor.new
+      returned = processor.output_formats
+      returned.delete(:presentation)
+      returned.delete(:xml)
+
+      expect(processor.output_formats[:presentation])
+        .to eq("presentation.xml")
+      expect(processor.output_formats[:xml]).to eq("xml")
+      expect(Metanorma::Generic.configuration.formats[:presentation])
+        .to eq("presentation.xml")
+    end
   end
 
   it "registers version against metanorma" do
