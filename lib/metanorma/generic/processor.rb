@@ -14,8 +14,12 @@ module Metanorma
         @asciidoctor_backend = n || :generic
       end
 
+      # Return a copy — callers (e.g. Compile#get_isodoc_options) may
+      # select!/delete entries. Sharing the live configuration hash lets those
+      # mutations permanently strip infrastructure formats such as
+      # :presentation, which then breaks html/doc/pdf generation for tastes.
       def output_formats
-        configuration.formats
+        (configuration.formats || {}).dup
       end
 
       def fonts_manifest

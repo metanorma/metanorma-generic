@@ -130,15 +130,22 @@ module Metanorma
         self.document_namespace ||= DOCUMENT_NAMESPACE
       end
 
-      # convert array to hash; if already is hash (no override in customize),
-      # don't reconvert
+      # Convert a YAML list of user-facing formats into a suffix hash, then
+      # always merge the infrastructure formats (xml / presentation / rxl)
+      # from DummyProcessor. Infrastructure formats must survive even when:
+      #   * formats is already a Hash (early return used to skip the merge),
+      #   * a taste customize file lists only html/doc,
+      #   * a prior compile mutated the shared hash (see Processor#output_formats).
       def default_formats
-        formats.is_a?(Hash) and return
-        self.formats ||= %w(html doc)
-        self.formats = self.formats.each_with_object({}) do |k, m|
-          m[k.to_sym] = k
+        unless formats.is_a?(Hash)
+          self.formats ||= %w(html doc)
+          self.formats = formats.each_with_object({}) do |k, m|
+            m[k.to_sym] = k.to_s
+          end
         end
-        self.formats.merge! DummyProcessor.new.output_formats
+        # Force correct infrastructure suffixes every time — never trust a
+        # previously mutated or partially-built hash.
+        self.formats = formats.merge(DummyProcessor.new.output_formats)
       end
 
       def default_titles
