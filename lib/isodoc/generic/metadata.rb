@@ -51,8 +51,12 @@ module IsoDoc
 
       def author(isoxml, _out)
         super
-        tc = isoxml.at(ns("//bibdata/contributor[role/description = 'committee']/organization/subdivision[@type = 'Committee']/name"))
-        set(:tc, tc.text) if tc
+        tc = isoxml.at(ns("//bibdata/contributor[role/description = 'committee']/" \
+                          "organization/subdivision[@type = 'Committee']/name"))
+        tc or return
+        committee = configuration.committee(tc.text)
+        set(:tc, committee ? committee.display_name : tc.text)
+        committee and set(:tc_committee, committee)
       end
 
       def stage_abbr(status)

@@ -1,3 +1,4 @@
+require "metanorma/generic/committee"
 require "metanorma/generic/processor"
 require "metanorma/generic/version"
 require "forwardable"
@@ -79,6 +80,21 @@ module Metanorma
 
       attr_accessor(*CONFIG_ATTRS)
 
+      # Assigning normalizes plain hashes (e.g. from metanorma.yml) into
+      # Committee models; Committee instances pass through unchanged.
+      def committees=(committees)
+        @committees = Array(committees).map do |committee|
+          committee.is_a?(Committee) ? committee : Committee.from_hash(committee)
+        end
+      end
+
+      def committee(code)
+        code or return nil
+        Array(committees).find do |committee|
+          committee.code == code.to_s.downcase
+        end
+      end
+
       class << self
         attr_accessor :_file
       end
@@ -100,6 +116,11 @@ module Metanorma
         default_org
         default_formats
         default_titles
+        parse_committees
+      end
+
+      def parse_committees
+        @committees and self.committees = @committees
       end
 
       def default_org

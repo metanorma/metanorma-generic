@@ -43,11 +43,10 @@ module Metanorma
       end
 
       def committee_validate(xmldoc)
-        committees = Array(configuration&.committees) || return
-        committees.empty? and return
+        Array(configuration&.committees).empty? and return
         xmldoc.xpath("//bibdata/contributor[role/description = 'committee']/" \
             "organization/subdivision/name").each do |c|
-          committees.include? c.text or
+          configuration.committee(c.text) or
             @log.add("GENERIC_3", nil, params: [c.text])
         end
       end
