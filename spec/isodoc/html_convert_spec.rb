@@ -17,6 +17,7 @@ RSpec.describe IsoDoc::Generic do
         .stage_abbreviations
       config.metadata_extensions = Metanorma::Generic::Configuration.new
         .metadata_extensions
+      config.committees = Metanorma::Generic::Configuration.new.committees
       config.webfont = Metanorma::Generic::Configuration.new.webfont
       config.i18nyaml = Metanorma::Generic::Configuration.new.i18nyaml
       config.html_bodyfont = Metanorma::Generic::Configuration.new.html_bodyfont
@@ -182,6 +183,50 @@ RSpec.describe IsoDoc::Generic do
         vote_starteddate: "XXX" }
     docxml, = csdc.convert_init(input, "test", true)
     expect(metadata(csdc.info(docxml, nil))).to be_equivalent_to output
+  end
+
+  it "renders committee models from configuration" do
+    Metanorma::Generic.configure do |config|
+      config.committees = [{ "code" => "tc",
+                             "full_name" => "Technical Committee" }]
+    end
+    csdc = IsoDoc::Generic::HtmlConvert.new({})
+    input = <<~"INPUT"
+      <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
+      <bibdata type="standard">
+        <title language="en" format="plain">Main Title</title>
+        <docidentifier>1000</docidentifier>
+      <contributor>
+         <role type="author">
+            <description>committee</description>
+         </role>
+         <organization>
+            <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+            <subdivision type="Committee">
+               <name>TC</name>
+            </subdivision>
+         </organization>
+      </contributor>
+      <contributor>
+         <role type="author">
+            <description>committee</description>
+         </role>
+         <organization>
+            <name>#{Metanorma::Generic::ORGANIZATION_NAME_LONG}</name>
+            <subdivision type="Committee">
+               <name>Unknown</name>
+            </subdivision>
+         </organization>
+      </contributor>
+      </bibdata>
+      <sections/>
+      </generic-standard>
+    INPUT
+    docxml, = csdc.convert_init(input, "test", true)
+    meta = metadata(csdc.info(docxml, nil))
+    expect(meta[:tc]).to eq "Technical Committee"
+    expect(meta[:tc_committee]).to be_a(Metanorma::Generic::Committee)
+    expect(meta[:tc_committee].code).to eq "tc"
   end
 
   context "with configuration options" do

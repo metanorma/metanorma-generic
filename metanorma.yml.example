@@ -46,7 +46,8 @@ committee_types:
   - Committee
   - Workgroup
 committees:
-  - TC 1
+  - code: tc1
+    full_name: Technical Committee 1
 relations:
   - part-of
   - translated-from
