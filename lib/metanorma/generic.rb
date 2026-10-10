@@ -85,7 +85,11 @@ module Metanorma
       # Committee models; Committee instances pass through unchanged.
       def committees=(committees)
         @committees = Array(committees).map do |committee|
-          committee.is_a?(Committee) ? committee : Committee.from_hash(committee)
+          case committee
+          when Committee then committee
+          when String then Committee.new(code: committee)
+          else Committee.from_hash(committee)
+          end
         end
       end
 
