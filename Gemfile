@@ -19,3 +19,4 @@ gem "relaton-bib", "~> 2.2.0.pre.alpha.1"
 gem "pubid", github: "pubid/pubid", branch: "main"
 
 eval_gemfile("Gemfile.devel") rescue nil
+gem "leptris", "1.9.331.0"
