@@ -90,7 +90,7 @@ module Metanorma
           # flavor metanorma.yml files carry committees as plain strings
           # (e.g. bipm's); from_hash rejects non-hashes under
           # lutaml-model 0.8.102's type checking.
-          else Committee.new(code: committee.to_s)
+          else Committee.new(code: committee.to_s, full_name: committee.to_s)
           end
         end
       end
