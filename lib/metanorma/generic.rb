@@ -84,7 +84,14 @@ module Metanorma
       # Committee models; Committee instances pass through unchanged.
       def committees=(committees)
         @committees = Array(committees).map do |committee|
-          committee.is_a?(Committee) ? committee : Committee.from_hash(committee)
+          case committee
+          when Committee then committee
+          when ::Hash then Committee.from_hash(committee)
+          # flavor metanorma.yml files carry committees as plain strings
+          # (e.g. bipm's); from_hash rejects non-hashes under
+          # lutaml-model 0.8.102's type checking.
+          else Committee.new(code: committee.to_s)
+          end
         end
       end
 
