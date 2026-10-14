@@ -38,7 +38,8 @@ module Metanorma
         @docstage_valid and return @docstage_valid
         keys = configuration.stage_abbreviations&.keys or return
         (keys.map(&:to_s) +
-          Array(configuration.published_stages).map(&:to_s) +
+          Array(configuration.published_stages || ["published"])
+            .map(&:to_s) +
           [configuration.default_stage]).compact.uniq
       end
 
