@@ -308,3 +308,28 @@ RSpec.describe Metanorma::Generic do
     end
   end
 end
+
+RSpec.describe Metanorma::Generic do
+  describe "stage validation" do
+    it "recognises the default published stage without configuration" do
+      Metanorma::Generic.configure do |config|
+        config.stage_abbreviations = { draft: "draft" }
+        config.default_stage = "draft"
+      end
+      input = <<~INPUT
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :status: published
+
+        == Clause
+        Para
+      INPUT
+      FileUtils.rm_f "test.err.html"
+      Asciidoctor.convert(input, *OPTIONS)
+      expect(File.read("test.err.html"))
+        .not_to include("is not a recognised status")
+    end
+  end
+end
