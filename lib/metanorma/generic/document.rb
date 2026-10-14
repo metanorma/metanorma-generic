@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require "metanorma/standoc"
+require "metanorma/document"
+require "metanorma/standoc/document"
 module Metanorma
   module Generic
   end

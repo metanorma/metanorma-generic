@@ -6,16 +6,23 @@ git_source(:github) { |repo| "https://github.com/#{repo}" }
 
 gemspec
 
-# TEMPORARY cross-PR pins (metanorma-core#18 wave) — identical block in
-# every adoption PR; delete when the branches release.
-gem "metanorma-core", github: "metanorma/metanorma-core", branch: "feat/flavor-table"
-gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "feat/move-standard-document"
-gem "metanorma-document", github: "metanorma/metanorma-document", branch: "feat/model-validation-l1-declarations"
-gem "metanorma-iso", github: "metanorma/metanorma-iso", branch: "feat/model-validation-migration"
+eval_gemfile("Gemfile.devel") rescue nil
 
-# relaton v3 monogem + pubid-2 prerelease chain (isodoc PR#825)
-gem "isodoc",
-    github: "metanorma/isodoc",
-    branch: "rt-pubid-2-migration"
-gem "relaton-cli", ">= 3.0.0.pre.alpha.1"
-gem "pubid", "2.0.0.pre.alpha.8" # relaton 3.0.0.pre.alpha.1 pairs with pre-rename pubid; .alpha.9 renamed base_identifier->base
+# standoc main: the Document model tree (released 3.5.0 predates it)
+gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "main"
+
+# metanorma-document main: SvgmapElement and the base component tree
+gem "metanorma-document", github: "metanorma/metanorma-document", branch: "main"
+
+# canonical line: relaton 3 prerelease monogem + git-main render/core
+# (released isodoc 3.7.3 lacks the moxml-aware BibdataConfig wrapper;
+# released relaton alpha.5 crashes the bibdata Liquid drop round-trip)
+gem "relaton", "= 3.0.0.pre.alpha.14"
+gem "relaton-render", "= 3.0.0.pre.alpha.43"
+gem "relaton-bib", "2.2.0.pre.alpha.1"
+gem "pubid", github: "pubid/pubid", branch: "main"
+gem "moxml", github: "lutaml/moxml", branch: "main"
+gem "leptris", "1.9.352.0"
+gem "isodoc", github: "metanorma/isodoc", branch: "main"
+gem "isodoc-i18n", github: "metanorma/isodoc-i18n", branch: "main"
+gem "canon", "0.3.87"
