@@ -63,6 +63,7 @@ RSpec.describe Metanorma::Generic do
     end
 
     it "uses config to populate fonts" do
+      Asciidoctor.convert(input, *OPTIONS)
       registry = Metanorma::Registry.instance
       registry.register(Metanorma::Generic::Processor)
       expect(registry.find_processor(:generic).fonts_manifest)

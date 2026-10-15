@@ -20,6 +20,14 @@ RSpec.configure do |config|
   # Disable RSpec exposing methods globally on `Module` and `main`
   config.disable_monkey_patching!
 
+  # context_spec (and any taste test) reconfigures the global
+  # Metanorma::Generic configuration; a leaked default_stage then flips
+  # the status stage of every later example. Reset it per example.
+  config.before do
+    Metanorma::Generic.configuration = nil
+    Metanorma::Generic.configure {}
+  end
+
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
