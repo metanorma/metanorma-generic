@@ -10,6 +10,8 @@ eval_gemfile("Gemfile.devel") rescue nil
 
 # standoc main: the Document model tree (released 3.5.0 predates it)
 gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "main"
+# the released plugin line dropped the preprocessor names standoc main registers
+gem "metanorma-plugin-lutaml", github: "metanorma/metanorma-plugin-lutaml", branch: "main"
 
 # metanorma-document main: SvgmapElement and the base component tree
 gem "metanorma-document", github: "metanorma/metanorma-document", branch: "main"
