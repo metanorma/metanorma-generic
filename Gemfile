@@ -8,20 +8,17 @@ gemspec
 
 eval_gemfile("Gemfile.devel") rescue nil
 
-# standoc main: the Document model tree (released 3.5.0 predates it)
-gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "main"
+# standoc α line: the Document model tree
+gem "metanorma-standoc", "~> 3.5.1.pre.alpha"
 # the released plugin line dropped the preprocessor names standoc main registers
 gem "metanorma-plugin-lutaml", github: "metanorma/metanorma-plugin-lutaml", branch: "main"
 
-# metanorma-document main: SvgmapElement and the base component tree
-gem "metanorma-document", github: "metanorma/metanorma-document", branch: "main"
+gem "metanorma-document", "~> 0.5.2.pre.alpha" # SvgmapElement and the base component tree
 
-# canonical line: relaton 3 prerelease monogem + git-main render/core
-# (released isodoc 3.7.3 lacks the moxml-aware BibdataConfig wrapper;
-# released relaton alpha.5 crashes the bibdata Liquid drop round-trip)
+# canonical line: relaton 3 finals over the α engine line
 gem "relaton", "~> 3.0"
 gem "relaton-render", "~> 3.0"
-gem "pubid", github: "pubid/pubid", branch: "main"
-gem "isodoc", github: "metanorma/isodoc", branch: "main"
+gem "pubid", "~> 2.0"
+gem "isodoc", "~> 3.7.4.pre.alpha"
 gem "isodoc-i18n", github: "metanorma/isodoc-i18n", branch: "main"
 gem "canon", "0.3.87"
