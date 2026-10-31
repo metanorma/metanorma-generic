@@ -67,7 +67,7 @@ RSpec.describe Metanorma::Generic do
       registry = Metanorma::Registry.instance
       registry.register(Metanorma::Generic::Processor)
       expect(registry.find_processor(:generic).fonts_manifest)
-        .to be_equivalent_to(fonts_manifest)
+        .to eq(fonts_manifest)
     end
   end
 
