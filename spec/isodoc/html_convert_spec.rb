@@ -182,7 +182,7 @@ RSpec.describe IsoDoc::Generic do
         vote_endeddate: "XXX",
         vote_starteddate: "XXX" }
     docxml, = csdc.convert_init(input, "test", true)
-    expect(metadata(csdc.info(docxml, nil))).to be_equivalent_to output
+    expect(metadata(csdc.info(docxml, nil))).to eq output
   end
 
   it "renders committee models from configuration" do
@@ -275,7 +275,7 @@ RSpec.describe IsoDoc::Generic do
           </generic-standard>
         INPUT
         expect(metadata(csdc.info(docxml, nil)))
-          .to be_equivalent_to({ accesseddate: "XXX",
+          .to eq({ accesseddate: "XXX",
                                  adapteddate: "XXX",
                                  announceddate: "XXX",
                                  circulateddate: "XXX",
@@ -477,9 +477,9 @@ RSpec.describe IsoDoc::Generic do
             vote_starteddate: "XXX" }
 
         docxml, = wcsdc.convert_init(input, "test", true)
-        expect(metadata(wcsdc.info(docxml, nil))).to be_equivalent_to output
+        expect(metadata(wcsdc.info(docxml, nil))).to eq output
         docxml, = csdc.convert_init(input, "test", true)
-        expect(metadata(csdc.info(docxml, nil))).to be_equivalent_to output
+        expect(metadata(csdc.info(docxml, nil))).to eq output
 
         FileUtils.rm_f "test.html"
         FileUtils.rm_f "test.doc"
@@ -616,7 +616,7 @@ RSpec.describe IsoDoc::Generic do
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>"),
-    ).to be_equivalent_to output
+    ).to be_xml_equivalent_to output
   end
 
   it "processes keyword" do
@@ -644,7 +644,7 @@ RSpec.describe IsoDoc::Generic do
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>"),
-    ).to be_equivalent_to output
+    ).to be_xml_equivalent_to output
   end
 
   it "processes simple terms & definitions" do
@@ -676,7 +676,7 @@ RSpec.describe IsoDoc::Generic do
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
       .gsub(%r{</body>.*}m, "</body>"),
-    ).to be_equivalent_to output
+    ).to be_xml_equivalent_to output
   end
 
   it "processes section names" do
