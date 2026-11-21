@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+require "tmpdir"
 
 RSpec.describe Metanorma::Generic do
   it "has a version number" do
@@ -73,6 +74,55 @@ RSpec.describe Metanorma::Generic do
         expect(config.logo_paths).to eq(logo_paths1)
         expect(config.logo_path).to eq(logo_path)
         expect(config.fonts_manifest).to eq(fonts_manifest)
+      end
+    end
+
+    context "sparse customize config file" do
+      # A customize metanorma.yml (the :customize: document attribute) is
+      # sparse: it names only the values the taste overrides. Reading it
+      # must leave every attribute it does not name at the value the base
+      # flavour already carries (metanorma-taste#252: the iala customize
+      # file nil-ed the iho htmlintropage and validate_rng_file, dropping
+      # the flavour into the generic HTML intro page and disabling
+      # schema validation).
+      subject(:config) { Metanorma::Generic::Configuration.new }
+
+      let(:customize_dir) { Dir.mktmpdir("customize") }
+      let(:customize_file) { File.join(customize_dir, "metanorma.yml") }
+      let(:customize_content) do
+        {
+          "htmlcoverpage" => "cover.html",
+          "standardstylesheet" => nil,
+        }
+      end
+
+      before do
+        config.htmlintropage = "base-intro.html"
+        config.validate_rng_file = "base-schema.rng"
+        config.standardstylesheet = "base-stylesheet.scss"
+        File.write(customize_file, customize_content.to_yaml)
+      end
+
+      after { FileUtils.rm_rf(customize_dir) }
+
+      it "keeps attributes the customize file does not name" do
+        config.set_default_values_from_yaml_file(customize_file)
+
+        expect(config.htmlintropage).to eq("base-intro.html")
+        expect(config.validate_rng_file).to eq("base-schema.rng")
+      end
+
+      it "applies the attributes the customize file names" do
+        config.set_default_values_from_yaml_file(customize_file)
+
+        expect(config.htmlcoverpage)
+          .to(eq(File.join(customize_dir, "cover.html")))
+      end
+
+      it "clears attributes the customize file names with a null value" do
+        config.set_default_values_from_yaml_file(customize_file)
+
+        expect(config.standardstylesheet).to be_nil
       end
     end
 

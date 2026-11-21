@@ -173,7 +173,16 @@ module Metanorma
       end
 
       def set_default_value_from_yaml_file(attr, root_path, default_options)
-        value = default_options[attr.to_s]
+        key = attr.to_s
+        # A configuration file speaks only to the keys it names: a
+        # flavour's metanorma.yml read through the +:customize:+
+        # document attribute is typically sparse, and absent keys are
+        # "no opinion" -- they must keep the values the base flavour
+        # already carries, not be clobbered to nil (metanorma-taste#252:
+        # the iala customize file nil-ed the iho htmlintropage, dropping
+        # the flavour into the generic HTML intro page).
+        default_options.key?(key) or return
+        value = default_options[key]
         value && filepath_attrs.include?(attr) and
           value = absolute_path(value, root_path)
         instance_variable_set("@#{attr}", value)
