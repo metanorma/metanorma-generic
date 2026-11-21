@@ -811,6 +811,29 @@ RSpec.describe IsoDoc::Generic do
       .convert("test", input, true))).to be_xml_equivalent_to output
   end
 
+  it "renders exactly one Contents heading in the HTML ToC" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <bibdata>
+      <title language="en">Test</title>
+      </bibdata>
+      <preface><clause type="toc" displayorder="1">
+      <fmt-title>Contents</fmt-title>
+      </clause>
+      <foreword displayorder="2" id="fwd"><fmt-title>Foreword</fmt-title>
+      </foreword></preface>
+      </iso-standard>
+    INPUT
+    FileUtils.rm_f "test.html"
+    IsoDoc::Generic::HtmlConvert.new({}).convert("test", input, false)
+    html = File.read("test.html")
+    # the intro page supplies the empty #toc shell; the ToC clause supplies
+    # the single heading and the entry set (metanorma-jis#13 contract)
+    expect(html.scan(/>\s*Contents\s*</).size).to eq(1)
+    expect(html).to include(%(class="IntroTitle"))
+    expect(html).to include(%(<li class="h1"><a href="#fwd">))
+  end
+
   private
 
   def stylesheet_mock(dir)
