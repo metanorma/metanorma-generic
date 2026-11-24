@@ -10,8 +10,7 @@ module Metanorma
       attribute :preface,
                 Metanorma::Standoc::Document::Sections::Preface
       attribute :sections,
-                Metanorma::Standoc::Document::Sections::Sections,
-                collection: true
+                Metanorma::Standoc::Document::Sections::Sections
       attribute :annex,
                 Metanorma::Standoc::Document::Sections::AnnexSection,
                 collection: true
