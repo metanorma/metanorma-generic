@@ -24,7 +24,7 @@ Gem can be configured in 2 ways:
 2. By using the `Metanorma::Generic.configuration` method directly; for example
 
 [source,ruby]
----
+----
 Metanorma::Generic.configure do |config|
   config.organization_name_short = 'My Organization'
   config.organization_name_long = 'My Organization name'
@@ -43,8 +43,33 @@ Metanorma::Generic.configure do |config|
   config.wordintropage = '/metanorma-mine/lib/isodoc/mine/html/word_mine_intro.html'
   config.wordstylesheet = '/metanorma-mine/lib/isodoc/mine/html/wordstyle.scss'
 end
----
+----
 
-More information about how to configure this gem is given in 
+=== Liquid templates: `bibdata.*` paths
+
+The `docid_template` value, the cover pages, the intro pages and the boilerplate are
+Liquid templates. They can read the document bibdata by object path, from the Relaton parse
+of `//bibdata`. In the `ext` subtree, a hyphen in an element name becomes an underscore, and
+the text of an element is in `content`. The Word `header` template needs isodoc with
+`stringify_all_keys` in `header_params`; with an older isodoc, use flat keys there.
+
+[source,liquid]
+----
+{{ bibdata.docnumber }}
+{{ bibdata.status.stage.content }}
+{{ bibdata.ext.doctype.content }}
+{{ bibdata.ext.security.content }}
+{% assign doi = bibdata.docidentifier | where: "type", "DOI" | first %}{{ doi.content }}
+----
+
+Use `bibdata.ext.<field>` for the `metadata_extensions` values. The older
+`metadata_extensions` hash stays available.
+
+The flat keys (`{{ stage }}`, `{{ doctype }}`, `{{ docnumeric }}`, `{{ agency }}`, ...) still
+work. Some of them give a formatted value: `{{ stage }}` gives `Working Draft` where
+`{{ bibdata.status.stage.content }}` gives `working-draft`. Other flat keys, such as
+`stageabbr` and `unpublished`, have no direct bibdata equivalent.
+
+More information about how to configure this gem is given in
 https://www.metanorma.com/builder/topics/simple-adoption/[Simple adoption] on the metanorma.com site.
 
