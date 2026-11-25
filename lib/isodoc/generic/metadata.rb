@@ -92,6 +92,9 @@ module IsoDoc
         c
       end
 
+      # Templates should prefer {{ bibdata.ext.<field> }} (see
+      # IsoDoc::Metadata#bibdata); :metadata_extensions is kept for
+      # existing flavour templates.
       def ext(isoxml, _out)
         b = isoxml&.at(ns("//bibdata/ext")) or return
         set(:metadata_extensions, xmlhash2hash(b.to_hash)["ext"])

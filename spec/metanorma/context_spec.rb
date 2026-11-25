@@ -1,5 +1,6 @@
 require "spec_helper"
 require "fileutils"
+require "tmpdir"
 
 RSpec.describe Metanorma::Generic do
   context "customize directive" do
@@ -281,6 +282,23 @@ RSpec.describe Metanorma::Generic do
           .sub('<identifier type="full">B 1</identifier>', "")
         expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
           .to be_xml_equivalent_to(output)
+      end
+
+      it "gives the resolved docidentifier to boilerplate as bibdata.docidentifier" do
+        dir = Dir.mktmpdir
+        bp = File.join(dir, "boilerplate_bibdata.xml")
+        File.write(bp, <<~XML)
+          <boilerplate><legal-statement><clause><p id="docid-check">{% for d in bibdata.docidentifier %}[{{ d.content }}]{% endfor %}</p></clause></legal-statement></boilerplate>
+        XML
+        Metanorma::Generic.configure do |config|
+          config.docid_template = docid_template_bibdata
+          config.boilerplate = bp
+        end
+        out = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
+        expect(out.at("//*[@id = 'docid-check']").text)
+          .to include("[working-draft elephant 1000]")
+      ensure
+        FileUtils.rm_rf dir
       end
 
       after do

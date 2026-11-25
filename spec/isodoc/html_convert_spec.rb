@@ -1,4 +1,5 @@
 require "spec_helper"
+require "tmpdir"
 
 logoloc = File.expand_path(
   File.join(
@@ -832,6 +833,51 @@ RSpec.describe IsoDoc::Generic do
     expect(html.scan(/>\s*Contents\s*</).size).to eq(1)
     expect(html).to include(%(class="IntroTitle"))
     expect(html).to include(%(<li class="h1"><a href="#fwd">))
+  end
+
+  it "renders bibdata.* object paths and flat keys in cover pages" do
+    dir = Dir.mktmpdir
+    template = File.join(dir, "bibdata_coverpage.html")
+    File.write(template, <<~TEMPLATE)
+      <p id="bibdata-paths">{{ bibdata.status.stage.content }}|{{ bibdata.ext.doctype.content }}|{{ bibdata.docnumber }}|{{ bibdata.ext.security.content }}</p>
+      <p id="flat-keys">{{ stage }}|{{ doctype }}|{{ docnumeric }}</p>
+    TEMPLATE
+    Metanorma::Generic.configure do |config|
+      config.htmlcoverpage = template
+      config.wordcoverpage = template
+    end
+    input = <<~INPUT
+      <generic-standard xmlns="#{Metanorma::Generic::DOCUMENT_NAMESPACE}">
+      <bibdata type="standard">
+        <title language="en" format="plain">Main Title</title>
+        <docidentifier primary="true">Acme 1000</docidentifier>
+        <docnumber>1000</docnumber>
+        <language>en</language>
+        <script>Latn</script>
+        <status><stage>working-draft</stage></status>
+        <ext>
+          <doctype>standard</doctype>
+          <security>X</security>
+        </ext>
+      </bibdata>
+      <sections/>
+      </generic-standard>
+    INPUT
+    FileUtils.rm_f "test.html"
+    FileUtils.rm_f "test.doc"
+    IsoDoc::Generic::HtmlConvert.new({}).convert("test", input, false)
+    IsoDoc::Generic::WordConvert.new({}).convert("test", input, false)
+    [File.read("test.html", encoding: "utf-8"),
+     File.read("test.doc", encoding: "utf-8")].each do |out|
+      expect(out).to include("working-draft|standard|1000|X")
+      expect(out).to include("Working Draft|Standard|1000")
+    end
+  ensure
+    FileUtils.rm_rf dir
+    Metanorma::Generic.configure do |config|
+      config.htmlcoverpage = Metanorma::Generic::Configuration.new.htmlcoverpage
+      config.wordcoverpage = Metanorma::Generic::Configuration.new.wordcoverpage
+    end
   end
 
   private

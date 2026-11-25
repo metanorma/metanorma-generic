@@ -37,6 +37,8 @@ word_normalfontsize: "12.0pt"
 word_monospacefontsize: "11.0pt"
 word_smallerfontsize: "10.0pt"
 word_footnotefontsize: "9.0pt"
+# Liquid template; flat keys and bibdata.* object paths both work, e.g.
+# "{{ organization_name_short }} {{ bibdata.docnumber }}"
 docid_template: "{{ organization_name_short }} {{ docnumeric }}"
 metadata_extensions:
   - security
