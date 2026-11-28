@@ -13,10 +13,10 @@ gem "metanorma-standoc", "~> 3.5.7"
 # the released plugin line dropped the preprocessor names standoc main registers
 gem "metanorma-plugin-lutaml", github: "metanorma/metanorma-plugin-lutaml", branch: "main"
 
-gem "metanorma-document", "~> 0.5.3" # SvgmapElement and the base component tree
+gem "metanorma-document", "~> 0.5.15" # SvgmapElement and the base component tree
 
 # canonical line: relaton 3 finals over the α engine line
-gem "relaton", "~> 3.1.1"
+gem "relaton", "~> 3.1.8"
 gem "pubid", "~> 2.0"
 gem "isodoc", "~> 3.7.9"
 gem "isodoc-i18n", github: "metanorma/isodoc-i18n", branch: "main"
